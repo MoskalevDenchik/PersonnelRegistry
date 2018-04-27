@@ -40,7 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IDepartmentServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DepartmentServices.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DM.PR.Common\DM.PR.Common.csproj">
+      <Project>{82E0BF11-2D91-49CD-8F9F-CF81495B0717}</Project>
+      <Name>DM.PR.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,7 +1,21 @@
-﻿
+﻿@model IEnumerable<DM.PR.Common.Entities.Department>
 @{
     ViewBag.Title = "Index";
 }
 
 <h2 class="text-center">@ViewBag.message</h2>
 
+
+<table class=" table table-bordered">
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td> @item.Name</td>
+            <td> @item.Address</td>
+            <td> @item.Description</td>
+        </tr>
+
+    }
+
+</table>
