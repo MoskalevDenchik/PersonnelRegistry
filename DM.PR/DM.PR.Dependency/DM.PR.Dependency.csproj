@@ -87,6 +87,10 @@
       <Project>{b87d68fb-f222-4f46-88cc-6a396eacddec}</Project>
       <Name>DM.PR.Business</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DM.PR.Common\DM.PR.Common.csproj">
+      <Project>{82E0BF11-2D91-49CD-8F9F-CF81495B0717}</Project>
+      <Name>DM.PR.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DM.PR.Data\DM.PR.Data.csproj">
       <Project>{95a397fd-0697-414d-8fd2-beb133df1823}</Project>
       <Name>DM.PR.Data</Name>
