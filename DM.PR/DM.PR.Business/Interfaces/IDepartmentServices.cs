@@ -9,6 +9,10 @@ namespace DM.PR.Business.Interfaces
 {
     public interface IDepartmentServices
     {
-       List<Department> GetAll();
+        IEnumerable<Department> GetAll();
+
+        IEnumerable<string> GetListOfName();
+
+
     }
 }
