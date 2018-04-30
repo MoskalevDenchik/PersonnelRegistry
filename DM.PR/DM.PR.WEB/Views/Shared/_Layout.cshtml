@@ -24,15 +24,17 @@
             </div>
         </div>
     </div>
-    <div>
-        @Html.Action("Menu", "Department")
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-2">
+            @Html.Action("Menu", "Department")
+        </div>
+        <div class="col-md-6 ">
+            @Html.Action("List", "Employee")
+        </div>
+
+        <div class=" row">
+            @RenderBody()
+        </div>
     </div>
 
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>

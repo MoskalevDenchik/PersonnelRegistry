@@ -1,0 +1,9 @@
+﻿@model IEnumerable<DM.PR.WEB.Models.EmployeeListViewModel>
+
+<div>
+    @foreach (var item in Model)
+    {
+        @Html.Partial("EmployeeSummary", item)
+    }
+</div>
+

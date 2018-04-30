@@ -9,16 +9,16 @@ namespace DM.PR.WEB.Controllers
 {
     public class DepartmentController : Controller
     {
-        private IDepartmentServices _departmentServices;
+        private IDepartmentProvider _departmentProvider;
 
-        public DepartmentController(IDepartmentServices departmentServices)
+        public DepartmentController(IDepartmentProvider departmentProvider)
         {
-            _departmentServices = departmentServices;
+            _departmentProvider = departmentProvider;
         }
 
         public PartialViewResult Menu()
         {
-            return PartialView(_departmentServices.GetListOfName());
+            return PartialView(_departmentProvider.GetListOfName());
         }
 
 

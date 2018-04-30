@@ -44,7 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Department.cs" />
+    <Compile Include="Entities\Employee.cs" />
     <Compile Include="Entities\Phone.cs" />
+    <Compile Include="Enums\Enums.cs" />
     <Compile Include="Logger\IRecordLog.cs" />
     <Compile Include="Logger\WorkLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

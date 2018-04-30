@@ -1,0 +1,29 @@
+﻿@model DM.PR.WEB.Models.EmployeeListViewModel
+
+<div class="well">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="#" alt="Alternate Text" />
+        </div>
+        <div class="col-md-6">
+            <div class="pull-right">
+                <h3>
+                    <strong>@Model.FirstName</strong>
+                    <strong>@Model.MiddleName </strong>
+                    <strong>@Model.LastName</strong>
+                </h3>
+                <br />
+                <h4 class="text-right">
+                    <strong>@Model.WorkPhone.Number</strong>
+                </h4>
+                <br />
+                <h5 class="text-right">
+                    @Html.RouteLink(Model.DepartmentName,
+                  new { controller = "Department", action = "Deatails", departmentName = Model.DepartmentName },
+                  htmlAttributes: new { @class=" btn btn-default"})
+                </h5>
+            </div>
+        </div>
+    </div>
+</div>
+
