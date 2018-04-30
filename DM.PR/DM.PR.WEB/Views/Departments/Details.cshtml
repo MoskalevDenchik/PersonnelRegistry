@@ -1,0 +1,33 @@
+﻿@model DM.PR.Common.Entities.Department
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container">
+
+    <div>
+        @Html.LabelFor(d => d.Name)
+        @Model.Name
+    </div>
+    <div>
+        @Html.LabelFor(d => d.Address)
+        @Model.Address
+    </div>
+
+    @Html.LabelFor(d => d.Phones)
+    <div>
+        @foreach (var item in @Model.Phones)
+        {
+            <p>@item.Number  @item.Kind</p>
+        }
+    </div>
+
+    <div>
+        @Html.LabelFor(d => d.Description)
+        @Model.Description
+    </div>
+</div>
+
+
+

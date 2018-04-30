@@ -23,7 +23,9 @@ namespace DM.PR.Business.Providers
                         Description = " Отдел занимается работой с кадрами",
                         Phones = new List<Phone>{
                             new Phone() { Number = " +375297894512",
-                                            Kind = KindOfPhone.HOME } } },
+                                            Kind = KindOfPhone.HOME },
+                            new Phone() { Number = " +375297894512",
+                                            Kind = KindOfPhone.WORK }} },
 
                 new Department(){ Name = "Отдел сбыта",
                         Address = " г.Могилев, ул.Космонавтов, д.130",
@@ -70,6 +72,11 @@ namespace DM.PR.Business.Providers
         public IEnumerable<string> GetListOfName()
         {
             return _departmentList.Select(d => d.Name).ToList();
+        }
+
+        public Department FindByName(string name)
+        {
+            return _departmentList.FirstOrDefault(d => d.Name == name);
         }
     }
 }

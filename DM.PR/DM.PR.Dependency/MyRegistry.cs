@@ -9,6 +9,7 @@ namespace DM.PR.Dependency
     {
         public MyRegistry()
         {
+            For<IEmployeeProvider>().Use<EmployeeProvider>();
             For<IDepartmentProvider>().Use<DepartmentProvider>();
             ForSingletonOf<IRecordLog>().Use<WorkLogger>();
         }

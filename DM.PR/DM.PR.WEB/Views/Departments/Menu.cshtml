@@ -1,0 +1,10 @@
+﻿@model IEnumerable<string>
+<div class="btn-group btn-group-lg btn-group-vertical ">
+    @Html.RouteLink("ALL", routeValues: new { controller = "Employees", action = "List" },
+             htmlAttributes: new { @class = "btn btn-default" })
+    @foreach (var link in Model)
+    {
+        @Html.RouteLink(link, routeValues: new { controller = "Employees", action = "List", department = link },
+               htmlAttributes: new { @class = "btn btn-default" })
+    }
+</div>

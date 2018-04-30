@@ -7,11 +7,11 @@ using System.Web.Mvc;
 
 namespace DM.PR.WEB.Controllers
 {
-    public class DepartmentController : Controller
+    public class DepartmentsController : Controller
     {
         private IDepartmentProvider _departmentProvider;
 
-        public DepartmentController(IDepartmentProvider departmentProvider)
+        public DepartmentsController(IDepartmentProvider departmentProvider)
         {
             _departmentProvider = departmentProvider;
         }
@@ -19,6 +19,16 @@ namespace DM.PR.WEB.Controllers
         public PartialViewResult Menu()
         {
             return PartialView(_departmentProvider.GetListOfName());
+        }
+
+        public ActionResult Details(string department)
+        {
+            if (department!=null)
+            {
+                return View(_departmentProvider.FindByName(department));
+            }
+            return View();
+
         }
 
 

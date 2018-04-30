@@ -12,7 +12,7 @@ namespace DM.PR.Business.Providers
     public class EmployeeProvider : IEmployeeProvider
     {
         private List<Employee> _employeesLis;
- 
+
         public EmployeeProvider()
         {
             _employeesLis = new List<Employee>
@@ -41,6 +41,14 @@ namespace DM.PR.Business.Providers
         public IEnumerable<Employee> GetAll()
         {
             return _employeesLis;
+        }
+
+        public IEnumerable<Employee> FindAllByDepartmentName(string name)
+        {
+            return _employeesLis
+                .Where(d => d.Department.Name == name)
+                .Select(d => d)
+                .ToList();
         }
 
 

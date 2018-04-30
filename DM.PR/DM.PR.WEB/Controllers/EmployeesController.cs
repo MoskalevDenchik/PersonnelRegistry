@@ -1,7 +1,6 @@
-﻿using DM.PR.Business.Providers;
+﻿using DM.PR.Business.Interfaces;
 using DM.PR.Common.Entities;
 using DM.PR.WEB.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,24 +8,30 @@ using System.Web.Mvc;
 
 namespace DM.PR.WEB.Controllers
 {
-    public class EmployeeController : Controller
+    public class EmployeesController : Controller
     {
-        private EmployeeProvider _employeeProvider;
-        public EmployeeController(EmployeeProvider employeeProvider)
+        private IEmployeeProvider _employeeProvider;
+        public EmployeesController(IEmployeeProvider employeeProvider)
         {
             _employeeProvider = employeeProvider;
         }
-
-        public PartialViewResult List()
-        {                                    
+       
+        public ActionResult List(string department)
+        {
             var list = new List<EmployeeListViewModel>();
+            IEnumerable<Employee> list2;
 
-            foreach (var item in _employeeProvider.GetAll())
+            if (department == null) { list2 = _employeeProvider.GetAll(); }
+            else { list2 = _employeeProvider.FindAllByDepartmentName(department); }
+
+            foreach (var item in list2)
             {
                 list.Add(MapEmployeeToEmployeeListViewModel(item));
             }
-            return PartialView(list);
+
+            return View(list);
         }
+
 
         #region Mappers
         public EmployeeListViewModel MapEmployeeToEmployeeListViewModel(Employee employee)
@@ -40,6 +45,8 @@ namespace DM.PR.WEB.Controllers
                 WorkPhone = employee.Phones
             };
         }
+
+
         #endregion
 
     }
