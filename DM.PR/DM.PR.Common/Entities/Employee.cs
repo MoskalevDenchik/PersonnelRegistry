@@ -9,6 +9,7 @@ namespace DM.PR.Common.Entities
 {
     public class Employee
     {
+        public int? Id { get; set; }
         public string FirstName { get; set; }
 
         public string MiddleName { get; set; }
@@ -24,6 +25,6 @@ namespace DM.PR.Common.Entities
         public string Address { get; set; }
 
         public MaritalStatus MaritalStatus { get; set; }
-        
+
     }
 }

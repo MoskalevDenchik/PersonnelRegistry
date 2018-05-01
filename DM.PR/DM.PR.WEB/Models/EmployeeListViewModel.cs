@@ -4,6 +4,7 @@ namespace DM.PR.WEB.Models
 {
     public class EmployeeListViewModel
     {
+        public int? Id { get; set; }
         public string FirstName { get; set; }
 
         public string MiddleName { get; set; }

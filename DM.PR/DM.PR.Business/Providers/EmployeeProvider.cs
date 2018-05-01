@@ -17,19 +17,19 @@ namespace DM.PR.Business.Providers
         {
             _employeesLis = new List<Employee>
             {
-                new Employee(){ FirstName = "Федор", LastName = "Кемеров", MiddleName = "Васильевич",
+                new Employee(){ Id = 1, FirstName = "Федор", LastName = "Кемеров", MiddleName = "Васильевич",
                  Address = "г.Могилев, ул. Непокоренных, д.122, кв.30",
                  Phones = new Phone(){ Number = "+375294563758", Kind = KindOfPhone.MOBILE},
                  Department = new Department(){  Name = "Отдел кадров"},
                  MaritalStatus = MaritalStatus.MARRIED, Emails = "derfe@mail.ru"
                 },
-                new Employee(){ FirstName = "Иван", LastName = "Кемеров", MiddleName = "Васильевич",
+                new Employee(){Id = 2,  FirstName = "Иван", LastName = "Кемеров", MiddleName = "Васильевич",
                  Address = "г.Могилев, ул. Непокоренных, д.122, кв.30",
                  Phones = new Phone(){ Number = "+375294563758", Kind = KindOfPhone.MOBILE},
                  Department = new Department(){  Name = "Отдел продаж"},
                  MaritalStatus = MaritalStatus.MARRIED, Emails = "derfe@mail.ru"
                 },
-                new Employee(){ FirstName = "Николай", LastName = "Кемеров", MiddleName = "Васильевич",
+                new Employee(){Id = 3,  FirstName = "Николай", LastName = "Кемеров", MiddleName = "Васильевич",
                  Address = "г.Могилев, ул. Непокоренных, д.122, кв.30",
                  Phones = new Phone(){ Number = "+375294563758", Kind = KindOfPhone.MOBILE},
                  Department = new Department(){  Name = "Отдел сбыта"},
@@ -52,6 +52,10 @@ namespace DM.PR.Business.Providers
         }
 
 
+        public Employee FindById(int? id)
+        {
+            return _employeesLis.FirstOrDefault(e => e.Id == id);
+        }
     }
 }
 

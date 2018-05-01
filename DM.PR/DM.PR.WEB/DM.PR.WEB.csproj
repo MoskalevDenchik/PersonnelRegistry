@@ -180,6 +180,8 @@
     <Content Include="Views\Shared\EmployeeSummary.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
     <Content Include="Views\Departments\Details.cshtml" />
+    <Content Include="Views\Employees\Create.cshtml" />
+    <Content Include="Views\Employees\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

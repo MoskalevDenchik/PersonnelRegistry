@@ -12,17 +12,18 @@ namespace DM.PR.WEB.Controllers
     public class EmployeesController : Controller
     {
         private IEmployeeProvider _employeeProvider;
+        //---------------------------------------Ctor--------------------------------------------------------------
         public EmployeesController(IEmployeeProvider employeeProvider)
         {
             _employeeProvider = employeeProvider;
         }
-       
+        //--------------------------------------Index--------------------------------------------------------------
         public ActionResult Index()
         {
             return View();
         }
 
-
+        //--------------------------------------List---------------------------------------------------------------
         public PartialViewResult List(string department)
         {
             var list = new List<EmployeeListViewModel>();
@@ -39,12 +40,43 @@ namespace DM.PR.WEB.Controllers
             return PartialView(list);
         }
 
+        //--------------------------------------Create-------------------------------------------------------------
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(Employee employee)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+
+            return View();
+        }
+
+        //--------------------------------------Details------------------------------------------------------------
+        public ActionResult Details(int? id)
+        {
+            return View(_employeeProvider.FindById(id));
+        }
+
+        //--------------------------------------Delete-------------------------------------------------------------
+        public ActionResult Delete(int Id)
+        {
+            return View();
+        }
+
+        //-------------------------------------
 
         #region Mappers
         public EmployeeListViewModel MapEmployeeToEmployeeListViewModel(Employee employee)
         {
             return new EmployeeListViewModel()
             {
+                Id = employee.Id,
                 LastName = employee.LastName,
                 MiddleName = employee.MiddleName,
                 FirstName = employee.FirstName,

@@ -11,5 +11,6 @@ namespace DM.PR.Business.Interfaces
     {
         IEnumerable<Employee> GetAll();
         IEnumerable<Employee> FindAllByDepartmentName(string name);
+        Employee FindById(int? id);
     }
 }
