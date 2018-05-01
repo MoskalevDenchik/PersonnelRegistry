@@ -1,4 +1,5 @@
 ﻿using DM.PR.Business.Interfaces;
+using DM.PR.Business.Providers;
 using DM.PR.Common.Entities;
 using DM.PR.WEB.Models;
 using System.Collections.Generic;
@@ -16,7 +17,13 @@ namespace DM.PR.WEB.Controllers
             _employeeProvider = employeeProvider;
         }
        
-        public ActionResult List(string department)
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+
+        public PartialViewResult List(string department)
         {
             var list = new List<EmployeeListViewModel>();
             IEnumerable<Employee> list2;
@@ -29,7 +36,7 @@ namespace DM.PR.WEB.Controllers
                 list.Add(MapEmployeeToEmployeeListViewModel(item));
             }
 
-            return View(list);
+            return PartialView(list);
         }
 
 

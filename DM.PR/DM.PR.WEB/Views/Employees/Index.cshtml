@@ -1,2 +1,12 @@
-﻿
+﻿@{
+    ViewBag.Title = "Employees";
+}
 
+<div class="row">
+    <div class="col-md-offset-2 col-md-2">
+        @Html.Action("Menu", "Departments")
+    </div>
+    <div class="col-md-6 ">
+        @Html.Action("List", new { department = (string)null })
+    </div>
+</div>
