@@ -2,6 +2,10 @@
 
 @{
     Layout = "~/Views/Shared/_Details.cshtml";
+
+    MvcHtmlString EndOfWork = Model.EndOfWork == null ? null 
+        : new MvcHtmlString( $" to {Html.DisplayFor(m => m.EndOfWork).ToString()}");
+
 }
 
 <div class="row">
@@ -63,6 +67,14 @@
             </div>
             <div class="col-md-8 text-left">
                 @Model.Address
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 text-right">
+                <span class="text-info">Period of work:</span>
+            </div>
+            <div class="col-md-8 text-left">
+                <p> From : @Html.DisplayFor(m => m.BeginningOfWork) @EndOfWork</p>
             </div>
         </div>
 

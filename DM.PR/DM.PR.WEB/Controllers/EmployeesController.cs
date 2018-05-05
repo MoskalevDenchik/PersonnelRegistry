@@ -28,10 +28,8 @@ namespace DM.PR.WEB.Controllers
         public PartialViewResult List(string department)
         {
             var list = new List<EmployeeListViewModel>();
-            IEnumerable<Employee> list2;
-
-            if (department == null) { list2 = _employeeProvider.GetAll(); }
-            else { list2 = _employeeProvider.FindAllByDepartmentName(department); }
+            var list2 = department == null ? _employeeProvider.GetAll()
+                : _employeeProvider.FindAllByDepartmentName(department);
 
             foreach (var item in list2)
             {

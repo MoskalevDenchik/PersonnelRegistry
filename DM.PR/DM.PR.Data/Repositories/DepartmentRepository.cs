@@ -16,7 +16,9 @@ namespace DM.PR.Data.Repositories
             _departmentList = new List<Department>
             {
 
-                new Department(){ Name = "Отдел кадров",
+                new Department(){
+                     Id =1,
+                    Name = "Отдел кадров",
                         Address = " г.Минск, ул.Камомольская, д.30",
                         Description = " Отдел занимается работой с кадрами",
                         Phones = new List<Phone>{
@@ -25,44 +27,58 @@ namespace DM.PR.Data.Repositories
                             new Phone() { Number = " +375297894512",
                                             Kind = KindOfPhone.WORK }} },
 
-                new Department(){ Name = "Отдел сбыта",
+                new Department(){ Id =2, ParentId =null,
+                    Name = "Отдел сбыта",
                         Address = " г.Могилев, ул.Космонавтов, д.130",
                         Description = " Отдел занимается продажей продукции",
                         Phones = new List<Phone>{
                             new Phone() { Number = " +375291254789",
                                             Kind = KindOfPhone.HOME } } },
 
-                 new Department(){ Name = "Отдел продаж",
+                 new Department(){ Id =3,
+                     Name = "Отдел продаж",
                         Address = " г.Могилев, ул.Космонавтов, д.130",
                         Description = " Отдел занимается продажей продукции",
                         Phones = new List<Phone>{
                             new Phone() { Number = " +375291254789",
                                             Kind = KindOfPhone.HOME } } },
-                 new Department(){ Name = "Бухгалтерия",
+                 new Department(){ Id =4,
+                     Name = "Бухгалтерия",
                         Address = " г.Могилев, ул.Космонавтов, д.130",
                         Description = " Отдел занимается продажей продукции",
                         Phones = new List<Phone>{
                             new Phone() { Number = " +375291254789",
                                             Kind = KindOfPhone.HOME} } },
-                 new Department(){ Name = "Отдел связи",
+                 new Department(){ Id =5,
+                     Name = "Отдел связи",
                         Address = " г.Могилев, ул.Космонавтов, д.130",
                         Description = " Отдел занимается продажей продукции",
                         Phones = new List<Phone>{
                             new Phone() { Number = " +375291254789",
                                             Kind = KindOfPhone.HOME } } },
-                 new Department(){ Name = "Управление",
+                 new Department(){ Id =6,
+                     Name = "Управление",
                         Address = " г.Могилев, ул.Космонавтов, д.130",
                         Description = " Отдел занимается продажей продукции",
                         Phones = new List<Phone>{
                             new Phone() { Number = " +375291254789",
                                             Kind = KindOfPhone.HOME } } },
-                  new Department(){ Name = "Питание",
+                  new Department(){  Id =7, ParentId = 9,
+                      Name = "Питание",
                         Address = " г.Могилев, ул.Космонавтов, д.130",
                         Description = " Отдел занимается продажей продукции",
                         Phones = new List<Phone>{
                             new Phone() { Number = " +375291254789",
                                             Kind = KindOfPhone.HOME } } },
-                   new Department(){ Name = "Производство",
+                   new Department(){ Id =8, ParentId =1,
+                        Name = "Производство",
+                        Address = " г.Могилев, ул.Космонавтов, д.130",
+                        Description = " Отдел занимается продажей продукции",
+                        Phones = new List<Phone>{
+                            new Phone() { Number = " +375291254789",
+                                            Kind = KindOfPhone.HOME } } },
+                    new Department(){ Id =9, ParentId =1,
+                        Name = "Производство",
                         Address = " г.Могилев, ул.Космонавтов, д.130",
                         Description = " Отдел занимается продажей продукции",
                         Phones = new List<Phone>{

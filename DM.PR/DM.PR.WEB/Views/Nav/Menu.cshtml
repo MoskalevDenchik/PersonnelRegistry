@@ -1,0 +1,39 @@
+﻿@using DM.PR.WEB.Models;
+@model IEnumerable<NavDepartmentViewModel>
+
+@helper ChildrenList(NavDepartmentViewModel element)
+    {
+        if (element.Children != null)
+        {
+            <ul>
+                @foreach (var item in element.Children)
+                {
+                    <li>
+                        @Ajax.ActionLink(@item.Name, "List", "Employees", new { department = item.Name },
+                                                      new AjaxOptions { UpdateTargetId = "ListOfEmployees" })
+                    </li>
+                    @ChildrenList(item)
+                }
+            </ul>
+        }
+}
+
+
+<div>
+    <ul>
+        <li>
+            @Ajax.ActionLink("ALL", "List", "Employees", new AjaxOptions { UpdateTargetId = "ListOfEmployees" })
+
+        </li>
+        @foreach (var item in Model)
+        {
+            <li>
+                @Ajax.ActionLink(@item.Name, "List", "Employees", new { department = item.Name },
+                                        new AjaxOptions { UpdateTargetId = "ListOfEmployees" })
+
+                @ChildrenList(item)
+
+            </li>
+        }
+    </ul>
+</div>

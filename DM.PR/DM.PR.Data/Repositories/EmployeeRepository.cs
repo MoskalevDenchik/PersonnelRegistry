@@ -27,7 +27,9 @@ namespace DM.PR.Data.Repositories
                      "ferser@mail.ru"
                  },
                  Department = new Department(){  Name = "Отдел кадров"},
-                 MaritalStatus = MaritalStatus.MARRIED
+                 MaritalStatus = MaritalStatus.MARRIED,
+                 BeginningOfWork = new DateTime(2016,06,06),
+                 EndOfWork = null
                 },
                 new Employee(){Id = 2,  FirstName = "Иван", LastName = "Кемеров", MiddleName = "Васильевич",
                  Address = "г.Могилев, ул. Непокоренных, д.122, кв.30",
@@ -41,7 +43,9 @@ namespace DM.PR.Data.Repositories
                      "ferser@mail.ru"
                  },
                  Department = new Department(){  Name = "Отдел продаж"},
-                 MaritalStatus = MaritalStatus.MARRIED
+                 MaritalStatus = MaritalStatus.MARRIED,
+                 BeginningOfWork = new DateTime(2016,06,06),
+                 EndOfWork = null
                 },
                 new Employee(){Id = 3,  FirstName = "Николай", LastName = "Кемеров", MiddleName = "Васильевич",
                  Address = "г.Могилев, ул. Непокоренных, д.122, кв.30",
@@ -55,7 +59,41 @@ namespace DM.PR.Data.Repositories
                      "ferser@mail.ru"
                  },
                  Department = new Department(){  Name = "Отдел сбыта"},
-                 MaritalStatus = MaritalStatus.MARRIED
+                 MaritalStatus = MaritalStatus.MARRIED,
+                 BeginningOfWork = new DateTime(2016,06,06),
+                 EndOfWork = new DateTime(2018,08,04)
+                } ,
+                 new Employee(){ Id = 4, FirstName = "Федор", LastName = "Кемеров", MiddleName = "Васильевич",
+                 Address = "г.Могилев, ул. Непокоренных, д.122, кв.30",
+                 Phones = new List<Phone>{
+                     new Phone(){ Number = "+375294563758", Kind = KindOfPhone.MOBILE},
+                     new Phone(){ Number = "+375294563758", Kind = KindOfPhone.HOME},
+                     new Phone(){ Number = "+375294563758", Kind = KindOfPhone.WORK}
+                 },
+                 Emails = new List<string>{
+                     "derfe@mail.ru",
+                     "ferser@mail.ru"
+                 },
+                 Department = new Department(){  Name = "Отдел кадров"},
+                 MaritalStatus = MaritalStatus.MARRIED,
+                 BeginningOfWork = new DateTime(2016,06,06),
+                 EndOfWork = null
+                },
+                  new Employee(){ Id = 5, FirstName = "Федор", LastName = "Кемеров", MiddleName = "Васильевич",
+                 Address = "г.Могилев, ул. Непокоренных, д.122, кв.30",
+                 Phones = new List<Phone>{
+                     new Phone(){ Number = "+375294563758", Kind = KindOfPhone.MOBILE},
+                     new Phone(){ Number = "+375294563758", Kind = KindOfPhone.HOME},
+                     new Phone(){ Number = "+375294563758", Kind = KindOfPhone.WORK}
+                 },
+                 Emails = new List<string>{
+                     "derfe@mail.ru",
+                     "ferser@mail.ru"
+                 },
+                 Department = new Department(){  Name = "Отдел кадров"},
+                 MaritalStatus = MaritalStatus.MARRIED,
+                 BeginningOfWork = new DateTime(2016,06,06),
+                 EndOfWork = null
                 }
             };
         }

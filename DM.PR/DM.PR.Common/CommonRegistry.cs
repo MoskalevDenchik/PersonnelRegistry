@@ -1,6 +1,5 @@
 using DM.PR.Common.Logger;
 using StructureMap.Configuration.DSL;
-using StructureMap.Graph;
 
 namespace DM.PR.Common
 {
