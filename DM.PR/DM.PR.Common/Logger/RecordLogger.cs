@@ -6,11 +6,11 @@ using System.Reflection;
 
 namespace DM.PR.Common.Logger
 {
-    public class WorkLogger : IRecordLog
+    public class RecordLog : IRecordLog
     {
         private readonly ILog _log;
 
-        public WorkLogger()
+        public RecordLog()
         {
             InitLogger();
             _log = LogManager.GetLogger("MyLogger");

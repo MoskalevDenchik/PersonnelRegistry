@@ -2,33 +2,29 @@
 
 
 @using (Html.BeginForm())
-{  
+{
     @Html.HiddenFor(e => e.Id);
 
-    <div class="well">
+    <div class="well well-sm">
         <div class="row">
-            <div class="col-md-6">
-                <img  class="img-circle"  src="" alt="Alternate Text" />
-                <br />
-                @Html.ActionLink("Подробнее", "Details", new { id = Model.Id}, new { @class = " btn btn-default" })
+            <div class="col-md-3">
+
+                <a href="~/Employees/Details/@Model.Id">
+                    <img src="~/Content/Images/UserImg.jpg" class="img-responsive img-circle" />
+                </a>
+                @*  @Html.ActionLink("Подробнее", "Details", new { id = Model.Id }, new { @class = " btn btn-default" })*@
             </div>
-            <div class="col-md-6">
-                <div class="pull-right">
-                    <h3>
-                        <strong>@Model.FirstName</strong>
-                        <strong>@Model.MiddleName </strong>
-                        <strong>@Model.LastName</strong>
-                    </h3>
-                    <br />
-                    <h4 class="text-right">
-                        <strong>@Model.WorkPhone.Number</strong>
-                    </h4>
-                    <br />
-                    <h5 class="text-right">
-                        @Html.RouteLink(Model.DepartmentName,
-                                new { controller = "Departments", action = "Details", department = Model.DepartmentName },
-                                new { @class = " btn btn-default" })
-                    </h5>
+            <div class="col-md-9">
+                <div class="text-right">
+
+                    <strong>@Model.FirstName</strong>
+                    <strong>@Model.MiddleName </strong>
+                    <strong>@Model.LastName</strong>    <br />
+
+                    <strong>@Model.WorkPhone.Number</strong>   <br />
+                    @Html.RouteLink(Model.DepartmentName,
+                        new { controller = "Departments", action = "Details", department = Model.DepartmentName },
+                        new { @class = " btn btn-default" })
                 </div>
             </div>
         </div>

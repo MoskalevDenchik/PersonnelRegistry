@@ -1,33 +1,49 @@
 ﻿@model DM.PR.Common.Entities.Department
 
 @{
-    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Details.cshtml";
 }
+<div class="row">
+    <div class="col-md-7 text-right " style="padding-top:20px">
+        <div class="row">
+            <div class="col-md-4  text-right">
+                <span class="text-info">Department:</span>
+            </div>
+            <div class="col-md-8 text-left ">
+                @Model.Name
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 text-right">
+                <span class="text-info">Phones:</span>
+            </div>
+            <div class="col-md-8 text-left">
+                @foreach (var item in Model.Phones)
+                {
+                    <p style="margin-bottom:0px">@item.Number (@item.Kind) </p>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 text-right">
+                <span class="text-info">Home address:</span>
+            </div>
+            <div class="col-md-8 text-left">
+                @Model.Address
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 text-right">
+                <span class="text-info">Description:</span>
+            </div>
+            <div class="col-md-8 text-left">
+                @Model.Description
+            </div>
+        </div>
 
-<div class="container">
-
-    <div>
-        @Html.LabelFor(d => d.Name)
-        @Model.Name
     </div>
-    <div>
-        @Html.LabelFor(d => d.Address)
-        @Model.Address
-    </div>
 
-    @Html.LabelFor(d => d.Phones)
-    <div>
-        @foreach (var item in @Model.Phones)
-        {
-            <p>@item.Number  @item.Kind</p>
-        }
-    </div>
-
-    <div>
-        @Html.LabelFor(d => d.Description)
-        @Model.Description
+    <div class="col-md-6">
     </div>
 </div>
-
-
 

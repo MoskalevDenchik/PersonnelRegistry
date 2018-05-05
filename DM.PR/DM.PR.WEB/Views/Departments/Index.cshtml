@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "List";
+}
+
+<table class="table table-condensed table-bordered  table-hover" style="background-color:white">
+    <thead>
+        <tr class="text-center" @*style="font-size:small"*@>
+            <td>Name</td>
+            <td>Adresss</td>
+            <td>Phones</td>
+            <td>Description</td>
+            <td>Employees Quantity</td>
+        </tr>
+    </thead>
+    <tbody class="text-center text-info" style="font-size:small; margin-bottom:2px">
+        @Html.Action("List", new { page = 1 })
+    </tbody>
+
+</table>
+

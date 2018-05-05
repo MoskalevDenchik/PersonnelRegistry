@@ -1,0 +1,18 @@
+﻿@model IEnumerable<DM.PR.WEB.Models.DepartmentListViewModel>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Address</td>
+            <td>
+                @foreach (var phone in item.Phones)
+                {
+                    <p >@phone.Number (@phone.Kind)</p>
+                }
+            </td>
+            <td>@item.Description</td>
+            <td>@item.EmployeeQuantity</td>
+        </tr>
+    }
+

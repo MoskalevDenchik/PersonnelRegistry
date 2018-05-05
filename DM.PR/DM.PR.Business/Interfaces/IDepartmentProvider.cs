@@ -8,6 +8,5 @@ namespace DM.PR.Business.Interfaces
         IEnumerable<Department> GetAll();
         IEnumerable<string> GetListOfName();
         Department FindByName(string name);
-
     }
 }

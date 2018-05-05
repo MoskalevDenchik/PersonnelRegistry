@@ -1,8 +1,8 @@
+using StructureMap.Configuration.DSL;
+using StructureMap.Graph;
+
 namespace DM.PR.WEB.DependencyResolution
 {
-    using StructureMap.Configuration.DSL; 
-    using StructureMap.Graph;
-    
     public class DefaultRegistry : Registry
     {
         #region Constructors and Destructors
@@ -10,12 +10,14 @@ namespace DM.PR.WEB.DependencyResolution
         public DefaultRegistry()
         {
             Scan(
-                scan => {
+                scan =>
+                {
                     scan.TheCallingAssembly();
                     scan.WithDefaultConventions();
                     scan.With(new ControllerConvention());
-                });                 
+                });
         }
+
         #endregion
     }
 }

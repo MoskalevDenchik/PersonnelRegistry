@@ -1,10 +1,9 @@
 ﻿using DM.PR.Business.Interfaces;
-using DM.PR.Business.Providers;
 using DM.PR.Common.Entities;
+using DM.PR.Common.Enums;
 using DM.PR.WEB.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DM.PR.WEB.Controllers
@@ -12,10 +11,12 @@ namespace DM.PR.WEB.Controllers
     public class EmployeesController : Controller
     {
         private IEmployeeProvider _employeeProvider;
+        private IEmployeeService _employeeService;
         //---------------------------------------Ctor--------------------------------------------------------------
-        public EmployeesController(IEmployeeProvider employeeProvider)
+        public EmployeesController(IEmployeeProvider employeeProvider, IEmployeeService employeeService)
         {
             _employeeProvider = employeeProvider;
+            _employeeService = employeeService;
         }
         //--------------------------------------Index--------------------------------------------------------------
         public ActionResult Index()
@@ -51,9 +52,8 @@ namespace DM.PR.WEB.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                _employeeService.Create(employee);
             }
-
             return View();
         }
 
@@ -63,13 +63,28 @@ namespace DM.PR.WEB.Controllers
             return View(_employeeProvider.FindById(id));
         }
 
-        //--------------------------------------Delete-------------------------------------------------------------
-        public ActionResult Delete(int Id)
+        //---------------------------------------Edit--------------------------------------------------------------
+        public ActionResult Edit(int? id)
         {
+            return View(_employeeProvider.FindById(id));
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Employee employee)
+        {
+            if (ModelState.IsValid)
+            {
+                _employeeService.Edit(employee);
+            }
             return View();
         }
 
-        //-------------------------------------
+        //--------------------------------------Delete-------------------------------------------------------------
+        public ActionResult Delete(int? id)
+        {
+            _employeeService.Delete(id);
+            return RedirectToAction("Index");
+        }
 
         #region Mappers
         public EmployeeListViewModel MapEmployeeToEmployeeListViewModel(Employee employee)
@@ -81,7 +96,7 @@ namespace DM.PR.WEB.Controllers
                 MiddleName = employee.MiddleName,
                 FirstName = employee.FirstName,
                 DepartmentName = employee.Department.Name,
-                WorkPhone = employee.Phones
+                WorkPhone = employee.Phones.FirstOrDefault(p => p.Kind == KindOfPhone.WORK)
             };
         }
 

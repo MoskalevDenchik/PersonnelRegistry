@@ -18,9 +18,9 @@ namespace DM.PR.Common.Entities
 
         public Department Department { get; set; }
 
-        public Phone Phones { get; set; }
+        public List<Phone> Phones { get; set; }
 
-        public string Emails { get; set; }
+        public List<string> Emails { get; set; }
 
         public string Address { get; set; }
 

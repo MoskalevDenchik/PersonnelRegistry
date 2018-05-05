@@ -1,10 +1,17 @@
 ﻿@model IEnumerable<string>
-<div class="btn-group btn-group-lg btn-group-vertical ">
+
+
+
+<div class="list-group">
+
     @Ajax.RouteLink("ALL", new { controller = "Employees", action = "List" },
-        new AjaxOptions { UpdateTargetId = "ListOfEmployees" }, new { @class = "btn btn-default" })
+                   new AjaxOptions { UpdateTargetId = "ListOfEmployees" }, new { @class = "list-group-item" })
+
     @foreach (var link in Model)
     {
+
         @Ajax.RouteLink(link, new { controller = "Employees", action = "List", department = link },
-                      new AjaxOptions { UpdateTargetId = "ListOfEmployees" }, new { @class = "btn btn-default" })
+                          new AjaxOptions { UpdateTargetId = "ListOfEmployees" }, new { @class = "list-group-item" })
     }
+
 </div>
