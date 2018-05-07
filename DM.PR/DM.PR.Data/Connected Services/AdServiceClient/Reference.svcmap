@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="649e9b1c-3fa2-404c-a4ad-2aa28bd0a55a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:49584/AdService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="AdService.xsd" MetadataType="Schema" ID="e0005690-b57f-4bdc-a8c9-04917251035a" SourceId="1" SourceUrl="http://localhost:49584/AdService.svc?xsd=xsd2" />
+    <MetadataFile FileName="AdService.wsdl" MetadataType="Wsdl" ID="fa34a372-ec34-456f-b11e-d683b6169394" SourceId="1" SourceUrl="http://localhost:49584/AdService.svc?wsdl" />
+    <MetadataFile FileName="AdService1.xsd" MetadataType="Schema" ID="4b07caa9-2c94-486a-bba5-cfe6068a5c57" SourceId="1" SourceUrl="http://localhost:49584/AdService.svc?xsd=xsd0" />
+    <MetadataFile FileName="AdService2.xsd" MetadataType="Schema" ID="c116e744-0fd8-47c1-9980-a6b77f393cba" SourceId="1" SourceUrl="http://localhost:49584/AdService.svc?xsd=xsd1" />
+    <MetadataFile FileName="AdService.disco" MetadataType="Disco" ID="70f7087e-14b9-4a87-834d-d542578efbd8" SourceId="1" SourceUrl="http://localhost:49584/AdService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
