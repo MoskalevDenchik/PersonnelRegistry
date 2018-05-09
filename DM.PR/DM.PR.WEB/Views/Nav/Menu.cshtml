@@ -1,12 +1,12 @@
-﻿@using DM.PR.WEB.Models;
-@model IEnumerable<NavDepartmentViewModel>
+﻿@using DM.PR.Common.Entities;
+@model IEnumerable<DepartmentNavModel>
 
-@helper ChildrenList(NavDepartmentViewModel element)
+@helper ChildrenList(DepartmentNavModel element)
     {
-        if (element.Children != null)
+        if (element.Cildren != null)
         {
             <ul>
-                @foreach (var item in element.Children)
+                @foreach (var item in element.Cildren)
                 {
                     <li>
                         @Ajax.ActionLink(@item.Name, "List", "Employees", new { department = item.Name },

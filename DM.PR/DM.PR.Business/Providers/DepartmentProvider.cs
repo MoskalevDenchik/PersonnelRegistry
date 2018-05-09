@@ -10,25 +10,14 @@ namespace DM.PR.Business.Providers
     {
         private IDepartmentRepository _departmentRepository;
 
-        public DepartmentProvider(IDepartmentRepository departmentRepository)
-        {
-            _departmentRepository = departmentRepository;
-        }
+        public DepartmentProvider(IDepartmentRepository departmentRepository) => _departmentRepository = departmentRepository;
 
-        public IEnumerable<Department> GetAll()
-        {
-            return _departmentRepository.GetAll();
-        }
+        public IEnumerable<Department> GetAll() => _departmentRepository.GetAll();
 
-        public IEnumerable<string> GetListOfName()
-        {
-            return _departmentRepository.GetAll().Select(d => d.Name).ToList();
-        }
+        public IEnumerable<string> GetListOfName() => _departmentRepository.GetAll().Select(d => d.Name);
 
-        public Department FindByName(string name)
-        {
-            return _departmentRepository.GetAll().FirstOrDefault(d => d.Name == name);
-        }
+        public Department GetById(int? id) => _departmentRepository.Get(id);
 
+        public IEnumerable<DepartmentNavModel> GetAllAsNavModel() => _departmentRepository.GetAllAsNavModel();
     }
 }

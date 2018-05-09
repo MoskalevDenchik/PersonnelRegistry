@@ -42,11 +42,11 @@ namespace DM.PR.WEB.Controllers
         }
 
         //--------------------------------------Details------------------------------------------------------------
-        public ActionResult Details(string department)
+        public ActionResult Details(int? id)
         {
-            if (department != null)
+            if (id != null)
             {
-                return View(_departmentProvider.FindByName(department));
+                return View(_departmentProvider.GetById(id));
             }
             return View();
         }
@@ -64,6 +64,12 @@ namespace DM.PR.WEB.Controllers
             {
 
             }
+            return View();
+        }
+
+        public ActionResult Create()
+        {
+            _departmentService.Create(new Department());
             return View();
         }
 

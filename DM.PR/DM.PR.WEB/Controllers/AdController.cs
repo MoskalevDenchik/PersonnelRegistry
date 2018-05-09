@@ -16,8 +16,7 @@ namespace DM.PR.WEB.Controllers
         }
         public PartialViewResult ListOfAd()
         {
-
-            return PartialView(_adProvider.GetContent());
+           return PartialView(_adProvider.GetContent());
         }
     }
 }

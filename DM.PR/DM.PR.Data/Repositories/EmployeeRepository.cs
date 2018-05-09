@@ -74,7 +74,7 @@ namespace DM.PR.Data.Repositories
                      "derfe@mail.ru",
                      "ferser@mail.ru"
                  },
-                 Department = new Department(){  Name = "Отдел кадров"},
+                 Department = new Department(){  Name = "Отдел маркетинга"},
                  MaritalStatus = MaritalStatus.MARRIED,
                  BeginningOfWork = new DateTime(2016,06,06),
                  EndOfWork = null
@@ -90,7 +90,7 @@ namespace DM.PR.Data.Repositories
                      "derfe@mail.ru",
                      "ferser@mail.ru"
                  },
-                 Department = new Department(){  Name = "Отдел кадров"},
+                 Department = new Department(){  Name = "Подотдел маркетинг"},
                  MaritalStatus = MaritalStatus.MARRIED,
                  BeginningOfWork = new DateTime(2016,06,06),
                  EndOfWork = null

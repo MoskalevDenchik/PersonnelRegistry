@@ -46,6 +46,7 @@
       <HintPath>..\packages\structuremap.web.3.1.0.133\lib\net40\StructureMap.Web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -65,6 +66,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="DataBase.cs" />
     <Compile Include="DataRegistry.cs" />
     <Compile Include="Intefaces\IAdRepository.cs" />
     <Compile Include="Intefaces\IDepartmentRepository.cs" />
@@ -75,7 +77,9 @@
     <Compile Include="Repositories\EmployeeRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Connected Services\AdServiceClient\AdService.wsdl" />
     <None Include="Connected Services\AdServiceClient\AdService.xsd">
       <SubType>Designer</SubType>

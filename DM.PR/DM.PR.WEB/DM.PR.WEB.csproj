@@ -210,6 +210,7 @@
     <Content Include="Views\Departments\Index.cshtml" />
     <Content Include="Views\Departments\List.cshtml" />
     <Content Include="Views\Ad\ListOfAd.cshtml" />
+    <Content Include="Views\Departments\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
