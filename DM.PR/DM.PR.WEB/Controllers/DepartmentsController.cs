@@ -8,40 +8,33 @@ namespace DM.PR.WEB.Controllers
 {
     public class DepartmentsController : Controller
     {
+        #region Private
+
         private IDepartmentProvider _departmentProvider;
         private IDepartmentService _departmentService;
 
-        //---------------------------------------Ctor--------------------------------------------------------------
+        #endregion
+
+        #region Ctors
         public DepartmentsController(IDepartmentProvider departmentProvider, IDepartmentService departmentService)
         {
             _departmentProvider = departmentProvider;
             _departmentService = departmentService;
         }
+        #endregion
 
-        //--------------------------------------Index--------------------------------------------------------------
-        public ActionResult Index()
-        {
-            return View();
-        }
+        #region Index
+        public ActionResult Index() => View();
+        #endregion
 
-        //--------------------------------------List---------------------------------------------------------------
+        #region List
         public PartialViewResult List()
         {
-            var list = new List<DepartmentListViewModel>();
-            foreach (var item in _departmentProvider.GetAll())
-            {
-                list.Add(MapDepartmentToDepartmetListViewModel(item));
-            }
-            return PartialView(list);
+            return PartialView(_departmentProvider.GetAll());
         }
+        #endregion
 
-        //--------------------------------------Menu--------------------------------------------------------------
-        public PartialViewResult Menu()
-        {
-            return PartialView(_departmentProvider.GetListOfName());
-        }
-
-        //--------------------------------------Details------------------------------------------------------------
+        #region Deatails
         public ActionResult Details(int? id)
         {
             if (id != null)
@@ -50,11 +43,12 @@ namespace DM.PR.WEB.Controllers
             }
             return View();
         }
+        #endregion
 
-        //---------------------------------------Edit--------------------------------------------------------------
-        public ActionResult Edit()
+        #region Edit
+        public ActionResult Edit(int? id)
         {
-            return View();
+            return View(_departmentProvider.GetById(id));
         }
 
         [HttpPost]
@@ -62,39 +56,61 @@ namespace DM.PR.WEB.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                _departmentService.Edit(department);
+                return RedirectToAction("Index");
             }
             return View();
         }
+        #endregion
+
+        #region Create
 
         public ActionResult Create()
         {
-            _departmentService.Create(new Department());
+            return View(new DepartmentCreateViewModel()
+            {
+                Phones = new List<Phone>() { new Phone() }
+            });
+        }
+
+
+        [HttpPost]
+        public ActionResult Create(FormCollection model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                //_departmentService.Create(MapDepartmentCreateToDepartment(model));
+                return RedirectToAction("Index");
+            }
+
             return View();
         }
 
-        //--------------------------------------Delete-------------------------------------------------------------
+        #endregion
+
+        #region Delete
         public ActionResult Delete(int? id)
         {
             _departmentService.Delete(id);
             return RedirectToAction("Index");  // Посмотрть перенаправвление и конфликты
         }
+        #endregion
 
         #region Mappers
-        public DepartmentListViewModel MapDepartmentToDepartmetListViewModel(Department department)
+
+        public Department MapDepartmentCreateToDepartment(DepartmentCreateViewModel department)
         {
-            return new DepartmentListViewModel()
+            return new Department()
             {
-                Id = department.Id,
                 Name = department.Name,
+                ParentId = department.ParentId,
                 Address = department.Address,
                 Description = department.Description,
                 Phones = department.Phones,
-                EmployeeQuantity = 1
             };
         }
+
+        #endregion
     }
-
-
-    #endregion
 }

@@ -10,87 +10,7 @@ namespace DM.PR.Data.Repositories
 {
     public class DepartmentRepository : IDepartmentRepository
     {
-        private List<Department> _departmentList;
-
-        public DepartmentRepository()
-        {
-            _departmentList = new List<Department>
-            {
-
-                new Department(){
-                     Id =1,
-                    Name = "Отдел кадров",
-                        Address = " г.Минск, ул.Камомольская, д.30",
-                        Description = " Отдел занимается работой с кадрами",
-                        Phones = new List<Phone>{
-                            new Phone() { Number = " +375297894512",
-                                            Kind = KindOfPhone.HOME },
-                            new Phone() { Number = " +375297894512",
-                                            Kind = KindOfPhone.WORK }} },
-
-                new Department(){ Id =2, ParentId =null,
-                    Name = "Отдел сбыта",
-                        Address = " г.Могилев, ул.Космонавтов, д.130",
-                        Description = " Отдел занимается продажей продукции",
-                        Phones = new List<Phone>{
-                            new Phone() { Number = " +375291254789",
-                                            Kind = KindOfPhone.HOME } } },
-
-                 new Department(){ Id =3,
-                     Name = "Отдел продаж",
-                        Address = " г.Могилев, ул.Космонавтов, д.130",
-                        Description = " Отдел занимается продажей продукции",
-                        Phones = new List<Phone>{
-                            new Phone() { Number = " +375291254789",
-                                            Kind = KindOfPhone.HOME } } },
-                 new Department(){ Id =4,
-                     Name = "Бухгалтерия",
-                        Address = " г.Могилев, ул.Космонавтов, д.130",
-                        Description = " Отдел занимается продажей продукции",
-                        Phones = new List<Phone>{
-                            new Phone() { Number = " +375291254789",
-                                            Kind = KindOfPhone.HOME} } },
-                 new Department(){ Id =5,
-                     Name = "Отдел связи",
-                        Address = " г.Могилев, ул.Космонавтов, д.130",
-                        Description = " Отдел занимается продажей продукции",
-                        Phones = new List<Phone>{
-                            new Phone() { Number = " +375291254789",
-                                            Kind = KindOfPhone.HOME } } },
-                 new Department(){ Id =6,
-                     Name = "Управление",
-                        Address = " г.Могилев, ул.Космонавтов, д.130",
-                        Description = " Отдел занимается продажей продукции",
-                        Phones = new List<Phone>{
-                            new Phone() { Number = " +375291254789",
-                                            Kind = KindOfPhone.HOME } } },
-                  new Department(){  Id =7, ParentId = 9,
-                      Name = "Питание",
-                        Address = " г.Могилев, ул.Космонавтов, д.130",
-                        Description = " Отдел занимается продажей продукции",
-                        Phones = new List<Phone>{
-                            new Phone() { Number = " +375291254789",
-                                            Kind = KindOfPhone.HOME } } },
-                   new Department(){ Id =8, ParentId =1,
-                        Name = "Производство",
-                        Address = " г.Могилев, ул.Космонавтов, д.130",
-                        Description = " Отдел занимается продажей продукции",
-                        Phones = new List<Phone>{
-                            new Phone() { Number = " +375291254789",
-                                            Kind = KindOfPhone.HOME } } },
-                    new Department(){ Id =9, ParentId =1,
-                        Name = "Производство",
-                        Address = " г.Могилев, ул.Космонавтов, д.130",
-                        Description = " Отдел занимается продажей продукции",
-                        Phones = new List<Phone>{
-                            new Phone() { Number = " +375291254789",
-                                            Kind = KindOfPhone.HOME } } }
-
-            };
-
-        }
-
-
+        #region Get
         public Department Get(int? id)
         {
             Department department = new Department();
@@ -110,12 +30,16 @@ namespace DM.PR.Data.Repositories
                 {
                     department.Id = (int)reader["DepartmentId"];
                     department.Name = (string)reader["Name"];
-                    department.Address = (string)reader["Address"];
-                    department.Description = (string)reader["Description"];
+                    department.ParentId = reader["ParentID"] == DBNull.Value ? null : (int?)reader["ParentID"];
+                    department.Address = reader["Address"] == DBNull.Value ? null : (string)reader["Address"];
+                    department.Description = reader["Description"] == DBNull.Value ? null : (string)reader["Description"];
                 }
+            }
 
-                reader.NextResult();
+            reader.NextResult();
 
+            if (reader.HasRows)
+            {
                 while (reader.Read())
                 {
                     phones.Add(new Phone()
@@ -133,50 +57,37 @@ namespace DM.PR.Data.Repositories
             return department;
 
         }
-
-        public IEnumerable<Department> GetAll()
+        #endregion
+         
+        #region GetAll
+        public IReadOnlyCollection<Department> GetAll()
         {
-            return _departmentList;
-        }
+            var list = new List<Department>();
 
-        public void Create(Department department)
-        {
-            SqlParameter[] departmentParameters =
+            var reader = DataBase.ExecuteReader("GetAllDepartmts", null);
+
+            if (reader.HasRows)
             {
-                new SqlParameter("@ParentId",department.ParentId),
-                new SqlParameter("@Name", department.Name),
-                new SqlParameter("@Address", department.Address),
-                new SqlParameter("@Description", department.Description)
-            };
-
-            var DepartmentId = DataBase.ExecuteScalar("AddDepartment", departmentParameters);
-
-            foreach (var item in department.Phones)
-            {
-                SqlParameter[] phoneParameters =
+                while (reader.Read())
                 {
-                    new SqlParameter("@DepartmetnId",DepartmentId),
-                    new SqlParameter("@Phone",item.Number),
-                    new SqlParameter("@PhoneType",item.Kind)
-                };
-
-                DataBase.ExecuteNonQuery("AddPhoneByDepartmentId", phoneParameters);
+                    list.Add(new Department()
+                    {
+                        Id = (int)reader["DepartmentId"],
+                        Name = (string)reader["Name"],
+                        ParentId = reader["ParentID"] == DBNull.Value ? null : (int?)reader["ParentID"],
+                        Address = reader["Address"] == DBNull.Value ? null : (string)reader["Address"],
+                        Description = reader["Description"] == DBNull.Value ? null : (string)reader["Description"]
+                    });
+                }
             }
-
             DataBase.CloseConnection();
-        }
 
-        public void Delete(int? id)
-        {
-            throw new NotImplementedException();
+            return list;
         }
+        #endregion
 
-        public void Update(Department item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<DepartmentNavModel> GetAllAsNavModel()
+        #region GetAllAsNavModel
+        public IReadOnlyCollection<DepartmentNavModel> GetAllAsNavModel()
         {
             var list = new List<DepartmentNavModel>();
 
@@ -191,20 +102,85 @@ namespace DM.PR.Data.Repositories
                     {
                         Id = (int)reader["DepartmentId"],
                         Name = (string)reader["Name"],
-                        ParentId = reader["ParentID"] == DBNull.Value? null : (int?)reader["ParentID"]
+                        ParentId = reader["ParentID"] == DBNull.Value ? null : (int?)reader["ParentID"]
                     });
                 }
             }
 
-            return AddChildren(list).Where(x => x.ParentId == null);
+            DataBase.CloseConnection();
+            return AddChildren(list).Where(x => x.ParentId == null).ToList();
         }
+        #endregion
+
+        #region Create
+        public void Create(Department department)
+        {
+            SqlParameter[] departmentParameters =
+            {
+                new SqlParameter("@ParentId",department.ParentId),
+                new SqlParameter("@Name", department.Name),
+                new SqlParameter("@Address", department.Address),
+                new SqlParameter("@Description", department.Description)
+            };
+
+            var DepartmentId = DataBase.ExecuteScalar("AddDepartment", departmentParameters);
+
+            if (department.Phones != null)
+            {
+                foreach (var item in department.Phones)
+                {
+                    SqlParameter[] phoneParameters =
+                    {
+                    new SqlParameter("@DepartmetnId",DepartmentId),
+                    new SqlParameter("@Phone",item.Number),
+                    new SqlParameter("@PhoneType",item.Kind)
+                };
+
+                    DataBase.ExecuteNonQuery("AddPhoneByDepartmentId", phoneParameters);
+                }
+            }
+
+            DataBase.CloseConnection();
+        }
+        #endregion
+
+        #region Delete
+        public void Delete(int? id)
+        {
+            SqlParameter[] parametrs =
+            {
+                new SqlParameter("@DepartmentId",id)
+            };
+
+            DataBase.ExecuteNonQuery("DeleteDepartmentById", parametrs);
+            DataBase.CloseConnection();
+        }
+        #endregion
+
+        #region Update
+        public void Update(Department department)
+        {
+            SqlParameter[] parameters =
+            {
+               new SqlParameter("@DepartmentId",department.Id),
+               new SqlParameter("@ParentId",department.ParentId),
+               new SqlParameter("@Name",department.Name),
+               new SqlParameter("@Address",department.Address),
+               new SqlParameter("@Description",department.Description), 
+
+            };
+
+            DataBase.ExecuteNonQuery("UpdateDepartment", parameters);
+            DataBase.CloseConnection();
+        }
+        #endregion
 
         #region Helpers
-        IEnumerable<DepartmentNavModel> AddChildren(IEnumerable<DepartmentNavModel> list)
+        IReadOnlyCollection<DepartmentNavModel> AddChildren(IReadOnlyCollection<DepartmentNavModel> list)
         {
             foreach (var item in list)
             {
-                var childrenList = list.Where(x => x.ParentId == item.Id);
+                var childrenList = list.Where(x => x.ParentId == item.Id).ToList();
                 item.Cildren = childrenList != null ? AddChildren(childrenList) : null;
             }
             return list;

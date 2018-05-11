@@ -5,11 +5,11 @@ namespace DM.PR.Data.Intefaces
 {
     public interface IDepartmentRepository
     {
-        IEnumerable<Department> GetAll();
+        IReadOnlyCollection<Department> GetAll();
         Department Get(int? id);
         void Create(Department item);
         void Update(Department item);
         void Delete(int? id);
-        IEnumerable<DepartmentNavModel> GetAllAsNavModel();
+        IReadOnlyCollection<DepartmentNavModel> GetAllAsNavModel();
     }
 }
