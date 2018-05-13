@@ -1,22 +1,5 @@
-﻿@using DM.PR.Common.Entities;
-@model IEnumerable<DepartmentNavModel>
-
-@helper ChildrenList(DepartmentNavModel element)
-    {
-        if (element.Cildren != null)
-        {
-            <ul>
-                @foreach (var item in element.Cildren)
-                {
-                    <li>
-                        @Ajax.ActionLink(@item.Name, "List", "Employees", new { department = item.Name },
-                                                      new AjaxOptions { UpdateTargetId = "ListOfEmployees" })
-                    </li>
-                    @ChildrenList(item)
-                }
-            </ul>
-        }
-}
+﻿@using DM.PR.WEB.Models;
+@model IEnumerable<DepartmentNavViewModel>
 
 
 <div>
@@ -28,11 +11,9 @@
         @foreach (var item in Model)
         {
             <li>
-                @Ajax.ActionLink(@item.Name, "List", "Employees", new { department = item.Name },
+                @Ajax.ActionLink(@item.Name, "List", "Employees", new { id = item.Id },
                                         new AjaxOptions { UpdateTargetId = "ListOfEmployees" })
-
-                @ChildrenList(item)
-
+            
             </li>
         }
     </ul>

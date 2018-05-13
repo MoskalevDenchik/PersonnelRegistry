@@ -1,7 +1,8 @@
-using DM.PR.Business;
-using DM.PR.Common;
-using DM.PR.Data.DependencyResolution;
 using StructureMap.Configuration.DSL;
+using DM.PR.Business.Dependencies;
+using DM.PR.Common.Dependencies;
+using DM.PR.Data.Dependencies;
+
 
 namespace DM.PR.Dependency
 {
@@ -13,8 +14,7 @@ namespace DM.PR.Dependency
             {
                 s.AssemblyContainingType<BusinessRegistry>();
                 s.AssemblyContainingType<CommonRegistry>();
-                s.AssemblyContainingType<DataRegistry>();
-                s.WithDefaultConventions();
+                s.AssemblyContainingType<DataRegistry>();   
                 s.LookForRegistries();
             });
         }

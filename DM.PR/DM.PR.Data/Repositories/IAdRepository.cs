@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace DM.PR.Data.Intefaces
+namespace DM.PR.Data.Repositories
 {
     public interface IAdRepository
     {
-        IEnumerable<string> GetAll();
+        IReadOnlyCollection<string> GetAll();
     }
 }

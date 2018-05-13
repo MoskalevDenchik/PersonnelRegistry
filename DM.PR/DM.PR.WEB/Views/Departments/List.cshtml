@@ -7,12 +7,12 @@
         <td>@item.ParentId</td>
         <td>@item.Name</td>
         <td>@item.Address</td>
-        @*<td>
+        <td>
                 @foreach (var phone in item.Phones)
                 {
                     <p >@phone.Number (@phone.Kind)</p>
                 }
-            </td>*@
+            </td>
         <td>@item.Description</td>
         <td>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</td>
         <td>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</td>

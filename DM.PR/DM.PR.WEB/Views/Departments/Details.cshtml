@@ -1,12 +1,19 @@
-﻿@model DM.PR.Common.Entities.Department
+﻿@model DM.PR.WEB.Models.DepartmentDeatailsViewModel
 
 @{
     Layout = "~/Views/Shared/_Details.cshtml";
 }
 
-@Html.HiddenFor(d => d.Id)
 <div class="row">
     <div class="col-md-7 text-right " style="padding-top:20px">
+        <div class="row">
+            <div class="col-md-4  text-right">
+                <span class="text-info">ParentDepartment:</span>
+            </div>
+            <div class="col-md-8 text-left">
+                @Model.ParentName
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-4  text-right">
                 <span class="text-info">Department:</span>
@@ -20,9 +27,8 @@
                 <span class="text-info">Phones:</span>
             </div>
             <div class="col-md-8 text-left">
-                @foreach (var item in Model.Phones)
-                {
-                    <p style="margin-bottom:0px">@item.Number (@item.Kind) </p>
+                @{
+                    if (Model.Phones != null) { Html.RenderPartial("ListOfPhones", Model.Phones); }
                 }
             </div>
         </div>

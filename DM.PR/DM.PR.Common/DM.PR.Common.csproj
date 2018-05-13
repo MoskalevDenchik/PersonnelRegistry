@@ -62,10 +62,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonRegistry.cs" />
+    <Compile Include="Dependencies\CommonRegistry.cs" />
     <Compile Include="Entities\Department.cs" />
-    <Compile Include="Entities\DepartmentNavModel.cs" />
     <Compile Include="Entities\Employee.cs" />
+    <Compile Include="Entities\EmployeeShortModel.cs" />
     <Compile Include="Entities\Phone.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Logger\IRecordLog.cs" />

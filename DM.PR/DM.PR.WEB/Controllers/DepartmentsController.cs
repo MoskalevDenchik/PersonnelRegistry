@@ -1,6 +1,7 @@
-﻿using DM.PR.Business.Interfaces;
+﻿using DM.PR.Business.Providers;
+using DM.PR.Business.Services;
 using DM.PR.Common.Entities;
-using DM.PR.WEB.Models;
+using DM.PR.WEB.Models;      
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -25,10 +26,11 @@ namespace DM.PR.WEB.Controllers
 
         #region Index
         public ActionResult Index() => View();
+
         #endregion
 
         #region List
-        public PartialViewResult List()
+        public PartialViewResult List(int? id)
         {
             return PartialView(_departmentProvider.GetAll());
         }
@@ -39,16 +41,32 @@ namespace DM.PR.WEB.Controllers
         {
             if (id != null)
             {
-                return View(_departmentProvider.GetById(id));
+                var department = _departmentProvider.GetById((int)id);
+                if (department != null)
+                {
+                    var parentName = department.ParentId == null ?
+                        null : _departmentProvider.GetById((int)department.ParentId).Name;
+
+                    var departmentView = MapDepartmentToDepartmentDetails(department, parentName);
+
+                    return View(departmentView);
+                }
+                else return HttpNotFound(); // Ошибка соединения с БД 
             }
-            return View();
+            else return HttpNotFound();  // Ошибка пришел NULL
         }
+
         #endregion
 
         #region Edit
         public ActionResult Edit(int? id)
         {
-            return View(_departmentProvider.GetById(id));
+            if (id != null)
+            {
+                return View(_departmentProvider.GetById((int)id));
+            }
+
+            return View();// Дописать исключение
         }
 
         [HttpPost]
@@ -92,12 +110,32 @@ namespace DM.PR.WEB.Controllers
         #region Delete
         public ActionResult Delete(int? id)
         {
-            _departmentService.Delete(id);
-            return RedirectToAction("Index");  // Посмотрть перенаправвление и конфликты
+            if (id != null)
+            {
+                _departmentService.Delete((int)id);
+                return RedirectToAction("Index");
+            }
+
+            return View(); // Посмотрть перенаправвление и конфликты
         }
         #endregion
 
         #region Mappers
+
+
+        private DepartmentDeatailsViewModel MapDepartmentToDepartmentDetails(Department department, string parentName)
+        {
+            return new DepartmentDeatailsViewModel()
+            {
+                Id = department.Id,
+                ParentId = department.ParentId,
+                ParentName = parentName,
+                Name = department.Name,
+                Address = department.Address,
+                Description = department.Description,
+                Phones = department.Phones
+            };
+        }
 
         public Department MapDepartmentCreateToDepartment(DepartmentCreateViewModel department)
         {

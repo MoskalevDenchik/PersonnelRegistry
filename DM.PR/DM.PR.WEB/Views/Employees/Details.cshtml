@@ -1,10 +1,10 @@
-﻿@model DM.PR.Common.Entities.Employee
+﻿@model DM.PR.WEB.Models.EmployeeDetailsViewModel
 
 @{
     Layout = "~/Views/Shared/_Details.cshtml";
 
-    MvcHtmlString EndOfWork = Model.EndOfWork == null ? null 
-        : new MvcHtmlString( $" to {Html.DisplayFor(m => m.EndOfWork).ToString()}");
+    MvcHtmlString EndOfWork = Model.EndOfWork == null ? null
+        : new MvcHtmlString($" to {Html.DisplayFor(m => m.EndOfWork).ToString()}");
 
 }
 
@@ -28,7 +28,7 @@
                 <span class="text-info">Department:</span>
             </div>
             <div class="col-md-8 text-left">
-                @Model.Department.Name
+                @Model.DepartmentName
             </div>
         </div>
         <div class="row">
@@ -44,9 +44,8 @@
                 <span class="text-info">Phones:</span>
             </div>
             <div class="col-md-8 text-left">
-                @foreach (var item in Model.Phones)
-                {
-                    <p style="margin-bottom:0px">@item.Number (@item.Kind) </p>
+                @{
+                    if (Model.Phones != null) { Html.RenderPartial("ListOfPhones", Model.Phones); }
                 }
             </div>
         </div>
@@ -55,9 +54,8 @@
                 <span class="text-info">E-mails:</span>
             </div>
             <div class="col-md-8 text-left">
-                @foreach (var item in Model.Emails)
-                {
-                    <p style="margin-bottom:0px">@item</p>
+                @{
+                    if (Model.Emails != null) { Html.RenderPartial("ListOfEmails", Model.Emails); }
                 }
             </div>
         </div>

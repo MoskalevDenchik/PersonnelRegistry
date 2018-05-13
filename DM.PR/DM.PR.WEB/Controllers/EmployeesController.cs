@@ -1,45 +1,61 @@
-﻿using DM.PR.Business.Interfaces;
+﻿using DM.PR.Business.Providers;
+using DM.PR.Business.Services;
 using DM.PR.Common.Entities;
-using DM.PR.Common.Enums;
 using DM.PR.WEB.Models;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 
 namespace DM.PR.WEB.Controllers
 {
     public class EmployeesController : Controller
     {
+        #region Private
+
         private IEmployeeProvider _employeeProvider;
         private IEmployeeService _employeeService;
-        //---------------------------------------Ctor--------------------------------------------------------------
-        public EmployeesController(IEmployeeProvider employeeProvider, IEmployeeService employeeService)
+        private IDepartmentProvider _departmentProvider;
+
+        #endregion
+
+        #region Ctors
+
+        public EmployeesController(IEmployeeProvider employeeProvider, IEmployeeService employeeService, IDepartmentProvider departmentProvider)
         {
             _employeeProvider = employeeProvider;
             _employeeService = employeeService;
+            _departmentProvider = departmentProvider;
         }
-        //--------------------------------------Index--------------------------------------------------------------
+        #endregion
+
+        #region Index
+
         public ActionResult Index()
         {
             return View();
         }
 
-        //--------------------------------------List---------------------------------------------------------------
-        public PartialViewResult List(string department)
+        #endregion
+
+        #region List
+
+        public PartialViewResult List(int? Id)
         {
-            var list = new List<EmployeeListViewModel>();
-            var list2 = department == null ? _employeeProvider.GetAll()
-                : _employeeProvider.FindAllByDepartmentName(department);
-
-            foreach (var item in list2)
+            if (Id != null)
             {
-                list.Add(MapEmployeeToEmployeeListViewModel(item));
+                var model = _employeeProvider.GetAllShortModelsByDepartmentId((int)Id);
+                if (model != null)
+                {
+                    return PartialView(model);
+                }
+                else return PartialView("NoEmployees");
+
             }
+            else return PartialView(_employeeProvider.GetAllShortModels());
 
-            return PartialView(list);
         }
+        #endregion
 
-        //--------------------------------------Create-------------------------------------------------------------
+        #region Create
+
         public ActionResult Create()
         {
             return View();
@@ -55,16 +71,41 @@ namespace DM.PR.WEB.Controllers
             return View();
         }
 
-        //--------------------------------------Details------------------------------------------------------------
+        #endregion
+
+        #region Deatails
+
         public ActionResult Details(int? id)
         {
-            return View(_employeeProvider.FindById(id));
+            if (id != null)
+            {
+                var employee = _employeeProvider.GetById((int)id);
+                if (employee != null)
+                {
+                    var departmentName = employee.DepartmentId == null ?
+                                            null : _departmentProvider.GetById(((int)employee.DepartmentId)).Name;
+
+                    var eployeeView = MapEmployeeToEmployeeDetailsViewModel(employee, departmentName);
+
+                    return View(eployeeView);
+                }
+                else return HttpNotFound(); // Ошибка соединения с БД
+            }
+            else return HttpNotFound();  // Ошибка пришел NULL
         }
 
-        //---------------------------------------Edit--------------------------------------------------------------
+        #endregion
+
+        #region Edit
+
         public ActionResult Edit(int? id)
         {
-            return View(_employeeProvider.FindById(id));
+            if (id != null)
+            {
+                return View(_employeeProvider.GetById((int)id));
+            }
+            return View(); // написать Redirect
+
         }
 
         [HttpPost]
@@ -77,28 +118,42 @@ namespace DM.PR.WEB.Controllers
             return View();
         }
 
-        //--------------------------------------Delete-------------------------------------------------------------
+        #endregion
+
+        #region Delete
         public ActionResult Delete(int? id)
         {
-            _employeeService.Delete(id);
-            return RedirectToAction("Index");
+            if (id != null)
+            {
+                _employeeService.Delete((int)id);
+                return RedirectToAction("Index");
+            }
+            return View();
         }
+
+        #endregion
 
         #region Mappers
-        public EmployeeListViewModel MapEmployeeToEmployeeListViewModel(Employee employee)
+
+        EmployeeDetailsViewModel MapEmployeeToEmployeeDetailsViewModel(Employee employee, string departmentName)
         {
-            return new EmployeeListViewModel()
+            return new EmployeeDetailsViewModel()
             {
                 Id = employee.Id,
+                DepartmentId = employee.DepartmentId,
+                DepartmentName = departmentName,
+                FirstName = employee.FirstName,
                 LastName = employee.LastName,
                 MiddleName = employee.MiddleName,
-                FirstName = employee.FirstName,
-                DepartmentName = employee.Department.Name,
-                WorkPhone = employee.Phones.FirstOrDefault(p => p.Kind == KindOfPhone.WORK)
+                Address = employee.Address,
+                BeginningOfWork = employee.BeginningOfWork,
+                Emails = employee.Emails,
+                EndOfWork = employee.EndOfWork,
+                ImagePath = employee.ImagePath,
+                MaritalStatus = employee.MaritalStatus,
+                Phones = employee.Phones
             };
         }
-
-
         #endregion
 
     }

@@ -4,12 +4,9 @@
 
 <div class="row">
     <div class="col-md-3">
-        <div class="">
-            @Html.Action("Menu", "Nav")
-        </div>
-       
+        @Html.Action("Menu", "Nav")
     </div>
     <div class="col-md-9 pull-right ">
-        @Html.Action("List", new { department = (string)null })
+        @Html.Action("List")
     </div>
 </div>

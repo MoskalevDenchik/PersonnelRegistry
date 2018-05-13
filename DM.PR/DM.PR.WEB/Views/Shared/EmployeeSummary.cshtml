@@ -1,33 +1,27 @@
-﻿@model DM.PR.WEB.Models.EmployeeListViewModel
+﻿@model DM.PR.Common.Entities.EmployeeShortModel
 
 
-@using (Html.BeginForm())
-{
-    @Html.HiddenFor(e => e.Id);
+<div class="well well-sm">
+    <div class="row">
+        <div class="col-md-3">
+            <a href="~/Employees/Details/@Model.Id">
+                <img src="~/Content/Images/UserImg.jpg" class="img-responsive img-circle" />
+            </a>
+        </div>
+        <div class="col-md-9">
+            <div class="text-right">
 
-    <div class="well well-sm">
-        <div class="row">
-            <div class="col-md-3">
+                <strong>@Model.FirstName</strong>
+                <strong>@Model.MiddleName </strong>
+                <strong>@Model.LastName</strong>    <br />
 
-                <a href="~/Employees/Details/@Model.Id">
-                    <img src="~/Content/Images/UserImg.jpg" class="img-responsive img-circle" />
-                </a>
-                @*  @Html.ActionLink("Подробнее", "Details", new { id = Model.Id }, new { @class = " btn btn-default" })*@
-            </div>
-            <div class="col-md-9">
-                <div class="text-right">
-
-                    <strong>@Model.FirstName</strong>
-                    <strong>@Model.MiddleName </strong>
-                    <strong>@Model.LastName</strong>    <br />
-
-                    <strong>@Model.WorkPhone.Number</strong>   <br />
-                    @Html.RouteLink(Model.DepartmentName,
-                        new { controller = "Departments", action = "Details", department = Model.DepartmentName },
-                        new { @class = " btn btn-default" })
-                </div>
+                <strong>@Model.WorkPhone</strong>   <br />
+                @Html.RouteLink(Model.DepartmentName,
+                         new { controller = "Departments", action = "Details", id = Model.DepartmentId },
+                         new { @class = " btn btn-default" })
             </div>
         </div>
     </div>
-}
+</div>
+
 

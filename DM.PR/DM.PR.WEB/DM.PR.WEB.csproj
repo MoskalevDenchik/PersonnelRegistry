@@ -184,7 +184,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\EmployeeListViewModel.cs" />
+    <Compile Include="Models\DepartmentDeatailsViewModel.cs" />
+    <Compile Include="Models\DepartmentNavViewModel.cs" />
+    <Compile Include="Models\EmployeeDetailsViewModel.cs" />
+    <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +214,9 @@
     <Content Include="Views\Ad\ListOfAd.cshtml" />
     <Content Include="Views\Departments\Create.cshtml" />
     <Content Include="Views\Shared\AddPhone.cshtml" />
+    <Content Include="Views\Employees\NoEmployees.cshtml" />
+    <Content Include="Views\Shared\ListOfPhones.cshtml" />
+    <Content Include="Views\Employees\ListOfEmails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
