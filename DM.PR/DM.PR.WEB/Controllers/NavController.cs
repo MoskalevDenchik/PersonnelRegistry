@@ -24,13 +24,23 @@ namespace DM.PR.WEB.Controllers
 
         #region Menu
 
-        public PartialViewResult Menu()
+        public ActionResult Menu()
         {
             var departments = _departmentProvider.GetAll();
+            if (departments != null)
+            {
+                var departsView = MapDepartmentToDepartmentViewModel(departments);
+                if (departments != null)
+                {
+                    return PartialView(departsView);
 
-            var departsView = MapDepartmentToDepartmentViewModel(departments);
+                }
+                else return HttpNotFound(); //Дописать 
 
-            return PartialView(departsView);
+            }
+            else return HttpNotFound(); //Дописать
+            
+
         }
 
 

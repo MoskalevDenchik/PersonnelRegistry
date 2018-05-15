@@ -26,12 +26,12 @@ namespace DM.PR.Data.DataBase
             {
                 _conStr = ConfigurationManager.ConnectionStrings["DataConnection"].ConnectionString;
             }
-            catch (Exception ex )
+            catch (Exception ex)
             {
                 _log.MakeInfo(ex.Message);
                 _conStr = null;
             }
-           
+
         }
 
         #endregion
@@ -43,28 +43,33 @@ namespace DM.PR.Data.DataBase
             SqlDataReader reader;
 
             var command = GetCommandProcedure(procedure);
+            if (command != null)
+            {
 
-            command.Parameters.AddWithValue(parametrName, Id);
+                command.Parameters.AddWithValue(parametrName, Id);
 
-            try
-            {
-                reader = command.ExecuteReader();
-            }
-            catch (Exception ex)
-            {
-                _log.MakeInfo(ex.Message);
-                reader = null;
-            }
+                try
+                {
+                    reader = command.ExecuteReader();
+                }
+                catch (Exception ex)
+                {
+                    _log.MakeInfo(ex.Message);
+                    reader = null;
+                }
 
-            if (reader != null && reader.HasRows)
-            {
-                return reader;
+                if (reader != null && reader.HasRows)
+                {
+                    return reader;
+                }
+                else
+                {
+                    CloseConnection();
+                    return null;
+                }
             }
-            else
-            {
-                CloseConnection();
-                return null;
-            }
+            else return null;
+
         }
 
         public SqlDataReader GetReader(string procedure, params SqlParameter[] parameters)
@@ -72,54 +77,61 @@ namespace DM.PR.Data.DataBase
             SqlDataReader reader;
 
             var command = GetCommandProcedure(procedure);
+            if (command != null)
+            {
+                AddParameters(command, parameters);
 
-            AddParameters(command, parameters);
+                try
+                {
+                    reader = command.ExecuteReader();
+                }
+                catch (Exception ex)
+                {
+                    _log.MakeInfo(ex.Message);
+                    reader = null;
+                }
 
-            try
-            {
-                reader = command.ExecuteReader();
+                if (reader.HasRows && reader != null)
+                {
+                    return reader;
+                }
+                else
+                {
+                    CloseConnection();
+                    return null;
+                }
             }
-            catch (Exception ex)
-            {
-                _log.MakeInfo(ex.Message);
-                reader = null;
-            }
+            else return null;
 
-            if (reader.HasRows && reader != null)
-            {
-                return reader;
-            }
-            else
-            {
-                CloseConnection();
-                return null;
-            }
         }
 
         public SqlDataReader GetReader(string procedure)
         {
             SqlDataReader reader;
             var command = GetCommandProcedure(procedure);
+            if (command != null)
+            {
+                try
+                {
+                    reader = command.ExecuteReader();
+                }
+                catch (Exception ex)
+                {
+                    _log.MakeInfo(ex.Message);
+                    reader = null;
+                }
 
-            try
-            {
-                reader = command.ExecuteReader();
+                if (reader != null && reader.HasRows)
+                {
+                    return reader;
+                }
+                else
+                {
+                    CloseConnection();
+                    return null;
+                }
             }
-            catch (Exception ex)
-            {
-                _log.MakeInfo(ex.Message);
-                reader = null;
-            }
-
-            if (reader.HasRows && reader != null)
-            {
-                return reader;
-            }
-            else
-            {
-                CloseConnection();
-                return null;
-            }
+            else return null;
         }
 
         #endregion
@@ -204,19 +216,24 @@ namespace DM.PR.Data.DataBase
         public DataSet GetDataSet(string procedure)
         {
             var adapter = GetAdapterProcedure(procedure);
-            var dataSet = new DataSet();
+            if (adapter != null)
+            {
+                var dataSet = new DataSet();
 
-            try
-            {
-                adapter.Fill(dataSet);
+                try
+                {
+                    adapter.Fill(dataSet);
+                }
+                catch (Exception ex)
+                {
+                    _log.MakeInfo(ex.Message);
+                    dataSet = null;
+                }
+                CloseConnection();
+                return dataSet;
             }
-            catch (Exception ex)
-            {
-                _log.MakeInfo(ex.Message);
-                dataSet = null;
-            }
-            CloseConnection();
-            return dataSet;
+            else return null;
+
         }
 
         #endregion
@@ -240,7 +257,16 @@ namespace DM.PR.Data.DataBase
             _connection = new SqlConnection(_conStr);
             if (_connection.State != ConnectionState.Open)
             {
-                _connection.Open();
+                try
+                {
+                    _connection.Open();
+                }
+                catch (Exception ex)
+                {
+                    _connection = null;
+                    _log.MakeInfo(ex.Message);
+                }
+
             }
             return _connection;
         }
@@ -260,10 +286,15 @@ namespace DM.PR.Data.DataBase
 
         private SqlCommand GetCommandProcedure(string procedure)
         {
-            return new SqlCommand(procedure, GetConnection())
+            _connection = GetConnection();
+            if (_connection != null)
             {
-                CommandType = CommandType.StoredProcedure
-            };
+                return new SqlCommand(procedure, _connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+            }
+            else return null;
         }
 
         #endregion
@@ -272,7 +303,12 @@ namespace DM.PR.Data.DataBase
 
         private SqlDataAdapter GetAdapterProcedure(string procedure)
         {
-            return new SqlDataAdapter(GetCommandProcedure(procedure));
+            var command = GetCommandProcedure(procedure); ;
+            if (command != null)
+            {
+                return new SqlDataAdapter(command);
+            }
+            else return null;
         }
 
         #endregion
