@@ -1,5 +1,6 @@
 ﻿using DM.PR.Common.Logger;
 using System;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -11,7 +12,7 @@ namespace DM.PR.Data.DataBase
         #region Private
 
         private IRecordLog _log;
-        private const string _conStr = @"Data Source=DESKTOP-1OSBSDG\SQLEXPRESS;Initial Catalog=PersonnelDB;Integrated Security=True";
+        private readonly string _conStr;
         private static SqlConnection _connection;
 
         #endregion
@@ -21,7 +22,16 @@ namespace DM.PR.Data.DataBase
         public DataBase(IRecordLog log)
         {
             _log = log;
-
+            try
+            {
+                _conStr = ConfigurationManager.ConnectionStrings["DataConnection"].ConnectionString;
+            }
+            catch (Exception ex )
+            {
+                _log.MakeInfo(ex.Message);
+                _conStr = null;
+            }
+           
         }
 
         #endregion

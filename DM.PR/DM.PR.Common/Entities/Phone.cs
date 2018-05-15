@@ -9,6 +9,7 @@ namespace DM.PR.Common.Entities
 {
     public class Phone
     {
+        public int? Id { get; set; }
         public string Number { get; set; }
         public KindOfPhone Kind { get; set; }
     }

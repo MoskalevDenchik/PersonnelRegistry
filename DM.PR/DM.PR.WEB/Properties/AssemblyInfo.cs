@@ -13,7 +13,7 @@ using log4net.Config;
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: XmlConfigurator(Watch = true, ConfigFile = "Log.config")]
+[assembly: XmlConfigurator(Watch = true, ConfigFile = "Log.config")] 
 
 // Установка значения false в параметре ComVisible делает типы в этой сборке невидимыми 
 // для компонентов COM. Если требуется обратиться к типу в этой сборке через 
@@ -34,3 +34,4 @@ using log4net.Config;
 // используя "*", как показано ниже:
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+

@@ -10,7 +10,6 @@ namespace DM.WCFService
         [OperationContract]
         IEnumerable<string> GetContent();
 
-
     }
 
 }

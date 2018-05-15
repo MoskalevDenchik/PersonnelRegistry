@@ -1,7 +1,7 @@
 ﻿using DM.PR.Business.Providers;
 using DM.PR.Business.Services;
 using DM.PR.Common.Entities;
-using DM.PR.WEB.Models;      
+using DM.PR.WEB.Models;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -77,7 +77,7 @@ namespace DM.PR.WEB.Controllers
                 _departmentService.Edit(department);
                 return RedirectToAction("Index");
             }
-            return View();
+            return View();   //Дописать перенаправления
         }
         #endregion
 
@@ -85,20 +85,22 @@ namespace DM.PR.WEB.Controllers
 
         public ActionResult Create()
         {
-            return View(new DepartmentCreateViewModel()
+            var department = new DepartmentCreateViewModel
             {
-                Phones = new List<Phone>() { new Phone() }
-            });
+                Phones = new List<Phone>()
+            };
+
+            return View(department);
         }
 
 
         [HttpPost]
-        public ActionResult Create(FormCollection model)
+        public ActionResult Create(DepartmentCreateViewModel model)
         {
 
             if (ModelState.IsValid)
             {
-                //_departmentService.Create(MapDepartmentCreateToDepartment(model));
+                _departmentService.Create(MapDepartmentCreateToDepartment(model));
                 return RedirectToAction("Index");
             }
 
@@ -120,7 +122,40 @@ namespace DM.PR.WEB.Controllers
         }
         #endregion
 
+        #region Helpers
+
+        public PartialViewResult AddPhone(int phones)
+        {
+            return PartialView(phones);
+        }
+
+        public PartialViewResult SelectList()
+        {
+            var list = _departmentProvider.GetAll();
+            if (list != null)
+            {
+                return PartialView(MapDepartmentToDepartmentSelectModel(list));
+            }
+            else return null;
+        }
+
+        #endregion
+
         #region Mappers
+
+        private IReadOnlyCollection<DepartmentSelectModel> MapDepartmentToDepartmentSelectModel(IReadOnlyCollection<Department> departments)
+        {
+            var list = new List<DepartmentSelectModel>();
+            foreach (var item in departments)
+            {
+                list.Add(new DepartmentSelectModel()
+                {
+                    Id = (int)item.Id,
+                    Name = item.Name
+                });
+            }
+            return list;
+        }
 
 
         private DepartmentDeatailsViewModel MapDepartmentToDepartmentDetails(Department department, string parentName)

@@ -79,7 +79,7 @@
     <Compile Include="Repositories\Implement\EmployeeRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config">
+    <None Include="DM.PR.Data.dll.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Connected Services\AdServiceClient\AdService.wsdl" />

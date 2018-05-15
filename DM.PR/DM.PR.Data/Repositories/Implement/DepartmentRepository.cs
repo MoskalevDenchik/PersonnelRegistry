@@ -31,23 +31,14 @@ namespace DM.PR.Data.Repositories
         {
             var reader = _dataBase.GetReader(Procedure.GetDepartmentById, "@DepartmentId", id);
 
-            if (reader != null)
+            if (reader != null && reader.Read())
             {
-                reader.Read();
-
-                var department = new Department()
-                {
-                    Id = (int)reader["DepartmentId"],
-                    ParentId = reader["ParentID"] == DBNull.Value ? null : (int?)reader["ParentID"],
-                    Name = (string)reader["Name"],
-                    Address = reader["Address"] == DBNull.Value ? null : (string)reader["Address"],
-                    Description = reader["Description"] == DBNull.Value ? null : (string)reader["Description"]
-                };
+                var department = ConvertToDepartment(reader);
 
                 reader.NextResult();  // GET PHONES
                 if (reader.HasRows)
                 {
-                    department.Phones = ConvertToPhone(reader);
+                    department.Phones = ConvertToPhones(reader);
                 }
 
                 _dataBase.CloseReader(reader);
@@ -112,24 +103,6 @@ namespace DM.PR.Data.Repositories
         }
         #endregion
 
-        #region AddPhones
-
-        public void AddPhones(int departmentId, params Phone[] phone)
-        {
-            foreach (var item in phone)
-            {
-                SqlParameter[] parameters =
-                {
-                    new SqlParameter("@DepartmetnId",departmentId),
-                    new SqlParameter("@Phone",item.Number),
-                    new SqlParameter("@PhoneType",item.Kind)
-                };
-                var result = _dataBase.ExecuteNonQuery(Procedure.AddPhoneByDepartmentId, parameters);
-            }
-        }
-
-        #endregion
-
         #region Delete
         public int Delete(int id)
         {
@@ -150,13 +123,33 @@ namespace DM.PR.Data.Repositories
 
             };
 
-            return _dataBase.ExecuteNonQuery(Procedure.UpdateDepartment, parameters);
+            var result = _dataBase.ExecuteNonQuery(Procedure.UpdateDepartment, parameters);
+
+            if (department.Phones != null)
+            {
+                UpdatePhones((int)department.Id, department.Phones.ToArray());
+            }
+
+            return result;   //обработать результат
         }
         #endregion
 
         #region Converters
 
-        private List<Phone> ConvertToPhone(SqlDataReader reader)
+        private Department ConvertToDepartment(SqlDataReader reader)
+        {
+            return new Department()
+            {
+                Id = (int)reader["DepartmentId"],
+                ParentId = reader["ParentID"] == DBNull.Value ? null : (int?)reader["ParentID"],
+                Name = (string)reader["Name"],
+                Address = reader["Address"] == DBNull.Value ? null : (string)reader["Address"],
+                Description = reader["Description"] == DBNull.Value ? null : (string)reader["Description"]
+            };
+
+        }
+
+        private List<Phone> ConvertToPhones(SqlDataReader reader)
         {
             var phones = new List<Phone>();
 
@@ -164,6 +157,7 @@ namespace DM.PR.Data.Repositories
             {
                 phones.Add(new Phone()
                 {
+                    Id = (int)reader["PhoneId"],
                     Kind = (KindOfPhone)reader["PhoneType"],
                     Number = (string)reader["Phone"]
                 });
@@ -174,6 +168,38 @@ namespace DM.PR.Data.Repositories
         #endregion
 
         #region Helpers
+
+
+        public void AddPhones(int departmentId, params Phone[] phone)
+        {
+            foreach (var item in phone)
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@DepartmetnId",departmentId),
+                    new SqlParameter("@Phone",item.Number),
+                    new SqlParameter("@PhoneType",item.Kind)
+                };
+                var result = _dataBase.ExecuteNonQuery(Procedure.AddPhoneByDepartmentId, parameters);
+            }
+        }
+
+
+        public void UpdatePhones(int departmentId, params Phone[] phone)
+        {
+            foreach (var item in phone)
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@DepartmentId",departmentId),
+                    new SqlParameter("@PhoneId",item.Id),
+                    new SqlParameter("@Number",item.Number),
+                    new SqlParameter("@PhoneType",item.Kind)
+                };
+                var result = _dataBase.ExecuteNonQuery(Procedure.UpdateDepartmentPhone, parameters);
+            }
+        }
+
 
         private List<Phone> FindPhonesById(EnumerableRowCollection<DataRow> phones, int id)
         {
@@ -193,6 +219,7 @@ namespace DM.PR.Data.Repositories
             }
             else return null;
         }
+
         #endregion
 
     }

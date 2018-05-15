@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.ServiceModel;
 using System.ServiceModel.Configuration;
 using DM.PR.Common.Logger;
-using DM.PR.Data.AdServiceClient;   
+using DM.PR.Data.AdServiceClient;
 
 namespace DM.PR.Data.Repositories.Implement
 {
     public class AdRepository : IAdRepository
     {
-        private IRecordLog _log;
+        #region Private
         private IAdService _service;
-        private ChannelFactory<IAdService> channelFactory;
+        private IRecordLog _log;
+
+        #endregion
+
+        #region Ctor
 
         public AdRepository(IRecordLog log)
         {
@@ -28,38 +31,39 @@ namespace DM.PR.Data.Repositories.Implement
                 _log.MakeInfo(ex.Message);
                 _service = null;
             }
+
         }
-    
+
+        #endregion
+
+        #region GetAll
+
         public IReadOnlyCollection<string> GetAll()
         {
-            
-            if (_service != null && channelFactory.State == CommunicationState.Opened )
+            try
             {
                 return _service.GetContent();
             }
-            else
+            catch (Exception ex)
             {
-                return new List<string>
-                {
-                    "Мы против рекламы"
-                };
+                _log.MakeInfo(ex.Message);
+                return null;
             }
         }
 
-        #region CreateChanel
-        private IAdService CreateChanel()
+        #endregion
+
+        #region Helpers
+
+        public IAdService CreateChanel()
         {
-            string absolutePath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.PrivateBinPath, "App.config");
-
-            Configuration configuration = ConfigurationManager.OpenMappedExeConfiguration(
-                new ExeConfigurationFileMap { ExeConfigFilename = absolutePath }, ConfigurationUserLevel.None);
-
-            channelFactory =
-                new ConfigurationChannelFactory<IAdService>("BasicHttpBinding_IAdService", configuration, null);
-
+            var absolutePath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.PrivateBinPath, "DM.PR.Data.dll.config");
+            var configuration = ConfigurationManager.OpenMappedExeConfiguration(
+                 new ExeConfigurationFileMap { ExeConfigFilename = absolutePath }, ConfigurationUserLevel.None);
+            var channelFactory =
+                       new ConfigurationChannelFactory<IAdService>("BasicHttpBinding_IAdService", configuration, null);
             return channelFactory.CreateChannel();
         }
-
 
         #endregion
     }

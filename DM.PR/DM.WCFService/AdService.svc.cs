@@ -6,12 +6,14 @@ namespace DM.WCFService
     {
         List<string> ads = new List<string>
         {
-            "Hello1",
-            "Hello2",
-            "Hello3",
-            "Hello4"
-        };
-
+            "Реклама 1",
+            "Реклама 2",
+            "Реклама 3",
+            "Реклама 4",
+            "Реклама 5",
+            "Реклама 6",
+            "Реклама 7"
+        };                            
 
         public IEnumerable<string> GetContent()
         {

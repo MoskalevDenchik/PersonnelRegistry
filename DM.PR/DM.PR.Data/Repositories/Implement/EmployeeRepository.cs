@@ -114,7 +114,7 @@ namespace DM.PR.Data.Repositories
 
         public IReadOnlyCollection<EmployeeShortModel> GetAllShortModelsByDepartmentId(int id)
         {
-            var reader = _dataBase.GetReader(Procedure.GetAllShortModelsByDepartmentId, "@DepartmentId", id);
+            var reader = _dataBase.GetReader(Procedure.GetAllShortEmployeesByDepartmentId, "@DepartmentId", id);
             if (reader != null)
             {
                 var list = new List<EmployeeShortModel>();
