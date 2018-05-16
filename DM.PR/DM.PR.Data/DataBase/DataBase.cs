@@ -3,6 +3,7 @@ using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace DM.PR.Data.DataBase
 
@@ -23,8 +24,14 @@ namespace DM.PR.Data.DataBase
         {
             _log = log;
             try
-            {
-                _conStr = ConfigurationManager.ConnectionStrings["DataConnection"].ConnectionString;
+            {    
+                ExeConfigurationFileMap map = new ExeConfigurationFileMap
+                {
+                    ExeConfigFilename = Path.Combine(AppDomain.CurrentDomain.SetupInformation.PrivateBinPath, "DM.PR.Data.dll.config")
+                };
+                var str = ConfigurationManager.OpenMappedExeConfiguration(map, ConfigurationUserLevel.None);
+                _conStr = str.ConnectionStrings.ConnectionStrings["DataConnection"].ConnectionString;
+
             }
             catch (Exception ex)
             {

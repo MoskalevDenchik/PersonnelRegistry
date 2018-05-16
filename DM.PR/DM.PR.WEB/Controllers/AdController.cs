@@ -27,7 +27,7 @@ namespace DM.PR.WEB.Controllers
             var content = _adProvider.GetContent();
             if (content != null)
             {
-                return PartialView(_adProvider.GetContent());
+                return PartialView(content);
             }
             return PartialView("NoAd");
         }

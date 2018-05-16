@@ -1,6 +1,6 @@
 ﻿using DM.PR.Common.Entities;
 using DM.PR.Common.Enums;
-using DM.PR.Data.DataBase;        
+using DM.PR.Data.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -82,11 +82,15 @@ namespace DM.PR.Data.Repositories
 
                 return employees;
             }
-            else return null;
+            else
+            {
+                return null;
+            }
+
         }
 
         #endregion
-       
+
         #region GetAllShortModels
 
         public IReadOnlyCollection<EmployeeShortModel> GetAllShortModels()

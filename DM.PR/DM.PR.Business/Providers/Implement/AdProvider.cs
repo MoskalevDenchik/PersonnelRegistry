@@ -1,5 +1,6 @@
 ﻿using DM.PR.Data.Repositories;
 using System.Collections.Generic;
+using System;
 
 namespace DM.PR.Business.Providers.Implement
 {
@@ -24,9 +25,13 @@ namespace DM.PR.Business.Providers.Implement
 
         public IReadOnlyCollection<string> GetContent()
         {
-            return _adRepository.GetAll();
+            var list = _adRepository.GetAll();
+            if (list != null)
+            {   
+                return list;
+            }
+            else return null;
         }
-
         #endregion
 
     }
