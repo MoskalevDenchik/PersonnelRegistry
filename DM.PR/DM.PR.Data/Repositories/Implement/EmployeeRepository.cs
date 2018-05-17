@@ -91,52 +91,6 @@ namespace DM.PR.Data.Repositories
 
         #endregion
 
-        #region GetAllShortModels
-
-        public IReadOnlyCollection<EmployeeShortModel> GetAllShortModels()
-        {
-            var reader = _dataBase.GetReader(Procedure.GetShortEmploees);
-            if (reader != null)
-            {
-                var list = new List<EmployeeShortModel>();
-
-                while (reader.Read())
-                {
-                    list.Add(ConvertToEmployeeShort(reader));
-                }
-
-                _dataBase.CloseReader(reader);
-
-                return list;
-            }
-            else return null;
-        }
-
-        #endregion
-
-        #region GetAllShortModelsByDepartmentId
-
-        public IReadOnlyCollection<EmployeeShortModel> GetAllShortModelsByDepartmentId(int id)
-        {
-            var reader = _dataBase.GetReader(Procedure.GetAllShortEmployeesByDepartmentId, "@DepartmentId", id);
-            if (reader != null)
-            {
-                var list = new List<EmployeeShortModel>();
-
-                while (reader.Read())
-                {
-                    list.Add(ConvertToEmployeeShort(reader));
-                }
-
-                _dataBase.CloseReader(reader);
-
-                return list;
-            }
-            else return null;
-        }
-
-        #endregion
-
         #region GetById
 
         public Employee GetById(int id)
@@ -271,21 +225,6 @@ namespace DM.PR.Data.Repositories
                 emails.Add((string)reader["Email"]);
             }
             return emails;
-        }
-
-
-        private EmployeeShortModel ConvertToEmployeeShort(SqlDataReader reader)
-        {
-            return new EmployeeShortModel()
-            {
-                Id = (int)reader["EmployeeId"],
-                DepartmentId = reader["DepartmentId"] == DBNull.Value ? null : (int?)reader["DepartmentId"],
-                DepartmentName = reader["DepartmentName"] == DBNull.Value ? null : (string)reader["DepartmentName"],
-                FirstName = reader["FirstName"] == DBNull.Value ? null : (string)reader["FirstName"],
-                MiddleName = reader["MiddleName"] == DBNull.Value ? null : (string)reader["MiddleName"],
-                LastName = reader["LastName"] == DBNull.Value ? null : (string)reader["LastName"],
-                WorkPhone = reader["WorkPhone"] == DBNull.Value ? null : (string)reader["WorkPhone"]
-            };
         }
 
         #endregion

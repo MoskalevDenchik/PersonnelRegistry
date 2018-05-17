@@ -9,11 +9,6 @@ namespace DM.PR.Business.Providers
 
         IReadOnlyCollection<Employee> GetAll();
 
-        IReadOnlyCollection<Employee> GetAllByDepartmentId(int id);
-
-        IReadOnlyCollection<EmployeeShortModel> GetAllShortModels();
-
-        IReadOnlyCollection<EmployeeShortModel> GetAllShortModelsByDepartmentId(int id);
-        
+        IReadOnlyCollection<Employee> GetAllByDepartmentId(int id);                            
     }
 }

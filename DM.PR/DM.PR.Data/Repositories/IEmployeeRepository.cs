@@ -9,10 +9,6 @@ namespace DM.PR.Data.Repositories
 
         IReadOnlyCollection<Employee> GetAllByDepartmentId(int id);
 
-        IReadOnlyCollection<EmployeeShortModel> GetAllShortModels();
-
-        IReadOnlyCollection<EmployeeShortModel> GetAllShortModelsByDepartmentId(int id);
-
         Employee GetById(int id);
 
         int Create(Employee item);

@@ -6,9 +6,7 @@
 
         public const string GetEmployeeById = "GetEmployeeById";
         public const string GetEmployeesByDepartmentId = "GetEmployeesByDepartmentId";
-        public const string GetAllEmployees = "GetAllEmployees";
-        public const string GetShortEmploees = "GetAllSortEmployees";
-        public const string GetAllShortEmployeesByDepartmentId = "GetAllShortEmployeesByDepartmentId";
+        public const string GetAllEmployees = "GetAllEmployees";                                        
         public const string AddEmployee = "AddEmployee";
         public const string UpdateEmployee = "UpdateEmployee";
         public const string DeleteEmployee = "DeleteEmployee";

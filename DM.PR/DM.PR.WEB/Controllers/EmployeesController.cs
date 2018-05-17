@@ -37,20 +37,17 @@ namespace DM.PR.WEB.Controllers
 
         #region List
 
-        public PartialViewResult List(int? Id)
+        public PartialViewResult List(int id = 0)
         {
-            if (Id != null)
+            var model = _employeeProvider.GetAllByDepartmentId(id);
+            if (model != null)
             {
-                var model = _employeeProvider.GetAllShortModelsByDepartmentId((int)Id);
-                if (model != null)
-                {
-                    return PartialView(model);
-                }
-                else return PartialView("NoEmployees");
-
+                return PartialView(model);
             }
-            else return PartialView(_employeeProvider.GetAllShortModels());
-
+            else
+            {
+                return PartialView("NoEmployees");
+            }
         }
         #endregion
 

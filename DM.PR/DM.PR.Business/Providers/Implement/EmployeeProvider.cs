@@ -29,34 +29,7 @@ namespace DM.PR.Business.Providers.Implement
         }
 
         #endregion
-
-        #region GetAllByDepartmentId
-
-        public IReadOnlyCollection<Employee> GetAllByDepartmentId(int id)
-        {
-            return _employeeRepository.GetAllByDepartmentId(id);
-        }
-
-        #endregion
-
-        #region GetAllShortModels
-
-        public IReadOnlyCollection<EmployeeShortModel> GetAllShortModels()
-        {
-            return _employeeRepository.GetAllShortModels();
-        }
-
-        #endregion
-
-        #region GetAllShortModelsByDepartmentId
-
-        public IReadOnlyCollection<EmployeeShortModel> GetAllShortModelsByDepartmentId(int id)
-        {
-            return _employeeRepository.GetAllShortModelsByDepartmentId(id);
-        }
-
-        #endregion
-
+       
         #region GetById
 
         public Employee GetById(int id)
@@ -66,6 +39,22 @@ namespace DM.PR.Business.Providers.Implement
 
         #endregion
 
+        #region GetAllByDepartmentId
+
+        public IReadOnlyCollection<Employee> GetAllByDepartmentId(int id)
+        {
+            if (id > 0)
+            {
+                return _employeeRepository.GetAllByDepartmentId(id);
+            }
+            else
+            {
+                return _employeeRepository.GetAll();
+            }
+        }
+
+        #endregion
+                                                                                              
     }
 }
 
