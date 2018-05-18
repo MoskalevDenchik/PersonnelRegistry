@@ -27,26 +27,12 @@ namespace DM.PR.Data.Repositories
         #endregion
 
         #region GetById
+
         public Department GetById(int id)
         {
-            var reader = _dataBase.GetReader(Procedure.GetDepartmentById, "@DepartmentId", id);
-
-            if (reader != null && reader.Read())
-            {
-                var department = ConvertToDepartment(reader);
-
-                reader.NextResult();  // GET PHONES
-                if (reader.HasRows)
-                {
-                    department.Phones = ConvertToPhones(reader);
-                }
-
-                _dataBase.CloseReader(reader);
-
-                return department;
-            }
-            else return null;
+            return _dataBase.GetEntity(ConvertToDepartment, Procedure.GetDepartmentById, new SqlParameter("@DepartmentId", id));
         }
+
         #endregion
 
         #region GetAll
@@ -75,7 +61,10 @@ namespace DM.PR.Data.Repositories
                 }
                 return list;
             }
-            else return null;
+            else
+            {
+                return null;
+            }
         }
 
 
@@ -92,21 +81,21 @@ namespace DM.PR.Data.Repositories
                 new SqlParameter("@Description", department.Description)
             };
 
-            var DepartmentId = _dataBase.GetScalar(Procedure.AddDepartment, departmentParameters);
+            var DepartmentId = _dataBase.GetScalar<int>(Procedure.AddDepartment, departmentParameters);
 
-            if (DepartmentId != null && department.Phones != null)
+            if (DepartmentId != 0 && department.Phones != null)
             {
                 AddPhones(Convert.ToInt32(DepartmentId), department.Phones.ToArray());
             }
 
-            return Convert.ToInt32(DepartmentId);
+            return DepartmentId;
         }
         #endregion
 
         #region Delete
         public int Delete(int id)
         {
-            return _dataBase.ExecuteNonQuery(Procedure.DeleteDepartment, "@DepartmentId", id);
+            return _dataBase.GetResult(Procedure.DeleteDepartment, new SqlParameter("@DepartmentId", id));
         }
         #endregion
 
@@ -123,7 +112,7 @@ namespace DM.PR.Data.Repositories
 
             };
 
-            var result = _dataBase.ExecuteNonQuery(Procedure.UpdateDepartment, parameters);
+            var result = _dataBase.GetResult(Procedure.UpdateDepartment, parameters);
 
             if (department.Phones != null)
             {
@@ -134,9 +123,54 @@ namespace DM.PR.Data.Repositories
         }
         #endregion
 
+
         #region Converters
 
-        private Department ConvertToDepartment(SqlDataReader reader)
+        public Department ConvertToDepartment(SqlDataReader reader)
+        {
+
+            if (reader.HasRows && reader.Read())
+            {
+                return new Department()
+                {
+                    Id = (int)reader["DepartmentId"],
+                    ParentId = reader["ParentID"] == DBNull.Value ? null : (int?)reader["ParentID"],
+                    Name = (string)reader["Name"],
+                    Address = reader["Address"] == DBNull.Value ? null : (string)reader["Address"],
+                    Description = reader["Description"] == DBNull.Value ? null : (string)reader["Description"],
+                    Phones = GetPhone(reader)
+                };
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private List<Phone> GetPhone(SqlDataReader reader)
+        {
+            if (reader.NextResult() && reader.HasRows)
+            {
+                var phones = new List<Phone>();
+
+                while (reader.Read())
+                {
+                    phones.Add(new Phone()
+                    {
+                        Id = (int)reader["PhoneId"],
+                        Kind = (KindOfPhone)reader["PhoneType"],
+                        Number = (string)reader["Phone"]
+                    });
+                }
+                return phones;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private Department ConvertDepartment(SqlDataReader reader)
         {
             return new Department()
             {
@@ -167,6 +201,7 @@ namespace DM.PR.Data.Repositories
 
         #endregion
 
+
         #region Helpers
 
 
@@ -180,7 +215,7 @@ namespace DM.PR.Data.Repositories
                     new SqlParameter("@Phone",item.Number),
                     new SqlParameter("@PhoneType",item.Kind)
                 };
-                var result = _dataBase.ExecuteNonQuery(Procedure.AddPhoneByDepartmentId, parameters);
+                var result = _dataBase.GetResult(Procedure.AddPhoneByDepartmentId, parameters);
             }
         }
 
@@ -196,7 +231,7 @@ namespace DM.PR.Data.Repositories
                     new SqlParameter("@Number",item.Number),
                     new SqlParameter("@PhoneType",item.Kind)
                 };
-                var result = _dataBase.ExecuteNonQuery(Procedure.UpdateDepartmentPhone, parameters);
+                var result = _dataBase.GetResult(Procedure.UpdateDepartmentPhone, parameters);
             }
         }
 

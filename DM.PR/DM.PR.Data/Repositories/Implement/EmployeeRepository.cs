@@ -25,62 +25,26 @@ namespace DM.PR.Data.Repositories
 
         #endregion
 
-        #region GetAll
 
         public IReadOnlyCollection<Employee> GetAll()
         {
             var dataSet = _dataBase.GetDataSet(Procedure.GetAllEmployees);
-
             if (dataSet != null)
             {
-                var employees = dataSet.Tables[0].AsEnumerable();
-                var phones = dataSet.Tables[1].AsEnumerable();
-                var emails = dataSet.Tables[2].AsEnumerable();
-
-                var list = new List<Employee>();
-
-                foreach (var item in employees)
-                {
-                    list.Add(new Employee()
-                    {
-                        Id = (int)item["EmployeeId"],
-                        FirstName = item["FirstName"] == DBNull.Value ? null : (string)item["FirstName"],
-                        MiddleName = item["MiddleName"] == DBNull.Value ? null : (string)item["MiddleName"],
-                        LastName = item["LastName"] == DBNull.Value ? null : (string)item["LastName"],
-                        DepartmentId = item["DepartmentId"] == DBNull.Value ? null : (int?)item["DepartmentId"],
-                        ImagePath = item["ImagePath"] == DBNull.Value ? null : (string)item["ImagePath"],
-                        BeginningOfWork = item["BeginningOfWork"] == DBNull.Value ? null : (DateTime?)item["BeginningOfWork"],
-                        EndOfWork = item["EndOfWork"] == DBNull.Value ? null : (DateTime?)item["EndOfWork"],
-                        Address = item["Address"] == DBNull.Value ? null : (string)item["Address"],
-                        Phones = FindPhonesById(phones, (int)item["EmployeeId"]),
-                        Emails = FindEmailsById(emails, (int)item["EmployeeId"])
-                    });
-                }
-                return list;
+                return ConvertDataSetToEmployees(dataSet);
             }
-            else return null;
+            else
+            {
+                return null;
+            }
         }
-
-        #endregion
-
-        #region GetAllByDepartmentId
 
         public IReadOnlyCollection<Employee> GetAllByDepartmentId(int id)
         {
-            var reader = _dataBase.GetReader(Procedure.GetEmployeesByDepartmentId, "@DepartmentId", id);
-
-            if (reader != null)
+            var dataSet = _dataBase.GetDataSet(Procedure.GetEmployeesByDepartmentId, new SqlParameter("@DepartmentId", id));
+            if (dataSet != null)
             {
-                var employees = new List<Employee>();
-
-                while (reader.Read())
-                {
-                    employees.Add(ConvertToEmployee(reader));
-                }
-
-                _dataBase.CloseReader(reader);
-
-                return employees;
+                return ConvertDataSetToEmployees(dataSet);
             }
             else
             {
@@ -89,46 +53,13 @@ namespace DM.PR.Data.Repositories
 
         }
 
-        #endregion
-
-        #region GetById
-
         public Employee GetById(int id)
         {
-            var reader = _dataBase.GetReader(Procedure.GetEmployeeById, "@EmployeeId", id);
-
-            if (reader != null && reader.Read())
-            {
-                var employee = ConvertToEmployee(reader);
-
-                reader.NextResult(); // GET PHONES
-                if (reader.HasRows)
-                {
-                    employee.Phones = ConvertToPhone(reader);
-                }
-
-                reader.NextResult(); // GET EMAILS
-                if (reader.HasRows)
-                {
-                    employee.Emails = ConvertToEmail(reader);
-                }
-
-                _dataBase.CloseReader(reader);
-
-                return employee;
-            }
-            else return null;
+            return _dataBase.GetEntity(ConvertToEmployee, Procedure.GetEmployeeById, new SqlParameter("@EmployeeId", id));
         }
-
-
-        #endregion
-
-        #region Create
 
         public int Create(Employee employee)
         {
-            int EmployeeId;
-
             SqlParameter[] parameters =
             {
               new SqlParameter("@LastName ",employee.LastName),
@@ -142,14 +73,10 @@ namespace DM.PR.Data.Repositories
               new SqlParameter("@MaritalStatusId",employee.MaritalStatus)
             };
 
-            EmployeeId = Convert.ToInt32(_dataBase.GetScalar(Procedure.AddEmployee, parameters));
+            var EmployeeId = _dataBase.GetScalar<int>(Procedure.AddEmployee, parameters);
 
             return EmployeeId;
         }
-
-        #endregion
-
-        #region Upadte
 
         public int Update(Employee employee)
         {
@@ -166,65 +93,110 @@ namespace DM.PR.Data.Repositories
               new SqlParameter("@MaritalStatusId",employee.MaritalStatus)
             };
 
-            return _dataBase.ExecuteNonQuery(Procedure.UpdateEmployee, parameters);
-
+            return _dataBase.GetResult(Procedure.UpdateEmployee, parameters);
         }
 
-        #endregion
-
-        #region Delete
         public int Delete(int id)
         {
-            return _dataBase.ExecuteNonQuery(Procedure.DeleteEmployee, "@EmployeeId", id);
+            return _dataBase.GetResult(Procedure.DeleteEmployee, new SqlParameter("@EmployeeId", id));
         }
 
-        #endregion
 
         #region Converters
-        private Employee ConvertToEmployee(SqlDataReader reader)
+
+        private IReadOnlyCollection<Employee> ConvertDataSetToEmployees(DataSet dataSet)
         {
-            return new Employee()
+            var employees = dataSet.Tables[0].AsEnumerable();
+            var phones = dataSet.Tables[1].AsEnumerable();
+            var emails = dataSet.Tables[2].AsEnumerable();
+
+            var list = new List<Employee>();
+
+            foreach (var item in employees)
             {
-                Id = (int)reader["EmployeeId"],
-                FirstName = reader["FirstName"] == DBNull.Value ? null : (string)reader["FirstName"],
-                MiddleName = reader["MiddleName"] == DBNull.Value ? null : (string)reader["MiddleName"],
-                LastName = reader["LastName"] == DBNull.Value ? null : (string)reader["LastName"],
-                DepartmentId = reader["DepartmentId"] == DBNull.Value ? null : (int?)reader["DepartmentId"],
-                MaritalStatus = reader["MaritalStatus"] == DBNull.Value ? null : (string)reader["MaritalStatus"],
-                ImagePath = reader["ImagePath"] == DBNull.Value ? null : (string)reader["ImagePath"],
-                BeginningOfWork = reader["BeginningOfWork"] == DBNull.Value ? null : (DateTime?)reader["BeginningOfWork"],
-                EndOfWork = reader["EndOfWork"] == DBNull.Value ? null : (DateTime?)reader["EndOfWork"],
-                Address = reader["Address"] == DBNull.Value ? null : (string)reader["Address"]
-            };
-        }
-
-
-        private List<Phone> ConvertToPhone(SqlDataReader reader)
-        {
-            var phones = new List<Phone>();
-
-            while (reader.Read())
-            {
-                phones.Add(new Phone()
+                list.Add(new Employee()
                 {
-                    Kind = (KindOfPhone)reader["PhoneType"],
-                    Number = (string)reader["Phone"]
+                    Id = (int)item["EmployeeId"],
+                    FirstName = item["FirstName"] == DBNull.Value ? null : (string)item["FirstName"],
+                    MiddleName = item["MiddleName"] == DBNull.Value ? null : (string)item["MiddleName"],
+                    LastName = item["LastName"] == DBNull.Value ? null : (string)item["LastName"],
+                    DepartmentId = item["DepartmentId"] == DBNull.Value ? null : (int?)item["DepartmentId"],
+                    ImagePath = item["ImagePath"] == DBNull.Value ? null : (string)item["ImagePath"],
+                    BeginningOfWork = item["BeginningOfWork"] == DBNull.Value ? null : (DateTime?)item["BeginningOfWork"],
+                    EndOfWork = item["EndOfWork"] == DBNull.Value ? null : (DateTime?)item["EndOfWork"],
+                    Address = item["Address"] == DBNull.Value ? null : (string)item["Address"],
+                    Phones = FindPhonesById(phones, (int)item["EmployeeId"]),
+                    Emails = FindEmailsById(emails, (int)item["EmployeeId"])
                 });
             }
-            return phones;
+            return list;
+
         }
 
-
-
+        private Employee ConvertToEmployee(SqlDataReader reader)
+        {
+            if (reader.HasRows && reader.Read())
+            {
+                return new Employee()
+                {
+                    Id = (int)reader["EmployeeId"],
+                    FirstName = reader["FirstName"] == DBNull.Value ? null : (string)reader["FirstName"],
+                    MiddleName = reader["MiddleName"] == DBNull.Value ? null : (string)reader["MiddleName"],
+                    LastName = reader["LastName"] == DBNull.Value ? null : (string)reader["LastName"],
+                    DepartmentId = reader["DepartmentId"] == DBNull.Value ? null : (int?)reader["DepartmentId"],
+                    MaritalStatus = reader["MaritalStatus"] == DBNull.Value ? null : (string)reader["MaritalStatus"],
+                    ImagePath = reader["ImagePath"] == DBNull.Value ? null : (string)reader["ImagePath"],
+                    BeginningOfWork = reader["BeginningOfWork"] == DBNull.Value ? null : (DateTime?)reader["BeginningOfWork"],
+                    EndOfWork = reader["EndOfWork"] == DBNull.Value ? null : (DateTime?)reader["EndOfWork"],
+                    Address = reader["Address"] == DBNull.Value ? null : (string)reader["Address"],
+                    Phones = ConvertToPhone(reader),
+                    Emails = ConvertToEmail(reader)
+                };
+            }
+            else
+            {
+                return null;
+            }
+        }
         private List<string> ConvertToEmail(SqlDataReader reader)
         {
-            var emails = new List<string>();
-
-            while (reader.Read())
+            if (reader.NextResult() && reader.HasRows)
             {
-                emails.Add((string)reader["Email"]);
+
+                var mails = new List<string>();
+
+                while (reader.Read())
+                {
+                    mails.Add((string)reader["Email"]);
+                }
+                return mails;
             }
-            return emails;
+            else
+            {
+                return null;
+            }
+        }
+        private List<Phone> ConvertToPhone(SqlDataReader reader)
+        {
+            if (reader.NextResult() && reader.HasRows)
+            {
+                var phones = new List<Phone>();
+
+                while (reader.Read())
+                {
+                    phones.Add(new Phone()
+                    {
+                        Id = (int)reader["PhoneId"],
+                        Kind = (KindOfPhone)reader["PhoneType"],
+                        Number = (string)reader["Phone"]
+                    });
+                }
+                return phones;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         #endregion
