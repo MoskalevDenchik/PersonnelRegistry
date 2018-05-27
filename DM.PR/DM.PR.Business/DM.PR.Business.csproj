@@ -61,6 +61,10 @@
     <Compile Include="Dependencies\BusinessRegistry.cs" />
     <Compile Include="Providers\IAdProvider.cs" />
     <Compile Include="Providers\IDepartmentProvider.cs" />
+    <Compile Include="Providers\IKindPhoneProvider.cs" />
+    <Compile Include="Providers\IMaritalStatusProvider.cs" />
+    <Compile Include="Providers\Implement\MaritalStatusProvider.cs" />
+    <Compile Include="Providers\Implement\KindPhoneProvider.cs" />
     <Compile Include="Services\IDepartmentService.cs" />
     <Compile Include="Providers\IEmployeeProvider.cs" />
     <Compile Include="Services\IEmployeeService.cs" />

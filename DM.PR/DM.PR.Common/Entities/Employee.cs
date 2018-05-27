@@ -7,7 +7,7 @@ namespace DM.PR.Common.Entities
     {
         public int Id { get; set; }
 
-        public int? DepartmentId { get; set; }
+        public Department Department { get; set; }
 
         public string FirstName { get; set; }
 
@@ -17,16 +17,16 @@ namespace DM.PR.Common.Entities
 
         public List<Phone> Phones { get; set; }
 
-        public List<string> Emails { get; set; }
+        public List<Email> Emails { get; set; }
 
         public string Address { get; set; }
 
-        public string MaritalStatus { get; set;}
+        public MaritalStatus MaritalStatus { get; set;}
 
         public string ImagePath { get; set; }
 
-        public DateTime? BeginningOfWork { get; set; }
+        public DateTime? BeginningWork { get; set; }
 
-        public DateTime? EndOfWork { get; set; }
+        public DateTime? EndWork { get; set; }
     }
 }

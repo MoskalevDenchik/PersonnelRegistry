@@ -50,6 +50,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -64,9 +65,13 @@
   <ItemGroup>
     <Compile Include="Dependencies\CommonRegistry.cs" />
     <Compile Include="Entities\Department.cs" />
+    <Compile Include="Entities\Email.cs" />
     <Compile Include="Entities\Employee.cs" />
+    <Compile Include="Entities\KindPhone.cs" />
+    <Compile Include="Entities\MaritalStatus.cs" />
     <Compile Include="Entities\Phone.cs" />
-    <Compile Include="Enums\Enums.cs" />
+    <Compile Include="Helpers\IConfigManger.cs" />
+    <Compile Include="Helpers\Implement\ConfigManager.cs" />
     <Compile Include="Logger\IRecordLog.cs" />
     <Compile Include="Logger\RecordLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

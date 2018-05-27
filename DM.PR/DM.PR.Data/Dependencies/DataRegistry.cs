@@ -1,4 +1,5 @@
-using DM.PR.Data.DataBase;
+using DM.PR.Data.Core.Data;
+using DM.PR.Data.Core.Data.Implement;
 using DM.PR.Data.Repositories;
 using DM.PR.Data.Repositories.Implement;
 using StructureMap.Configuration.DSL;
@@ -10,11 +11,14 @@ namespace DM.PR.Data.Dependencies
 
         public DataRegistry()
         {
-            For<IDataBase>().Use<DataBase.DataBase>();
+            For<IDbAccess>().Use<DbAccess>();
+            For<IDbExecutor>().Use<DbExecutor>();
 
+            For<IKindPhoneRepository>().Use<KindPhoneRepository>();
             For<IAdRepository>().Use<AdRepository>();
             For<IEmployeeRepository>().Use<EmployeeRepository>();
             For<IDepartmentRepository>().Use<DepartmentRepository>();
+            For<IMaritalStatusRepository>().Use<MaritalStatusRepository>();
         }
 
     }

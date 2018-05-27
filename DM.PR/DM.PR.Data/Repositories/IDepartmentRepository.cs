@@ -1,4 +1,5 @@
-﻿using DM.PR.Common.Entities;   
+﻿using DM.PR.Common.Entities;
+using DM.PR.Data.Entity;
 using System.Collections.Generic;   
 
 namespace DM.PR.Data.Repositories
@@ -9,10 +10,10 @@ namespace DM.PR.Data.Repositories
 
         Department GetById(int id);
 
-        int Create(Department item);
+        ExecuteResult Create(Department item);
 
-        int Update(Department item);
+        ExecuteResult Update(Department item);
 
-        int Delete(int id);                                         
+        ExecuteResult Delete(int id);                                         
     }
 }

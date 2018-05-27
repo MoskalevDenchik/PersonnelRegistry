@@ -1,0 +1,9 @@
+﻿@model IReadOnlyCollection<DepartmentSelectModel>
+@{ 
+    var list = new SelectList(Model, "Id", "Name");
+}
+
+<div>
+    @Html.DropDownList("DepartmentId", new SelectList(Model, "Id", "Name"),"Нет Отдела", new { @class = "form-control" })
+</div>
+

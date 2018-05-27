@@ -1,4 +1,5 @@
 ﻿using DM.PR.Common.Entities;
+using DM.PR.Data.Entity;
 using System.Collections.Generic;
 
 namespace DM.PR.Data.Repositories
@@ -11,10 +12,10 @@ namespace DM.PR.Data.Repositories
 
         Employee GetById(int id);
 
-        int Create(Employee item);
+        ExecuteResult Create(Employee item);
 
-        int Update(Employee item);
+        ExecuteResult Update(Employee item);
 
-        int Delete(int id);
+        ExecuteResult Delete(int id);
     }
 }

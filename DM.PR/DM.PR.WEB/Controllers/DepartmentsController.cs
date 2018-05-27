@@ -9,30 +9,27 @@ namespace DM.PR.WEB.Controllers
 {
     public class DepartmentsController : Controller
     {
-        #region Private
-
-        private IDepartmentProvider _departmentProvider;
-        private IDepartmentService _departmentService;
-
-        #endregion
-
-        #region Ctors
-        public DepartmentsController(IDepartmentProvider departmentProvider, IDepartmentService departmentService)
+        private IDepartmentProvider _departmentProv;
+        private IDepartmentService _departmentServ;
+                
+        public DepartmentsController(IDepartmentProvider departmentProv, IDepartmentService departmentServ)
         {
-            _departmentProvider = departmentProvider;
-            _departmentService = departmentService;
+            _departmentProv = departmentProv;
+            _departmentServ = departmentServ;
         }
-        #endregion
 
         #region Index
-        public ActionResult Index() => View();
+        public ActionResult Index()
+        {
+            return View();
+        }
 
         #endregion
 
         #region List
         public PartialViewResult List(int? id)
         {
-            return PartialView(_departmentProvider.GetAll());
+            return PartialView(_departmentProv.GetAll());
         }
         #endregion
 
@@ -41,11 +38,11 @@ namespace DM.PR.WEB.Controllers
         {
             if (id != null)
             {
-                var department = _departmentProvider.GetById((int)id);
+                var department = _departmentProv.GetById((int)id);
                 if (department != null)
                 {
                     var parentName = department.ParentId == null ?
-                        null : _departmentProvider.GetById((int)department.ParentId).Name;
+                        null : _departmentProv.GetById((int)department.ParentId).Name;
 
                     var departmentView = MapDepartmentToDepartmentDetails(department, parentName);
 
@@ -63,7 +60,7 @@ namespace DM.PR.WEB.Controllers
         {
             if (id != null)
             {
-                return View(_departmentProvider.GetById((int)id));
+                return View(_departmentProv.GetById((int)id));
             }
 
             return View();// Дописать исключение
@@ -74,7 +71,7 @@ namespace DM.PR.WEB.Controllers
         {
             if (ModelState.IsValid)
             {
-                _departmentService.Edit(department);
+                _departmentServ.Edit(department);
                 return RedirectToAction("Index");
             }
             return View();   //Дописать перенаправления
@@ -100,7 +97,7 @@ namespace DM.PR.WEB.Controllers
 
             if (ModelState.IsValid)
             {
-                _departmentService.Create(MapDepartmentCreateToDepartment(model));
+                _departmentServ.Create(MapDepartmentCreateToDepartment(model));
                 return RedirectToAction("Index");
             }
 
@@ -114,7 +111,7 @@ namespace DM.PR.WEB.Controllers
         {
             if (id != null)
             {
-                _departmentService.Delete((int)id);
+                _departmentServ.Delete((int)id);
                 return RedirectToAction("Index");
             }
 
@@ -122,21 +119,19 @@ namespace DM.PR.WEB.Controllers
         }
         #endregion
 
-        #region Helpers
+        #region Helpers     
 
-        public PartialViewResult AddPhone(int phones)
+        public ActionResult SelectList()
         {
-            return PartialView(phones);
-        }
-
-        public PartialViewResult SelectList()
-        {
-            var list = _departmentProvider.GetAll();
+            var list = _departmentProv.GetAll();
             if (list != null)
             {
                 return PartialView(MapDepartmentToDepartmentSelectModel(list));
             }
-            else return null;
+            else
+            {
+                return RedirectToAction("ServerError", "Error");
+            }
         }
 
         #endregion

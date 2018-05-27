@@ -3,8 +3,8 @@
 namespace DM.PR.Common.Entities
 {
     public class Department
-    {
-        public int? Id { get; set; }
+    {   
+        public int Id { get; set; }
         public int? ParentId { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }

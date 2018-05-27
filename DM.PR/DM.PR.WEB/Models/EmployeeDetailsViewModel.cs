@@ -21,7 +21,7 @@ namespace DM.PR.WEB.Models
 
         public List<Phone> Phones { get; set; }
 
-        public List<string> Emails { get; set; }
+        public List<Email> Emails { get; set; }
 
         public string Address { get; set; }
 

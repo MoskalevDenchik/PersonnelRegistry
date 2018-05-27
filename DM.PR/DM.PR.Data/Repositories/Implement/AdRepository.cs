@@ -8,7 +8,7 @@ using DM.PR.Data.AdServiceClient;
 
 namespace DM.PR.Data.Repositories.Implement
 {
-    public class AdRepository : IAdRepository
+    internal class AdRepository : IAdRepository
     {
         #region Private
         private IAdService _service;

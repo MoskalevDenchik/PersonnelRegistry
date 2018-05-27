@@ -2,6 +2,8 @@
 using DM.PR.Business.Services;
 using DM.PR.Common.Entities;
 using DM.PR.WEB.Models;
+using DM.PR.WEB.Models.Employee;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace DM.PR.WEB.Controllers
@@ -13,16 +15,21 @@ namespace DM.PR.WEB.Controllers
         private IEmployeeProvider _employeeProvider;
         private IEmployeeService _employeeService;
         private IDepartmentProvider _departmentProvider;
+        private IMaritalStatusProvider _maritalStatusProvider;
 
         #endregion
 
         #region Ctors
 
-        public EmployeesController(IEmployeeProvider employeeProvider, IEmployeeService employeeService, IDepartmentProvider departmentProvider)
+        public EmployeesController(IEmployeeProvider employeeProvider,
+            IEmployeeService employeeService,
+            IDepartmentProvider departmentProvider,
+            IMaritalStatusProvider maritalStatusProvider)
         {
             _employeeProvider = employeeProvider;
             _employeeService = employeeService;
             _departmentProvider = departmentProvider;
+            _maritalStatusProvider = maritalStatusProvider;
         }
         #endregion
 
@@ -55,17 +62,19 @@ namespace DM.PR.WEB.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            var employee = new EmployeeCreateViewModel
+            {
+                Emails = new List<Email>(),
+                Phones = new List<Phone>()
+            };
+            return View(employee);
         }
 
         [HttpPost]
-        public ActionResult Create(Employee employee)
+        public ActionResult Create(EmployeeCreateViewModel employee)
         {
-            if (ModelState.IsValid)
-            {
-                _employeeService.Create(employee);
-            }
-            return View();
+            _employeeService.Create(MapEmployeeCreateViewModelToEmployee(employee));
+            return RedirectToAction("Index");
         }
 
         #endregion
@@ -79,8 +88,7 @@ namespace DM.PR.WEB.Controllers
                 var employee = _employeeProvider.GetById((int)id);
                 if (employee != null)
                 {
-                    var departmentName = employee.DepartmentId == null ?
-                                            null : _departmentProvider.GetById(((int)employee.DepartmentId)).Name;
+                    var departmentName = "";
 
                     var eployeeView = MapEmployeeToEmployeeDetailsViewModel(employee, departmentName);
 
@@ -130,25 +138,92 @@ namespace DM.PR.WEB.Controllers
 
         #endregion
 
+        #region Partials
+ 
+        public PartialViewResult AddEmail(int emails)
+        {
+            return PartialView(emails);
+        }
+
+        public PartialViewResult AddPhone(int phones)
+        {
+            return PartialView(phones);
+        }
+
+        [ChildActionOnly]
+        public PartialViewResult SelectMaritalStatus()
+        {
+            var list = _maritalStatusProvider.GetAll();
+            if (list != null)
+            {
+                return PartialView(list);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        [ChildActionOnly]
+        public PartialViewResult SelectList()
+        {
+            var list = _departmentProvider.GetAll();
+            if (list != null)
+            {
+                return PartialView(MapDepartmentToDepartmentSelectModel(list));
+            }
+            else return null;
+        }
+
+        #endregion
+
         #region Mappers
+
+        private IReadOnlyCollection<DepartmentSelectModel> MapDepartmentToDepartmentSelectModel(IReadOnlyCollection<Department> departments)
+        {
+            var list = new List<DepartmentSelectModel>();
+            foreach (var item in departments)
+            {
+                list.Add(new DepartmentSelectModel()
+                {
+                    Id = (int)item.Id,
+                    Name = item.Name
+                });
+            }
+            return list;
+        }
 
         EmployeeDetailsViewModel MapEmployeeToEmployeeDetailsViewModel(Employee employee, string departmentName)
         {
             return new EmployeeDetailsViewModel()
             {
-                Id = employee.Id,
-                DepartmentId = employee.DepartmentId,
+                Id = employee.Id,                     
                 DepartmentName = departmentName,
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
                 MiddleName = employee.MiddleName,
                 Address = employee.Address,
-                BeginningOfWork = employee.BeginningOfWork,
-                Emails = employee.Emails,
-                EndOfWork = employee.EndOfWork,
-                ImagePath = employee.ImagePath,
-                MaritalStatus = employee.MaritalStatus,
-                Phones = employee.Phones
+                BeginningOfWork = employee.BeginningWork,
+                EndOfWork = employee.EndWork,
+                ImagePath = employee.ImagePath,         
+                Phones = employee.Phones,
+                Emails = employee.Emails
+            };
+        }
+
+        Employee MapEmployeeCreateViewModelToEmployee(EmployeeCreateViewModel employee)
+        {
+            return new Employee()
+            {                                          
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                MiddleName = employee.MiddleName,
+                Address = employee.Address,
+                BeginningWork = employee.BeginningWork,
+                EndWork = employee.EndWork,
+                ImagePath = employee.ImagePath,               
+                Phones = employee.Phones,
+                Emails = employee.Emails
             };
         }
         #endregion
