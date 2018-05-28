@@ -1,26 +1,18 @@
 ﻿using DM.PR.Business.Providers;
+using DM.PR.Common.Helpers;
 using System.Web.Mvc;
 
 namespace DM.PR.WEB.Controllers
 {
     public class AdController : Controller
     {
-        #region Private
-
-        private IAdProvider _adProvider;
-
-        #endregion
-
-        #region Ctor
+        private readonly IAdProvider _adProvider;
 
         public AdController(IAdProvider adProvider)
         {
+            Helper.ThrowExceptionIfNull(adProvider);
             _adProvider = adProvider;
         }
-
-        #endregion
-
-        #region ListOfAd
 
         public PartialViewResult ListOfAd()
         {
@@ -31,7 +23,5 @@ namespace DM.PR.WEB.Controllers
             }
             return PartialView("NoAd");
         }
-
-        #endregion
     }
 }

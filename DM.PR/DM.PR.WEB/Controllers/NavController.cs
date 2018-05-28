@@ -1,54 +1,37 @@
-﻿using System.Web.Mvc;      
-using DM.PR.Common.Entities;   
+﻿using System.Web.Mvc;
+using DM.PR.Common.Entities;
 using System.Collections.Generic;
 using DM.PR.WEB.Models;
 using DM.PR.Business.Providers;
+using DM.PR.Common.Helpers;
+using System;
 
 namespace DM.PR.WEB.Controllers
 {
     public class NavController : Controller
     {
-        #region Private
+        private readonly IDepartmentProvider _departmentProvider;
 
-        private IDepartmentProvider _departmentProvider;
-
-        #endregion
-        
-        #region Ctor
         public NavController(IDepartmentProvider departmentProvider)
         {
+            Helper.ThrowExceptionIfNull(departmentProvider);
             _departmentProvider = departmentProvider;
         }
-
-        #endregion
-
-        #region Menu
 
         public ActionResult Menu()
         {
             var departments = _departmentProvider.GetAll();
-            if (departments != null)
+            if (departments.Equals(null))
             {
-                var departsView = MapDepartmentToDepartmentViewModel(departments);
-                if (departments != null)
-                {
-                    return PartialView(departsView);
-
-                }
-                else return HttpNotFound(); //Дописать 
-
+                throw new Exception();
             }
-            else return HttpNotFound(); //Дописать
-            
 
+            return PartialView(MapDepartmentToDepartmentViewModel(departments));
         }
-
-
-        #endregion
 
         #region Helpers
 
-        private IEnumerable<DepartmentNavViewModel> MapDepartmentToDepartmentViewModel(IEnumerable<Department> departments)
+        private IReadOnlyCollection<DepartmentNavViewModel> MapDepartmentToDepartmentViewModel(IEnumerable<Department> departments)
         {
             var departmentsViewModel = new List<DepartmentNavViewModel>();
             foreach (var item in departments)
@@ -62,14 +45,6 @@ namespace DM.PR.WEB.Controllers
             }
             return departmentsViewModel;
         }
-
-        //private IEnumerable<NavDepartmentViewModel> FindChidrenById(int? id)
-        //{
-        //    IEnumerable<Department> childrenList = _departmentProvider.GetAll().Where(x => x.ParentId == id);
-
-        //    return childrenList != null ? MapDepartmentToDepartmentViewModel(childrenList) : null;
-
-        //}
 
         #endregion
     }

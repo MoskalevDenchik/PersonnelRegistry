@@ -1,8 +1,7 @@
-﻿
-namespace DM.PR.Data.Core.Procedures
+﻿namespace DM.PR.Data.Core.Procedures
 {
     internal static class MaritalStatusProcedure
     {
-        internal const string GetAll = "GetAllMaritalStatuses";
+        public const string GetAll = "GetAllMaritalStatuses";
     }
 }

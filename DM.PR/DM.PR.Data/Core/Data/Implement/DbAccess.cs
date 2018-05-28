@@ -1,5 +1,4 @@
 ﻿using DM.PR.Common.Helpers;
-using DM.PR.Data.Entity;
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -7,16 +6,17 @@ using System.Data.SqlClient;
 namespace DM.PR.Data.Core.Data.Implement
 {
 
-    public class DbAccess : IDbAccess
+    internal class DbAccess : IDbAccess
     {
-        IConfigManger _configManager;
+        private readonly IConfigManger _configManager;
 
         public DbAccess(IConfigManger configManager)
         {
+            Helper.ThrowExceptionIfNull(configManager);
             _configManager = configManager;
         }
 
-        public T ExecuteCommand<T>(Func<SqlCommand,T> func, string procedure, params SqlParameter[] parameters)
+        public T ExecuteCommand<T>(Func<SqlCommand, T> func, string procedure, params SqlParameter[] parameters)
         {
             using (var connection = GetConnection())
             {

@@ -1,13 +1,13 @@
-﻿using DM.PR.Common.Entities;   
+﻿using DM.PR.Common.Entities;
 using System.Collections.Generic;
-using System.Data;            
+using System.Data;
 using System.Linq;
 
 namespace DM.PR.Data.Core.Converters
 {
     internal static class DepartmentConverter
-    {   
-        internal static IEnumerable<Department> Convert(DataSet dataSet)
+    {
+        public static IEnumerable<Department> Convert(DataSet dataSet)
         {
             return dataSet.Tables[0].AsEnumerable().Select(d =>
             {
@@ -34,7 +34,7 @@ namespace DM.PR.Data.Core.Converters
                     }).ToList()
                 };
             });
-        }             
+        }
     }
 }
 

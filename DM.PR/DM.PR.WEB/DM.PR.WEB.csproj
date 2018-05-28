@@ -179,21 +179,20 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KindPhoneController.cs" />
     <Compile Include="Controllers\NavController.cs" />
-    <Compile Include="DependencyResolution\DefaultRegistry.cs" />
-    <Compile Include="DependencyResolution\ControllerConvention.cs" />
-    <Compile Include="DependencyResolution\IoC.cs" />
-    <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />
-    <Compile Include="DependencyResolution\StructureMapScopeModule.cs" />
-    <Compile Include="Models\DepartmentCreateViewModel.cs" />
+    <Compile Include="Dependency\DefaultRegistry.cs" />
+    <Compile Include="Dependency\ControllerConvention.cs" />
+    <Compile Include="Dependency\IoC.cs" />
+    <Compile Include="Dependency\StructureMapDependencyScope.cs" />
+    <Compile Include="Dependency\StructureMapScopeModule.cs" />
+    <Compile Include="Models\Department\DepartmentCreateViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DepartmentDeatailsViewModel.cs" />
-    <Compile Include="Models\DepartmentNavViewModel.cs" />
-    <Compile Include="Models\DepartmentSelectModel.cs" />
-    <Compile Include="Models\EmployeeDetailsViewModel.cs" />
+    <Compile Include="Models\Department\DepartmentDeatailsViewModel.cs" />
+    <Compile Include="Models\Department\DepartmentNavViewModel.cs" />
+    <Compile Include="Models\Department\DepartmentSelectModel.cs" />
+    <Compile Include="Models\Employee\EmployeeDetailsViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeCreateViewModel.cs" />
-    <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -267,7 +266,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50478</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

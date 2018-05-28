@@ -1,15 +1,17 @@
-﻿using System.Collections.Generic;   
+﻿using System.Collections.Generic;
 using DM.PR.Common.Entities;
+using DM.PR.Common.Helpers;
 using DM.PR.Data.Repositories;
 
 namespace DM.PR.Business.Providers.Implement
 {
-    class MaritalStatusProvider : IMaritalStatusProvider
+    internal class MaritalStatusProvider : IMaritalStatusProvider
     {
-        private IMaritalStatusRepository _maritalStatusRepository;
+        private readonly IMaritalStatusRepository _maritalStatusRepository;
 
         public MaritalStatusProvider(IMaritalStatusRepository maritalStatusRepository)
         {
+            Helper.ThrowExceptionIfNull(maritalStatusRepository);
             _maritalStatusRepository = maritalStatusRepository;
         }
 

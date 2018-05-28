@@ -7,7 +7,7 @@ namespace DM.PR.Data.Core.Converters
 {
     internal static class MaritalStatusConverter
     {
-        internal static IEnumerable<MaritalStatus> Convert(DataSet dataSet)
+        public static IEnumerable<MaritalStatus> Convert(DataSet dataSet)
         {
             return dataSet.Tables[0].AsEnumerable().Select(x =>
             {

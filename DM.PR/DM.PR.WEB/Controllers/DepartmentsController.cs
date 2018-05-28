@@ -1,6 +1,7 @@
 ﻿using DM.PR.Business.Providers;
 using DM.PR.Business.Services;
 using DM.PR.Common.Entities;
+using DM.PR.Common.Helpers;
 using DM.PR.WEB.Models;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -9,77 +10,59 @@ namespace DM.PR.WEB.Controllers
 {
     public class DepartmentsController : Controller
     {
-        private IDepartmentProvider _departmentProv;
-        private IDepartmentService _departmentServ;
-                
+        private readonly IDepartmentProvider _departmentProv;
+        private readonly IDepartmentService _departmentServ;
+
         public DepartmentsController(IDepartmentProvider departmentProv, IDepartmentService departmentServ)
         {
+            Helper.ThrowExceptionIfNull(departmentProv, departmentProv);
             _departmentProv = departmentProv;
             _departmentServ = departmentServ;
         }
 
-        #region Index
         public ActionResult Index()
         {
+            return HttpNotFound();
             return View();
+            
         }
 
-        #endregion
-
-        #region List
-        public PartialViewResult List(int? id)
+        public PartialViewResult List(int id = 0)
         {
             return PartialView(_departmentProv.GetAll());
         }
-        #endregion
 
-        #region Deatails
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id = 0)
         {
-            if (id != null)
-            {
-                var department = _departmentProv.GetById((int)id);
-                if (department != null)
-                {
-                    var parentName = department.ParentId == null ?
-                        null : _departmentProv.GetById((int)department.ParentId).Name;
+            var department = _departmentProv.GetById(id);
 
-                    var departmentView = MapDepartmentToDepartmentDetails(department, parentName);
+            var parentName = department.ParentId == null ?
+                    null : _departmentProv.GetById((int)department.ParentId).Name;
 
-                    return View(departmentView);
-                }
-                else return HttpNotFound(); // Ошибка соединения с БД 
-            }
-            else return HttpNotFound();  // Ошибка пришел NULL
+            var departmentView = MapDepartmentToDepartmentDetails(department, parentName);
+
+            return View(departmentView);
         }
 
-        #endregion
-
-        #region Edit
-        public ActionResult Edit(int? id)
+        [HttpGet]
+        public ActionResult Edit(int id = 0)
         {
-            if (id != null)
-            {
-                return View(_departmentProv.GetById((int)id));
-            }
-
-            return View();// Дописать исключение
+            return View(_departmentProv.GetById(id));
         }
 
         [HttpPost]
         public ActionResult Edit(Department department)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _departmentServ.Edit(department);
-                return RedirectToAction("Index");
+                return View(department);
             }
-            return View();   //Дописать перенаправления
+
+            _departmentServ.Edit(department);
+            return RedirectToAction("Index");
         }
-        #endregion
 
-        #region Create
-
+        [HttpGet]
         public ActionResult Create()
         {
             var department = new DepartmentCreateViewModel
@@ -90,34 +73,23 @@ namespace DM.PR.WEB.Controllers
             return View(department);
         }
 
-
         [HttpPost]
         public ActionResult Create(DepartmentCreateViewModel model)
         {
-
             if (ModelState.IsValid)
             {
-                _departmentServ.Create(MapDepartmentCreateToDepartment(model));
-                return RedirectToAction("Index");
+                return View();
             }
 
-            return View();
+            _departmentServ.Create(MapDepartmentCreateToDepartment(model));
+            return RedirectToAction("Index");
         }
 
-        #endregion
-
-        #region Delete
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id = 0)
         {
-            if (id != null)
-            {
-                _departmentServ.Delete((int)id);
-                return RedirectToAction("Index");
-            }
-
-            return View(); // Посмотрть перенаправвление и конфликты
+            _departmentServ.Delete(id);
+            return RedirectToAction("Index");
         }
-        #endregion
 
         #region Helpers     
 

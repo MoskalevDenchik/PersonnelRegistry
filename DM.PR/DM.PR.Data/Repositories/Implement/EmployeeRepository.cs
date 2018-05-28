@@ -1,4 +1,5 @@
 ﻿using DM.PR.Common.Entities;
+using DM.PR.Common.Helpers;
 using DM.PR.Data.Core.Converters;
 using DM.PR.Data.Core.Data;
 using DM.PR.Data.Core.Parameters;
@@ -13,50 +14,34 @@ namespace DM.PR.Data.Repositories
 {
     internal class EmployeeRepository : IEmployeeRepository
     {
-        private IDbExecutor _dbExecutor;
+        private readonly IDbExecutor _dbExecutor;
 
         public EmployeeRepository(IDbExecutor dbExecutor)
         {
+            Helper.ThrowExceptionIfNull(dbExecutor);
             _dbExecutor = dbExecutor;
         }
 
         public IReadOnlyCollection<Employee> GetAll()
         {
             var executeResult = _dbExecutor.Execute(EmployeeProcedure.GetAll);
-            if (!executeResult.IsNull)
-            {
-                return EmployeeConverter.Convert(executeResult.Result as DataSet).ToList();
-            }
-            else
-            {
-                throw new Exception();
-            }
+
+            return executeResult.IsNull ? null : EmployeeConverter.Convert(executeResult.Result as DataSet).ToList();
         }
 
         public IReadOnlyCollection<Employee> GetAllByDepartmentId(int id)
         {
             var executeResult = _dbExecutor.Execute(EmployeeProcedure.GetAllByDepartmentId, ResultType.DataSet, EmployeeParameters.ById(id));
-            if (!executeResult.IsNull)
-            {
-                return EmployeeConverter.Convert(executeResult.Result as DataSet).ToList();
-            }
-            else
-            {
-                throw new Exception();
-            }
+
+            return executeResult.IsNull ? throw new Exception() : EmployeeConverter.Convert(executeResult.Result as DataSet).ToList();
         }
 
         public Employee GetById(int id)
         {
             var executeResult = _dbExecutor.Execute(EmployeeProcedure.GetById, ResultType.DataSet, EmployeeParameters.ById(id));
-            if (!executeResult.IsNull)
-            {
-                return EmployeeConverter.Convert(executeResult.Result as DataSet).First();
-            }
-            else
-            {
-                throw new Exception();
-            }
+
+            return executeResult.IsNull ? throw new Exception() : EmployeeConverter.Convert(executeResult.Result as DataSet).First();
+
         }
 
         public ExecuteResult Create(Employee employee)
@@ -66,7 +51,7 @@ namespace DM.PR.Data.Repositories
 
         public ExecuteResult Delete(int id)
         {
-            return _dbExecutor.Execute(EmployeeProcedure.Delete, ResultType.NonQery, EmployeeParameters.Delete(id));
+            return _dbExecutor.Execute(EmployeeProcedure.Delete, ResultType.NonQery, EmployeeParameters.ById(id));
         }
 
         public ExecuteResult Update(Employee employee)

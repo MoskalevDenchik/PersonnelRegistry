@@ -67,7 +67,6 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Core\Converters\DepartmentConverter.cs" />
-    <Compile Include="Core\Converters\EmailConverter.cs" />
     <Compile Include="Core\Converters\EmployeeConverter.cs" />
     <Compile Include="Core\Converters\KindPhoneConverter.cs" />
     <Compile Include="Core\Converters\MaritalStatusConverter.cs" />

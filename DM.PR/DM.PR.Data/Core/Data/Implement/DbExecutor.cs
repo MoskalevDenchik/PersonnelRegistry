@@ -1,4 +1,5 @@
-﻿using DM.PR.Data.Entity;
+﻿using DM.PR.Common.Helpers;
+using DM.PR.Data.Entity;
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -7,12 +8,13 @@ namespace DM.PR.Data.Core.Data.Implement
 {
     internal class DbExecutor : IDbExecutor
     {
-        private IDbAccess _access;
+        private readonly IDbAccess _access;
 
         private Func<SqlCommand, ExecuteResult> _funcResult;
 
         public DbExecutor(IDbAccess access)
         {
+            Helper.ThrowExceptionIfNull(access);
             _access = access;
         }
 
@@ -62,5 +64,5 @@ namespace DM.PR.Data.Core.Data.Implement
             return new ExecuteResult(result);
         }
 
-    } 
+    }
 }

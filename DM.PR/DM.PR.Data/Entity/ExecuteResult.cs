@@ -1,5 +1,4 @@
-﻿
-namespace DM.PR.Data.Entity
+﻿namespace DM.PR.Data.Entity
 {
     public class ExecuteResult
     {

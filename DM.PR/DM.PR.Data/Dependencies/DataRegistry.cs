@@ -8,7 +8,6 @@ namespace DM.PR.Data.Dependencies
 {
     public class DataRegistry : Registry
     {
-
         public DataRegistry()
         {
             For<IDbAccess>().Use<DbAccess>();
@@ -20,6 +19,5 @@ namespace DM.PR.Data.Dependencies
             For<IDepartmentRepository>().Use<DepartmentRepository>();
             For<IMaritalStatusRepository>().Use<MaritalStatusRepository>();
         }
-
     }
 }

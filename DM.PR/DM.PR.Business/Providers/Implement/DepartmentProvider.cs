@@ -1,43 +1,33 @@
 ﻿using DM.PR.Common.Entities;
+using DM.PR.Common.Helpers;
 using DM.PR.Data.Repositories;
+using System;
 using System.Collections.Generic;
 
 namespace DM.PR.Business.Providers.Implement
 {
-    public class DepartmentProvider : IDepartmentProvider
+    internal class DepartmentProvider : IDepartmentProvider
     {
-        #region Private
-
-        private IDepartmentRepository _departmentRepository;
-
-        #endregion
-
-        #region Ctor
+        private readonly IDepartmentRepository _departmentRepository;
 
         public DepartmentProvider(IDepartmentRepository departmentRepository)
         {
+            Helper.ThrowExceptionIfNull(departmentRepository);
             _departmentRepository = departmentRepository;
         }
-
-        #endregion
-
-        #region GetAll
 
         public IReadOnlyCollection<Department> GetAll()
         {
             return _departmentRepository.GetAll();
         }
 
-        #endregion
-
-        #region GetById
-
         public Department GetById(int id)
         {
+            if (id <= 0)
+            {
+                throw new Exception("Неверный ID ");
+            }
             return _departmentRepository.GetById(id);
         }
-
-        #endregion
-
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.ServiceModel.Configuration;
+using DM.PR.Common.Helpers;
 using DM.PR.Common.Logger;
 using DM.PR.Data.AdServiceClient;
 
@@ -10,16 +11,12 @@ namespace DM.PR.Data.Repositories.Implement
 {
     internal class AdRepository : IAdRepository
     {
-        #region Private
-        private IAdService _service;
-        private IRecordLog _log;
-
-        #endregion
-
-        #region Ctor
+        private readonly IAdService _service;
+        private readonly IRecordLog _log;
 
         public AdRepository(IRecordLog log)
         {
+            Helper.ThrowExceptionIfNull(log);
             _log = log;
 
             try
@@ -34,10 +31,6 @@ namespace DM.PR.Data.Repositories.Implement
 
         }
 
-        #endregion
-
-        #region GetAll
-
         public IReadOnlyCollection<string> GetAll()
         {
             try
@@ -50,11 +43,7 @@ namespace DM.PR.Data.Repositories.Implement
                 return null;
             }
         }
-
-        #endregion
-
-        #region Helpers
-
+                    
         public IAdService CreateChanel()
         {
             var absolutePath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.PrivateBinPath, "DM.PR.Data.dll.config");
@@ -64,7 +53,6 @@ namespace DM.PR.Data.Repositories.Implement
                        new ConfigurationChannelFactory<IAdService>("BasicHttpBinding_IAdService", configuration, null);
             return channelFactory.CreateChannel();
         }
-
-        #endregion
+                     
     }
 }

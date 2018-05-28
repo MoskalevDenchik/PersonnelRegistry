@@ -1,5 +1,4 @@
-﻿using DM.PR.Data.Entity;
-using System;                      
+﻿using System;                      
 using System.Data.SqlClient;
 
 namespace DM.PR.Data.Core.Data

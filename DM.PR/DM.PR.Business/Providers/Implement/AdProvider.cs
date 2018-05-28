@@ -1,38 +1,22 @@
-﻿using DM.PR.Data.Repositories;
+﻿using DM.PR.Common.Helpers;
+using DM.PR.Data.Repositories;
 using System.Collections.Generic;
-using System;
 
 namespace DM.PR.Business.Providers.Implement
 {
-    public class AdProvider : IAdProvider
+    internal class AdProvider : IAdProvider
     {
-        #region Private
-
-        private IAdRepository _adRepository;
-
-        #endregion
-
-        #region Ctor
+        private readonly IAdRepository _adRepository;
 
         public AdProvider(IAdRepository adRepository)
         {
+            Helper.ThrowExceptionIfNull(adRepository);
             _adRepository = adRepository;
         }
 
-        #endregion
-
-        #region GetContent
-
         public IReadOnlyCollection<string> GetContent()
         {
-            var list = _adRepository.GetAll();
-            if (list != null)
-            {   
-                return list;
-            }
-            else return null;
+            return _adRepository.GetAll();
         }
-        #endregion
-
     }
 }

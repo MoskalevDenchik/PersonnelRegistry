@@ -5,8 +5,6 @@ namespace DM.PR.WEB.DependencyResolution
 {
     public class DefaultRegistry : Registry
     {
-        #region Constructors and Destructors
-
         public DefaultRegistry()
         {
             Scan(
@@ -17,7 +15,5 @@ namespace DM.PR.WEB.DependencyResolution
                     scan.With(new ControllerConvention());
                 });
         }
-
-        #endregion
     }
 }

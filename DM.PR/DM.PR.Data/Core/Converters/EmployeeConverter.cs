@@ -8,7 +8,7 @@ namespace DM.PR.Data.Core.Converters
 {
     internal static class EmployeeConverter
     {
-        internal static IEnumerable<Employee> Convert(DataSet dataSet)
+        public static IEnumerable<Employee> Convert(DataSet dataSet)
         {
             return dataSet.Tables[0].AsEnumerable().Select(empl =>
             {

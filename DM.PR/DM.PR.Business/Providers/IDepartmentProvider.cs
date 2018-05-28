@@ -5,8 +5,7 @@ namespace DM.PR.Business.Providers
 {
     public interface IDepartmentProvider
     {
+        Department GetById(int id);
         IReadOnlyCollection<Department> GetAll();
-
-        Department GetById(int id);                            
     }
 }

@@ -2,11 +2,11 @@
 {
     internal static class EmployeeProcedure
     {
-        internal const string GetAll = "SelectAllEmployees";
-        internal const string GetById = "SelectEmployeeById";
-        internal const string GetAllByDepartmentId = "SelectEmployeesByDepartmentId";
-        internal const string Create = "InsertEmployee";
-        internal const string Update = "UpdateEmployee";
-        internal const string Delete = "DeleteEmployee";
+        public const string GetAll = "SelectAllEmployees";
+        public const string GetById = "SelectEmployeeById";
+        public const string GetAllByDepartmentId = "SelectEmployeesByDepartmentId";
+        public const string Create = "InsertEmployee";
+        public const string Update = "UpdateEmployee";
+        public const string Delete = "DeleteEmployee";
     }
 }

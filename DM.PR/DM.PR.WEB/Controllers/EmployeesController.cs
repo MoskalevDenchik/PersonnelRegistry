@@ -1,6 +1,7 @@
 ﻿using DM.PR.Business.Providers;
 using DM.PR.Business.Services;
 using DM.PR.Common.Entities;
+using DM.PR.Common.Helpers;
 using DM.PR.WEB.Models;
 using DM.PR.WEB.Models.Employee;
 using System.Collections.Generic;
@@ -21,29 +22,22 @@ namespace DM.PR.WEB.Controllers
 
         #region Ctors
 
-        public EmployeesController(IEmployeeProvider employeeProvider,
-            IEmployeeService employeeService,
-            IDepartmentProvider departmentProvider,
-            IMaritalStatusProvider maritalStatusProvider)
+        public EmployeesController(IEmployeeProvider employeeProvider, IEmployeeService employeeService,
+            IDepartmentProvider departmentProvider, IMaritalStatusProvider maritalStatusProvider)
         {
+            Helper.ThrowExceptionIfNull(employeeProvider, employeeService, departmentProvider, maritalStatusProvider);
             _employeeProvider = employeeProvider;
             _employeeService = employeeService;
             _departmentProvider = departmentProvider;
             _maritalStatusProvider = maritalStatusProvider;
         }
         #endregion
-
-        #region Index
-
+               
         public ActionResult Index()
         {
             return View();
         }
-
-        #endregion
-
-        #region List
-
+                    
         public PartialViewResult List(int id = 0)
         {
             var model = _employeeProvider.GetAllByDepartmentId(id);
@@ -56,9 +50,6 @@ namespace DM.PR.WEB.Controllers
                 return PartialView("NoEmployees");
             }
         }
-        #endregion
-
-        #region Create
 
         public ActionResult Create()
         {
@@ -76,11 +67,7 @@ namespace DM.PR.WEB.Controllers
             _employeeService.Create(MapEmployeeCreateViewModelToEmployee(employee));
             return RedirectToAction("Index");
         }
-
-        #endregion
-
-        #region Deatails
-
+              
         public ActionResult Details(int? id)
         {
             if (id != null)
@@ -98,11 +85,7 @@ namespace DM.PR.WEB.Controllers
             }
             else return HttpNotFound();  // Ошибка пришел NULL
         }
-
-        #endregion
-
-        #region Edit
-
+          
         public ActionResult Edit(int? id)
         {
             if (id != null)
@@ -122,10 +105,7 @@ namespace DM.PR.WEB.Controllers
             }
             return View();
         }
-
-        #endregion
-
-        #region Delete
+                  
         public ActionResult Delete(int? id)
         {
             if (id != null)
@@ -135,11 +115,10 @@ namespace DM.PR.WEB.Controllers
             }
             return View();
         }
-
-        #endregion
+                      
 
         #region Partials
- 
+
         public PartialViewResult AddEmail(int emails)
         {
             return PartialView(emails);
@@ -197,7 +176,7 @@ namespace DM.PR.WEB.Controllers
         {
             return new EmployeeDetailsViewModel()
             {
-                Id = employee.Id,                     
+                Id = employee.Id,
                 DepartmentName = departmentName,
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
@@ -205,7 +184,7 @@ namespace DM.PR.WEB.Controllers
                 Address = employee.Address,
                 BeginningOfWork = employee.BeginningWork,
                 EndOfWork = employee.EndWork,
-                ImagePath = employee.ImagePath,         
+                ImagePath = employee.ImagePath,
                 Phones = employee.Phones,
                 Emails = employee.Emails
             };
@@ -214,14 +193,14 @@ namespace DM.PR.WEB.Controllers
         Employee MapEmployeeCreateViewModelToEmployee(EmployeeCreateViewModel employee)
         {
             return new Employee()
-            {                                          
+            {
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
                 MiddleName = employee.MiddleName,
                 Address = employee.Address,
                 BeginningWork = employee.BeginningWork,
                 EndWork = employee.EndWork,
-                ImagePath = employee.ImagePath,               
+                ImagePath = employee.ImagePath,
                 Phones = employee.Phones,
                 Emails = employee.Emails
             };

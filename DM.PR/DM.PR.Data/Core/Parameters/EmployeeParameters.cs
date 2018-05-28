@@ -7,7 +7,12 @@ namespace DM.PR.Data.Core.Parameters
 {
     internal static class EmployeeParameters
     {
-        internal static SqlParameter[] Create(Employee employee)
+        public static SqlParameter ById(int id)
+        {
+            return new SqlParameter("@Id", id);
+        }
+
+        public static SqlParameter[] Create(Employee employee)
         {
             return new SqlParameter[]
                {
@@ -26,7 +31,7 @@ namespace DM.PR.Data.Core.Parameters
             };
         }
 
-        internal static SqlParameter[] Update(Employee employee)
+        public static SqlParameter[] Update(Employee employee)
         {
             return new SqlParameter[]
                {
@@ -42,17 +47,7 @@ namespace DM.PR.Data.Core.Parameters
                   new SqlParameter("@MaritalStatusId",employee.MaritalStatus)
             };
         }
-
-        internal static SqlParameter Delete(int id)
-        {
-            return new SqlParameter("@EmployeeId", id);
-        }
-        
-        internal static SqlParameter ById(int id)
-        {
-            return new SqlParameter("@Id", id);
-        }
-
+ 
         #region Helpers
 
         private static DataTable ConvertToCreateTable(IReadOnlyCollection<Email> emails)

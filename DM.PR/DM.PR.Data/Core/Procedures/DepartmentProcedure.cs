@@ -2,10 +2,10 @@
 {
     internal static class DepartmentProcedure
     {
-        internal const string GetAll = "SelectAllDepartmts";
-        internal const string GetById = "SelectDepartmentById";
-        internal const string Create = "InsertDepartment";
-        internal const string Update = "UpdateDepartment";
-        internal const string Delete = "DeleteDepartmentById";
+        public const string GetAll = "SelectAllDepartmts";
+        public const string GetById = "SelectDepartmentById";
+        public const string Create = "InsertDepartment";
+        public const string Update = "UpdateDepartment";
+        public const string Delete = "DeleteDepartmentById";
     }
 }
