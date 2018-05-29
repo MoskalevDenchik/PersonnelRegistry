@@ -17,11 +17,8 @@ namespace DM.PR.WEB.Controllers
         public PartialViewResult ListOfAd()
         {
             var content = _adProvider.GetContent();
-            if (content != null)
-            {
-                return PartialView(content);
-            }
-            return PartialView("NoAd");
+
+            return content.Equals(null) ? PartialView("NoAd") : PartialView(content);
         }
     }
 }

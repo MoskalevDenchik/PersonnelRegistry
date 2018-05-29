@@ -21,8 +21,7 @@ namespace DM.PR.WEB.Controllers
         }
 
         public ActionResult Index()
-        {
-            return HttpNotFound();
+        {                              
             return View();
             
         }

@@ -61,7 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connected Services\AdServiceClient\Reference.cs">
+    <Compile Include="Connected Services\AdService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -96,22 +96,23 @@
     <Compile Include="Repositories\Implement\MaritalStatusRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\AdService\AdService.wsdl" />
+    <None Include="Connected Services\AdService\AdvertisingService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AdService\AdvertisingService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="DM.PR.Data.dll.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Connected Services\AdServiceClient\AdService.wsdl" />
-    <None Include="Connected Services\AdServiceClient\AdService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\AdServiceClient\AdService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\AdServiceClient\AdService2.xsd">
-      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DM.AdvertisingService\DM.AdvertisingService.csproj">
+      <Project>{9EF65058-B174-4A67-BAA7-3B153C82BCD0}</Project>
+      <Name>DM.AdvertisingService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DM.PR.Common\DM.PR.Common.csproj">
       <Project>{82E0BF11-2D91-49CD-8F9F-CF81495B0717}</Project>
       <Name>DM.PR.Common</Name>
@@ -121,23 +122,22 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\AdServiceClient\" />
+    <WCFMetadataStorage Include="Connected Services\AdService\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\AdServiceClient\AdService.disco" />
+    <None Include="Connected Services\AdService\AdvertisingService.disco" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\AdServiceClient\configuration91.svcinfo" />
+    <None Include="Connected Services\AdService\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\AdServiceClient\configuration.svcinfo" />
+    <None Include="Connected Services\AdService\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\AdServiceClient\Reference.svcmap">
+    <None Include="Connected Services\AdService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

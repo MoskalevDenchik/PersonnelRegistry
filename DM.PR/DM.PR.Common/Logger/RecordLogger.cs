@@ -30,13 +30,10 @@ namespace DM.PR.Common.Logger
         {
             if (!LogManager.GetRepository().Configured)
             {
-                // имя файла конфигурации
                 string configFileName = "Log";
 
-                // находи текущую деректорию
                 string curentDirectory = GetFullPathToConfigFile();
 
-                // делаем полный адрес к файлу          
                 FileInfo fullPath = new FileInfo($"{curentDirectory}\\{configFileName}.config");
 
                 if (fullPath.Exists)
@@ -52,11 +49,8 @@ namespace DM.PR.Common.Logger
         }
 
         private string GetFullPathToConfigFile()
-        {
-            // получаем адрес текущий репозиторий
+        {                                              
             return new DirectoryInfo(Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath)).FullName;
         }
-
-      
     }
 }

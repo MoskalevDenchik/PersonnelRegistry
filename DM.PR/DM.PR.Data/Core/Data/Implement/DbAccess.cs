@@ -5,7 +5,6 @@ using System.Data.SqlClient;
 
 namespace DM.PR.Data.Core.Data.Implement
 {
-
     internal class DbAccess : IDbAccess
     {
         private readonly IConfigManger _configManager;

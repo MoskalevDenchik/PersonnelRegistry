@@ -1,8 +1,17 @@
-﻿@model IEnumerable<string>
+﻿@model IEnumerable<BillBoard>
 
 <div>
     @foreach (var item in Model)
-    {
-        <p> @item </p>
+    {                   
+        <a href="@item.Link">
+            <img src="@Html.ConvertByteArrayToString(item.Image)" alt="Alternate Text" class="img-thumbnail img-responsive" />
+        </a>
+
+        <p class=" text-info text-center"> @item.Description</p>
+
     }
 </div>
+
+
+
+

@@ -1,4 +1,5 @@
-﻿using DM.PR.Common.Helpers;
+﻿using DM.PR.Common.Entities;
+using DM.PR.Common.Helpers;
 using DM.PR.Data.Repositories;
 using System.Collections.Generic;
 
@@ -14,7 +15,7 @@ namespace DM.PR.Business.Providers.Implement
             _adRepository = adRepository;
         }
 
-        public IReadOnlyCollection<string> GetContent()
+        public IReadOnlyCollection<BillBoard> GetContent()
         {
             return _adRepository.GetAll();
         }

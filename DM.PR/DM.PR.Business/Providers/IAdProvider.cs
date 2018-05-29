@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;   
+﻿using DM.PR.Common.Entities;
+using System.Collections.Generic;   
 
 namespace DM.PR.Business.Providers
 {
     public interface IAdProvider
     {
-        IReadOnlyCollection<string> GetContent();
+        IReadOnlyCollection<BillBoard> GetContent();
     }
 }

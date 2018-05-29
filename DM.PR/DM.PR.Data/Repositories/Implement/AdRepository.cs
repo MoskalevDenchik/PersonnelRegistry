@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.ServiceModel.Configuration;
+using DM.AdvertisingService.Contracts;
+using DM.AdvertisingService.Entities;
 using DM.PR.Common.Helpers;
 using DM.PR.Common.Logger;
-using DM.PR.Data.AdServiceClient;
 
 namespace DM.PR.Data.Repositories.Implement
 {
@@ -28,22 +29,38 @@ namespace DM.PR.Data.Repositories.Implement
                 _log.MakeInfo(ex.Message);
                 _service = null;
             }
-
         }
 
-        public IReadOnlyCollection<string> GetAll()
+        public IReadOnlyCollection<Common.Entities.BillBoard> GetAll()
         {
+            BillBoard[] bor;
             try
             {
-                return _service.GetContent();
+                bor = _service.GetRandomBiilBoards();
             }
             catch (Exception ex)
             {
                 _log.MakeInfo(ex.Message);
                 return null;
+            }                  
+
+            var list = new List<Common.Entities.BillBoard>();
+
+            foreach (var item in bor)
+            {
+                list.Add(new Common.Entities.BillBoard
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Description = item.Description,
+                    Image = item.Image,
+                    Link = item.Link
+                });
             }
+
+            return list;
         }
-                    
+
         public IAdService CreateChanel()
         {
             var absolutePath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.PrivateBinPath, "DM.PR.Data.dll.config");
@@ -53,6 +70,6 @@ namespace DM.PR.Data.Repositories.Implement
                        new ConfigurationChannelFactory<IAdService>("BasicHttpBinding_IAdService", configuration, null);
             return channelFactory.CreateChannel();
         }
-                     
+
     }
 }

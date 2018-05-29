@@ -8,27 +8,27 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DM.PR.Data.AdServiceClient {
+namespace DM.PR.Data.AdService {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="AdServiceClient.IAdService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="AdService.IAdService")]
     public interface IAdService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdService/GetContent", ReplyAction="http://tempuri.org/IAdService/GetContentResponse")]
-        string[] GetContent();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdService/GetRandomBiilBoards", ReplyAction="http://tempuri.org/IAdService/GetRandomBiilBoardsResponse")]
+        object GetRandomBiilBoards();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdService/GetContent", ReplyAction="http://tempuri.org/IAdService/GetContentResponse")]
-        System.Threading.Tasks.Task<string[]> GetContentAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAdService/GetRandomBiilBoards", ReplyAction="http://tempuri.org/IAdService/GetRandomBiilBoardsResponse")]
+        System.Threading.Tasks.Task<object> GetRandomBiilBoardsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IAdServiceChannel : DM.PR.Data.AdServiceClient.IAdService, System.ServiceModel.IClientChannel {
+    public interface IAdServiceChannel : DM.PR.Data.AdService.IAdService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class AdServiceClient : System.ServiceModel.ClientBase<DM.PR.Data.AdServiceClient.IAdService>, DM.PR.Data.AdServiceClient.IAdService {
+    public partial class AdServiceClient : System.ServiceModel.ClientBase<DM.PR.Data.AdService.IAdService>, DM.PR.Data.AdService.IAdService {
         
         public AdServiceClient() {
         }
@@ -49,12 +49,12 @@ namespace DM.PR.Data.AdServiceClient {
                 base(binding, remoteAddress) {
         }
         
-        public string[] GetContent() {
-            return base.Channel.GetContent();
+        public object GetRandomBiilBoards() {
+            return base.Channel.GetRandomBiilBoards();
         }
         
-        public System.Threading.Tasks.Task<string[]> GetContentAsync() {
-            return base.Channel.GetContentAsync();
+        public System.Threading.Tasks.Task<object> GetRandomBiilBoardsAsync() {
+            return base.Channel.GetRandomBiilBoardsAsync();
         }
     }
 }
