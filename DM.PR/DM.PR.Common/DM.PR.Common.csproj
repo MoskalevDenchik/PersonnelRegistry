@@ -64,6 +64,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dependencies\CommonRegistry.cs" />
+    <Compile Include="Entities\Account\Enums.cs" />
+    <Compile Include="Entities\Account\Role.cs" />
+    <Compile Include="Entities\Account\User.cs" />
     <Compile Include="Entities\BillBoard.cs" />
     <Compile Include="Entities\Department.cs" />
     <Compile Include="Entities\Email.cs" />

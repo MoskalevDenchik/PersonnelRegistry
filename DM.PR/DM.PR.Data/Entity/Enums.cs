@@ -3,6 +3,7 @@
     internal enum ResultType
     {
         DataSet,
+        DataTable,
         Scalar,
         NonQery
     }

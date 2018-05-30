@@ -12,13 +12,13 @@ namespace DM.PR.Business.Dependencies
         {
             For<IAdProvider>().Use<AdProvider>();
             For<IEmployeeProvider>().Use<EmployeeProvider>();
-            For<IDepartmentProvider>().Use<DepartmentProvider>();
             For<IKindPhoneProvider>().Use<KindPhoneProvider>();
+            For<IDepartmentProvider>().Use<DepartmentProvider>();
+            For<IMaritalStatusProvider>().Use<MaritalStatusProvider>();
 
+            For<ILoginServices>().Use<LoginServices>();
             For<IEmployeeService>().Use<EmployeeService>();
             For<IDepartmentService>().Use<DepartmentService>();
-
-            For<IMaritalStatusProvider>().Use<MaritalStatusProvider>();
         }
 
     }

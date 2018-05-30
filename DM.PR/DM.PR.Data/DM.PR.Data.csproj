@@ -70,16 +70,19 @@
     <Compile Include="Core\Converters\EmployeeConverter.cs" />
     <Compile Include="Core\Converters\KindPhoneConverter.cs" />
     <Compile Include="Core\Converters\MaritalStatusConverter.cs" />
+    <Compile Include="Core\Converters\UserConverter.cs" />
     <Compile Include="Core\Data\IDbAccsess.cs" />
     <Compile Include="Core\Data\IDbExecutor.cs" />
     <Compile Include="Core\Data\Implement\DbAccess.cs" />
     <Compile Include="Core\Data\Implement\DbExecutor.cs" />
     <Compile Include="Core\Parameters\DepartmentParameters.cs" />
     <Compile Include="Core\Parameters\EmployeeParameters.cs" />
+    <Compile Include="Core\Parameters\UserParameters.cs" />
     <Compile Include="Core\Procedures\DepartmentProcedure.cs" />
     <Compile Include="Core\Procedures\EmployeeProcedure.cs" />
     <Compile Include="Core\Procedures\KindPhoneProcedure.cs" />
     <Compile Include="Core\Procedures\MaritalStatusProcedure.cs" />
+    <Compile Include="Core\Procedures\UserProcedure.cs" />
     <Compile Include="Dependencies\DataRegistry.cs" />
     <Compile Include="Entity\Enums.cs" />
     <Compile Include="Entity\ExecuteResult.cs" />
@@ -94,6 +97,8 @@
     <Compile Include="Repositories\IKindPhoneRepository.cs" />
     <Compile Include="Repositories\Implement\KindPhoneRepository.cs" />
     <Compile Include="Repositories\Implement\MaritalStatusRepository.cs" />
+    <Compile Include="Repositories\Implement\UserRepository.cs" />
+    <Compile Include="Repositories\IUserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\AdService\AdService.wsdl" />

@@ -25,14 +25,12 @@ namespace DM.PR.Data.Repositories
         public Department GetById(int id)
         {
             var executeResult = _dbExecuter.Execute(DepartmentProcedure.GetById, ResultType.DataSet, DepartmentParameters.ById(id));
-
             return executeResult.IsNull ? throw new Exception() : DepartmentConverter.Convert(executeResult.Result as DataSet).First();
         }
 
         public IReadOnlyCollection<Department> GetAll()
         {
             var executeResult = _dbExecuter.Execute(DepartmentProcedure.GetAll);
-
             return executeResult.IsNull ? null : DepartmentConverter.Convert(executeResult.Result as DataSet).ToList();
         }
 

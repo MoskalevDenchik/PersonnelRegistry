@@ -25,7 +25,9 @@ namespace DM.PR.Data.Core.Data.Implement
                 case ResultType.DataSet:
                     _funcResult = GetDataSet;
                     break;
-
+                case ResultType.DataTable:
+                    _funcResult = GetDataTable;
+                    break;
                 case ResultType.Scalar:
                     _funcResult = GetScalar;
                     break;
@@ -33,7 +35,6 @@ namespace DM.PR.Data.Core.Data.Implement
                 case ResultType.NonQery:
                     _funcResult = GetNonQeryResult;
                     break;
-
                 default:
                     _funcResult = GetDataSet;
                     break;
@@ -51,6 +52,15 @@ namespace DM.PR.Data.Core.Data.Implement
                 return new ExecuteResult(dataSet);
             }
         }
+        private ExecuteResult GetDataTable(SqlCommand command)
+        {
+            using (var adapter = new SqlDataAdapter(command))
+            {
+                var dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                return new ExecuteResult(dataTable);
+            }
+        }
         private ExecuteResult GetNonQeryResult(SqlCommand command)
         {
             command.Connection.Open();
@@ -63,6 +73,5 @@ namespace DM.PR.Data.Core.Data.Implement
             var result = command.ExecuteScalar();
             return new ExecuteResult(result);
         }
-
     }
 }

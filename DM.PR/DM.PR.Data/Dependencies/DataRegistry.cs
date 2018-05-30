@@ -13,6 +13,7 @@ namespace DM.PR.Data.Dependencies
             For<IDbAccess>().Use<DbAccess>();
             For<IDbExecutor>().Use<DbExecutor>();
 
+            For<IUserRepository>().Use<UserRepository>();
             For<IKindPhoneRepository>().Use<KindPhoneRepository>();
             For<IAdRepository>().Use<AdRepository>();
             For<IEmployeeRepository>().Use<EmployeeRepository>();
