@@ -231,6 +231,9 @@
     <Content Include="Views\Employees\SelectList.cshtml" />
     <Content Include="Views\Employees\SelectMaritalStatus.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Error\Unauthorized.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

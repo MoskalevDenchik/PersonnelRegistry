@@ -31,7 +31,7 @@ namespace DM.PR.Data.Repositories.Implement
         public User GetByLogin(string login)
         {
             var executeResult = _dbExecuter.Execute(UserProcedure.GetByLogin, Entity.ResultType.DataSet, UserParameters.ByLogin(login));
-            return executeResult.IsNull ? null : UserConverter.Convert(executeResult.Result as DataSet).First();
+            return executeResult.IsNull ? null : UserConverter.Convert(executeResult.Result as DataSet).FirstOrDefault();
         }
 
         public IReadOnlyCollection<User> GetAll()

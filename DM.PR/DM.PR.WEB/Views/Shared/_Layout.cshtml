@@ -19,16 +19,13 @@
                 @Html.ActionLink("Personnel Registry", "Index", "Home", null, new { @class = "navbar-brand" })
                 @Html.ActionLink("Eployees", "Index", "Employees", new { departmen = (string)null }, new { @class = "navbar-brand" })
                 @Html.ActionLink("Departments", "Index", "Departments", null, new { @class = "navbar-brand" })
-                @Html.ActionLink("Login", "Login", "Account", null, new { @class = "navbar-brand" })
-
-
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav"></ul>
             </div>
+            @Html.Partial("_LoginPartial")
         </div>
     </div>
-
     <div class="container">
         <div class="jumbotron">
             <div>

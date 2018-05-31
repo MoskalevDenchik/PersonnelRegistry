@@ -20,10 +20,11 @@ namespace DM.PR.WEB.Controllers
             _departmentServ = departmentServ;
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult Index()
-        {                              
+        {
             return View();
-            
+
         }
 
         public PartialViewResult List(int id = 0)

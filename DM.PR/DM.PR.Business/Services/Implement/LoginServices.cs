@@ -1,4 +1,5 @@
-﻿using DM.PR.Common.Entities.Account;
+﻿using DM.PR.Business.Helpers;
+using DM.PR.Common.Entities.Account;
 using DM.PR.Common.Helpers;
 using DM.PR.Data.Repositories;
 using Newtonsoft.Json;
@@ -28,8 +29,7 @@ namespace DM.PR.Business.Services.Implement
             }
 
             var user = _userRep.GetByLogin(login);
-
-            if (user.Login.Equals(null))
+            if (user == null)
             {
                 return SignInStatus.Failure;
             }
@@ -54,13 +54,10 @@ namespace DM.PR.Business.Services.Implement
 
         private void AddUserToCookies(User user)
         {
-            var userData = JsonConvert.SerializeObject(user);
-            var ticket = new FormsAuthenticationTicket(1, user.Login, DateTime.Now, DateTime.Now.AddMinutes(15), false, userData);
-            var encryptTicket = FormsAuthentication.Encrypt(ticket);
-            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptTicket);
+            var cookie = CookiesConverter.ConvertToCookie(user);
             HttpContext.Current.Response.Cookies.Add(cookie);
         }
-        
+
         #endregion
 
 

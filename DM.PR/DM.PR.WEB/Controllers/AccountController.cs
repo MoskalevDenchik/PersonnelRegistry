@@ -1,6 +1,7 @@
 ﻿using DM.PR.Business.Services;
 using DM.PR.Common.Entities.Account;
 using DM.PR.WEB.Models.Account;
+using System;
 using System.Web.Mvc;
 
 namespace DM.PR.WEB.Controllers
@@ -21,7 +22,7 @@ namespace DM.PR.WEB.Controllers
 
         [HttpPost]
         public ActionResult Login(LoginViewModel model, string returnUrl)
-        {
+        {                                          
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -32,7 +33,7 @@ namespace DM.PR.WEB.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                   return  RedirectToAction("Index","Home");
+                    return RedirectToAction("Index", "Home");
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.InvalidPssword:
                     ModelState.AddModelError("", "Вы ввели неверный пароль");
@@ -43,6 +44,13 @@ namespace DM.PR.WEB.Controllers
                     return View(model);
             }
         }
+
+        public ActionResult LoginOut(string returnUrl)
+        {
+            _loginServices.SingOut();
+            return RedirectToAction("Index", "Home");
+        }
+
 
         #region Helpers
 
