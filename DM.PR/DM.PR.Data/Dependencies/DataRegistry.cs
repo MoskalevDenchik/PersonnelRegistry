@@ -1,3 +1,7 @@
+using DM.PR.Common.Entities;
+using DM.PR.Common.Entities.Account;
+using DM.PR.Data.Core.Converters;
+using DM.PR.Data.Core.Converters.Implement;
 using DM.PR.Data.Core.Data;
 using DM.PR.Data.Core.Data.Implement;
 using DM.PR.Data.Repositories;
@@ -12,6 +16,12 @@ namespace DM.PR.Data.Dependencies
         {
             For<IDbAccess>().Use<DbAccess>();
             For<IDbExecutor>().Use<DbExecutor>();
+
+            For<IConverter<User>>().Use<UserConverter>();
+            For<IConverter<Employee>>().Use<EmployeeConverter>();
+            For<IConverter<KindPhone>>().Use<KindPhoneConverter>();
+            For<IConverter<Department>>().Use<DepartmentConverter>();
+            For<IConverter<MaritalStatus>>().Use<MaritalStatusConverter>();
 
             For<IUserRepository>().Use<UserRepository>();
             For<IKindPhoneRepository>().Use<KindPhoneRepository>();

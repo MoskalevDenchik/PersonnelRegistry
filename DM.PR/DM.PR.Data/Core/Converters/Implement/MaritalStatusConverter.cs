@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace DM.PR.Data.Core.Converters
+namespace DM.PR.Data.Core.Converters.Implement
 {
-    internal static class MaritalStatusConverter
+    internal class MaritalStatusConverter : IConverter<MaritalStatus>
     {
-        public static IEnumerable<MaritalStatus> Convert(DataSet dataSet)
+        public IEnumerable<MaritalStatus> Convert(DataSet dataSet)
         {
             return dataSet.Tables[0].AsEnumerable().Select(x =>
             {

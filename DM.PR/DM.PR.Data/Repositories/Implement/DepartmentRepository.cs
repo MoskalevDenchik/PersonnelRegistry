@@ -6,7 +6,6 @@ using DM.PR.Data.Entity;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System;
 using DM.PR.Data.Core.Data;
 using DM.PR.Common.Helpers;
 
@@ -15,23 +14,25 @@ namespace DM.PR.Data.Repositories
     internal class DepartmentRepository : IDepartmentRepository
     {
         private readonly IDbExecutor _dbExecuter;
+        private readonly IConverter<Department> _converter;
 
-        public DepartmentRepository(IDbExecutor dbExecuter)
+        public DepartmentRepository(IDbExecutor dbExecuter, IConverter<Department> converter)
         {
-            Helper.ThrowExceptionIfNull(dbExecuter);
+            Helper.ThrowExceptionIfNull(dbExecuter, converter);
             _dbExecuter = dbExecuter;
+            _converter = converter;
         }
 
         public Department GetById(int id)
         {
             var executeResult = _dbExecuter.Execute(DepartmentProcedure.GetById, ResultType.DataSet, DepartmentParameters.ById(id));
-            return executeResult.IsNull ? throw new Exception() : DepartmentConverter.Convert(executeResult.Result as DataSet).First();
+            return _converter.Convert(executeResult.Result as DataSet).First();
         }
 
         public IReadOnlyCollection<Department> GetAll()
         {
             var executeResult = _dbExecuter.Execute(DepartmentProcedure.GetAll);
-            return executeResult.IsNull ? null : DepartmentConverter.Convert(executeResult.Result as DataSet).ToList();
+            return _converter.Convert(executeResult.Result as DataSet).ToList();
         }
 
         public ExecuteResult Create(Department department)
@@ -48,6 +49,6 @@ namespace DM.PR.Data.Repositories
         {
             return _dbExecuter.Execute(DepartmentProcedure.Delete, ResultType.NonQery, DepartmentParameters.ById(id));
         }
-    }   
+    }
 }
 

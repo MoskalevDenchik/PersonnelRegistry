@@ -12,35 +12,38 @@ using System.Linq;
 
 namespace DM.PR.Data.Repositories
 {
+
     internal class EmployeeRepository : IEmployeeRepository
     {
         private readonly IDbExecutor _dbExecutor;
+        private readonly IConverter<Employee> _converter;
 
-        public EmployeeRepository(IDbExecutor dbExecutor)
+        public EmployeeRepository(IDbExecutor dbExecutor, IConverter<Employee> converter)
         {
-            Helper.ThrowExceptionIfNull(dbExecutor);
+            Helper.ThrowExceptionIfNull(dbExecutor, converter);
             _dbExecutor = dbExecutor;
+            _converter = converter;
         }
 
         public IReadOnlyCollection<Employee> GetAll()
         {
             var executeResult = _dbExecutor.Execute(EmployeeProcedure.GetAll);
 
-            return executeResult.IsNull ? null : EmployeeConverter.Convert(executeResult.Result as DataSet).ToList();
+            return _converter.Convert(executeResult.Result as DataSet).ToList();
         }
 
         public IReadOnlyCollection<Employee> GetAllByDepartmentId(int id)
         {
             var executeResult = _dbExecutor.Execute(EmployeeProcedure.GetAllByDepartmentId, ResultType.DataSet, EmployeeParameters.ById(id));
 
-            return executeResult.IsNull ? throw new Exception() : EmployeeConverter.Convert(executeResult.Result as DataSet).ToList();
+            return _converter.Convert(executeResult.Result as DataSet).ToList();
         }
 
         public Employee GetById(int id)
         {
             var executeResult = _dbExecutor.Execute(EmployeeProcedure.GetById, ResultType.DataSet, EmployeeParameters.ById(id));
 
-            return executeResult.IsNull ? throw new Exception() : EmployeeConverter.Convert(executeResult.Result as DataSet).First();
+            return _converter.Convert(executeResult.Result as DataSet).First();
 
         }
 
@@ -60,4 +63,5 @@ namespace DM.PR.Data.Repositories
         }
     }
 }
+
 

@@ -28,26 +28,6 @@ namespace DM.PR.WEB
 
             string errorType = "ServerError";
 
-            //if (exc is HttpException HttpExc)
-            //{
-            //    switch (HttpExc.GetHttpCode())
-            //    {
-
-            //        case 401:
-            //            errorType = "ServerError";
-            //            break;
-            //        case 404:
-            //            errorType = "NotFound";
-            //            break;
-            //        case 500:
-            //            errorType = "ServerError";
-            //            break;
-            //        default:
-            //            errorType = "ServerError";
-            //            break;
-            //    }
-            //}
-
             using (var container = IoC.Initialize())
             {
                 var log = container.GetInstance<IRecordLog>();
