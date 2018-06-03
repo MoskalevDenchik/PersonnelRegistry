@@ -1,12 +1,34 @@
-﻿@{
-    ViewBag.Title = "Employees";
-}
+﻿@model IReadOnlyCollection<Employee>
 
-<div class="row">
-    <div class="col-md-3"  style="background-color:aliceblue">
-        @Html.Action("Menu", "Nav")
-    </div>
-    <div class="col-md-9 pull-right ">
-        @Html.Action("List")
-    </div>
+<br />
+<br />
+<div>
+    <table class="table table-condensed table-bordered text-center" style="background-color:white">
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Фамилия</td>
+                <td>Имя</td>
+                <td>Отчество</td>
+                <td>Отдел</td>
+                <td>Адресс</td>
+                <td>Статус</td>
+            </tr>
+        </thead>
+        <tbody id="tableData"></tbody>
+    </table>
 </div>
+
+<div>
+    <ul class="pagination" id="paged"></ul>
+</div>
+
+<div>
+    <select id="pageSize">
+        <option value="value">5</option>
+        <option value="value">10</option>
+        <option value="value">15</option>
+    </select>
+</div>
+
+<script src="~/Scripts/Employee/EmployeePagin.js"></script>

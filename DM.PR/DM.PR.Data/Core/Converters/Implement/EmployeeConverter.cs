@@ -22,9 +22,9 @@ namespace DM.PR.Data.Core.Converters.Implement
                     BeginningWork = empl.Field<DateTime?>("BeginningWork"),
                     EndWork = empl.Field<DateTime?>("EndWork"),
                     ImagePath = empl.Field<string>("ImagePath"),
-                    Emails = ConvertToEmails(empl.Field<int>("Id"), dataSet.Tables[1]),
-                    Phones = ConvertToPhones(empl.Field<int>("Id"), dataSet.Tables[2]),
-                    Department = ConvertToDepartmnent(empl.Field<int>("Id"), dataSet.Tables[3], dataSet.Tables[4]),
+                    Phones = ConvertToPhones(empl.Field<int>("Id"), "EmployeeId", dataSet.Tables[1]),
+                    Emails = ConvertToEmails(empl.Field<int>("Id"), dataSet.Tables[2]),
+                    Department = ConvertToDepartmnent(empl.Field<int>("DepartmentId"), dataSet.Tables[3], dataSet.Tables[4]),
                     MaritalStatus = new MaritalStatus
                     {
                         Id = empl.Field<int>("StatusId"),
@@ -34,9 +34,9 @@ namespace DM.PR.Data.Core.Converters.Implement
             });
         }
 
-        private Department ConvertToDepartmnent(int employeeId, params DataTable[] tables)
+        private Department ConvertToDepartmnent(int departmentId, params DataTable[] tables)
         {
-            return tables[0].AsEnumerable().Where(dep => dep.Field<int>("Id") == employeeId).Select(dep =>
+            return tables[0].AsEnumerable().Where(dep => dep.Field<int>("Id") == departmentId).Select(dep =>
             {
                 return new Department
                 {
@@ -45,7 +45,7 @@ namespace DM.PR.Data.Core.Converters.Implement
                     ParentId = dep.Field<int?>("ParentId"),
                     Address = dep.Field<string>("Address"),
                     Description = dep.Field<string>("Description"),
-                    Phones = ConvertToPhones(dep.Field<int>("Id"), tables[1])
+                    Phones = ConvertToPhones(dep.Field<int>("Id"), "DepartmentId", tables[1])
                 };
             }).FirstOrDefault();
         }
@@ -60,9 +60,9 @@ namespace DM.PR.Data.Core.Converters.Implement
                 };
             }).ToList();
         }
-        private List<Phone> ConvertToPhones(int entityId, DataTable table)
+        private List<Phone> ConvertToPhones(int entityId, string EntityName, DataTable table)
         {
-            return table.AsEnumerable().Where(phone => phone.Field<int>("EmployeeId") == entityId).Select(phone =>
+            return table.AsEnumerable().Where(phone => phone.Field<int>(EntityName) == entityId).Select(phone =>
             {
                 return new Phone
                 {

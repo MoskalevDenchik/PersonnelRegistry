@@ -16,7 +16,7 @@ namespace DM.PR.Data.Core.Data.Implement
         {
             Helper.ThrowExceptionIfNull(access);
             _access = access;
-        }
+        }         
 
         public ExecuteResult Execute(string procedure, ResultType result = ResultType.DataSet, params SqlParameter[] parameters)
         {

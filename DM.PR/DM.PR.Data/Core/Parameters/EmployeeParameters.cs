@@ -1,4 +1,5 @@
 ﻿using DM.PR.Common.Entities;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -10,6 +11,15 @@ namespace DM.PR.Data.Core.Parameters
         public static SqlParameter ById(int id)
         {
             return new SqlParameter("@Id", id);
+        }
+
+        public static SqlParameter[] GetAll(int pageSize, int page)
+        {
+            return new SqlParameter[]
+                {
+                  new SqlParameter("@PageSize",pageSize),
+                  new SqlParameter("@Page",page)
+                };
         }
 
         public static SqlParameter[] Create(Employee employee)
@@ -47,7 +57,19 @@ namespace DM.PR.Data.Core.Parameters
                   new SqlParameter("@MaritalStatusId",employee.MaritalStatus)
             };
         }
- 
+
+        public static SqlParameter[] FindBy(string MiddledName, string FirstName, string LastName, DateTime? WorkTime, bool IsWorking)
+        {
+            return new SqlParameter[]
+                {
+                  new SqlParameter("@LastName",LastName),
+                  new SqlParameter("@FirstName",FirstName),
+                  new SqlParameter("@MiddleName",MiddledName),
+                  new SqlParameter("@WorkTime",WorkTime),
+                  new SqlParameter("@IsWorking",IsWorking)
+             };
+        }
+
         #region Helpers
 
         private static DataTable ConvertToCreateTable(IReadOnlyCollection<Email> emails)

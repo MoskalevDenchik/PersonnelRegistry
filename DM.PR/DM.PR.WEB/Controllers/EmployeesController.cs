@@ -6,6 +6,8 @@ using DM.PR.WEB.Models;
 using DM.PR.WEB.Models.Employee;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Linq;
+using System;
 
 namespace DM.PR.WEB.Controllers
 {
@@ -32,25 +34,31 @@ namespace DM.PR.WEB.Controllers
             _maritalStatusProvider = maritalStatusProvider;
         }
         #endregion
-               
+
         public ActionResult Index()
+        {                                                
+            return View();
+        }
+
+        public ActionResult Search()
         {
             return View();
         }
-                    
-        public PartialViewResult List(int id = 0)
+
+        public ActionResult List()
         {
-            var model = _employeeProvider.GetAllByDepartmentId(id);
-            if (model != null)
-            {
-                return PartialView(model);
-            }
-            else
-            {
-                return PartialView("NoEmployees");
-            }
+            return View();
         }
 
+
+        public JsonResult GetListBy(string MiddledName, string FirstName, string LastName, DateTime? BeginningWork, bool IsWorking)
+        {
+            var list = _employeeProvider.FindBy(MiddledName, FirstName, LastName, BeginningWork, IsWorking);
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpGet]
         public ActionResult Create()
         {
             var employee = new EmployeeCreateViewModel
@@ -67,33 +75,16 @@ namespace DM.PR.WEB.Controllers
             _employeeService.Create(MapEmployeeCreateViewModelToEmployee(employee));
             return RedirectToAction("Index");
         }
-              
-        public ActionResult Details(int? id)
+
+        public ActionResult Details(int id = 0)
         {
-            if (id != null)
-            {
-                var employee = _employeeProvider.GetById((int)id);
-                if (employee != null)
-                {
-                    var departmentName = "";
-
-                    var eployeeView = MapEmployeeToEmployeeDetailsViewModel(employee, departmentName);
-
-                    return View(eployeeView);
-                }
-                else return HttpNotFound(); // Ошибка соединения с БД
-            }
-            else return HttpNotFound();  // Ошибка пришел NULL
+            var employee = _employeeProvider.GetById(id);
+            return View(MapEmployeeToEmployeeDetailsViewModel(employee));
         }
-          
-        public ActionResult Edit(int? id)
-        {
-            if (id != null)
-            {
-                return View(_employeeProvider.GetById((int)id));
-            }
-            return View(); // написать Redirect
 
+        public ActionResult Edit(int id = 0)
+        {
+            return View(_employeeProvider.GetById(id));
         }
 
         [HttpPost]
@@ -103,21 +94,35 @@ namespace DM.PR.WEB.Controllers
             {
                 _employeeService.Edit(employee);
             }
-            return View();
+            return View(employee);
         }
-                  
-        public ActionResult Delete(int? id)
-        {
-            if (id != null)
-            {
-                _employeeService.Delete((int)id);
-                return RedirectToAction("Index");
-            }
-            return View();
-        }
-                      
 
-        #region Partials
+        public ActionResult Delete(int id = 0)
+        {
+            _employeeService.Delete((int)id);
+            return RedirectToAction("Index");
+        }
+
+        public PartialViewResult GetListByDepartmentId(int id = 0, int pageSize = 5, int page = 1)
+        {
+            var model = _employeeProvider.GetAllByDepartmentId(id);
+            if (model != null)
+            {
+                return PartialView(model);
+            }
+            else
+            {
+                return PartialView("NoEmployees");
+            }
+        }
+
+        public ActionResult GetAll(int pageSize, int pageNumber)
+        {
+            var model = _employeeProvider.GetAll(pageSize, pageNumber);
+            model.CurentPage = pageNumber;
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
 
         public PartialViewResult AddEmail(int emails)
         {
@@ -154,8 +159,6 @@ namespace DM.PR.WEB.Controllers
             else return null;
         }
 
-        #endregion
-
         #region Mappers
 
         private IReadOnlyCollection<DepartmentSelectModel> MapDepartmentToDepartmentSelectModel(IReadOnlyCollection<Department> departments)
@@ -165,19 +168,19 @@ namespace DM.PR.WEB.Controllers
             {
                 list.Add(new DepartmentSelectModel()
                 {
-                    Id = (int)item.Id,
+                    Id = item.Id,
                     Name = item.Name
                 });
             }
             return list;
         }
 
-        EmployeeDetailsViewModel MapEmployeeToEmployeeDetailsViewModel(Employee employee, string departmentName)
+        private EmployeeDetailsViewModel MapEmployeeToEmployeeDetailsViewModel(Employee employee)
         {
             return new EmployeeDetailsViewModel()
             {
                 Id = employee.Id,
-                DepartmentName = departmentName,
+                DepartmentName = employee.Department.Name,
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
                 MiddleName = employee.MiddleName,
@@ -190,7 +193,7 @@ namespace DM.PR.WEB.Controllers
             };
         }
 
-        Employee MapEmployeeCreateViewModelToEmployee(EmployeeCreateViewModel employee)
+        private Employee MapEmployeeCreateViewModelToEmployee(EmployeeCreateViewModel employee)
         {
             return new Employee()
             {
@@ -205,7 +208,7 @@ namespace DM.PR.WEB.Controllers
                 Emails = employee.Emails
             };
         }
-        #endregion
 
+        #endregion
     }
 }

@@ -25,17 +25,30 @@ namespace DM.PR.Data.Repositories
             _converter = converter;
         }
 
-        public IReadOnlyCollection<Employee> GetAll()
+        public PagedData<Employee> GetAll(int pageSize, int page)
         {
-            var executeResult = _dbExecutor.Execute(EmployeeProcedure.GetAll);
+            var executeResult = _dbExecutor.Execute(EmployeeProcedure.GetAll, ResultType.DataSet, EmployeeParameters.GetAll(pageSize, page));
 
-            return _converter.Convert(executeResult.Result as DataSet).ToList();
+            var pagedData = new PagedData<Employee>
+            {
+                Data = _converter.Convert(executeResult.Result as DataSet).ToList(),
+                TotalCount = (executeResult.Result as DataSet).Tables[5].AsEnumerable().Select(x => x.Field<int>("Count")).First()
+            };
+
+            return pagedData;
         }
 
         public IReadOnlyCollection<Employee> GetAllByDepartmentId(int id)
         {
             var executeResult = _dbExecutor.Execute(EmployeeProcedure.GetAllByDepartmentId, ResultType.DataSet, EmployeeParameters.ById(id));
 
+            return _converter.Convert(executeResult.Result as DataSet).ToList();
+        }
+
+        public IReadOnlyCollection<Employee> FindBy(string MiddledName, string FirstName, string LastName, DateTime? WorkTime, bool IsWorking)
+        {
+            var executeResult = _dbExecutor.Execute(EmployeeProcedure.FindBy, ResultType.DataSet,
+                                          EmployeeParameters.FindBy(MiddledName, FirstName, LastName, WorkTime, IsWorking));
             return _converter.Convert(executeResult.Result as DataSet).ToList();
         }
 
@@ -61,6 +74,8 @@ namespace DM.PR.Data.Repositories
         {
             return _dbExecutor.Execute(EmployeeProcedure.Update, ResultType.NonQery, EmployeeParameters.Update(employee));
         }
+
+
     }
 }
 

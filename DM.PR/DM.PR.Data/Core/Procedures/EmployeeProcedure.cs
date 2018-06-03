@@ -8,5 +8,6 @@
         public const string Create = "InsertEmployee";
         public const string Update = "UpdateEmployee";
         public const string Delete = "DeleteEmployee";
+        public const string FindBy = "FindEmpoyeesBy";
     }
 }

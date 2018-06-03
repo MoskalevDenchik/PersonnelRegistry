@@ -1,4 +1,5 @@
 ﻿using DM.PR.Common.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace DM.PR.Business.Providers
@@ -7,8 +8,10 @@ namespace DM.PR.Business.Providers
     {
         Employee GetById(int id);
 
-        IReadOnlyCollection<Employee> GetAll();
+        IReadOnlyCollection<Employee> FindBy(string MiddledName, string FirstName, string LastName, DateTime? WorkTime, bool IsWorking);
 
-        IReadOnlyCollection<Employee> GetAllByDepartmentId(int id);                            
+        PagedData<Employee> GetAll(int pageSize, int page);
+
+        IReadOnlyCollection<Employee> GetAllByDepartmentId(int id);
     }
 }

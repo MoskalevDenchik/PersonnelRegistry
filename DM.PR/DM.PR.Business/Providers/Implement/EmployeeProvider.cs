@@ -1,6 +1,7 @@
 ﻿using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using DM.PR.Data.Repositories;
+using System;
 using System.Collections.Generic;
 
 namespace DM.PR.Business.Providers.Implement
@@ -15,9 +16,9 @@ namespace DM.PR.Business.Providers.Implement
             _employeeRepository = employeeRepository;
         }
 
-        public IReadOnlyCollection<Employee> GetAll()
+        public PagedData<Employee> GetAll(int pageSize, int page)
         {
-            return _employeeRepository.GetAll();
+            return _employeeRepository.GetAll(pageSize, page);
         }
 
         public Employee GetById(int id)
@@ -33,8 +34,13 @@ namespace DM.PR.Business.Providers.Implement
             }
             else
             {
-                return _employeeRepository.GetAll();
+                return null;//return _employeeRepository.GetAll(2, 4);
             }
+        }
+
+        public IReadOnlyCollection<Employee> FindBy(string MiddledName, string FirstName, string LastName, DateTime? WorkTime, bool IsWorking)
+        {
+            return _employeeRepository.FindBy(MiddledName, FirstName, LastName, WorkTime, IsWorking);
         }
     }
 }

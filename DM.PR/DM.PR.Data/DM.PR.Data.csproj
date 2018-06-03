@@ -66,11 +66,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Core\Converters\DepartmentConverter.cs" />
-    <Compile Include="Core\Converters\EmployeeConverter.cs" />
-    <Compile Include="Core\Converters\KindPhoneConverter.cs" />
-    <Compile Include="Core\Converters\MaritalStatusConverter.cs" />
-    <Compile Include="Core\Converters\UserConverter.cs" />
+    <Compile Include="Core\Converters\IConverter.cs" />
+    <Compile Include="Core\Converters\Implement\DepartmentConverter.cs" />
+    <Compile Include="Core\Converters\Implement\EmployeeConverter.cs" />
+    <Compile Include="Core\Converters\Implement\KindPhoneConverter.cs" />
+    <Compile Include="Core\Converters\Implement\MaritalStatusConverter.cs" />
+    <Compile Include="Core\Converters\Implement\UserConverter.cs" />
     <Compile Include="Core\Data\IDbAccsess.cs" />
     <Compile Include="Core\Data\IDbExecutor.cs" />
     <Compile Include="Core\Data\Implement\DbAccess.cs" />

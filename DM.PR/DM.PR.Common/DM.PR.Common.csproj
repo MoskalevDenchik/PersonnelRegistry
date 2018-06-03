@@ -73,6 +73,7 @@
     <Compile Include="Entities\Employee.cs" />
     <Compile Include="Entities\KindPhone.cs" />
     <Compile Include="Entities\MaritalStatus.cs" />
+    <Compile Include="Entities\PagedData.cs" />
     <Compile Include="Entities\Phone.cs" />
     <Compile Include="Helpers\Helper.cs" />
     <Compile Include="Helpers\IConfigManger.cs" />
