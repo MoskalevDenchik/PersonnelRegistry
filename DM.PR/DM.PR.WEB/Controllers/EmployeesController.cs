@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Linq;
 using System;
+using DM.PR.WEB.Infrastructure.Attributes;
 
 namespace DM.PR.WEB.Controllers
 {
@@ -36,7 +37,7 @@ namespace DM.PR.WEB.Controllers
         #endregion
 
         public ActionResult Index()
-        {                                                
+        {
             return View();
         }
 
@@ -116,7 +117,8 @@ namespace DM.PR.WEB.Controllers
             }
         }
 
-        public ActionResult GetAll(int pageSize, int pageNumber)
+        [AjaxOnly]
+        public ActionResult GetAll(int pageSize = 1, int pageNumber = 1)
         {
             var model = _employeeProvider.GetAll(pageSize, pageNumber);
             model.CurentPage = pageNumber;

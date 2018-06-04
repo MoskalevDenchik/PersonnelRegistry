@@ -18,7 +18,6 @@ function GetPageData(pageNum, pageSize)
             AddRows(result);
             AddPaggin(result.TotalCount, result.CurentPage);
         }
-
     })
 }
 
@@ -26,16 +25,16 @@ function AddRows(data)
 {
     var rowData = "";
 
-    for (var i = 0; i < data.Data.length; i++)
+    for (let item of data.Data)
     {
         rowData += '<tr>'
-            + '<td>' + data.Data[i].Id + '</td >'
-            + '<td>' + data.Data[i].LastName + '</td>'
-            + '<td>' + data.Data[i].FirstName + '</td >'
-            + '<td>' + data.Data[i].MiddleName + '</td>'
-            + '<td>' + data.Data[i].Department.Name + '</td>'
-            + '<td>' + data.Data[i].Address + '</td>'
-            + '<td>' + data.Data[i].MaritalStatus.Status + '</td>'
+            + '<td>' + item.Id + '</td >'
+            + '<td>' + item.LastName + '</td>'
+            + '<td>' + item.FirstName + '</td >'
+            + '<td>' + item.MiddleName + '</td>'
+            + '<td>' + item.Department.Name + '</td>'
+            + '<td>' + item.Address + '</td>'
+            + '<td>' + item.MaritalStatus.Status + '</td>'
             + '</tr> ';
     }
 
@@ -44,20 +43,20 @@ function AddRows(data)
 
 function AddPaggin(totalCount, currentPage)
 {
-    var pagin = '';
-    var totalPage = Math.ceil(totalCount / 6);
+    var buttons = '';
+    var pagaSize = 6; // привязать к selectList
+    var totalPage = Math.ceil(totalCount / pagaSize);
     var nextPage = (currentPage < totalPage) ? currentPage + 1 : currentPage;
     var previosPage = (currentPage > 1) ? currentPage - 1 : currentPage;
 
-    pagin += ' <li  onclick="GetPageData(' + previosPage + ',' + 6 + ')" ><a href="#">&laquo;</a></li>';
+    buttons += ' <li  onclick="GetPageData(' + previosPage + ',' + pagaSize + ')" ><a href="#">&laquo;</a></li>';
     for (var i = 1; i <= totalPage; i++)
     {
-        var classAtiv = '';
-        if (i == currentPage) { classAtiv = 'active'; }
-        pagin += '<li onclick="GetPageData(' + i + ',' + 6 + ')" class = ' + classAtiv + ' id = "selectedId" ><a href="#">' + i + '</a></li>';
+        var classAtiv = (i == currentPage) ? 'active' : '';
+        buttons += '<li onclick="GetPageData(' + i + ',' + pagaSize + ')" class = ' + classAtiv + ' id = "selectedId" ><a href="#">' + i + '</a></li>';
     }
-    pagin += ' <li onclick="GetPageData(' + nextPage + ',' + 6 + ')"><a href="#">&raquo;</a></li>';
+    buttons += ' <li onclick="GetPageData(' + nextPage + ',' + pagaSize + ')"><a href="#">&raquo;</a></li>';
 
-    $("#paged").append(pagin)
+    $("#paged").append(buttons);
 }
-    
+
