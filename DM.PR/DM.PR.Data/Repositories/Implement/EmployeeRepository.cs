@@ -29,13 +29,11 @@ namespace DM.PR.Data.Repositories
         {
             var executeResult = _dbExecutor.Execute(EmployeeProcedure.GetAll, ResultType.DataSet, EmployeeParameters.GetAll(pageSize, page));
 
-            var pagedData = new PagedData<Employee>
+            return new PagedData<Employee>
             {
                 Data = _converter.Convert(executeResult.Result as DataSet).ToList(),
                 TotalCount = (executeResult.Result as DataSet).Tables[5].AsEnumerable().Select(x => x.Field<int>("Count")).First()
             };
-
-            return pagedData;
         }
 
         public IReadOnlyCollection<Employee> GetAllByDepartmentId(int id)

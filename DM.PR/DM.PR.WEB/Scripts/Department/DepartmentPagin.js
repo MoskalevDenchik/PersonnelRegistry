@@ -10,7 +10,7 @@ function GetPageData(pageNum, pageSize)
     $("#paged").empty();
 
     $.ajax({
-        url: "/Employees/GetAll",
+        url: "/Departments/GetAll",
         type: "GET",
         data: { pageNumber: pageNum, pageSize: pageSize },
         success: function (result)
@@ -28,13 +28,10 @@ function AddRows(data)
     for (let item of data.Data)
     {
         rowData += '<tr>'
-            + '<td>' + item.Id + '</td >'
-            + '<td>' + item.LastName + '</td>'
-            + '<td>' + item.FirstName + '</td >'
-            + '<td>' + item.MiddleName + '</td>'
-            + '<td>' + item.Department.Name + '</td>'
+            + '<td>' + item.Id + '</td >'      
+            + '<td>' + item.Name + '</td >'
             + '<td>' + item.Address + '</td>'
-            + '<td>' + item.MaritalStatus.Status + '</td>'
+            + '<td>' + item.Description + '</td>'            
             + '</tr> ';
     }
 
@@ -58,12 +55,12 @@ function AddPaggin(totalCount, currentPage)
     buttons += ' <li onclick="GetPageData(' + nextPage + ',' + pagaSize + ')"><a href="#">&raquo;</a></li>';
 
     $("#paged").append(buttons);
-
+ 
 }
 
 $('#pageSize').on('change', function ()
 {
-    var PageSize = $('#pageSize option:selected').html();
+    var PageSize = $('#pageSize option:selected').html(); 
 
     GetPageData(1, PageSize);
 })

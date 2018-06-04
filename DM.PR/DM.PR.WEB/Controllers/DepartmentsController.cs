@@ -2,6 +2,7 @@
 using DM.PR.Business.Services;
 using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
+using DM.PR.WEB.Infrastructure.Attributes;
 using DM.PR.WEB.Models;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -29,7 +30,7 @@ namespace DM.PR.WEB.Controllers
 
         public PartialViewResult List(int id = 0)
         {
-            return PartialView(_departmentProv.GetAll());
+            return PartialView(_departmentProv.GetAll(1,1));
         }
 
         public ActionResult Details(int id = 0)
@@ -89,6 +90,14 @@ namespace DM.PR.WEB.Controllers
         {
             _departmentServ.Delete(id);
             return RedirectToAction("Index");
+        }
+
+        [AjaxOnly]
+        public ActionResult GetAll(int pageSize, int pageNumber)
+        {
+            var model = _departmentProv.GetAll(pageSize, pageNumber);
+            model.CurentPage = pageNumber;
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
 
         #region Helpers     

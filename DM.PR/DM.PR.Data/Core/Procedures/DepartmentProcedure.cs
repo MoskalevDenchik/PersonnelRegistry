@@ -3,6 +3,7 @@
     internal static class DepartmentProcedure
     {
         public const string GetAll = "SelectAllDepartmts";
+        public const string GetAllByPage = "SelectAllDepartmtsByPage";
         public const string GetById = "SelectDepartmentById";
         public const string Create = "InsertDepartment";
         public const string Update = "UpdateDepartment";

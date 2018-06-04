@@ -1,9 +1,8 @@
-﻿@model IReadOnlyCollection<Employee>
-
+﻿
 <br />
 <br />
 <div>
-    <table class="table table-condensed table-bordered text-center" style="background-color:white">
+    <table class="table table-hover table-bordered text-center" style="background-color:white">
         <thead>
             <tr>
                 <td>Id</td>
@@ -15,20 +14,41 @@
                 <td>Статус</td>
             </tr>
         </thead>
-        <tbody id="tableData"></tbody>
+        <tbody id="tableData" class="text-center text-info tableClick" style="font-size:small; margin-bottom:2px"></tbody>
     </table>
 </div>
 
-<div>
-    <ul class="pagination" id="paged"></ul>
-</div>
+<div class="row">
+    <div class="col-md-3">
+        <ul class="pagination" id="paged"></ul>
+    </div>
 
-<div>
-    <select id="pageSize">
-        <option value="value">5</option>
-        <option value="value">10</option>
-        <option value="value">15</option>
-    </select>
+    <div class="col-md-1">
+        <select id="pageSize">
+            <option value="value">5</option>
+            <option value="value">10</option>
+            <option value="value">15</option>
+        </select>
+    </div>
+    <div class=" col-md-offset-4 col-md-4">
+        <form action="Employees/" class="form-inline" role="form" method="post" id="buttonForm">
+
+            <input type="hidden" name="id" id="UserID" />
+
+            <div class="form-group" style="margin-bottom:5px">
+                <input value="Удалить" name="Delete" type="submit" class="btn btn-default form-control disabled " />
+            </div>
+            <div class="form-group" style="margin-bottom:5px">
+                <input value="Изменить" name="Edit" type="submit" class="btn btn-default form-control disabled" />
+            </div>
+            <div class="form-group" style="margin-bottom:5px">
+                <input value="Подробнее" name="Details" type="submit" class="btn btn-default form-control disabled" />
+            </div>
+
+        </form>
+    </div>
 </div>
 
 <script src="~/Scripts/Employee/EmployeePagin.js"></script>
+<script src="~/Scripts/ModifyButtons.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>

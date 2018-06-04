@@ -15,10 +15,14 @@ namespace DM.PR.Business.Providers.Implement
             Helper.ThrowExceptionIfNull(departmentRepository);
             _departmentRepository = departmentRepository;
         }
-
         public IReadOnlyCollection<Department> GetAll()
         {
             return _departmentRepository.GetAll();
+        }
+
+        public PagedData<Department> GetAll(int pageSize, int pageNumber)
+        {
+            return _departmentRepository.GetAll(pageSize, pageNumber);
         }
 
         public Department GetById(int id)

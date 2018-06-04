@@ -31,8 +31,19 @@ namespace DM.PR.Data.Repositories
 
         public IReadOnlyCollection<Department> GetAll()
         {
-            var executeResult = _dbExecuter.Execute(DepartmentProcedure.GetAll);
+            var executeResult = _dbExecuter.Execute(DepartmentProcedure.GetAll, ResultType.DataSet);
             return _converter.Convert(executeResult.Result as DataSet).ToList();
+
+        }
+
+        public PagedData<Department> GetAll(int pageSize, int pageNumber)
+        {
+            var executeResult = _dbExecuter.Execute(DepartmentProcedure.GetAllByPage, ResultType.DataSet, DepartmentParameters.GetAll(pageSize, pageNumber));
+            return new PagedData<Department>
+            {
+                Data = _converter.Convert(executeResult.Result as DataSet).ToList(),
+                TotalCount = (executeResult.Result as DataSet).Tables[2].AsEnumerable().Select(x => x.Field<int>("Count")).First()
+            };
         }
 
         public ExecuteResult Create(Department department)
@@ -49,6 +60,8 @@ namespace DM.PR.Data.Repositories
         {
             return _dbExecuter.Execute(DepartmentProcedure.Delete, ResultType.NonQery, DepartmentParameters.ById(id));
         }
+
+
     }
 }
 

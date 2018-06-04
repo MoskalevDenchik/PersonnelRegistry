@@ -1,11 +1,13 @@
 ﻿using DM.PR.Common.Entities;
 using DM.PR.Data.Entity;
-using System.Collections.Generic;   
+using System.Collections.Generic;
 
 namespace DM.PR.Data.Repositories
 {
     public interface IDepartmentRepository
     {
+        PagedData<Department> GetAll(int pageSize, int pageNumber);
+
         IReadOnlyCollection<Department> GetAll();
 
         Department GetById(int id);
@@ -14,6 +16,6 @@ namespace DM.PR.Data.Repositories
 
         ExecuteResult Update(Department item);
 
-        ExecuteResult Delete(int id);                                         
+        ExecuteResult Delete(int id);
     }
 }

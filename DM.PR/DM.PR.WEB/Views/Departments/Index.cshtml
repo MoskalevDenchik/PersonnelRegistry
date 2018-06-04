@@ -1,29 +1,52 @@
-﻿@{
-    ViewBag.Title = "List";
-}
+﻿
+<br />
+<br />
 
-<div class="container">
-    <div class="row pull-right">
-        @Html.ActionLink("Create", "Create", null, new { @class = "btn btn-default" })
+<table class="table table-hover table-bordered " style="background-color:white">
+    <thead>
+        <tr class="text-center">
+            <td>Id</td>
+            <td>Имя</td>
+            <td>Адресс</td>
+            <td>Описание</td>
+        </tr>
+    </thead>
+    <tbody id="tableData" class="text-center text-info tableClick" style="font-size:small; margin-bottom:2px"></tbody>
+</table>
+
+<div class="row">
+    <div class="col-md-3">
+        <ul class="pagination" id="paged"></ul>
+    </div>
+
+    <div class="col-md-1">
+        <select id="pageSize">
+            <option value="value">5</option>
+            <option value="value">10</option>
+            <option value="value">15</option>
+        </select>
+    </div>
+    <div class=" col-md-offset-4 col-md-4">
+        <form action="Departments/" class="form-inline" role="form" method="post" id="buttonForm">
+            
+            <input type="hidden" name="id" id="UserID" />
+            
+            <div class="form-group" style="margin-bottom:5px">
+                <input value="Удалить" name="Delete" type="submit" class="btn btn-default form-control disabled " />
+            </div>
+            <div class="form-group" style="margin-bottom:5px">
+                <input value="Изменить" name="Edit" type="submit" class="btn btn-default form-control disabled" />
+            </div>
+            <div class="form-group" style="margin-bottom:5px">
+                <input value="Подробнее" name="Details" type="submit" class="btn btn-default form-control disabled" />
+            </div>
+
+        </form>
     </div>
 </div>
 
 
-<table class="table table-condensed table-bordered  table-hover" style="background-color:white">
-    <thead>
-        <tr class="text-center" @*style="font-size:small"*@>
-            <td>ID</td>
-            <td>ParentId</td>
-            <td>Name</td>
-            <td>Adresss</td>
-            <td>Numbers</td>
-            <td>Description</td>
-            <td>Edit</td>
-            <td>Delete</td>
-        </tr>
-    </thead>
-    <tbody class="text-center text-info" style="font-size:small; margin-bottom:2px">
-        @Html.Action("List")
-    </tbody>
-</table>
 
+<script src="~/Scripts/Department/DepartmentPagin.js"></script>
+<script src="~/Scripts/ModifyButtons.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>

@@ -12,6 +12,15 @@ namespace DM.PR.Data.Core.Parameters
             return new SqlParameter("@Id", id);
         }
 
+        public static SqlParameter[] GetAll(int pageSize, int page)
+        {
+            return new SqlParameter[]
+                {
+                  new SqlParameter("@PageSize",pageSize),
+                  new SqlParameter("@Page",page)
+                };
+        }
+
         public static SqlParameter[] Create(Department department)
         {
             return new SqlParameter[]

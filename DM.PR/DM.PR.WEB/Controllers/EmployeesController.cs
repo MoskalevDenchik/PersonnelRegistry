@@ -52,11 +52,6 @@ namespace DM.PR.WEB.Controllers
         }
 
 
-        public JsonResult GetListBy(string MiddledName, string FirstName, string LastName, DateTime? BeginningWork, bool IsWorking)
-        {
-            var list = _employeeProvider.FindBy(MiddledName, FirstName, LastName, BeginningWork, IsWorking);
-            return Json(list, JsonRequestBehavior.AllowGet);
-        }
 
 
         [HttpGet]
@@ -118,12 +113,19 @@ namespace DM.PR.WEB.Controllers
         }
 
         [AjaxOnly]
-        public ActionResult GetAll(int pageSize = 1, int pageNumber = 1)
+        public ActionResult GetAll(int pageSize , int pageNumber)
         {
             var model = _employeeProvider.GetAll(pageSize, pageNumber);
             model.CurentPage = pageNumber;
             return Json(model, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult GetListBy(string MiddledName, string FirstName, string LastName, DateTime? BeginningWork, bool IsWorking)
+        {
+            var list = _employeeProvider.FindBy(MiddledName, FirstName, LastName, BeginningWork, IsWorking);
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
 
 
         public PartialViewResult AddEmail(int emails)
