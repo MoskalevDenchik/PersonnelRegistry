@@ -1,14 +1,12 @@
-﻿using DM.PR.Business.Providers;
+﻿using DM.PR.WEB.Infrastructure.Attributes;
+using System.Collections.Generic;
+using DM.PR.WEB.Models.Employee;
+using DM.PR.Business.Providers;
 using DM.PR.Business.Services;
 using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using DM.PR.WEB.Models;
-using DM.PR.WEB.Models.Employee;
-using System.Collections.Generic;
-using System.Web.Mvc;
-using System.Linq;
-using System;
-using DM.PR.WEB.Infrastructure.Attributes;
+using System.Web.Mvc;     
 
 namespace DM.PR.WEB.Controllers
 {
@@ -50,10 +48,7 @@ namespace DM.PR.WEB.Controllers
         {
             return View();
         }
-
-
-
-
+        
         [HttpGet]
         public ActionResult Create()
         {
@@ -95,13 +90,13 @@ namespace DM.PR.WEB.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            _employeeService.Delete((int)id);
+            _employeeService.Delete(id);
             return RedirectToAction("Index");
         }
 
         public PartialViewResult GetListByDepartmentId(int id = 0, int pageSize = 5, int page = 1)
         {
-            var model = _employeeProvider.GetAllByDepartmentId(id);
+            var model = _employeeProvider.GetPageByDepartmentId(id, pageSize, page);
             if (model != null)
             {
                 return PartialView(model);
@@ -113,20 +108,18 @@ namespace DM.PR.WEB.Controllers
         }
 
         [AjaxOnly]
-        public ActionResult GetAll(int pageSize , int pageNumber)
+        public ActionResult GetAll(int pageSize, int pageNumber)
         {
-            var model = _employeeProvider.GetAll(pageSize, pageNumber);
+            var model = _employeeProvider.GetPage(pageSize, pageNumber);
             model.CurentPage = pageNumber;
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetListBy(string MiddledName, string FirstName, string LastName, DateTime? BeginningWork, bool IsWorking)
+        public ActionResult GetListBy(string MiddledName, string FirstName, string LastName, int fromYear, int toYear, bool IsWorking, int pageSize, int page)
         {
-            var list = _employeeProvider.FindBy(MiddledName, FirstName, LastName, BeginningWork, IsWorking);
+            PagedData<Employee> list = _employeeProvider.GetPageBySearchParams(LastName, FirstName, MiddledName, fromYear, toYear, IsWorking, pageSize, page);
             return Json(list, JsonRequestBehavior.AllowGet);
         }
-
-
 
         public PartialViewResult AddEmail(int emails)
         {

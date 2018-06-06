@@ -5,6 +5,7 @@ namespace DM.PR.Business.Providers
 {
     public interface IMaritalStatusProvider
     {
+        MaritalStatus GetById(int id);
         IReadOnlyCollection<MaritalStatus> GetAll();
     }
 }

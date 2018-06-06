@@ -1,22 +1,20 @@
-﻿using DM.PR.Business.Helpers;
-using DM.PR.Common.Entities.Account;
-using DM.PR.Common.Helpers;
-using DM.PR.Data.Repositories;
-using Newtonsoft.Json;
-using System;
-using System.Web;
+﻿using DM.PR.Common.Entities.Account;
+using DM.PR.Business.Providers;
+using DM.PR.Business.Helpers;
+using DM.PR.Common.Helpers;           
 using System.Web.Security;
+using System.Web;
 
 namespace DM.PR.Business.Services.Implement
 {
     internal class LoginServices : ILoginServices
     {
-        IUserRepository _userRep;
+        private readonly IUserProvider _prov;
 
-        public LoginServices(IUserRepository userRep)
+        public LoginServices(IUserProvider prov)
         {
-            Helper.ThrowExceptionIfNull(userRep);
-            _userRep = userRep;
+            Helper.ThrowExceptionIfNull(prov);
+            _prov = prov;
         }
 
         #region Public Methods
@@ -28,7 +26,7 @@ namespace DM.PR.Business.Services.Implement
                 return SignInStatus.Failure;
             }
 
-            var user = _userRep.GetByLogin(login);
+            var user = _prov.GetByLogin(login);
             if (user == null)
             {
                 return SignInStatus.Failure;

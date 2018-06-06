@@ -1,37 +1,49 @@
-﻿using DM.PR.Common.Entities;
-using DM.PR.Common.Helpers;
+﻿using System.Collections.Generic;
+using DM.PR.Data.Specifications;
 using DM.PR.Data.Repositories;
+using DM.PR.Common.Entities;
+using DM.PR.Common.Helpers;
 using System;
-using System.Collections.Generic;
 
 namespace DM.PR.Business.Providers.Implement
 {
     internal class DepartmentProvider : IDepartmentProvider
     {
-        private readonly IDepartmentRepository _departmentRepository;
+        private readonly IRepository<Department> _rep;
+        private readonly IDepartmentSpecificationCreator _creator;
 
-        public DepartmentProvider(IDepartmentRepository departmentRepository)
+        public DepartmentProvider(IRepository<Department> rep, IDepartmentSpecificationCreator creater)
         {
-            Helper.ThrowExceptionIfNull(departmentRepository);
-            _departmentRepository = departmentRepository;
-        }
-        public IReadOnlyCollection<Department> GetAll()
-        {
-            return _departmentRepository.GetAll();
-        }
-
-        public PagedData<Department> GetAll(int pageSize, int pageNumber)
-        {
-            return _departmentRepository.GetAll(pageSize, pageNumber);
+            Helper.ThrowExceptionIfNull(rep, creater);
+            _rep = rep;
+            _creator = creater;
         }
 
         public Department GetById(int id)
         {
             if (id <= 0)
             {
-                throw new Exception("Неверный ID ");
+                throw new Exception("Неверный ID");
             }
-            return _departmentRepository.GetById(id);
+
+            return _rep.GetById(id);
+        }
+
+        public IReadOnlyCollection<Department> GetAll()
+        {
+            return _rep.GetAll();
+        }
+
+        public PagedData<Department> GetPage(int pageSize, int pageNumber)
+        {
+            if (pageSize <= 0 || pageNumber <= 0)
+            {
+                throw new Exception("Id пришел 0");
+            }
+
+            ISpecification findByPageSpecification = _creator.CreateFindByPageDataSpecification(pageSize, pageNumber);
+            return _rep.FindPageBy(findByPageSpecification);
         }
     }
 }
+           

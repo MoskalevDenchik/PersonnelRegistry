@@ -84,23 +84,31 @@
     <Compile Include="Dependencies\BusinessRegistry.cs" />
     <Compile Include="Entities\UserPrincipal.cs" />
     <Compile Include="Helpers\CookiesConverter.cs" />
-    <Compile Include="Providers\IAdProvider.cs" />
+    <Compile Include="Providers\IBillBoardProvider.cs" />
     <Compile Include="Providers\IDepartmentProvider.cs" />
     <Compile Include="Providers\IKindPhoneProvider.cs" />
     <Compile Include="Providers\IMaritalStatusProvider.cs" />
     <Compile Include="Providers\Implement\MaritalStatusProvider.cs" />
     <Compile Include="Providers\Implement\KindPhoneProvider.cs" />
+    <Compile Include="Providers\Implement\UserProvider.cs" />
+    <Compile Include="Providers\IUserProvider.cs" />
     <Compile Include="Services\IDepartmentService.cs" />
     <Compile Include="Providers\IEmployeeProvider.cs" />
     <Compile Include="Services\IEmployeeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\Implement\AdProvider.cs" />
+    <Compile Include="Providers\Implement\BillBoardProvider.cs" />
     <Compile Include="Providers\Implement\DepartmentProvider.cs" />
     <Compile Include="Providers\Implement\EmployeeProvider.cs" />
     <Compile Include="Services\ILoginServices.cs" />
+    <Compile Include="Services\IMaritalStatusService.cs" />
     <Compile Include="Services\Implement\DepartmentService.cs" />
     <Compile Include="Services\Implement\EmployeeService.cs" />
+    <Compile Include="Services\Implement\KindPhoneService.cs" />
     <Compile Include="Services\Implement\LoginServices.cs" />
+    <Compile Include="Services\Implement\MaritalStatusService.cs" />
+    <Compile Include="Services\Implement\UserService.cs" />
+    <Compile Include="Services\IUserService.cs" />
+    <Compile Include="Services\IKindPhoneService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DM.PR.Common\DM.PR.Common.csproj">

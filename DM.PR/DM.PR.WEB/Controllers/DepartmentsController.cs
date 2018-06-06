@@ -1,10 +1,10 @@
-﻿using DM.PR.Business.Providers;
+﻿using DM.PR.WEB.Infrastructure.Attributes;
+using System.Collections.Generic;
+using DM.PR.Business.Providers;
 using DM.PR.Business.Services;
 using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
-using DM.PR.WEB.Infrastructure.Attributes;
 using DM.PR.WEB.Models;
-using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace DM.PR.WEB.Controllers
@@ -21,16 +21,17 @@ namespace DM.PR.WEB.Controllers
             _departmentServ = departmentServ;
         }
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public ActionResult Index()
         {
+            _departmentProv.GetAll();
             return View();
 
         }
 
         public PartialViewResult List(int id = 0)
         {
-            return PartialView(_departmentProv.GetAll(1,1));
+            return PartialView(_departmentProv.GetPage(1,1));
         }
 
         public ActionResult Details(int id = 0)
@@ -95,7 +96,7 @@ namespace DM.PR.WEB.Controllers
         [AjaxOnly]
         public ActionResult GetAll(int pageSize, int pageNumber)
         {
-            var model = _departmentProv.GetAll(pageSize, pageNumber);
+            var model = _departmentProv.GetPage(pageSize, pageNumber);
             model.CurentPage = pageNumber;
             return Json(model, JsonRequestBehavior.AllowGet);
         }

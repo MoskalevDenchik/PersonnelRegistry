@@ -6,19 +6,19 @@ namespace DM.PR.WEB.Controllers
 {
     public class AdController : Controller
     {
-        private readonly IAdProvider _adProvider;
+        private readonly IBillBoardProvider billBoardProv;
 
-        public AdController(IAdProvider adProvider)
+        public AdController(IBillBoardProvider adProvider)
         {
             Helper.ThrowExceptionIfNull(adProvider);
-            _adProvider = adProvider;
+            billBoardProv = adProvider;
         }
 
         public PartialViewResult ListOfAd()
         {
-            var content = _adProvider.GetContent();
+            var content = billBoardProv.GetAll();
 
-            return content.Equals(null) ? PartialView("NoAd") : PartialView(content);
+            return content == null ? PartialView("NoAd") : PartialView(content);
         }
     }
 }

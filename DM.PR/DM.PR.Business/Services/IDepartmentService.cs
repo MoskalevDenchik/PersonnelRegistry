@@ -4,8 +4,8 @@ namespace DM.PR.Business.Services
 {
     public interface IDepartmentService
     {
-        void Delete(int id);
-        void Edit(Department department);
         void Create(Department department);
+        void Edit(Department department);
+        void Delete(int id);
     }
 }

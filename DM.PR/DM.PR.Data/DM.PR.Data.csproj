@@ -66,40 +66,44 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Core\Converters\IConverter.cs" />
-    <Compile Include="Core\Converters\Implement\DepartmentConverter.cs" />
-    <Compile Include="Core\Converters\Implement\EmployeeConverter.cs" />
-    <Compile Include="Core\Converters\Implement\KindPhoneConverter.cs" />
-    <Compile Include="Core\Converters\Implement\MaritalStatusConverter.cs" />
-    <Compile Include="Core\Converters\Implement\UserConverter.cs" />
-    <Compile Include="Core\Data\IDbAccsess.cs" />
-    <Compile Include="Core\Data\IDbExecutor.cs" />
-    <Compile Include="Core\Data\Implement\DbAccess.cs" />
-    <Compile Include="Core\Data\Implement\DbExecutor.cs" />
-    <Compile Include="Core\Parameters\DepartmentParameters.cs" />
-    <Compile Include="Core\Parameters\EmployeeParameters.cs" />
-    <Compile Include="Core\Parameters\UserParameters.cs" />
-    <Compile Include="Core\Procedures\DepartmentProcedure.cs" />
-    <Compile Include="Core\Procedures\EmployeeProcedure.cs" />
-    <Compile Include="Core\Procedures\KindPhoneProcedure.cs" />
-    <Compile Include="Core\Procedures\MaritalStatusProcedure.cs" />
-    <Compile Include="Core\Procedures\UserProcedure.cs" />
+    <Compile Include="Core\Context\Implement\WcfContext.cs" />
+    <Compile Include="Core\DataBase\Converters\IConverter.cs" />
+    <Compile Include="Core\DataBase\Converters\Implement\DepartmentConverter.cs" />
+    <Compile Include="Core\DataBase\Converters\Implement\EmployeeConverter.cs" />
+    <Compile Include="Core\DataBase\Converters\Implement\KindPhoneConverter.cs" />
+    <Compile Include="Core\DataBase\Converters\Implement\MaritalStatusConverter.cs" />
+    <Compile Include="Core\DataBase\Converters\Implement\UserConverter.cs" />
+    <Compile Include="Core\DataBase\Data\DbExec.cs" />
+    <Compile Include="Core\Context\IDataContext.cs" />
+    <Compile Include="Core\Context\Implement\DbContext.cs" />
+    <Compile Include="Core\DataBase\Data\Implement\SqlDbExec.cs" />
+    <Compile Include="Core\ParameterCreaters\IDepartmentParametersCreater.cs" />
+    <Compile Include="Core\ParameterCreaters\IEmployeeParameterCreater.cs" />
+    <Compile Include="Core\ParameterCreaters\Implement\BillBoardParameterCreater.cs" />
+    <Compile Include="Core\ParameterCreaters\Implement\DepartmentParametersCreater.cs" />
+    <Compile Include="Core\ParameterCreaters\Implement\EmployeeParameterCreater.cs" />
+    <Compile Include="Core\ParameterCreaters\IUserParameterCreator.cs" />
+    <Compile Include="Core\ParameterCreaters\Implement\KindPhoneParameterCreater.cs" />
+    <Compile Include="Core\ParameterCreaters\Implement\MaritalStatusParameterCreater.cs" />
+    <Compile Include="Core\ParameterCreaters\Implement\UserParameterCreater.cs" />
+    <Compile Include="Core\ParameterCreaters\IParametersCreater.cs" />
     <Compile Include="Dependencies\DataRegistry.cs" />
-    <Compile Include="Entity\Enums.cs" />
-    <Compile Include="Entity\ExecuteResult.cs" />
-    <Compile Include="Repositories\IAdRepository.cs" />
-    <Compile Include="Repositories\IDepartmentRepository.cs" />
-    <Compile Include="Repositories\IEmployeeRepository.cs" />
+    <Compile Include="Entities\DataBase\DbInputParameter.cs" />
+    <Compile Include="Entities\DataBase\Enums.cs" />
+    <Compile Include="Entities\DataBase\ExecuteResult.cs" />
+    <Compile Include="Entities\IInputParameter.cs" />
+    <Compile Include="Entities\Service\WcfInputParameter.cs" />
+    <Compile Include="Entities\Specification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\IMaritalStatusRepository.cs" />
-    <Compile Include="Repositories\Implement\AdRepository.cs" />
-    <Compile Include="Repositories\Implement\DepartmentRepository.cs" />
-    <Compile Include="Repositories\Implement\EmployeeRepository.cs" />
-    <Compile Include="Repositories\IKindPhoneRepository.cs" />
-    <Compile Include="Repositories\Implement\KindPhoneRepository.cs" />
-    <Compile Include="Repositories\Implement\MaritalStatusRepository.cs" />
-    <Compile Include="Repositories\Implement\UserRepository.cs" />
-    <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Repositories\Implement\Repository.cs" />
+    <Compile Include="Repositories\IRepositoty.cs" />
+    <Compile Include="SpecificationCreators\IEmployeeSpecificationCreator.cs" />
+    <Compile Include="SpecificationCreators\Implement\DepartmentSpecificationCreator.cs" />
+    <Compile Include="SpecificationCreators\IDepartmentSpecificationCreator.cs" />
+    <Compile Include="Entities\ISpecification.cs" />
+    <Compile Include="SpecificationCreators\Implement\EmployeeSpecificationCreator.cs" />
+    <Compile Include="SpecificationCreators\Implement\UserSpecificationCreator.cs" />
+    <Compile Include="SpecificationCreators\IUserSpecificationCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\AdService\AdService.wsdl" />
@@ -144,6 +148,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\Service\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

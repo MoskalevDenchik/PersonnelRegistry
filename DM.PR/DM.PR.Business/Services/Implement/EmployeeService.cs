@@ -1,32 +1,32 @@
-﻿using DM.PR.Common.Entities;
+﻿using DM.PR.Data.Repositories;
+using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
-using DM.PR.Data.Repositories;
 
 namespace DM.PR.Business.Services.Implement
 {
     internal class EmployeeService : IEmployeeService
     {
-        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IRepository<Employee> _rep;
 
-        public EmployeeService(IEmployeeRepository employeeRepository)
+        public EmployeeService(IRepository<Employee> employeeRepository)
         {
             Helper.ThrowExceptionIfNull(employeeRepository);
-            _employeeRepository = employeeRepository;
+            _rep = employeeRepository;
         }
 
         public void Create(Employee employee)
         {
-            _employeeRepository.Create(employee);
+            _rep.Add(employee);
         }
 
         public void Delete(int id)
         {
-            _employeeRepository.Delete(id);
+            _rep.Remove(id);
         }
 
         public void Edit(Employee employee)
         {
-            _employeeRepository.Update(employee);
+            _rep.Update(employee);
         }
     }
 }
