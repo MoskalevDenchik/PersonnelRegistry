@@ -183,6 +183,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KindPhoneController.cs" />
+    <Compile Include="Controllers\MaritalStatusController.cs" />
     <Compile Include="Controllers\NavigationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Dependency\DefaultRegistry.cs" />
@@ -204,6 +205,8 @@
     <Compile Include="Models\Employee\EmployeeCreateViewModel.cs" />
     <Compile Include="Models\KindPhone\KindPhoneCreateViewModel.cs" />
     <Compile Include="Models\KindPhone\KindPhoneEditViewModel.cs" />
+    <Compile Include="Models\MaritalStatus\MaritalStatusCreateViewModel.cs" />
+    <Compile Include="Models\MaritalStatus\MaritalStatusEditViewModel.cs" />
     <Compile Include="Models\User\UserCreateViewModel.cs" />
     <Compile Include="Models\User\UserEditViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -253,6 +256,10 @@
     <Content Include="Views\KindPhone\Details.cshtml" />
     <Content Include="Views\KindPhone\Create.cshtml" />
     <Content Include="Views\KindPhone\Edit.cshtml" />
+    <Content Include="Views\MaritalStatus\Index.cshtml" />
+    <Content Include="Views\MaritalStatus\Details.cshtml" />
+    <Content Include="Views\MaritalStatus\Create.cshtml" />
+    <Content Include="Views\MaritalStatus\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
