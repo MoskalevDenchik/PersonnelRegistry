@@ -4,11 +4,11 @@ using System.Web.Mvc;
 
 namespace DM.PR.WEB.Controllers
 {
-    public class AdController : Controller
+    public class AdvertisingController : Controller
     {
         private readonly IBillBoardProvider billBoardProv;
 
-        public AdController(IBillBoardProvider adProvider)
+        public AdvertisingController(IBillBoardProvider adProvider)
         {
             Helper.ThrowExceptionIfNull(adProvider);
             billBoardProv = adProvider;

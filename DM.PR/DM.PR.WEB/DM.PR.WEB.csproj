@@ -177,13 +177,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AdController.cs" />
+    <Compile Include="Controllers\AdvertisingController.cs" />
     <Compile Include="Controllers\DepartmentsController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KindPhoneController.cs" />
-    <Compile Include="Controllers\NavController.cs" />
+    <Compile Include="Controllers\NavigationController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Dependency\DefaultRegistry.cs" />
     <Compile Include="Dependency\ControllerConvention.cs" />
     <Compile Include="Dependency\IoC.cs" />
@@ -201,6 +202,8 @@
     <Compile Include="Models\Department\DepartmentSelectModel.cs" />
     <Compile Include="Models\Employee\EmployeeDetailsViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeCreateViewModel.cs" />
+    <Compile Include="Models\User\UserCreateViewModel.cs" />
+    <Compile Include="Models\User\UserEditViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -212,7 +215,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Nav\Menu.cshtml" />
+    <Content Include="Views\Navigation\Menu.cshtml" />
     <Content Include="Views\Employees\List.cshtml" />
     <Content Include="Views\Shared\EmployeeSummary.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
@@ -224,13 +227,13 @@
     <Content Include="Views\Departments\Edit.cshtml" />
     <Content Include="Views\Departments\Index.cshtml" />
     <Content Include="Views\Departments\List.cshtml" />
-    <Content Include="Views\Ad\ListOfAd.cshtml" />
+    <Content Include="Views\Advertising\ListOfAd.cshtml" />
     <Content Include="Views\Departments\Create.cshtml" />
     <Content Include="Views\Employees\NoEmployees.cshtml" />
     <Content Include="Views\Shared\ListOfPhones.cshtml" />
     <Content Include="Views\Employees\ListOfEmails.cshtml" />
     <Content Include="Views\Departments\SelectList.cshtml" />
-    <Content Include="Views\Ad\NoAd.cshtml" />
+    <Content Include="Views\Advertising\NoAd.cshtml" />
     <Content Include="Views\Error\ServerError.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Employees\SelectList.cshtml" />
@@ -241,6 +244,9 @@
     <Content Include="Views\Error\Unauthorized.cshtml" />
     <Content Include="Views\Employees\Search.cshtml" />
     <Content Include="Views\Employees\GetAll.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,18 +1,18 @@
-﻿using System.Web.Mvc;
-using DM.PR.Common.Entities;
-using System.Collections.Generic;
-using DM.PR.WEB.Models;
+﻿using System.Collections.Generic;
 using DM.PR.Business.Providers;
+using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
+using DM.PR.WEB.Models;
+using System.Web.Mvc;
 using System;
 
 namespace DM.PR.WEB.Controllers
 {
-    public class NavController : Controller
+    public class NavigationController : Controller
     {
         private readonly IDepartmentProvider _departmentProvider;
 
-        public NavController(IDepartmentProvider departmentProvider)
+        public NavigationController(IDepartmentProvider departmentProvider)
         {
             Helper.ThrowExceptionIfNull(departmentProvider);
             _departmentProvider = departmentProvider;

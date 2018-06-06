@@ -24,6 +24,7 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Eployees", "Index", "Employees", new { departmen = (string)null }, new { @class = "navbar-brand" })</li>
                     <li>@Html.ActionLink("Departments", "Index", "Departments", null, new { @class = "navbar-brand" })</li>
+                    <li>@Html.ActionLink("Users", "Index", "User", null, new { @class = "navbar-brand" })</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

@@ -25,7 +25,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
         {
             return new DbInputParameter
             {
-                Procedure = "SelectAllUsers",
+                Procedure = "SelectAllUser",
                 Parameters = null
             };
         }
