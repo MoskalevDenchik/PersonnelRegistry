@@ -25,9 +25,49 @@ GO
 -----------------------------------------------------TABLES----------------------------------------------
 ---------------------------------------------------------------------------------------------------------
 
+------------------------------------------------------Users----------------------------------------------
+CREATE TABLE [Users](
+[Id] INT IDENTITY (1,1),
+[Login] NVARCHAR(32) NOT NULL,
+[Password] NVARCHAR(64) NOT NULL,
+[Email] NVARCHAR(64) NOT NULL)
+GO
+
+--Создание первичного ключа
+ALTER TABLE [Users]
+ADD CONSTRAINT [pk_userId] PRIMARY KEY ([Id]);
+GO
+
+------------------------------------------------------Roles----------------------------------------------
+CREATE TABLE [Roles](
+[Id] INT IDENTITY(1,1),
+[Name] NVARCHAR(32) NOT NULL)
+GO
+
+--Создание первичного ключа
+ALTER TABLE [Roles]
+ADD CONSTRAINT [pk_rolesId] PRIMARY KEY ([Id]);
+GO
+
+CREATE TABLE [RolesUsers](
+[UserId] INT,
+[RoleId] INT)
+GO
+
+------------------------------------------------------Roles----------------------------------------------
+--Создание внешнего ключа
+ALTER TABLE [RolesUsers]
+ADD CONSTRAINT [fk_RolesUsers_to_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users]([Id]);
+GO
+
+ALTER TABLE [RolesUsers]
+ADD CONSTRAINT [fk_RolesUsers_to_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [Roles]([Id]);
+GO
+
+
+
 
 ----------------------------------------------------KindPhone--------------------------------------------
-
 
 CREATE TABLE [KindPhones](
 [Id] INT IDENTITY(1,1),
@@ -282,6 +322,27 @@ GO
 ---------------------------------------------------FUNCTIONS--------------------------------------------------
 --------------------------------------------------------------------------------------------------------------
 
+---------------------------------------------GetEmployeesByPage-------------------------------------------
+
+CREATE FUNCTION [AllEmployeesByPage](@PageSize INT,@Page INT)
+RETURNS Table
+AS
+ return SELECT [Id] as [EmployeeId],
+			   [DepartmentId] FROM [Employees]
+	ORDER BY [Id]
+	OFFSET @PageSize *( @Page - 1 ) ROWS
+	FETCH NEXT @PageSize ROWS ONLY ;
+GO
+---------------------------------------------GetEmployeesByPage-------------------------------------------
+
+CREATE FUNCTION [GetDepartmentsByPage](@PageSize INT,@Page INT)
+RETURNS Table
+AS
+RETURN SELECT [Id] as [DepartmentId] FROM [Departments]
+	   ORDER BY [Id]
+	   OFFSET @PageSize *( @Page - 1 ) ROWS
+	   FETCH NEXT @PageSize ROWS ONLY ;
+GO
 
 ---------------------------------------------GetPhoneByDepartmentId-------------------------------------------
 CREATE FUNCTION [GetDepartmentPhonesById](@Id INT)
@@ -358,39 +419,104 @@ Select [E].[Id],
  WHERE [E].[Id] = @Id);
  GO
 
+ ---------------------------------------------GetEmployeeBySerchParams----------------------------------------
+
+CREATE FUNCTION [dbo].[GetEmployeeBySerchParams](
+@LastName nvarchar(16) = '',
+@FirstName nvarchar(16) = '',
+@MiddleName nvarchar(16) = '',
+@minTime INT,
+@maxTime INT,
+@IsWorking BIT)
+RETURNS TABLE
+AS
+RETURN SELECT [Id] as [EmployeeId],
+              [DepartmentId] FROM [Employees] 
+		WHERE [LastName] LIKE @LastName + '%' 
+		  AND [FirstName] LIKE @FirstName +'%'
+		  AND [MiddleName] LIKE @MiddleName +'%'
+		  AND DATEDIFF( YEAR, BeginningWork, ISNULL(EndWork,GETDATE())) BETWEEN @minTime and @maxTime
+		  AND @IsWorking = IIF(EndWork is NULL, 0, 1 );
+GO
+
+ ---------------------------------------------AllEmployeesByPage----------------------------------------
+ALTER FUNCTION [dbo].[AllEmployeesByPage](@PageSize INT,@Page INT)
+RETURNS Table
+AS
+ return SELECT [Id] as [EmployeeId],
+			   [DepartmentId] FROM [Employees]
+	ORDER BY [Id]
+	OFFSET @PageSize *( @Page - 1 ) ROWS
+	FETCH NEXT @PageSize ROWS ONLY ;
+GO
+
+ ----------------------------------------GetPageEmployeesByDepartmentId--------------------------------
+Create FUNCTION [dbo].[GetPageEmployeesByDepartmentId](@DepartmentId INT,@PageSize INT,@Page INT)
+RETURNS Table
+AS
+ RETURN SELECT [Id] as [EmployeeId],
+			   [DepartmentId] FROM [Employees]
+    WHERE [DepartmentId] = @DepartmentId
+	ORDER BY [Id]
+	OFFSET @PageSize *( @Page - 1 ) ROWS
+	FETCH NEXT @PageSize ROWS ONLY ;
+GO
+
+
 
 ---------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------PROCRDURES--------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------
 
 
---------------------------------------------------MARITALSTATUS-------------------------------------------------
 
 
----------------------------------------------GetAllMaritalStatuses---------------------------------------------
-CREATE PROCEDURE [GetAllMaritalStatuses]
-AS
-SELECT [Id],
-	   [Status] FROM [MaritalStatuses];
-GO
+
 
 ----------------------------------------------------DEPARTMENT-------------------------------------------------
 
-
 -------------------------------------------------GetAllDepartmts-----------------------------------------------
-CREATE PROCEDURE [SelectAllDepartmts]
+create PROCEDURE [SelectAllDepartments]
 AS
 SELECT [Id]
       ,[ParentID]
       ,[Name]
       ,[Address]
-      ,[Description] FROM [dbo].[Departments];
+      ,[Description] FROM [Departments]
 
 SELECT [Id], 
 	   [DepartmentId],
 	   [Number], 
 	   [KindId],
-	   [Kind] FROM [PhonesDepartmentView];
+	   [Kind] FROM [PhonesDepartmentView] 
+GO
+
+-----------------------------------------------SelectAllDepartmtsByPage------------------------------------------
+CREATE PROCEDURE [SelectAllDepartmtsByPage]
+@PageSize INT,
+@Page INT
+AS
+CREATE TABLE [#Searched]([DepartmentId] INT)
+INSERT INTO  [#Searched] 
+	  SELECT [DepartmentId] FROM dbo.GetDepartmentsByPage(@PageSize,@Page)
+
+SELECT [Id]
+      ,[ParentID]
+      ,[Name]
+      ,[Address]
+      ,[Description] FROM [dbo].[Departments]
+  JOIN [#Searched]
+    ON [Id] =[DepartmentId];
+
+SELECT [Id], 
+	   [P].[DepartmentId],
+	   [Number], 
+	   [KindId],
+	   [Kind] FROM [PhonesDepartmentView] as [P]
+  JOIN [#Searched] as [S]
+    ON [S].[DepartmentId] = [P].[DepartmentId];
+
+SELECT COUNT([Id]) as [Count] FROM [Departments];
 GO
 
 -------------------------------------------------SelectDepartmentById-----------------------------------------
@@ -515,8 +641,6 @@ GO
 
 
 --------------------------------------------------SelectEmployeeById------------------------------------------
-
-
 CREATE PROCEDURE [SelectEmployeeById]
 @Id INT
 AS
@@ -554,49 +678,21 @@ SELECT [Id],
 GO
 
 -------------------------------------------------SelectEmployeesByDepartmentId-------------------------------
-CREATE PROCEDURE [SelectEmployeesByDepartmentId]
-@Id INT
+alter PROCEDURE [SelectPageEmployeesByDepartmentId]
+@DepartmentId INT,
+@PageSize INT,
+@Page INT 
 AS
-Select [E].[Id],
-	   [DepartmentId],
-	   [LastName],
-	   [FirstName],
-	   [MiddleName],
-	   [Address],
-	   [ImagePath],
-	   [BeginningWork],
-	   [EndWork],
-	   [Status],
-	   [MS].[Id] as [StatusId] FROM [Employees] as [E]
-JOIN [MaritalStatuses] as [MS]
-ON [MS].[Id] = [E].[Id]
-WHERE [DepartmentId] = @Id;
+CREATE TABLE [#Searched]([EmployeeId] INT,[DepartmentId] INT);
+INSERT INTO  [#Searched] 
+	  SELECT [EmployeeId], [DepartmentId] FROM [dbo].[GetPageEmployeesByDepartmentId](@DepartmentId,@PageSize,@Page)
+	  WHERE [DepartmentId] = @DepartmentId;
 
-
-SELECT [EmployeeId],
-       [Id],
-	   [Number],
-	   [KindId],
-	   [Kind] FROM [GetEmployeePhonesByDepartmentId](@Id);
-
-SELECT [EmployeeId],
-	   [E].[Id],
-	   [E].[Address] FROM [Emails] as [E]
-JOIN [Employees] as [Empl] 
-ON [Empl].Id = [E].EmployeeId 
-WHERE DepartmentId = @Id
-
-
-exec [SelectDepartmentById] @Id;
-GO
-----------------------------------------------------SelectAllEmployees---------------------------------------
-CREATE PROCEDURE [SelectAllEmployees]
-AS
 SELECT [E].[Id],
 	   [LastName],
 	   [FirstName],
 	   [MiddleName],
-	   [DepartmentId],
+	   [E].[DepartmentId],
 	   [Address],
 	   [ImagePath],
 	   [BeginningWork],
@@ -604,19 +700,202 @@ SELECT [E].[Id],
 	   [MS].[Status],
 	   [MaritalStatusId] as [StatusId] FROM Employees as [E]
 LEFT JOIN [MaritalStatuses] as [MS]
-ON [E].[MaritalStatusId] =[Ms].[Id];
+ON [E].[MaritalStatusId] =[Ms].[Id]
+  JOIN [#Searched] as [S]
+ON [S].[EmployeeId] = [E].[Id]; 
 
-SELECT [EmployeeId],
-	   [Id],
+SELECT [PE].[EmployeeId],
+	   [PE].[Id],
 	   [Number],
        [KindId],
-	   [Kind] From [PhonesEmployeeView]
+	   [Kind] From [PhonesEmployeeView] as [PE]
+  JOIN [#Searched] as [S]
+ON [S].[EmployeeId] = [PE].[EmployeeId];
 
-SELECT [EmployeeId],
-	   [Id], 
-	   [Address] FROM [Emails];
+SELECT [Emails].[EmployeeId],
+	   [Emails].[Id], 
+	   [Emails].[Address] FROM [Emails]
+  JOIN [#Searched] as [S]
+ON [S].[EmployeeId] = [Emails].[EmployeeId];
 
-EXEC SelectAllDepartmts;
+SELECT [Id]
+      ,[ParentID]
+      ,[Name]
+      ,[Address]
+      ,[Description] FROM [Departments]
+  JOIN [#Searched]
+    ON [Id] =[DepartmentId]
+	GROUP BY [Id]
+      ,[ParentID]
+      ,[Name]
+      ,[Address]
+      ,[Description];
+
+SELECT [Id], 
+	   [P].[DepartmentId],
+	   [Number], 
+	   [KindId],
+	   [Kind] FROM [PhonesDepartmentView] as [P]
+  JOIN [#Searched] as [S]
+    ON [S].[DepartmentId] = [P].[DepartmentId]
+	GROUP BY [Id], 
+	   [P].[DepartmentId],
+	   [Number], 
+	   [KindId],
+	   [Kind];
+
+SELECT COUNT([ID]) as [Count] FROM [Employees]
+WHERE [DepartmentId] = @DepartmentId;
+
+GO
+----------------------------------------------------SelectAllEmployees---------------------------------------
+alter PROCEDURE [SelectAllEmployees]
+@PageSize INT,
+@Page INT 
+AS
+
+CREATE TABLE [#Searched](EmployeeId INT,DepartmentId INT);
+INSERT INTO  [#Searched] 
+	  SELECT [EmployeeId], [DepartmentId] FROM dbo.AllEmployeesByPage(@PageSize,@Page);
+
+SELECT [E].[Id],
+	   [LastName],
+	   [FirstName],
+	   [MiddleName],
+	   [E].[DepartmentId],
+	   [Address],
+	   [ImagePath],
+	   [BeginningWork],
+	   [EndWork],
+	   [MS].[Status],
+	   [MaritalStatusId] as [StatusId] FROM Employees as [E]
+LEFT JOIN [MaritalStatuses] as [MS]
+ON [E].[MaritalStatusId] =[Ms].[Id]
+  JOIN [#Searched] as [S]
+ON [S].[EmployeeId] = [E].[Id]; 
+
+SELECT [PE].[EmployeeId],
+	   [PE].[Id],
+	   [Number],
+       [KindId],
+	   [Kind] From [PhonesEmployeeView] as [PE]
+  JOIN [#Searched] as [S]
+ON [S].[EmployeeId] = [PE].[EmployeeId];
+
+SELECT [Emails].[EmployeeId],
+	   [Emails].[Id], 
+	   [Emails].[Address] FROM [Emails]
+  JOIN [#Searched] as [S]
+ON [S].[EmployeeId] = [Emails].[EmployeeId];
+
+SELECT [Id]
+      ,[ParentID]
+      ,[Name]
+      ,[Address]
+      ,[Description] FROM [Departments]
+  JOIN [#Searched]
+    ON [Id] =[DepartmentId]
+	GROUP BY [Id]
+      ,[ParentID]
+      ,[Name]
+      ,[Address]
+      ,[Description];
+
+SELECT [Id], 
+	   [P].[DepartmentId],
+	   [Number], 
+	   [KindId],
+	   [Kind] FROM [PhonesDepartmentView] as [P]
+  JOIN [#Searched] as [S]
+    ON [S].[DepartmentId] = [P].[DepartmentId]
+	GROUP BY [Id], 
+	   [P].[DepartmentId],
+	   [Number], 
+	   [KindId],
+	   [Kind];
+
+SELECT COUNT([ID]) as [Count] FROM [Employees];
+
+GO
+
+
+----------------------------------------------------SelectPageEmployeesBySearchParams--------------------------------------------
+
+Create PROCEDURE [SelectPageEmployeesBySearchParams]
+@LastName nvarchar(16) = '',
+@FirstName nvarchar(16) = '',
+@MiddleName nvarchar(16) = '',
+@minTime INT,
+@maxTime INT,
+@IsWorking BIT,
+@PageSize INT,
+@Page INT
+AS
+
+CREATE TABLE [#Searched]([EmployeeId] INT,[DepartmentId] INT);
+INSERT INTO  [#Searched] 
+SELECT * FROM dbo.GetEmployeeBySerchParams(@LastName,@FirstName,@MiddleName,@minTime,@maxTime,@IsWorking)
+    ORDER BY [EmployeeId]
+	OFFSET @PageSize *( @Page - 1 ) ROWS
+	FETCH NEXT @PageSize ROWS ONLY ;
+
+SELECT [E].[Id],
+	   [LastName],
+	   [FirstName],
+	   [MiddleName],
+	   [E].[DepartmentId],
+	   [Address],
+	   [ImagePath],
+	   [BeginningWork],
+	   [EndWork],
+	   [MS].[Status],
+	   [MaritalStatusId] as [StatusId] FROM Employees as [E]
+LEFT JOIN [MaritalStatuses] as [MS]
+ON [E].[MaritalStatusId] =[Ms].[Id]
+  JOIN [#Searched] as [S]
+ON [S].[EmployeeId] = [E].[Id]; 
+
+SELECT [PE].[EmployeeId],
+	   [PE].[Id],
+	   [Number],
+       [KindId],
+	   [Kind] From [PhonesEmployeeView] as [PE]
+  JOIN [#Searched] as [S]
+ON [S].[EmployeeId] = [PE].[EmployeeId];
+
+SELECT [Emails].[EmployeeId],
+	   [Emails].[Id], 
+	   [Emails].[Address] FROM [Emails]
+  JOIN [#Searched] as [S]
+ON [S].[EmployeeId] = [Emails].[EmployeeId];
+
+SELECT [Id]
+      ,[ParentID]
+      ,[Name]
+      ,[Address]
+      ,[Description] FROM [Departments]
+  JOIN [#Searched]
+    ON [Id] =[DepartmentId]
+	GROUP BY [Id]
+      ,[ParentID]
+      ,[Name]
+      ,[Address]
+      ,[Description];
+
+SELECT [Id], 
+	   [P].[DepartmentId],
+	   [Number], 
+	   [KindId],
+	   [Kind] FROM [PhonesDepartmentView] as [P]
+  JOIN [#Searched] as [S]
+    ON [S].[DepartmentId] = [P].[DepartmentId]
+	GROUP BY [Id], 
+	   [P].[DepartmentId],
+	   [Number], 
+	   [KindId],
+	   [Kind];
+
+SELECT COUNT(*) as [Count] FROM dbo.GetEmployeeBySerchParams(@LastName,@FirstName,@MiddleName,@minTime,@maxTime,@IsWorking);
 
 GO
 
@@ -757,14 +1036,133 @@ DELETE FROM [dbo].[Departments]
 	  WHERE [Id] = @Id;
 GO
 
+--------------------------------------------------KINDPHONES-------------------------------------------------
 
 
+---------------------------------------------GetAllKindPhones------------------------------------------------
+CREATE PROCEDURE [SelectAllKindPhones]
+AS
+SELECT [Id],
+	   [Kind] FROM [KindPhones];
+GO
+
+-----------------------------------------------SelectKindPhoneById--------------------------------------------
+CREATE PROCEDURE [SelectKindPhoneById]
+@Id INT
+AS
+SELECT [Id],
+	   [Kind] FROM [KindPhones]
+WHERE [Id] = @Id;
+GO
+
+------------------------------------------------MARITALSTATUS-------------------------------------------------
+
+
+---------------------------------------------GetAllMaritalStatuses--------------------------------------------
+CREATE PROCEDURE [GetAllMaritalStatuses]
+AS
+SELECT [Id],
+	   [Status] FROM [MaritalStatuses];
+GO
+
+-----------------------------------------------GetMaritalStatusById--------------------------------------------
+CREATE PROCEDURE [GetMaritalStatusById]
+@Id INT
+AS
+SELECT [Id],
+	   [Status] FROM MaritalStatuses
+WHERE [Id] = @Id;
+GO
+
+-----------------------------------------------Users-------------------------------------------------------
+
+-------------------------------------------SelectAllUsers-----------------------------------------------
+CREATE PROCEDURE [SelectAllUser]
+AS
+SELECT [Id],
+	   [Login],
+	   [Password],
+	   [Email] FROM [Users];
+
+SELECT [U].[Id],
+       [R].[Name] FROM [Roles] as [R]
+JOIN [RolesUsers] as [RU]
+ON [R].[Id] = [RoleId]
+JOIN [Users] as [U]
+ON [U].[Id] = [UserId];
+GO
+
+
+-------------------------------------------SelectUserByLogin-----------------------------------------------
+alter PROCEDURE [SelectUserByLogin]
+@login NVARCHAR(32)
+AS
+SELECT [Id],
+	   [Login],
+	   [Password],
+	   [Email] FROM [Users]
+WHERE [Login] = @Login
+
+SELECT [U].[Id],
+       [R].[Name] FROM [Roles] as [R]
+JOIN [RolesUsers] as [RU]
+ON [R].[Id] = [RoleId]
+JOIN [Users] as [U]
+ON [U].[Id] = [UserId]
+WHERE [Login] = @Login;
+GO
+
+-------------------------------------------SelectUserById--------------------------------------------------
+CREATE PROCEDURE [SelectUserById]
+@Id NVARCHAR(32)
+AS
+SELECT [Id],
+	   [Login],
+	   [Password],
+	   [Email] FROM [Users]
+WHERE [Id] = @Id
+
+SELECT [U].[Id],
+       [R].[Name] FROM [Roles] as [R]
+JOIN [RolesUsers] as [RU]
+ON [R].[Id] = [RoleId]
+JOIN [Users] as [U]
+ON [U].[Id] = [UserId]
+WHERE [U].[Id] = @Id;
+GO
 
 -------------------------------------------------------------------------------------------------------------
 ------------------------------------------INSERT DATA FOR TEST-----------------------------------------------
 -------------------------------------------------------------------------------------------------------------
 
+---------------------------------------------Add Users------------------------------------------------------
+INSERT INTO [Users](
+			[Login],
+			[Password],
+			[Email])
+VALUES 
+('Turbo','1234','turbo@mail.com'),
+('Den', '1234', 'Den@mail.ru'),
+('Red','1234','red@mail.com');
+GO
 
+---------------------------------------------Add Roles------------------------------------------------------
+INSERT INTO [Roles](
+			[Name])
+VALUES 
+('admin'),
+('editor');
+GO
+
+---------------------------------------------Add UsersRoles------------------------------------------------------
+INSERT INTO [RolesUsers](
+			[UserId],
+			[RoleId])
+VALUES 
+(1,1),
+(2,2),
+(3,2);
+GO
 
 ---------------------------------------------Add KindPhone------------------------------------------------------
 INSERT INTO [KindPhones]

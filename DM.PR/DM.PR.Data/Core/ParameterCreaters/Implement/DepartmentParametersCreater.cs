@@ -9,6 +9,32 @@ namespace DM.PR.Data.Core.InputParameters.Creaters.Implement
 {
     internal class DepartmentParameterCreater : IParameterCreater<Department>, IDepartmentParameterCreater
     {
+        public IInputParameter CreateForGetById(int id)
+        {
+            return new DbInputParameter
+            {
+                Procedure = "SelectDepartmentById",
+                Parameters = new SqlParameter[]
+                {
+                    new SqlParameter("@Id", id)
+                }
+            };
+        }
+
+        public IInputParameter CreateForGetAll()
+        {
+            return new DbInputParameter
+            {
+                Procedure = "SelectAllDepartments",
+                Parameters = null
+            };
+        }
+
+        public IInputParameter CreateForFindBy(ISpecification specification)
+        {
+            return specification.GetSpecific();
+        }
+
         public IInputParameter CreateForAdd(Department item)
         {
             return new DbInputParameter
@@ -22,44 +48,6 @@ namespace DM.PR.Data.Core.InputParameters.Creaters.Implement
                     new SqlParameter("@Address", item.Address),
                     new SqlParameter("@Description", item.Description),
                     new SqlParameter("@Phones",ConvertToCreateTable(item.Phones))
-                }
-            };
-        }
-
-        public IInputParameter CreateForFindBy(ISpecification specification)
-        {
-            return specification.GetSpecific();
-        }
-
-        public IInputParameter CreateForGetAll()
-        {
-            return new DbInputParameter
-            {
-                Procedure = "SelectAllDepartments",
-                Parameters = null
-            };
-        }
-
-        public IInputParameter CreateForGetById(int id)
-        {
-            return new DbInputParameter
-            {
-                Procedure = "SelectDepartmentById",
-                Parameters = new SqlParameter[]
-                {
-                    new SqlParameter("@Id", id)
-                }
-            };
-        }
-
-        public IInputParameter CreateForRemove(int id)
-        {
-            return new DbInputParameter
-            {
-                Procedure = "DeleteDepartmentById",
-                Parameters = new SqlParameter[]
-                {
-                    new SqlParameter("@Id", id)
                 }
             };
         }
@@ -82,6 +70,18 @@ namespace DM.PR.Data.Core.InputParameters.Creaters.Implement
             };
         }
 
+        public IInputParameter CreateForRemove(int id)
+        {
+            return new DbInputParameter
+            {
+                Procedure = "DeleteDepartmentById",
+                Parameters = new SqlParameter[]
+                {
+                    new SqlParameter("@Id", id)
+                }
+            };
+        }
+
         public IInputParameter CreateForFindByPageData(int pageSize, int page)
         {
             return new DbInputParameter
@@ -95,7 +95,6 @@ namespace DM.PR.Data.Core.InputParameters.Creaters.Implement
             };
         }
         
-
         #region Helpers
 
         private static DataTable ConvertToCreateTable(IReadOnlyCollection<Phone> phones)

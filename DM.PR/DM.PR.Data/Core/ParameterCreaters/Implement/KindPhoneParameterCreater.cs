@@ -1,5 +1,6 @@
 ﻿using DM.PR.Data.Core.InputParameters.Creaters;
 using DM.PR.Data.Specifications;
+using System.Data.SqlClient;
 using DM.PR.Common.Entities;
 using DM.PR.Data.Entity;
 using System;
@@ -10,9 +11,15 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
     {
         public IInputParameter CreateForGetById(int id)
         {
-            throw new NotImplementedException();
+            return new DbInputParameter
+            {
+                Procedure = "SelectKindPhoneById",
+                Parameters = new SqlParameter[]
+                {
+                    new SqlParameter("@Id", id)
+                }
+            };
         }
-
 
         public IInputParameter CreateForGetAll()
         {

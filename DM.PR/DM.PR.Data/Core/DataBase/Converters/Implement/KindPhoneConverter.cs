@@ -1,8 +1,8 @@
-﻿using DM.PR.Common.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using DM.PR.Common.Entities;
 using System.Data;
 using System.Linq;
+using System;
 
 namespace DM.PR.Data.Core.Converters.Implement
 {

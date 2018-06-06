@@ -202,6 +202,8 @@
     <Compile Include="Models\Department\DepartmentSelectModel.cs" />
     <Compile Include="Models\Employee\EmployeeDetailsViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeCreateViewModel.cs" />
+    <Compile Include="Models\KindPhone\KindPhoneCreateViewModel.cs" />
+    <Compile Include="Models\KindPhone\KindPhoneEditViewModel.cs" />
     <Compile Include="Models\User\UserCreateViewModel.cs" />
     <Compile Include="Models\User\UserEditViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -247,6 +249,10 @@
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\KindPhone\Index.cshtml" />
+    <Content Include="Views\KindPhone\Details.cshtml" />
+    <Content Include="Views\KindPhone\Create.cshtml" />
+    <Content Include="Views\KindPhone\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -256,7 +262,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\KindPhone\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DM.PR.Business\DM.PR.Business.csproj">
