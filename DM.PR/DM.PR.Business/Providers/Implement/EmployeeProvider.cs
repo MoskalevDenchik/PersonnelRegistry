@@ -4,6 +4,7 @@ using DM.PR.Data.Repositories;
 using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using System;
+using System.Collections.Generic;
 
 namespace DM.PR.Business.Providers.Implement
 {
@@ -29,7 +30,7 @@ namespace DM.PR.Business.Providers.Implement
             return _rep.GetById(id);
         }
 
-        public PagedData<Employee> GetPage(int pageSize, int page)
+        public IReadOnlyCollection<Employee> GetPage(int pageSize, int page, out int totalCount)
         {
             if (pageSize <= 0 || page <= 0)
             {
@@ -37,27 +38,27 @@ namespace DM.PR.Business.Providers.Implement
             }
 
             ISpecification findByPageSpecification = _creator.CreateFindByPageDataSpecification(pageSize, page);
-            return _rep.FindPageBy(findByPageSpecification);
+            return _rep.FindBy(findByPageSpecification, out totalCount);
         }
 
-        public PagedData<Employee> GetPageByDepartmentId(int departmentId, int pageSize, int page)
+        public IReadOnlyCollection<Employee> GetPageByDepartmentId(int departmentId, int pageSize, int page, out int totalCount)
         {
-            if (departmentId <= 0 || pageSize <= 0 || page <= 0)
+            if (departmentId < 0 || pageSize <= 0 || page <= 0)
             {
                 throw new Exception("Id пришел 0");
             }
             ISpecification findByPageAndDepartmentIdSpecification = _creator.CreateFindPageByDepartmentIdSpecification(departmentId, pageSize, page);
-            return _rep.FindPageBy(findByPageAndDepartmentIdSpecification);
+            return _rep.FindBy(findByPageAndDepartmentIdSpecification, out totalCount);
         }
 
-        public PagedData<Employee> GetPageBySearchParams(string lastName, string firstName, string middledName, int fromYear, int toYear, bool IsWorking, int pageSize, int page)
+        public IReadOnlyCollection<Employee> GetPageBySearchParams(string lastName, string firstName, string middledName, int fromYear, int toYear, bool IsWorking, int pageSize, int page, out int totalCount)
         {
             if (pageSize <= 0 || page <= 0 || fromYear < 0 || toYear < 0 || fromYear > toYear)
             {
                 throw new Exception("Id пришел  или параметрыры неверны");
             }
             ISpecification FindPageBySearchParamsSpecification = _creator.CreateFindPageBySearchParamsSpecification(lastName, firstName, middledName, fromYear, toYear, IsWorking, pageSize, page);
-            return _rep.FindPageBy(FindPageBySearchParamsSpecification);
+            return _rep.FindBy(FindPageBySearchParamsSpecification, out totalCount);
         }
     }
 }

@@ -34,16 +34,15 @@ namespace DM.PR.Business.Providers.Implement
             return _rep.GetAll();
         }
 
-        public PagedData<Department> GetPage(int pageSize, int pageNumber)
+        public IReadOnlyCollection<Department> GetPage(int pageSize, int pageNumber, out int totalCount)
         {
             if (pageSize <= 0 || pageNumber <= 0)
             {
                 throw new Exception("Id пришел 0");
-            }
+            }               
 
             ISpecification findByPageSpecification = _creator.CreateFindByPageDataSpecification(pageSize, pageNumber);
-            return _rep.FindPageBy(findByPageSpecification);
+            return _rep.FindBy(findByPageSpecification, out totalCount);
         }
     }
 }
-           

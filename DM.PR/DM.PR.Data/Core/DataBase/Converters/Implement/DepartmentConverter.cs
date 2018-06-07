@@ -23,16 +23,12 @@ namespace DM.PR.Data.Core.Converters.Implement
             });
         }
 
-        public PagedData<Department> ConvertToPage(DataSet dataSet)
+        public IEnumerable<Department> ConvertToList(DataSet dataSet, out int outputParameter)
         {
-            return new PagedData<Department>
-            {
-                Data = ConvertToList(dataSet).ToList(),
-                TotalCount = dataSet.Tables[2].AsEnumerable().Select(x => x.Field<int>("Count")).First()
-            };
+            outputParameter = dataSet.Tables[2].AsEnumerable().Select(x => x.Field<int>("Count")).First();
+            return ConvertToList(dataSet).ToList();
         }
-
-
+           
         private List<Phone> ConvertToPhones(int entityId, DataTable table)
         {
             return table.AsEnumerable().Where(phone => phone.Field<int>("DepartmentId") == entityId).Select(phone =>

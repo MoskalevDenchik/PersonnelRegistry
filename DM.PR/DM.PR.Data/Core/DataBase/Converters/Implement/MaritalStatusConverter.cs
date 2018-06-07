@@ -1,8 +1,8 @@
-﻿using DM.PR.Common.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using DM.PR.Common.Entities;
 using System.Data;
 using System.Linq;
+using System;
 
 namespace DM.PR.Data.Core.Converters.Implement
 {
@@ -20,9 +20,10 @@ namespace DM.PR.Data.Core.Converters.Implement
             });
         }
 
-        public PagedData<MaritalStatus> ConvertToPage(DataSet dataSet)
+        public IEnumerable<MaritalStatus> ConvertToList(DataSet dataSet, out int outputParameter)
         {
             throw new NotImplementedException();
         }
+       
     }
 }

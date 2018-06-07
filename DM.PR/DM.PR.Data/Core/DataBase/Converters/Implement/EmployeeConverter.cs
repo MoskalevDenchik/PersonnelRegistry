@@ -34,13 +34,10 @@ namespace DM.PR.Data.Core.Converters.Implement
             });
         }
 
-        public PagedData<Employee> ConvertToPage(DataSet dataSet)
+        public IEnumerable<Employee> ConvertToList(DataSet dataSet, out int outputParameter)
         {
-            return new PagedData<Employee>
-            {
-                Data = ConvertToList(dataSet).ToList(),
-                TotalCount = dataSet.Tables[5].AsEnumerable().Select(x => x.Field<int>("Count")).First()
-            };
+            outputParameter = dataSet.Tables[5].AsEnumerable().Select(x => x.Field<int>("Count")).First();
+            return ConvertToList(dataSet).ToList();
         }
 
         private Department ConvertToDepartmnent(int departmentId, params DataTable[] tables)

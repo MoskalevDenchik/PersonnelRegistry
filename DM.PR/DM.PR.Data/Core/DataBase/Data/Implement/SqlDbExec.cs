@@ -1,27 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;    
+﻿using System.Data.SqlClient;
 using DM.PR.Common.Helpers;
-using System.Data.Common;
 using DM.PR.Data.Entity;
+using System.Data;
 
 namespace DM.PR.Data.Core.DataBase.Data.Implement
 {
     internal class SqlDbExec : DbExec
     {
-        IConfigManger _configManager;
+        private readonly IConfigManger _configManager;
 
         public SqlDbExec(IConfigManger configManager)
         {
+            Helper.ThrowExceptionIfNull(configManager);
             _configManager = configManager;
         }
 
-        protected override DbDataAdapter GetAdapter(IDbCommand command)
+        protected override IDbDataAdapter GetAdapter(IDbCommand command)
         {
-            IDbDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = command;
-            return adapter as DbDataAdapter;
+            return new SqlDataAdapter
+            {
+                SelectCommand = command as SqlCommand
+            };
         }
 
         protected override IDbConnection GetConnection()
@@ -29,12 +28,13 @@ namespace DM.PR.Data.Core.DataBase.Data.Implement
             return new SqlConnection(_configManager.GetConnectionString("DataConnection"));
         }
 
-        protected override IDbCommand GetProcedureCommand(DbInputParameter parameter)
+        protected override IDbCommand GetProcedureCommand(IDbConnection connection, DbInputParameter parameter)
         {
-            var command = new SqlCommand
+            SqlCommand command = new SqlCommand
             {
                 CommandText = parameter.Procedure,
-                CommandType = CommandType.StoredProcedure
+                Connection = connection as SqlConnection,
+                CommandType = CommandType.StoredProcedure,
             };
 
             if (parameter.Parameters != null)

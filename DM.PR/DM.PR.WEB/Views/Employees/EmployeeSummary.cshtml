@@ -41,14 +41,14 @@
 }
 
 <div class="row">
-    <div class="col-md-3">
+    <div class="text-center">
         <ul class="pagination" id="paged">
-            <li><a onclick="GetPageData(@priviosPage)" href="#">&laquo;</a></li>
+            <li data-page="@priviosPage"><a href="#">&laquo;</a></li>
             @for (int i = 1; i <= totalPage; i++)
             {
-                <li class="@AddClass(i)"><a onclick="GetPageData(@i)" href="#">@i</a></li>
+                <li class="@AddClass(@i)" data-page="@i"><a href="#">@i</a></li>
             }
-            <li><a onclick="GetPageData(@nextPage)" href="#">&raquo;</a></li>
+            <li data-page="@nextPage"><a href="#">&raquo;</a></li>
         </ul>
     </div>
 </div>

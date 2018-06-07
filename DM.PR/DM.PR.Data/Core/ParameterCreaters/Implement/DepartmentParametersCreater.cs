@@ -84,17 +84,28 @@ namespace DM.PR.Data.Core.InputParameters.Creaters.Implement
 
         public IInputParameter CreateForFindByPageData(int pageSize, int page)
         {
+
+            SqlParameter sqls = new SqlParameter
+            {
+                ParameterName = "@TotalCount",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
+
+            
+
+
             return new DbInputParameter
             {
                 Procedure = "SelectAllDepartmtsByPage",
                 Parameters = new SqlParameter[]
                 {
                     new SqlParameter("@PageSize",pageSize),
-                    new SqlParameter("@Page",page)
+                    new SqlParameter("@Page",page),
                 }
-            };
+            };                              
         }
-        
+
         #region Helpers
 
         private static DataTable ConvertToCreateTable(IReadOnlyCollection<Phone> phones)

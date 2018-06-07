@@ -7,7 +7,6 @@ using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using DM.PR.WEB.Models;
 using System.Web.Mvc;
-using System.Linq;
 
 namespace DM.PR.WEB.Controllers
 {
@@ -45,9 +44,9 @@ namespace DM.PR.WEB.Controllers
             return View();
         }
 
-        public ActionResult List(Employee model)
+        public ActionResult Navigation()
         {
-            return PartialView("EmployeeSummary", model);
+            return View("DepartmentNavigation");
         }
 
         [HttpGet]
@@ -95,33 +94,25 @@ namespace DM.PR.WEB.Controllers
             return RedirectToAction("Index");
         }
 
-        public PartialViewResult GetListByDepartmentId(int id = 0, int pageSize = 5, int page = 1)
+        [AjaxOnly]
+        public ActionResult GetPageEmployeesByDepartmentId(int page, int departmentId = 0, int pageSize = 5)
         {
-            var model = _employeeProvider.GetPageByDepartmentId(id, pageSize, page);
-            if (model != null)
-            {
-                return PartialView(model);
-            }
-            else
-            {
-                return PartialView("NoEmployees");
-            }
+            var list = _employeeProvider.GetPageByDepartmentId(departmentId, pageSize, page, out int totalCount);
+            return list != null ? PartialView("EmployeeSummary", new PagedData<Employee>(list, totalCount)) : PartialView("NoEmployees");
         }
 
         [AjaxOnly]
         public ActionResult GetAll(int pageSize, int pageNumber)
         {
-            var model = _employeeProvider.GetPage(pageSize, pageNumber);
-            model.CurentPage = pageNumber;
-            return Json(model, JsonRequestBehavior.AllowGet);
+            var list = _employeeProvider.GetPage(pageSize, pageNumber, out int totalCount);
+            return Json(new { Data = list, TotalCount = totalCount }, JsonRequestBehavior.AllowGet);
         }
 
         [AjaxOnly]
         public ActionResult GetPageEmployeesBySearchParams(string middledName, string firstName, string lastName, bool IsWorking, int page, int fromYear = 0, int toYear = 100, int pageSize = 5)
         {
-            PagedData<Employee> list = _employeeProvider.GetPageBySearchParams(lastName, firstName, middledName, fromYear, toYear, IsWorking, pageSize, page);
-            list.CurentPage = page;
-            return PartialView("EmployeeSummary", list);
+            var list = _employeeProvider.GetPageBySearchParams(lastName, firstName, middledName, fromYear, toYear, IsWorking, pageSize, page, out int totalCount);
+            return PartialView("EmployeeSummary", new PagedData<Employee>(list, totalCount));
         }
 
         public PartialViewResult AddEmail(int emails)

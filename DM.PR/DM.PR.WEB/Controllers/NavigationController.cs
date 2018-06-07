@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using DM.PR.WEB.Models.Navigation;
+using System.Collections.Generic;
 using DM.PR.Business.Providers;
 using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
-using DM.PR.WEB.Models;
 using System.Web.Mvc;
 using System;
 
@@ -31,12 +31,12 @@ namespace DM.PR.WEB.Controllers
 
         #region Helpers
 
-        private IReadOnlyCollection<DepartmentNavViewModel> MapDepartmentToDepartmentViewModel(IEnumerable<Department> departments)
+        private IReadOnlyCollection<NavigationMenuViewModel> MapDepartmentToDepartmentViewModel(IEnumerable<Department> departments)
         {
-            var departmentsViewModel = new List<DepartmentNavViewModel>();
+            var departmentsViewModel = new List<NavigationMenuViewModel>();
             foreach (var item in departments)
             {
-                departmentsViewModel.Add(new DepartmentNavViewModel()
+                departmentsViewModel.Add(new NavigationMenuViewModel()
                 {
                     Id = item.Id,
                     Name = item.Name,

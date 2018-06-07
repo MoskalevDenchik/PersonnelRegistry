@@ -1,4 +1,4 @@
-﻿using System.Data.Common;              
+﻿using System.Data.Common;
 using DM.PR.Data.Entity;
 using System.Data;
 using System;
@@ -7,39 +7,36 @@ namespace DM.PR.Data.Core.DataBase.Data
 {
     internal abstract class DbExec
     {
-        protected abstract DbDataAdapter GetAdapter(IDbCommand command);
-
         protected abstract IDbConnection GetConnection();
+        protected abstract IDbDataAdapter GetAdapter(IDbCommand command);
+        protected abstract IDbCommand GetProcedureCommand(IDbConnection connection, DbInputParameter parameter);
 
-        protected abstract IDbCommand GetProcedureCommand(DbInputParameter parameter);
-
-        private T ExecuteCommand<T>(Func<IDbCommand, T> executeComand, DbInputParameter parameter)
+        private T ExecuteCommand<T>(Func<IDbCommand, T> executeCommand, DbInputParameter parameter)
         {
             using (IDbConnection connection = GetConnection())
             {
-                using (IDbCommand command = GetProcedureCommand(parameter))
+                using (IDbCommand command = GetProcedureCommand(connection, parameter))
                 {
-                    command.Connection = connection;
-                    return executeComand(command);
+                    return executeCommand(command);
                 }
             }
         }
 
-        public DataSet GetDataSet(IInputParameter parameter)
+        public DataSet GetDataSet(DbInputParameter parameter)
         {
             return ExecuteCommand(command =>
             {
-                using (DbDataAdapter adapter = GetAdapter(command))
+                using (var adapter = GetAdapter(command) as DbDataAdapter)
                 {
-                    DataSet dataSet = new DataSet();
+                    var dataSet = new DataSet();
                     adapter.Fill(dataSet);
                     return dataSet;
                 }
             }
-            , parameter as DbInputParameter);
+            , parameter);
         }
 
-        public int GetNonQuery(IInputParameter parameter)
+        public int GetNonQuery(DbInputParameter parameter)
         {
             return ExecuteCommand(command =>
             {
@@ -47,7 +44,7 @@ namespace DM.PR.Data.Core.DataBase.Data
                 int result = command.ExecuteNonQuery();
                 return result;
             }
-            , parameter as DbInputParameter);
+            , parameter);
         }
     }
 }

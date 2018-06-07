@@ -1,5 +1,5 @@
-﻿using DM.PR.Common.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using DM.PR.Common.Entities;
 
 namespace DM.PR.Business.Providers
 {
@@ -7,6 +7,6 @@ namespace DM.PR.Business.Providers
     {
         Department GetById(int id);
         IReadOnlyCollection<Department> GetAll();
-        PagedData<Department> GetPage(int pageSize, int pageNumber);
+        IReadOnlyCollection<Department> GetPage(int pageSize, int pageNumber, out int totalCount);
     }
 }

@@ -20,7 +20,7 @@ namespace DM.PR.Data.Core.Converters.Implement
             });
         }
 
-        public PagedData<KindPhone> ConvertToPage(DataSet dataSet)
+        public IEnumerable<KindPhone> ConvertToList(DataSet dataSet, out int outputParameter)
         {
             throw new NotImplementedException();
         }

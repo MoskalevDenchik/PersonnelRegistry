@@ -1,19 +1,15 @@
-﻿@using DM.PR.WEB.Models;
-@model IEnumerable<DepartmentNavViewModel>
+﻿@model IEnumerable<DM.PR.WEB.Models.Navigation.NavigationMenuViewModel>
 
 
 <div>
-    <ul>
+    <ul id="menu">
         <li>
-            @Ajax.ActionLink("ALL", "List", "Employees", new AjaxOptions { UpdateTargetId = "ListOfEmployees" })
-
+            <a href="#" data-department="0" name="0">Все</a>
         </li>
         @foreach (var item in Model)
         {
             <li>
-                @Ajax.ActionLink(@item.Name, "List", "Employees", new { id = item.Id },
-                                        new AjaxOptions { UpdateTargetId = "ListOfEmployees" })
-            
+                <a href="#" data-department="@item.Id">@item.Name</a>
             </li>
         }
     </ul>

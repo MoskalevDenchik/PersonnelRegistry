@@ -169,6 +169,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Navigation.js" />
     <Content Include="Scripts\Search.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -199,7 +200,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Department\DepartmentDeatailsViewModel.cs" />
-    <Compile Include="Models\Department\DepartmentNavViewModel.cs" />
     <Compile Include="Models\Department\DepartmentSelectModel.cs" />
     <Compile Include="Models\Employee\EmployeeDetailsViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeCreateViewModel.cs" />
@@ -207,6 +207,7 @@
     <Compile Include="Models\KindPhone\KindPhoneEditViewModel.cs" />
     <Compile Include="Models\MaritalStatus\MaritalStatusCreateViewModel.cs" />
     <Compile Include="Models\MaritalStatus\MaritalStatusEditViewModel.cs" />
+    <Compile Include="Models\Navigation\NavigationMenuViewModel.cs" />
     <Compile Include="Models\User\UserCreateViewModel.cs" />
     <Compile Include="Models\User\UserEditViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -260,6 +261,7 @@
     <Content Include="Views\MaritalStatus\Details.cshtml" />
     <Content Include="Views\MaritalStatus\Create.cshtml" />
     <Content Include="Views\MaritalStatus\Edit.cshtml" />
+    <Content Include="Views\Employees\DepartmentNavigation.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

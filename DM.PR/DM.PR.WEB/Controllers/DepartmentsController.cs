@@ -31,7 +31,8 @@ namespace DM.PR.WEB.Controllers
 
         public PartialViewResult List(int id = 0)
         {
-            return PartialView(_departmentProv.GetPage(1,1));
+            int totalPage;
+            return PartialView(_departmentProv.GetPage(1, 1, out totalPage));
         }
 
         public ActionResult Details(int id = 0)
@@ -96,9 +97,8 @@ namespace DM.PR.WEB.Controllers
         [AjaxOnly]
         public ActionResult GetAll(int pageSize, int pageNumber)
         {
-            var model = _departmentProv.GetPage(pageSize, pageNumber);
-            model.CurentPage = pageNumber;
-            return Json(model, JsonRequestBehavior.AllowGet);
+            var model = _departmentProv.GetPage(pageSize, pageNumber, out int totalPage);
+            return Json(new { Data = model, TotalCount = totalPage }, JsonRequestBehavior.AllowGet);
         }
 
         #region Helpers     
@@ -164,3 +164,5 @@ namespace DM.PR.WEB.Controllers
         #endregion
     }
 }
+
+

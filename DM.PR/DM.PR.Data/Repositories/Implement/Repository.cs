@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using DM.PR.Common.Entities;
-using DM.PR.Data.Core.Data;
-using DM.PR.Data.Core.InputParameters.Creaters;
+﻿using DM.PR.Data.Core.InputParameters.Creaters;
+using System.Collections.Generic;
 using DM.PR.Data.Specifications;
+using DM.PR.Data.Core.Data;
+using DM.PR.Common.Helpers;
 
 namespace DM.PR.Data.Repositories.Implement
 {
@@ -13,6 +13,7 @@ namespace DM.PR.Data.Repositories.Implement
 
         public Repository(IParameterCreater<T> creater, IDataContext<T> dataContext)
         {
+            Helper.ThrowExceptionIfNull(creater, dataContext);
             _dataContext = dataContext;
             _parametersCreater = creater;
         }
@@ -31,10 +32,9 @@ namespace DM.PR.Data.Repositories.Implement
         {
             return _dataContext.GetEntities(_parametersCreater.CreateForFindBy(specification));
         }
-
-        public PagedData<T> FindPageBy(ISpecification specification)
+        public IReadOnlyCollection<T> FindBy(ISpecification specification, out int outputParameter)
         {
-            return _dataContext.GetPageEntities(_parametersCreater.CreateForFindBy(specification));
+            return _dataContext.GetEntities(_parametersCreater.CreateForFindBy(specification), out outputParameter);
         }
 
         public void Add(T item)

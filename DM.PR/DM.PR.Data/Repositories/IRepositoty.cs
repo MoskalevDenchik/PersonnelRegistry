@@ -1,6 +1,5 @@
-﻿using DM.PR.Common.Entities;
+﻿using System.Collections.Generic;
 using DM.PR.Data.Specifications;
-using System.Collections.Generic;
 
 namespace DM.PR.Data.Repositories
 {
@@ -8,8 +7,8 @@ namespace DM.PR.Data.Repositories
     {
         T GetById(int id);
         IReadOnlyCollection<T> GetAll();
-        PagedData<T> FindPageBy(ISpecification specification);
         IReadOnlyCollection<T> FindBy(ISpecification specification);
+        IReadOnlyCollection<T> FindBy(ISpecification specification, out int outputParameter);
         void Add(T item);
         void Update(T item);
         void Remove(int id);

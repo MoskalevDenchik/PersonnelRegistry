@@ -88,5 +88,10 @@ namespace DM.PR.Data.Core.Context.Implement
                        new ConfigurationChannelFactory<IAdService>("BasicHttpBinding_IAdService", configuration, null);
             return channelFactory.CreateChannel();
         }
+
+        public IReadOnlyCollection<BillBoard> GetEntities(IInputParameter parameter, out int outputParameter)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
