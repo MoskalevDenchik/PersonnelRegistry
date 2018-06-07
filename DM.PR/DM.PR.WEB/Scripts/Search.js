@@ -1,21 +1,32 @@
-﻿$(function ()
+﻿
+$("#Search").on('click', function ()
 {
-    $("#Search").click(function ()
-    {
-        $.ajax({
-            url: "Employees/Serch",
-            type: "Get",
-            data: {
-                FirstName: $("input[name='FirstName']").val(),
-                LastName: $("input[name='LastName']").val(),
-                Middlename: $("input[name='Middlename']").val(),
-                WorkTime: $("input[name='WorkTime']").val(),
-                IsWorking: $("input[name='IsWorking']").val()
-            },
-            success: function (response)
-            {
-                $("#EmployeeList")
-            }
-        })
-    });
-})
+    GetPageData(1);
+});
+
+
+
+function GetPageData(pageNumber)
+{
+    $("#EmployeeList").empty();
+    $("#paged").empty();
+                                                       
+    $.ajax({
+        url: "/Employees/GetPageEmployeesBySearchParams",
+        type: "GET",
+        data: {
+            firstName: $("input[name='firstName']").val(),
+            lastName: $("input[name='lastName']").val(),
+            middlename: $("input[name='middlename']").val(),
+            fromYear: $("input[name='fromYear']").val(),
+            toYear: $("input[name='toYear']").val(),
+            IsWorking: $("input[name='IsWorking']").prop('checked'), 
+            page: pageNumber
+        },
+        success: function (respons)
+        {
+            $('#EmployeeList').append(respons);
+        }
+    })
+}
+

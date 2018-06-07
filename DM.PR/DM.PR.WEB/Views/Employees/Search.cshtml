@@ -1,46 +1,35 @@
 ﻿@model Employee
 
-@{
-    ViewBag.Title = "Search";
-}
-
-<h2>Search</h2>
-
-
 <div class="row">
-
     <div class="col-md-2">
-        @Html.Label("FirstName")
-        <input type="text" name="FirstName" value="" />
+        <input type="text" class="form-control" name="lastName" placeholder="Фамилия..." />
     </div>
     <div class="col-md-2">
-        @Html.Label("LastName")
-        <input type="text" name="LastName" value="" />
+        <input type="text" class="form-control" name="firstName" placeholder="Имя..." />
     </div>
     <div class="col-md-2">
-        @Html.Label("Middlename")
-        <input type="text" name="Middlename" value="" />
+        <input type="text" class="form-control" name="middlename" placeholder="Отчество..." />
     </div>
-    <div class="col-md-2">
-        @Html.Label("WorkTime")
-        <input type="text" name="WorkTime" value="" />
+    <div class="col-md-1">
+        <input type="number" class="form-control" name="fromYear" placeholder="От..." />
     </div>
-    <div class="col-md-2">
-        @Html.Label("IsWorking")
-        <input type="checkbox" name="WorkTime" value="" />
+    <div class="col-md-1">
+        <input type="number" class="form-control" name="toYear" placeholder="До..." />
     </div>
-
-
+    <div class="col-md-2 checkbox ">
+        <label>
+            <input type="checkbox" name="IsWorking" checked ="checked"> Работает
+        </label>
+    </div>
+    <div>
+        <input type="button" class="btn btn-danger" id="Search" value="Search" />
+    </div>
 </div>
-
 
 
 <div id="EmployeeList">
 
-
 </div>
 
-
-<input type="button" id="Search" value="Search" />
-
 <script src="~/Scripts/Search.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>

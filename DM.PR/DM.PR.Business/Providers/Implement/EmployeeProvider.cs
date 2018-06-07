@@ -52,7 +52,7 @@ namespace DM.PR.Business.Providers.Implement
 
         public PagedData<Employee> GetPageBySearchParams(string lastName, string firstName, string middledName, int fromYear, int toYear, bool IsWorking, int pageSize, int page)
         {
-            if (pageSize <= 0 || page <= 0 || fromYear <= 0 || toYear <= 0 || fromYear > toYear)
+            if (pageSize <= 0 || page <= 0 || fromYear < 0 || toYear < 0 || fromYear > toYear)
             {
                 throw new Exception("Id пришел  или параметрыры неверны");
             }

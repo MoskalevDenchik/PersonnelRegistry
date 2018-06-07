@@ -6,7 +6,8 @@ using DM.PR.Business.Services;
 using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using DM.PR.WEB.Models;
-using System.Web.Mvc;     
+using System.Web.Mvc;
+using System.Linq;
 
 namespace DM.PR.WEB.Controllers
 {
@@ -44,11 +45,11 @@ namespace DM.PR.WEB.Controllers
             return View();
         }
 
-        public ActionResult List()
+        public ActionResult List(Employee model)
         {
-            return View();
+            return PartialView("EmployeeSummary", model);
         }
-        
+
         [HttpGet]
         public ActionResult Create()
         {
@@ -115,10 +116,12 @@ namespace DM.PR.WEB.Controllers
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetListBy(string MiddledName, string FirstName, string LastName, int fromYear, int toYear, bool IsWorking, int pageSize, int page)
+        [AjaxOnly]
+        public ActionResult GetPageEmployeesBySearchParams(string middledName, string firstName, string lastName, bool IsWorking, int page, int fromYear = 0, int toYear = 100, int pageSize = 5)
         {
-            PagedData<Employee> list = _employeeProvider.GetPageBySearchParams(LastName, FirstName, MiddledName, fromYear, toYear, IsWorking, pageSize, page);
-            return Json(list, JsonRequestBehavior.AllowGet);
+            PagedData<Employee> list = _employeeProvider.GetPageBySearchParams(lastName, firstName, middledName, fromYear, toYear, IsWorking, pageSize, page);
+            list.CurentPage = page;
+            return PartialView("EmployeeSummary", list);
         }
 
         public PartialViewResult AddEmail(int emails)

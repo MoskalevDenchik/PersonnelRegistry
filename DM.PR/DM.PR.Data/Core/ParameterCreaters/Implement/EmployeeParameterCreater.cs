@@ -130,7 +130,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
                 {
                     new SqlParameter("@LastName", lastName),
                     new SqlParameter("@FirstName", firstName),
-                    new SqlParameter("@MiddledName", middledName),
+                    new SqlParameter("@MiddleName", middledName),
                     new SqlParameter("@FromYear", fromYear),
                     new SqlParameter("@ToYear", toYear),
                     new SqlParameter("@IsWorking", IsWorking),
