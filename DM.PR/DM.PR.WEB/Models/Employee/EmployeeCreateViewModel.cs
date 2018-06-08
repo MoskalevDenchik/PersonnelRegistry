@@ -1,7 +1,7 @@
-﻿using DM.PR.Common.Entities;
-using System;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using DM.PR.Common.Entities;
+using System;
 
 namespace DM.PR.WEB.Models.Employee
 {
@@ -37,7 +37,7 @@ namespace DM.PR.WEB.Models.Employee
         [DataType(DataType.Date)]
         public DateTime? BeginningWork { get; set; }
 
-
+        [Display(Name = "Дата увольнения")]
         [DataType(DataType.Date)]
         public DateTime? EndWork { get; set; }
     }

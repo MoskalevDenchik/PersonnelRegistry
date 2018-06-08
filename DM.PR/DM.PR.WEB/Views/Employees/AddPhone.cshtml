@@ -1,0 +1,8 @@
+﻿@model DM.PR.WEB.Models.Employee.AddPhoneViewModel
+@{
+    Layout = null;
+}
+
+@Html.Hidden($"Phones[{Model.Number}].Id")
+@Html.TextBox($"Phones[{Model.Number}].Number", null, new { @class = "form-control" })
+@Html.DropDownList($"Phones[{Model.Number}].Kind.Id", new SelectList(Model.KindList, "Id", "Kind"), new { @class = "form-control" })

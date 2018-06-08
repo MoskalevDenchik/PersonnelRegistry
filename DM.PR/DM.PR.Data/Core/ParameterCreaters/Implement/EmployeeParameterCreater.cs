@@ -5,7 +5,6 @@ using DM.PR.Common.Entities;
 using System.Data.SqlClient;
 using DM.PR.Data.Entity;
 using System.Data;
-using System;
 
 namespace DM.PR.Data.Core.ParameterCreaters.Implement
 {
@@ -52,9 +51,9 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
                   new SqlParameter("@ImagePath",item.ImagePath),
                   new SqlParameter("@BeginningWork",item.BeginningWork),
                   new SqlParameter("@EndWork",item.EndWork),
-                  new SqlParameter("@MaritalStatusId",item.MaritalStatus),
-                  new SqlParameter("@Phones",ConvertToCreateTable(item.Phones)),
-                  new SqlParameter("@Emails",ConvertToCreateTable(item.Emails))
+                  new SqlParameter("@MaritalStatusId",item.MaritalStatus.Id),
+                  new SqlParameter("@Phones",ConvertToTable(item.Phones)),
+                  new SqlParameter("@Emails",ConvertToTable(item.Emails))
                 }
             };
         }
@@ -76,8 +75,8 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
                     new SqlParameter("@BeginningWork",item.BeginningWork),
                     new SqlParameter("@EndWork",item.EndWork),
                     new SqlParameter("@MaritalStatusId",item.MaritalStatus),
-                    new SqlParameter("@Phones",ConvertToCreateTable(item.Phones)),
-                    new SqlParameter("@Emails",ConvertToCreateTable(item.Emails))
+                    new SqlParameter("@Phones",item.Phones!=null?ConvertToTable(item.Phones):null),
+                    new SqlParameter("@Emails",item.Emails!=null?ConvertToTable(item.Emails):null)
                 }
             };
         }
@@ -86,7 +85,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
         {
             return new DbInputParameter
             {
-                Procedure = "DeleteEmployee",
+                Procedure = "DeleteEmployeeById",
                 Parameters = new SqlParameter[]
                 {
                   new SqlParameter("@Id", id)
@@ -140,83 +139,34 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             };
         }
 
-        #region Helpers
+        #region Converters
 
-        private static DataTable ConvertToCreateTable(IReadOnlyCollection<Email> emails)
+        private static DataTable ConvertToTable(IReadOnlyCollection<Email> emails)
         {
-            if (emails != null)
-            {
-                var table = EmailTable();
+            var table = new DataTable("Emails");
+            table.Columns.Add("Id", typeof(int));
+            table.Columns.Add("Address", typeof(string));
 
-                foreach (var item in emails)
-                {
-                    table.Rows.Add(item.Id, item.Address);
-                }
-                return table;
-
-            }
-            else
+            foreach (var item in emails)
             {
-                return null;
+                table.Rows.Add(item.Id, item.Address);
             }
+            return table;
         }
 
-        private static DataTable ConvertToCreateTable(IReadOnlyCollection<Phone> phones)
-        {
-            if (phones != null)
-            {
-                var table = PhoneTable();
-
-                foreach (var item in phones)
-                {
-                    table.Rows.Add(item.Id, item.Number, item.Kind);
-                }
-                return table;
-
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        private static DataTable ConvertToUpdateTable(IReadOnlyCollection<Phone> phones)
-        {
-            if (phones != null)
-            {
-                var table = PhoneTable();
-
-                foreach (var item in phones)
-                {
-                    table.Rows.Add(item.Id, item.Number, item.Kind);
-                }
-                return table;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        private static DataTable PhoneTable()
+        private static DataTable ConvertToTable(IReadOnlyCollection<Phone> phones)
         {
             var table = new DataTable("Phones");
             table.Columns.Add("Id", typeof(int));
             table.Columns.Add("Number", typeof(string));
-            table.Columns.Add("Type", typeof(int));
+            table.Columns.Add("KindId", typeof(int));
 
+            foreach (var item in phones)
+            {
+                table.Rows.Add(item.Id, item.Number, item.Kind.Id);
+            }
             return table;
         }
-
-        private static DataTable EmailTable()
-        {
-            var table = new DataTable("Phones");
-            table.Columns.Add("Id", typeof(int));
-            table.Columns.Add("Address", typeof(string));
-
-            return table;
-        }
-
 
         #endregion
     }

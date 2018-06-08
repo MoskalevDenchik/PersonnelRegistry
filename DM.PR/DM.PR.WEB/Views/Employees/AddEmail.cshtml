@@ -1,0 +1,7 @@
+﻿@model int
+@{
+    Layout = null;
+}
+
+@Html.Hidden($"Emails[{Model}].Id")
+@Html.TextBox($"Emails[{Model}].Address", null, new { @class = "form-control" })

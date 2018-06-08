@@ -2,91 +2,86 @@
 
 @{
     ViewBag.Title = "Create";
-    int phoneCount = 0;
-    int emailCount = 0;
 }
 
 <h2 class="text-center">Добавьте нового сотрудника</h2> <br />
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create"))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
         <div class="form-group">
-            @Html.LabelFor(model => model.DepartmentId, htmlAttributes: new { @class = "control-label col-md-4" })
-            <div class="col-md-8">
-                @Html.Action("SelectList")                                                                   
+            <div class="col-md-offset-4 col-md-8">
+                @Html.Action("GetDepartmentList")
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.FirstName, new { @class = "control-label col-md-4" })
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-offset-4 col-md-8">
+                @Html.TextBoxFor(model => model.LastName, new { @class = "form-control ", placeholder = "Фамилия..." })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.MiddleName, new { @class = "control-label col-md-4" })
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-offset-4 col-md-8">
+                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", placeholder = "Имя..." })
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-8">
+                @Html.TextBoxFor(model => model.MiddleName, new { @class = "form-control", placeholder = "Отчество..." })
+                @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.LastName,new { @class = "control-label col-md-4" })
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-offset-4 col-md-8">
+                @Html.TextBoxFor(model => model.Address, new { @class = "form-control", placeholder = "Адрес..." })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-4" })
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+            <div class=" col-md-offset-4 col-md-8">
+                @Html.Action("GetMaritalStatusList")
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.MaritalStatusId,new { @class = "control-label col-md-4" })
-            <div class="col-md-8">
-                @Html.Action("SelectMaritalStatus")
+            <div class=" col-md-offset-4 col-md-8">
+                @Html.EditorFor(model => model.BeginningWork, new { htmlAttributes = new { @class = "form-control", placeholder = "Дата приема на работу..." } })
+                @Html.ValidationMessageFor(model => model.BeginningWork, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.BeginningWork, new { @class = "control-label col-md-4" })
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.BeginningWork, new { htmlAttributes = new { @class = "form-control" } })
+            <div class=" col-md-offset-4 col-md-8">
+                @Html.EditorFor(model => model.EndWork, new { htmlAttributes = new { @class = "form-control", placeholder = "Дата увальнения..." } })
+                @Html.ValidationMessageFor(model => model.Emails, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.EndWork, new { @class = "control-label col-md-4" })
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.EndWork, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.LabelFor(model => model.Phones, new { @class = "control-label col-md-4" })
+            @Html.ValidationMessageFor(model => model.Phones, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-md-6" id="Phones">
+
+                </div>
+                <div class="col-md-2">
+                    <a id="AddPhone" class="btn btn-default">Добавить телефон</a>
+                </div>
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.Emails, new { @class = "control-label col-md-4" })
-            <div class="col-md-4" id="Emails">
-                @{
-                    if (Model.Emails != null) { Html.RenderAction("AddEmail", new { emails = @emailCount++ }); }
-                }
-            </div>
-            <div class="col-md-2">
-                @Ajax.ActionLink("Добавить Email", "AddEmail", new { emails = @emailCount++ },
-     new AjaxOptions { UpdateTargetId = "Emails", InsertionMode = InsertionMode.InsertAfter },
-     new { @class = "btn btn-default" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.Label("Телефоны :", new { @class = "control-label col-md-4" })
-            <div class="col-md-4" id="Phones">
-                @{
-                    if (Model.Phones != null) { Html.RenderAction("AddPhone", new { phones = @phoneCount++ }); }
-                }
-            </div>
-            <div class="col-md-2">
-                @Ajax.ActionLink("Добавить Телефон", "AddPhone", new { phones = @phoneCount++ },
-     new AjaxOptions { UpdateTargetId = "Phones", InsertionMode = InsertionMode.InsertAfter },
-     new { @class = "btn btn-default" })
+            @Html.ValidationMessageFor(model => model.Emails, "", new { @class = "text-danger" })
+
+            <div class="row">
+                <div class="col-md-6" id="Emails">
+
+                </div>
+                <div class="col-md-2">
+                    <a id="AddEmail" class="btn btn-default">Добавить Email</a>
+                </div>
             </div>
         </div>
         <div class="form-group">
@@ -96,11 +91,10 @@
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script src="~/Scripts/Phones.js"></script>
+<script src="~/Scripts/Emails.js"></script>

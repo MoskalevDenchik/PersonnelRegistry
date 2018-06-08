@@ -14,6 +14,7 @@ namespace DM.PR.WEB.Controllers
     {
         #region Private
 
+        private IKindPhoneProvider _kindPhoneProv;
         private IEmployeeProvider _employeeProvider;
         private IEmployeeService _employeeService;
         private IDepartmentProvider _departmentProvider;
@@ -24,9 +25,10 @@ namespace DM.PR.WEB.Controllers
         #region Ctors
 
         public EmployeesController(IEmployeeProvider employeeProvider, IEmployeeService employeeService,
-            IDepartmentProvider departmentProvider, IMaritalStatusProvider maritalStatusProvider)
+            IDepartmentProvider departmentProvider, IMaritalStatusProvider maritalStatusProvider, IKindPhoneProvider kindPhoneProv)
         {
-            Helper.ThrowExceptionIfNull(employeeProvider, employeeService, departmentProvider, maritalStatusProvider);
+            Helper.ThrowExceptionIfNull(employeeProvider, employeeService, departmentProvider, maritalStatusProvider, kindPhoneProv);
+            _kindPhoneProv = kindPhoneProv;
             _employeeProvider = employeeProvider;
             _employeeService = employeeService;
             _departmentProvider = departmentProvider;
@@ -64,11 +66,14 @@ namespace DM.PR.WEB.Controllers
         [HttpPost]
         public ActionResult Create(EmployeeCreateViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            _employeeService.Create(MapEmployeeCreateViewModelToEmployee(model));
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(model);
+            //}
+
+            var employee = MapEmployeeCreateViewModelToEmployee(model);
+            _employeeService.Create(employee);
+
             return RedirectToAction("Index");
         }
 
@@ -94,6 +99,8 @@ namespace DM.PR.WEB.Controllers
             return RedirectToAction("Index");
         }
 
+        #region Partial
+
         [AjaxOnly]
         public ActionResult GetPageEmployees(int pageSize, int pageNumber)
         {
@@ -115,32 +122,35 @@ namespace DM.PR.WEB.Controllers
             return PartialView("EmployeeSummary", new PagedData<Employee>(list, totalCount));
         }
 
-
         [ChildActionOnly]
-        public PartialViewResult AddEmail(int emails)
-        {
-            return PartialView(emails);
-        }
-
-        [ChildActionOnly]
-        public PartialViewResult AddPhone(int phones)
-        {
-            return PartialView(phones);
-        }
-
-        [ChildActionOnly]
-        public PartialViewResult SelectMaritalStatus()
+        public PartialViewResult GetMaritalStatusList()
         {
             var list = _maritalStatusProvider.GetAll();
-            return PartialView(list);
+            return PartialView("MaritalStatusSelect", list);
         }
 
         [ChildActionOnly]
-        public PartialViewResult SelectList()
+        public PartialViewResult GetDepartmentList()
         {
             var list = _departmentProvider.GetAll();
-            return PartialView(MapDepartmentToDepartmentSelectModel(list));
+            var model = MapDepartmentToDepartmentSelectModel(list);
+            return PartialView("DepartmentSelect", model);
         }
+
+        [AjaxOnly]
+        public ActionResult AddPhone(int number = 0)
+        {
+            var list = _kindPhoneProv.GetAll();
+            return PartialView("AddPhone", new AddPhoneViewModel { KindList = list, Number = number });
+        }
+
+        [AjaxOnly]
+        public ActionResult AddEmail(int number = 0)
+        {
+            return PartialView("AddEmail", number);
+        }
+
+        #endregion
 
         #region Mappers
 
@@ -176,19 +186,21 @@ namespace DM.PR.WEB.Controllers
             };
         }
 
-        private Employee MapEmployeeCreateViewModelToEmployee(EmployeeCreateViewModel employee)
+        private Employee MapEmployeeCreateViewModelToEmployee(EmployeeCreateViewModel model)
         {
             return new Employee()
             {
-                FirstName = employee.FirstName,
-                LastName = employee.LastName,
-                MiddleName = employee.MiddleName,
-                Address = employee.Address,
-                BeginningWork = employee.BeginningWork,
-                EndWork = employee.EndWork,
-                ImagePath = employee.ImagePath,
-                Phones = employee.Phones,
-                Emails = employee.Emails
+                Department = new Department { Id = model.DepartmentId },
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                MiddleName = model.MiddleName,
+                Address = model.Address,
+                BeginningWork = model.BeginningWork,
+                EndWork = model.EndWork,
+                ImagePath = model.ImagePath,
+                Phones = model.Phones,
+                Emails = model.Emails,
+                MaritalStatus = new MaritalStatus { Id = model.DepartmentId }
             };
         }
 
