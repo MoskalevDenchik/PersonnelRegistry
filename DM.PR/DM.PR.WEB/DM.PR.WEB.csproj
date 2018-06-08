@@ -235,13 +235,10 @@
     <Content Include="Views\Shared\_Details.cshtml" />
     <Content Include="Views\Departments\Edit.cshtml" />
     <Content Include="Views\Departments\Index.cshtml" />
-    <Content Include="Views\Departments\List.cshtml" />
     <Content Include="Views\Advertising\ListOfAd.cshtml" />
     <Content Include="Views\Departments\Create.cshtml" />
     <Content Include="Views\Employees\NoEmployees.cshtml" />
-    <Content Include="Views\Shared\ListOfPhones.cshtml" />
     <Content Include="Views\Employees\ListOfEmails.cshtml" />
-    <Content Include="Views\Departments\SelectList.cshtml" />
     <Content Include="Views\Advertising\NoAd.cshtml" />
     <Content Include="Views\Error\ServerError.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
@@ -267,6 +264,7 @@
     <Content Include="Views\Employees\DepartmentNavigation.cshtml" />
     <Content Include="Views\Employees\AddPhone.cshtml" />
     <Content Include="Views\Employees\AddEmail.cshtml" />
+    <Content Include="Views\Departments\DepartmentSelect.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

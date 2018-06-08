@@ -11,8 +11,14 @@ namespace DM.PR.WEB.Controllers
 {
     public class DepartmentsController : Controller
     {
+        #region Private
+
         private readonly IDepartmentProvider _departmentProv;
         private readonly IDepartmentService _departmentServ;
+
+        #endregion
+
+        #region Ctors
 
         public DepartmentsController(IDepartmentProvider departmentProv, IDepartmentService departmentServ)
         {
@@ -21,36 +27,27 @@ namespace DM.PR.WEB.Controllers
             _departmentServ = departmentServ;
         }
 
-        //[Authorize(Roles = "admin")]
+
+        #endregion
+
         public ActionResult Index()
         {
-            _departmentProv.GetAll();
             return View();
-
-        }
-
-        public PartialViewResult List(int id = 0)
-        {
-            int totalPage;
-            return PartialView(_departmentProv.GetPage(1, 1, out totalPage));
         }
 
         public ActionResult Details(int id = 0)
         {
             var department = _departmentProv.GetById(id);
+            var parent = department.ParentId != null ? _departmentProv.GetById((int)department.ParentId) : null;
 
-            var parentName = department.ParentId == null ?
-                    null : _departmentProv.GetById((int)department.ParentId).Name;
-
-            var departmentView = MapDepartmentToDepartmentDetails(department, parentName);
-
-            return View(departmentView);
+            var model = MapDepartmentToDepartmentDetailsViewModel(department, parent);
+            return View(model);
         }
 
-        [HttpGet]
         public ActionResult Edit(int id = 0)
         {
-            return View(_departmentProv.GetById(id));
+            var model = _departmentProv.GetById(id);
+            return View(model);
         }
 
         [HttpPost]
@@ -63,28 +60,24 @@ namespace DM.PR.WEB.Controllers
 
             _departmentServ.Edit(department);
             return RedirectToAction("Index");
-        }
+        }                                                                           
 
-        [HttpGet]
         public ActionResult Create()
         {
-            var department = new DepartmentCreateViewModel
-            {
-                Phones = new List<Phone>()
-            };
-
-            return View(department);
+            return View();
         }
 
         [HttpPost]
         public ActionResult Create(DepartmentCreateViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                return View();
+                return View(model);
             }
 
-            _departmentServ.Create(MapDepartmentCreateToDepartment(model));
+            var department = MapDepartmentCreateToDepartment(model);
+            _departmentServ.Create(department);
+
             return RedirectToAction("Index");
         }
 
@@ -94,6 +87,8 @@ namespace DM.PR.WEB.Controllers
             return RedirectToAction("Index");
         }
 
+        #region Partial
+
         [AjaxOnly]
         public ActionResult GetAll(int pageSize, int pageNumber)
         {
@@ -101,19 +96,13 @@ namespace DM.PR.WEB.Controllers
             return Json(new { Data = model, TotalCount = totalPage }, JsonRequestBehavior.AllowGet);
         }
 
-        #region Helpers     
-
-        public ActionResult SelectList()
+        [ChildActionOnly]
+        public ActionResult GetParentDepartment()
         {
             var list = _departmentProv.GetAll();
-            if (list != null)
-            {
-                return PartialView(MapDepartmentToDepartmentSelectModel(list));
-            }
-            else
-            {
-                return RedirectToAction("ServerError", "Error");
-            }
+            var model = MapDepartmentToDepartmentSelectModel(list);
+
+            return PartialView("DepartmentSelect", model);
         }
 
         #endregion
@@ -135,13 +124,13 @@ namespace DM.PR.WEB.Controllers
         }
 
 
-        private DepartmentDeatailsViewModel MapDepartmentToDepartmentDetails(Department department, string parentName)
+        private DepartmentDeatailsViewModel MapDepartmentToDepartmentDetailsViewModel(Department department, Department parent)
         {
             return new DepartmentDeatailsViewModel()
             {
                 Id = department.Id,
                 ParentId = department.ParentId,
-                ParentName = parentName,
+                ParentName = parent?.Name,
                 Name = department.Name,
                 Address = department.Address,
                 Description = department.Description,

@@ -43,7 +43,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
                 Procedure = "InsertEmployee",
                 Parameters = new SqlParameter[]
                 {
-                  new SqlParameter("@DepartmentId",item.Department.Id),
+                  new SqlParameter("@DepartmentId",item?.Department.Id),
                   new SqlParameter("@LastName ",item.LastName),
                   new SqlParameter("@FirstName",item.FirstName),
                   new SqlParameter("@MiddleName",item.MiddleName),
@@ -51,11 +51,11 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
                   new SqlParameter("@ImagePath",item.ImagePath),
                   new SqlParameter("@BeginningWork",item.BeginningWork),
                   new SqlParameter("@EndWork",item.EndWork),
-                  new SqlParameter("@MaritalStatusId",item.MaritalStatus.Id),
-                  new SqlParameter("@Phones",ConvertToTable(item.Phones)),
-                  new SqlParameter("@Emails",ConvertToTable(item.Emails))
+                  new SqlParameter("@MaritalStatusId",item?.MaritalStatus.Id),
+                  new SqlParameter("@Phones",item.Phones!=null?ConvertToTable(item.Phones):null),
+                  new SqlParameter("@Emails",item.Emails!=null?ConvertToTable(item.Emails):null)
                 }
-            };
+            };                                            
         }
 
         public IInputParameter CreateForUpdate(Employee item)
@@ -66,7 +66,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
                 Parameters = new SqlParameter[]
                 {
                     new SqlParameter("@Id",item.Id),
-                    new SqlParameter("@DepartmentId",item.Department.Id),
+                    new SqlParameter("@DepartmentId",item?.Department.Id),
                     new SqlParameter("@LastName ",item.LastName),
                     new SqlParameter("@FirstName",item.FirstName),
                     new SqlParameter("@MiddleName",item.MiddleName),
@@ -74,7 +74,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
                     new SqlParameter("@ImagePath",item.ImagePath),
                     new SqlParameter("@BeginningWork",item.BeginningWork),
                     new SqlParameter("@EndWork",item.EndWork),
-                    new SqlParameter("@MaritalStatusId",item.MaritalStatus),
+                    new SqlParameter("@MaritalStatusId",item?.MaritalStatus),
                     new SqlParameter("@Phones",item.Phones!=null?ConvertToTable(item.Phones):null),
                     new SqlParameter("@Emails",item.Emails!=null?ConvertToTable(item.Emails):null)
                 }

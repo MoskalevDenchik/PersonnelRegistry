@@ -43,11 +43,11 @@ namespace DM.PR.Data.Core.InputParameters.Creaters.Implement
 
                 Parameters = new SqlParameter[]
                 {
-                    new SqlParameter("@Id", item.ParentId),
                     new SqlParameter("@Name", item.Name),
+                    new SqlParameter("@ParentId", item.ParentId),
                     new SqlParameter("@Address", item.Address),
                     new SqlParameter("@Description", item.Description),
-                    new SqlParameter("@Phones",ConvertToCreateTable(item.Phones))
+                    new SqlParameter("@Phones", item.Phones!=null? ConvertToTable(item.Phones):null)
                 }
             };
         }
@@ -64,7 +64,7 @@ namespace DM.PR.Data.Core.InputParameters.Creaters.Implement
                     new SqlParameter("@Name", item.Name),
                     new SqlParameter("@Address", item.Address),
                     new SqlParameter("@Description", item.Description),
-                    new SqlParameter("@Phones", ConvertToUpdateTable(item.Phones))
+                    new SqlParameter("@Phones", item.Phones!=null? ConvertToTable(item.Phones):null)
 
                 }
             };
@@ -84,17 +84,6 @@ namespace DM.PR.Data.Core.InputParameters.Creaters.Implement
 
         public IInputParameter CreateForFindByPageData(int pageSize, int page)
         {
-
-            SqlParameter sqls = new SqlParameter
-            {
-                ParameterName = "@TotalCount",
-                SqlDbType = SqlDbType.Int,
-                Direction = ParameterDirection.Output
-            };
-
-            
-
-
             return new DbInputParameter
             {
                 Procedure = "SelectAllDepartmtsByPage",
@@ -103,65 +92,24 @@ namespace DM.PR.Data.Core.InputParameters.Creaters.Implement
                     new SqlParameter("@PageSize",pageSize),
                     new SqlParameter("@Page",page),
                 }
-            };                              
+            };
         }
 
-        #region Helpers
+        #region Converters
 
-        private static DataTable ConvertToCreateTable(IReadOnlyCollection<Phone> phones)
-        {
-            if (phones == null)
-            {
-                return null;
-            }
-            var table = CreatePhoneTable();
-
-            foreach (var item in phones)
-            {
-                table.Rows.Add(item.Number, item.Kind.Kind);
-            }
-            return table;
-        }
-
-
-        private static DataTable ConvertToUpdateTable(IReadOnlyCollection<Phone> phones)
-        {
-            if (phones == null)
-            {
-                return null;
-            }
-
-            var table = UpdatePhoneTable();
-
-            foreach (var item in phones)
-            {
-                table.Rows.Add(item.Id, item.Number, item.Kind.Kind);
-            }
-            return table;
-        }
-
-
-
-        private static DataTable CreatePhoneTable()
-        {
-            var table = new DataTable("Phones");
-            table.Columns.Add("Number", typeof(string));
-            table.Columns.Add("KindId", typeof(int));
-
-            return table;
-        }
-
-        private static DataTable UpdatePhoneTable()
+        private static DataTable ConvertToTable(IReadOnlyCollection<Phone> phones)
         {
             var table = new DataTable("Phones");
             table.Columns.Add("Id", typeof(int));
             table.Columns.Add("Number", typeof(string));
             table.Columns.Add("KindId", typeof(int));
 
+            foreach (var item in phones)
+            {
+                table.Rows.Add(item.Id, item.Number, item.Kind.Id);
+            }
             return table;
         }
-
-
 
         #endregion
     }

@@ -8,7 +8,7 @@
     <div class="col-md-7 text-right " style="padding-top:20px">
         <div class="row">
             <div class="col-md-4  text-right">
-                <span class="text-info">ParentDepartment:</span>
+                <span class="text-info">Вышестоящий отдел:</span>
             </div>
             <div class="col-md-8 text-left">
                 @Model.ParentName
@@ -16,7 +16,7 @@
         </div>
         <div class="row">
             <div class="col-md-4  text-right">
-                <span class="text-info">Department:</span>
+                <span class="text-info">Название:</span>
             </div>
             <div class="col-md-8 text-left ">
                 @Model.Name
@@ -24,17 +24,20 @@
         </div>
         <div class="row">
             <div class="col-md-4 text-right">
-                <span class="text-info">Phones:</span>
+                <span class="text-info">Телефоны:</span>
             </div>
             <div class="col-md-8 text-left">
                 @{
-                    if (Model.Phones != null) { Html.RenderPartial("ListOfPhones", Model.Phones); }
+                    foreach (var item in Model.Phones)
+                    {
+                        <p style="margin-bottom:0px">@item.Number (@item.Kind.Kind) </p>
+                    }
                 }
             </div>
         </div>
         <div class="row">
             <div class="col-md-4 text-right">
-                <span class="text-info">Home address:</span>
+                <span class="text-info">Адресс:</span>
             </div>
             <div class="col-md-8 text-left">
                 @Model.Address
@@ -42,16 +45,12 @@
         </div>
         <div class="row">
             <div class="col-md-4 text-right">
-                <span class="text-info">Description:</span>
+                <span class="text-info">Описание:</span>
             </div>
             <div class="col-md-8 text-left">
                 @Model.Description
             </div>
         </div>
-
-    </div>
-
-    <div class="col-md-6">
     </div>
 </div>
 

@@ -57,7 +57,6 @@ namespace DM.PR.WEB.Controllers
             return View(MapEmployeeToEmployeeDetailsViewModel(employee));
         }
 
-        [HttpGet]
         public ActionResult Create()
         {
             return View();
