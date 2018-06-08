@@ -1,18 +1,38 @@
-﻿$(document).ready(function ()
+﻿pageNumber = 1;
+
+$(document).ready(function ()
 {
-    GetPageData(1, $('#pageSize option:selected').html());
+    GetPageData($('#pageSize option:selected').html());
 });
 
-function GetPageData(pageNum, pageSize)
+$('#pageSize').on('change', function ()
+{
+    var pageSize = $('#pageSize option:selected').html();
+    pageNumber = 1;
+    GetPageData(pageSize);
+})
+
+$('#paged').on('click', 'li', function ()
+{
+    var pageSize = $('#pageSize option:selected').html();
+    var clicked = $(this).html();
+    pageNumber = $(clicked).data('page');
+    GetPageData(pageSize);
+})
+
+function GetPageData(pageSize)
 {
 
     $("#tableData").empty();
     $("#paged").empty();
 
     $.ajax({
-        url: "/Employees/GetAll",
+        url: "/Employees/GetPageEmployees",
         type: "GET",
-        data: { pageNumber: pageNum, pageSize: pageSize },
+        data: {
+            pageNumber: pageNumber,
+            pageSize: pageSize
+        },
         success: function (result)
         {
             AddRows(result);
@@ -41,30 +61,22 @@ function AddRows(data)
     $("#tableData").append(rowData);
 }
 
-function AddPaggin(totalCount, currentPage)
+function AddPaggin(totalCount)
 {
     var buttons = '';
     var pagaSize = $('#pageSize option:selected').html();
     var totalPage = Math.ceil(totalCount / pagaSize);
-    var nextPage = (currentPage < totalPage) ? currentPage + 1 : currentPage;
-    var previosPage = (currentPage > 1) ? currentPage - 1 : currentPage;
+    var nextPage = (pageNumber < totalPage) ? pageNumber + 1 : pageNumber;
+    var previosPage = (pageNumber > 1) ? pageNumber - 1 : pageNumber;
 
-    buttons += ' <li  onclick="GetPageData(' + previosPage + ',' + pagaSize + ')" ><a href="#">&laquo;</a></li>';
+    buttons += '<li ><a  data-page=' + previosPage + ' href="#">&laquo;</a></li>';
     for (var i = 1; i <= totalPage; i++)
     {
-        var classAtiv = (i == currentPage) ? 'active' : '';
-        buttons += '<li onclick="GetPageData(' + i + ',' + pagaSize + ')" class = ' + classAtiv + ' id = "selectedId" ><a href="#">' + i + '</a></li>';
+        var classAtiv = (i == pageNumber) ? 'active' : '';
+        buttons += '<li  class = ' + classAtiv + ' id = "selectedId" ><a data-page=' + i + ' href="#">' + i + '</a></li>';
     }
-    buttons += ' <li onclick="GetPageData(' + nextPage + ',' + pagaSize + ')"><a href="#">&raquo;</a></li>';
+    buttons += ' <li ><a data-page=' + nextPage + ' href="#">&raquo;</a></li>';
 
     $("#paged").append(buttons);
-
 }
-
-$('#pageSize').on('change', function ()
-{
-    var PageSize = $('#pageSize option:selected').html();
-
-    GetPageData(1, PageSize);
-})
 

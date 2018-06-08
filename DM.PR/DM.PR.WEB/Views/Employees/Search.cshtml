@@ -1,5 +1,4 @@
-﻿@model Employee
-
+﻿
 <div class="row">
     <div class="col-md-2">
         <input type="text" class="form-control" name="lastName" placeholder="Фамилия..." />
@@ -18,17 +17,26 @@
     </div>
     <div class="col-md-2 checkbox ">
         <label>
-            <input type="checkbox" name="IsWorking" checked ="checked"> Работает
+            <input type="checkbox" name="IsWorking" checked="checked"> Работает
         </label>
     </div>
-    <div>
+    <div class="col-md-1">
         <input type="button" class="btn btn-danger" id="Search" value="Search" />
     </div>
+    <div class="col-md-1">
+        <select id="pageSize" class="form-control">
+            <option value="value">5</option>
+            <option value="value">10</option>
+            <option value="value">15</option>
+        </select>
+    </div>
 </div>
-
-
-<div id="EmployeeList">
-
+<div id="EmployeesList">
+</div>
+<div class="row">
+    <div class="text-center">
+        <ul class="pagination" id="paged"></ul>
+    </div>
 </div>
 
 <script src="~/Scripts/Search.js"></script>

@@ -1,7 +1,6 @@
 ﻿$("#buttonForm input[type='submit']").on('click', function ()
 {
-    var action = $("#buttonForm").attr('action') + $(this).attr("name");
-
+    var action = $("#buttonForm").attr('action') + $(this).data("action");
     $("#buttonForm").attr('action', action);
 })
 
@@ -19,12 +18,10 @@ $('.tableClick').on('click', 'tr', function ()
     });
     clickedRow.toggleClass("active");
 
-
     $("#buttonForm input[type='submit']").toggleClass("disabled", !($(this).hasClass("active")));
 
-    $('#UserID').val(clickedRow.children(0).html());
+    $('#userId').val(clickedRow.children(0).html());
 })
-
 
 $('.selectlist').on('change', function ()
 {

@@ -11,7 +11,7 @@ namespace DM.PR.Common.Entities
 
         public PagedData(IReadOnlyCollection<T> data, int totalCount)
         {
-            data = Data;
+            Data = data;
             TotalCount = totalCount;
         }
     }

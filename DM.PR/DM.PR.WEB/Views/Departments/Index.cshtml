@@ -1,7 +1,4 @@
 ﻿
-<br />
-<br />
-
 <table class="table table-hover table-bordered " style="background-color:white">
     <thead>
         <tr class="text-center">
@@ -28,17 +25,17 @@
     </div>
     <div class=" col-md-offset-4 col-md-4">
         <form action="Departments/" class="form-inline" role="form" method="post" id="buttonForm">
-            
-            <input type="hidden" name="id" id="UserID" />
-            
+
+            <input type="hidden" name="id" id="userId" />
+
             <div class="form-group" style="margin-bottom:5px">
-                <input value="Удалить" name="Delete" type="submit" class="btn btn-default form-control disabled " />
+                <input value="Удалить" data-action="Delete" type="submit" class="btn btn-default form-control disabled " />
             </div>
             <div class="form-group" style="margin-bottom:5px">
-                <input value="Изменить" name="Edit" type="submit" class="btn btn-default form-control disabled" />
+                <input value="Изменить" data-action="Edit" type="submit" class="btn btn-default form-control disabled" />
             </div>
             <div class="form-group" style="margin-bottom:5px">
-                <input value="Подробнее" name="Details" type="submit" class="btn btn-default form-control disabled" />
+                <input value="Подробнее" data-action="Details" type="submit" class="btn btn-default form-control disabled" />
             </div>
 
         </form>
