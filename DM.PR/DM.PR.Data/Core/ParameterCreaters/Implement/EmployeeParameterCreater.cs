@@ -120,7 +120,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             };
         }
 
-        public IInputParameter CreateForFindPageBySearchParams(string lastName, string firstName, string middledName, int fromYear, int toYear, bool IsWorking, int pageSize, int page)
+        public IInputParameter CreateForFindPageBySearchParams(string lastName, string firstName, string middledName, int fromYear, int toYear, int WorkStatusId, int pageSize, int page)
         {
             return new DbInputParameter
             {
@@ -132,7 +132,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
                     new SqlParameter("@MiddleName", middledName),
                     new SqlParameter("@FromYear", fromYear),
                     new SqlParameter("@ToYear", toYear),
-                    new SqlParameter("@IsWorking", IsWorking),
+                    new SqlParameter("@WorkStatusId", WorkStatusId),
                     new SqlParameter("@PageSize",pageSize),
                     new SqlParameter("@Page",page)
                 }

@@ -55,6 +55,7 @@ function AddRows(data)
             + '<td>' + item.Department.Name + '</td>'
             + '<td>' + item.Address + '</td>'
             + '<td>' + item.MaritalStatus.Status + '</td>'
+            + '<td>' + item.WorkStatus.Status + '</td>'
             + '</tr> ';
     }
 

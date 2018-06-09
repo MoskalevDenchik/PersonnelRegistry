@@ -1,7 +1,6 @@
-﻿
-namespace DM.PR.Common.Entities
+﻿namespace DM.PR.Common.Entities
 {
-    public class MaritalStatus
+    public class WorkStatus
     {
         public int Id { get; set; }
         public string Status { get; set; }

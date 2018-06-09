@@ -1,8 +1,8 @@
-﻿using DM.PR.Common.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using DM.PR.Common.Entities;
 using System.Data;
 using System.Linq;
+using System;
 
 namespace DM.PR.Data.Core.Converters.Implement
 {
@@ -27,9 +27,14 @@ namespace DM.PR.Data.Core.Converters.Implement
                     Department = ConvertToDepartmnent(empl.Field<int>("DepartmentId"), dataSet.Tables[3], dataSet.Tables[4]),
                     MaritalStatus = new MaritalStatus
                     {
-                        Id = empl.Field<int>("StatusId"),
-                        Status = empl.Field<string>("Status")
+                        Id = empl.Field<int>("MaritalStatusId"),
+                        Status = empl.Field<string>("MaritalStatus")
                     },
+                    WorkStatus = new WorkStatus
+                    {
+                        Id = empl.Field<int>("WorkStatusId"),
+                        Status = empl.Field<string>("WorkStatus")
+                    }
                 };
             });
         }
@@ -37,8 +42,10 @@ namespace DM.PR.Data.Core.Converters.Implement
         public IEnumerable<Employee> ConvertToList(DataSet dataSet, out int outputParameter)
         {
             outputParameter = dataSet.Tables[5].AsEnumerable().Select(x => x.Field<int>("Count")).First();
-            return ConvertToList(dataSet).ToList();
+            return ConvertToList(dataSet);
         }
+
+        #region Helpers
 
         private Department ConvertToDepartmnent(int departmentId, params DataTable[] tables)
         {
@@ -82,5 +89,7 @@ namespace DM.PR.Data.Core.Converters.Implement
                 };
             }).ToList();
         }
+
+        #endregion
     }
 }

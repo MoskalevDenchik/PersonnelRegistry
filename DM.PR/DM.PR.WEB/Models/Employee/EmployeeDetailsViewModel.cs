@@ -1,7 +1,7 @@
-﻿using DM.PR.Common.Entities;
-using System;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using DM.PR.Common.Entities;
+using System;
 
 namespace DM.PR.WEB.Models
 {
@@ -26,6 +26,8 @@ namespace DM.PR.WEB.Models
         public string Address { get; set; }
 
         public string MaritalStatus { get; set; }
+
+        public string WorkStatus { get; set; }
 
         public string ImagePath { get; set; }
 

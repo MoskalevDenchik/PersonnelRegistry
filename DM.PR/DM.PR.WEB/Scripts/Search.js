@@ -35,7 +35,7 @@ function GetPageData()
             middlename: $("input[name='middlename']").val(),
             fromYear: $("input[name='fromYear']").val(),
             toYear: $("input[name='toYear']").val(),
-            IsWorking: $("input[name='IsWorking']").prop('checked'),
+            WorkStatusId: $("select[name='WorkStatusId'] option:checked").val(),
             pageNumber: pageNumber,
             pageSize: pageSize
 

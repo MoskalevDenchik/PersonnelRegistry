@@ -1,4 +1,5 @@
 using DM.PR.Data.Core.InputParameters.Creaters.Implement;
+using DM.PR.Data.Core.DataBase.Converters.Implement;
 using DM.PR.Data.Core.ParameterCreaters.Implement;
 using DM.PR.Data.SpecificationCreators.Implement;
 using DM.PR.Data.Core.InputParameters.Creaters;
@@ -23,35 +24,39 @@ namespace DM.PR.Data.Dependencies
     public class DataRegistry : Registry
     {
         public DataRegistry()
-        {                                        
+        {
 
             For<DbExec>().Use<SqlDbExec>();
 
             For<IDataContext<User>>().Use<DbContext<User>>();
             For<IDataContext<Employee>>().Use<DbContext<Employee>>();
+            For<IDataContext<BillBoard>>().Use<WcfBillBoardContext>();
             For<IDataContext<KindPhone>>().Use<DbContext<KindPhone>>();
             For<IDataContext<Department>>().Use<DbContext<Department>>();
+            For<IDataContext<WorkStatus>>().Use<DbContext<WorkStatus>>();
             For<IDataContext<MaritalStatus>>().Use<DbContext<MaritalStatus>>();
-            For<IDataContext<BillBoard>>().Use<WcfBillBoardContext>();
 
             For<IRepository<User>>().Use<Repository<User>>();
             For<IRepository<Employee>>().Use<Repository<Employee>>();
+            For<IRepository<BillBoard>>().Use<Repository<BillBoard>>();
             For<IRepository<KindPhone>>().Use<Repository<KindPhone>>();
             For<IRepository<Department>>().Use<Repository<Department>>();
+            For<IRepository<WorkStatus>>().Use<Repository<WorkStatus>>();
             For<IRepository<MaritalStatus>>().Use<Repository<MaritalStatus>>();
-            For<IRepository<BillBoard>>().Use<Repository<BillBoard>>();
 
             For<IParameterCreater<User>>().Use<UserParameterCreater>();
             For<IParameterCreater<Employee>>().Use<EmployeeParameterCreater>();
+            For<IParameterCreater<BillBoard>>().Use<BillBoardParameterCreater>();
             For<IParameterCreater<KindPhone>>().Use<KindPhoneParameterCreater>();
             For<IParameterCreater<Department>>().Use<DepartmentParameterCreater>();
+            For<IParameterCreater<WorkStatus>>().Use<WorkStatusParameterCreater>();
             For<IParameterCreater<MaritalStatus>>().Use<MaritalStatusParameterCreater>();
-            For<IParameterCreater<BillBoard>>().Use<BillBoardParameterCreater>();
 
             For<IConverter<User>>().Use<UserConverter>();
             For<IConverter<Employee>>().Use<EmployeeConverter>();
             For<IConverter<KindPhone>>().Use<KindPhoneConverter>();
             For<IConverter<Department>>().Use<DepartmentConverter>();
+            For<IConverter<WorkStatus>>().Use<WorkStatusConverter>();
             For<IConverter<MaritalStatus>>().Use<MaritalStatusConverter>();
 
             For<IUserParameterCreator>().Use<UserParameterCreater>();

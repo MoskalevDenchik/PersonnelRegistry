@@ -51,13 +51,13 @@ namespace DM.PR.Business.Providers.Implement
             return _rep.FindBy(findByPageAndDepartmentIdSpecification, out totalCount);
         }
 
-        public IReadOnlyCollection<Employee> GetPageBySearchParams(string lastName, string firstName, string middledName, int fromYear, int toYear, bool IsWorking, int pageSize, int page, out int totalCount)
+        public IReadOnlyCollection<Employee> GetPageBySearchParams(string lastName, string firstName, string middledName, int fromYear, int toYear, int WorkStatusId, int pageSize, int page, out int totalCount)
         {
             if (pageSize <= 0 || page <= 0 || fromYear < 0 || toYear < 0 || fromYear > toYear)
             {
                 throw new Exception("Id пришел  или параметрыры неверны");
             }
-            ISpecification FindPageBySearchParamsSpecification = _creator.CreateFindPageBySearchParamsSpecification(lastName, firstName, middledName, fromYear, toYear, IsWorking, pageSize, page);
+            ISpecification FindPageBySearchParamsSpecification = _creator.CreateFindPageBySearchParamsSpecification(lastName, firstName, middledName, fromYear, toYear, WorkStatusId, pageSize, page);
             return _rep.FindBy(FindPageBySearchParamsSpecification, out totalCount);
         }
     }

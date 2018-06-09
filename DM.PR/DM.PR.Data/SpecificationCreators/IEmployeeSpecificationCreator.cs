@@ -8,6 +8,6 @@ namespace DM.PR.Data.SpecificationCreators
 
         ISpecification CreateFindPageByDepartmentIdSpecification(int departmentId, int pageSize, int page);
 
-        ISpecification CreateFindPageBySearchParamsSpecification(string lastName, string firstName, string middledName, int fromYear, int toYear, bool IsWorking, int pageSize, int page);
+        ISpecification CreateFindPageBySearchParamsSpecification(string lastName, string firstName, string middledName, int fromYear, int toYear, int WorkStatusId, int pageSize, int page);
     }
 }

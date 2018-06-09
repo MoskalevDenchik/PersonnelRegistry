@@ -27,8 +27,11 @@ namespace DM.PR.WEB.Models.Employee
         [Display(Name = "Домашний адрес")]
         public string Address { get; set; }
 
-        [Display(Name = "Семейный статус")]
-        public string MaritalStatusId { get; set; }
+        [Display(Name = "Семейный положение")]
+        public int MaritalStatusId { get; set; }
+
+        [Display(Name = "Статус")]
+        public int  WorkStatusId { get; set; }
 
         [Display(Name = "Фото")]
         public string ImagePath { get; set; }

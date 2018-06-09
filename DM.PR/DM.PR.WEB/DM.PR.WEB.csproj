@@ -189,6 +189,7 @@
     <Compile Include="Controllers\MaritalStatusController.cs" />
     <Compile Include="Controllers\NavigationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\WorkStatusController.cs" />
     <Compile Include="Dependency\DefaultRegistry.cs" />
     <Compile Include="Dependency\ControllerConvention.cs" />
     <Compile Include="Dependency\IoC.cs" />
@@ -213,6 +214,8 @@
     <Compile Include="Models\Navigation\NavigationMenuViewModel.cs" />
     <Compile Include="Models\User\UserCreateViewModel.cs" />
     <Compile Include="Models\User\UserEditViewModel.cs" />
+    <Compile Include="Models\WorkStatus\WorkStatusCreateViewModel.cs" />
+    <Compile Include="Models\WorkStatus\WorkStatusEditViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -225,7 +228,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Navigation\Menu.cshtml" />
-    <Content Include="Views\Employees\List.cshtml" />
     <Content Include="Views\Employees\EmployeeSummary.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
     <Content Include="Views\Departments\Details.cshtml" />
@@ -238,7 +240,6 @@
     <Content Include="Views\Advertising\ListOfAd.cshtml" />
     <Content Include="Views\Departments\Create.cshtml" />
     <Content Include="Views\Employees\NoEmployees.cshtml" />
-    <Content Include="Views\Employees\ListOfEmails.cshtml" />
     <Content Include="Views\Advertising\NoAd.cshtml" />
     <Content Include="Views\Error\ServerError.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
@@ -265,6 +266,11 @@
     <Content Include="Views\Employees\AddPhone.cshtml" />
     <Content Include="Views\Employees\AddEmail.cshtml" />
     <Content Include="Views\Departments\DepartmentSelect.cshtml" />
+    <Content Include="Views\WorkStatus\Index.cshtml" />
+    <Content Include="Views\WorkStatus\Details.cshtml" />
+    <Content Include="Views\WorkStatus\Create.cshtml" />
+    <Content Include="Views\WorkStatus\Edit.cshtml" />
+    <Content Include="Views\Employees\WorkStatusSelect.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

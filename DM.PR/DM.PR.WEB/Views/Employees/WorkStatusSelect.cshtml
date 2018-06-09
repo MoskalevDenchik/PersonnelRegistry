@@ -1,0 +1,7 @@
+﻿@model  IReadOnlyCollection<DM.PR.Common.Entities.WorkStatus>
+
+<div>
+    @Html.DropDownList("WorkStatusId", new SelectList(Model, "Id", "Status"),new { @class = "form-control" })
+</div>
+
+

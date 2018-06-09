@@ -16,11 +16,13 @@ namespace DM.PR.Business.Dependencies
             For<IKindPhoneProvider>().Use<KindPhoneProvider>();
             For<IDepartmentProvider>().Use<DepartmentProvider>();
             For<IMaritalStatusProvider>().Use<MaritalStatusProvider>();
+            For<IWorkStatusProvider>().Use<WorkStatusProvider>();
 
             For<IUserService>().Use<UserService>();
             For<ILoginServices>().Use<LoginServices>();
             For<IEmployeeService>().Use<EmployeeService>();
             For<IKindPhoneService>().Use<KindPhoneService>();
+            For<IWorkStatusService>().Use<WorkStatusService>();
             For<IDepartmentService>().Use<DepartmentService>();
             For<IMaritalStatusService>().Use<MaritalStatusService>();
         }

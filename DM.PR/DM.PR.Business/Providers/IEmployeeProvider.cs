@@ -8,6 +8,6 @@ namespace DM.PR.Business.Providers
         Employee GetById(int id);
         IReadOnlyCollection<Employee> GetPage(int pageSize, int page, out int totalCount);
         IReadOnlyCollection<Employee> GetPageByDepartmentId(int departmentId, int pageSize, int page, out int totalCount);
-        IReadOnlyCollection<Employee> GetPageBySearchParams(string lastName, string firstName, string middledName, int fromYear, int toYear, bool IsWorking, int pageSize, int page, out int totalCount);
+        IReadOnlyCollection<Employee> GetPageBySearchParams(string lastName, string firstName, string middledName, int fromYear, int toYear, int WorkStatusId, int pageSize, int page, out int totalCount);
     }
 }

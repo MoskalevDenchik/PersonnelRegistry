@@ -36,7 +36,7 @@ namespace DM.PR.Data.Core.DataBase.Data
             , parameter);
         }
 
-        public int GetNonQuery(DbInputParameter parameter)
+        public int GetExecuteResult(DbInputParameter parameter)
         {
             return ExecuteCommand(command =>
             {

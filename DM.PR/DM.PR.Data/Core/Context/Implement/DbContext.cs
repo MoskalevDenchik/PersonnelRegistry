@@ -39,7 +39,7 @@ namespace DM.PR.Data.Core.Data.Implement
 
         public void Save(IInputParameter parameter)
         {
-            _dbExecutor.GetNonQuery(parameter as DbInputParameter);
+            _dbExecutor.GetExecuteResult(parameter as DbInputParameter);
         }
     }
 }

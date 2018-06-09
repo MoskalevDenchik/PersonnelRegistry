@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;         
+using System.Collections.Generic;
 
 namespace DM.PR.Common.Entities
 {
@@ -21,7 +21,9 @@ namespace DM.PR.Common.Entities
 
         public string Address { get; set; }
 
-        public MaritalStatus MaritalStatus { get; set;}
+        public MaritalStatus MaritalStatus { get; set; }
+
+        public WorkStatus WorkStatus { get; set; }
 
         public string ImagePath { get; set; }
 

@@ -15,17 +15,17 @@
     <div class="col-md-7 text-right " style="padding-top:20px">
         <div class="row">
             <div class="col-md-4  text-right">
-                <span class="text-info">Full Name:</span>
+                <span class="text-info">ФИО:</span>
             </div>
             <div class="col-md-8 text-left">
+                @Model.LastName
                 @Model.FirstName
                 @Model.MiddleName
-                @Model.LastName
             </div>
         </div>
         <div class="row">
             <div class="col-md-4  text-right">
-                <span class="text-info">Department:</span>
+                <span class="text-info">Отдел:</span>
             </div>
             <div class="col-md-8 text-left">
                 @Model.DepartmentName
@@ -33,7 +33,7 @@
         </div>
         <div class="row">
             <div class="col-md-4 text-right">
-                <span class="text-info">Marital Status:</span>
+                <span class="text-info">Семейное положение:</span>
             </div>
             <div class="col-md-8 text-left">
                 <span class="text-uppercase">@Model.MaritalStatus</span>
@@ -41,11 +41,20 @@
         </div>
         <div class="row">
             <div class="col-md-4 text-right">
-                <span class="text-info">Phones:</span>
+                <span class="text-info">Статус:</span>
             </div>
             <div class="col-md-8 text-left">
-                @{
-                    if (Model.Phones != null) { Html.RenderPartial("ListOfPhones", Model.Phones); }
+                <span class="text-uppercase">@Model.WorkStatus</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 text-right">
+                <span class="text-info">Телеоны:</span>
+            </div>
+            <div class="col-md-8 text-left">
+                @foreach (var item in Model.Phones)
+                {
+                    <p>@item.Number (@item.Kind.Kind)</p>
                 }
             </div>
         </div>
@@ -54,14 +63,15 @@
                 <span class="text-info">E-mails:</span>
             </div>
             <div class="col-md-8 text-left">
-                @{
-                    if (Model.Emails != null) { Html.RenderPartial("ListOfEmails", Model.Emails); }
+                @foreach (var item in Model.Emails)
+                {
+                    <p>@item.Address</p>
                 }
             </div>
         </div>
         <div class="row">
             <div class="col-md-4 text-right">
-                <span class="text-info">Home address:</span>
+                <span class="text-info">Домашний адрес:</span>
             </div>
             <div class="col-md-8 text-left">
                 @Model.Address
@@ -69,10 +79,10 @@
         </div>
         <div class="row">
             <div class="col-md-4 text-right">
-                <span class="text-info">Period of work:</span>
+                <span class="text-info">Период работы:</span>
             </div>
             <div class="col-md-8 text-left">
-                <p> From : @Html.DisplayFor(m => m.BeginningOfWork) @EndOfWork</p>
+                <p> с @Html.DisplayFor(m => m.BeginningOfWork)  @EndOfWork</p>
             </div>
         </div>
 

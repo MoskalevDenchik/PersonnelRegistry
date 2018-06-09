@@ -16,6 +16,7 @@ namespace DM.PR.WEB.Controllers
 
         private IKindPhoneProvider _kindPhoneProv;
         private IEmployeeProvider _employeeProvider;
+        private IWorkStatusProvider _workStatusProvider;
         private IEmployeeService _employeeService;
         private IDepartmentProvider _departmentProvider;
         private IMaritalStatusProvider _maritalStatusProvider;
@@ -24,15 +25,17 @@ namespace DM.PR.WEB.Controllers
 
         #region Ctors
 
-        public EmployeesController(IEmployeeProvider employeeProvider, IEmployeeService employeeService,
+        public EmployeesController(IEmployeeProvider employeeProvider, IEmployeeService employeeService, IWorkStatusProvider workStatusProvider,
             IDepartmentProvider departmentProvider, IMaritalStatusProvider maritalStatusProvider, IKindPhoneProvider kindPhoneProv)
         {
-            Helper.ThrowExceptionIfNull(employeeProvider, employeeService, departmentProvider, maritalStatusProvider, kindPhoneProv);
+            Helper.ThrowExceptionIfNull(employeeProvider, employeeService,
+                departmentProvider, maritalStatusProvider, kindPhoneProv, workStatusProvider);
             _kindPhoneProv = kindPhoneProv;
             _employeeProvider = employeeProvider;
             _employeeService = employeeService;
             _departmentProvider = departmentProvider;
             _maritalStatusProvider = maritalStatusProvider;
+            _workStatusProvider = workStatusProvider;
         }
         #endregion
 
@@ -115,9 +118,9 @@ namespace DM.PR.WEB.Controllers
         }
 
         [AjaxOnly]
-        public ActionResult GetPageEmployeesBySearchParams(string middledName, string firstName, string lastName, bool IsWorking, int pageNumber, int pageSize, int fromYear = 0, int toYear = 100)
+        public ActionResult GetPageEmployeesBySearchParams(string middledName, string firstName, string lastName, int WorkStatusId, int pageNumber, int pageSize, int fromYear = 0, int toYear = 100)
         {
-            var list = _employeeProvider.GetPageBySearchParams(lastName, firstName, middledName, fromYear, toYear, IsWorking, pageSize, pageNumber, out int totalCount);
+            var list = _employeeProvider.GetPageBySearchParams(lastName, firstName, middledName, fromYear, toYear, WorkStatusId, pageSize, pageNumber, out int totalCount);
             return PartialView("EmployeeSummary", new PagedData<Employee>(list, totalCount));
         }
 
@@ -126,6 +129,13 @@ namespace DM.PR.WEB.Controllers
         {
             var list = _maritalStatusProvider.GetAll();
             return PartialView("MaritalStatusSelect", list);
+        }
+
+        [ChildActionOnly]
+        public PartialViewResult GetWorkStatusList()
+        {
+            var list = _workStatusProvider.GetAll();
+            return PartialView("WorkStatusSelect", list);
         }
 
         [ChildActionOnly]
@@ -167,21 +177,23 @@ namespace DM.PR.WEB.Controllers
             return list;
         }
 
-        private EmployeeDetailsViewModel MapEmployeeToEmployeeDetailsViewModel(Employee employee)
+        private EmployeeDetailsViewModel MapEmployeeToEmployeeDetailsViewModel(Employee empl)
         {
             return new EmployeeDetailsViewModel()
             {
-                Id = employee.Id,
-                DepartmentName = employee.Department.Name,
-                FirstName = employee.FirstName,
-                LastName = employee.LastName,
-                MiddleName = employee.MiddleName,
-                Address = employee.Address,
-                BeginningOfWork = employee.BeginningWork,
-                EndOfWork = employee.EndWork,
-                ImagePath = employee.ImagePath,
-                Phones = employee.Phones,
-                Emails = employee.Emails
+                Id = empl.Id,
+                DepartmentName = empl.Department.Name,
+                FirstName = empl.FirstName,
+                LastName = empl.LastName,
+                MiddleName = empl.MiddleName,
+                MaritalStatus = empl.MaritalStatus.Status,
+                WorkStatus = empl.WorkStatus.Status,
+                Address = empl.Address,
+                BeginningOfWork = empl.BeginningWork,
+                EndOfWork = empl.EndWork,
+                ImagePath = empl.ImagePath,
+                Phones = empl.Phones,
+                Emails = empl.Emails
             };
         }
 
@@ -195,6 +207,7 @@ namespace DM.PR.WEB.Controllers
                 MiddleName = model.MiddleName,
                 Address = model.Address,
                 BeginningWork = model.BeginningWork,
+                WorkStatus = new WorkStatus { Id = model.WorkStatusId },
                 EndWork = model.EndWork,
                 ImagePath = model.ImagePath,
                 Phones = model.Phones,

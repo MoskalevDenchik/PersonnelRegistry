@@ -91,7 +91,9 @@
     <Compile Include="Providers\Implement\MaritalStatusProvider.cs" />
     <Compile Include="Providers\Implement\KindPhoneProvider.cs" />
     <Compile Include="Providers\Implement\UserProvider.cs" />
+    <Compile Include="Providers\Implement\WorkStatusProvider.cs" />
     <Compile Include="Providers\IUserProvider.cs" />
+    <Compile Include="Providers\IWorkStatusProvider.cs" />
     <Compile Include="Services\IDepartmentService.cs" />
     <Compile Include="Providers\IEmployeeProvider.cs" />
     <Compile Include="Services\IEmployeeService.cs" />
@@ -107,8 +109,10 @@
     <Compile Include="Services\Implement\LoginServices.cs" />
     <Compile Include="Services\Implement\MaritalStatusService.cs" />
     <Compile Include="Services\Implement\UserService.cs" />
+    <Compile Include="Services\Implement\WorkStatusService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\IKindPhoneService.cs" />
+    <Compile Include="Services\IWorkStatusService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DM.PR.Common\DM.PR.Common.csproj">

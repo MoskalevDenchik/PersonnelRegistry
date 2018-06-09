@@ -1,7 +1,6 @@
-﻿
-namespace DM.PR.Common.Entities
+﻿namespace DM.PR.WEB.Models.WorkStatus
 {
-    public class MaritalStatus
+    public class WorkStatusEditViewModel
     {
         public int Id { get; set; }
         public string Status { get; set; }

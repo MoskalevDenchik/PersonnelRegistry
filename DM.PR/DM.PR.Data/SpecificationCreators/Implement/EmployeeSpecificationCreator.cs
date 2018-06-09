@@ -25,9 +25,9 @@ namespace DM.PR.Data.SpecificationCreators.Implement
             return new Specification(_paramCreator.CreateForFindPageByDepartmentId(departmentId, pageSize, page));
         }
 
-        public ISpecification CreateFindPageBySearchParamsSpecification(string lastName, string firstName, string middledName, int fromYear, int toYear, bool IsWorking, int pageSize, int page)
+        public ISpecification CreateFindPageBySearchParamsSpecification(string lastName, string firstName, string middledName, int fromYear, int toYear, int WorkStatusId, int pageSize, int page)
         {
-            return new Specification(_paramCreator.CreateForFindPageBySearchParams(lastName, firstName, middledName, fromYear, toYear, IsWorking, pageSize, page));
+            return new Specification(_paramCreator.CreateForFindPageBySearchParams(lastName, firstName, middledName, fromYear, toYear, WorkStatusId, pageSize, page));
         }
     }
 }
