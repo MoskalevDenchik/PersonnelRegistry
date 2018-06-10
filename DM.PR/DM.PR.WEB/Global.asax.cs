@@ -1,13 +1,13 @@
-﻿using DM.PR.Business.Helpers;
+﻿using DM.PR.WEB.DependencyResolution;
+using System.Web.Optimization;
+using DM.PR.Business.Helpers;
+using System.Web.Security;
 using DM.PR.Common.Logger;
 using DM.PR.WEB.App_Start;
-using DM.PR.WEB.DependencyResolution;
-using System;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Optimization;
 using System.Web.Routing;
-using System.Web.Security;
+using System.Web.Mvc;
+using System.Web;
+using System;
 
 namespace DM.PR.WEB
 {

@@ -31,7 +31,7 @@ namespace DM.PR.Business.Services.Implement
             {
                 return SignInStatus.Failure;
             }
-            if (!user.Password.Equals(password))
+            if (user.Password != password)
             {
                 return SignInStatus.InvalidPssword;
             }

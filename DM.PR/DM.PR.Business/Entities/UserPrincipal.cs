@@ -1,6 +1,6 @@
 ﻿using DM.PR.Common.Entities.Account;
-using System.Linq;
 using System.Security.Principal;
+using System.Linq;
 
 namespace DM.PR.Business.Entities
 {

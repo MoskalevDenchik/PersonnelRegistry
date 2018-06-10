@@ -1,3 +1,4 @@
+
 USE [master]
 GO
 ------------------------------------------------DataBase-----------------------------------------------
@@ -25,53 +26,21 @@ GO
 -----------------------------------------------------TABLES----------------------------------------------
 ---------------------------------------------------------------------------------------------------------
 
-------------------------------------------------------Users----------------------------------------------
-CREATE TABLE [Users](
+---------------------------------------------------WorkStatus--------------------------------------------
+CREATE TABLE [WorkStatuses](
 [Id] INT IDENTITY (1,1),
-[Login] NVARCHAR(32) NOT NULL,
-[Password] NVARCHAR(64) NOT NULL,
-[Email] NVARCHAR(64) NOT NULL)
+[Status] NVARCHAR(32) NOT NULL);
 GO
 
 --Создание первичного ключа
-ALTER TABLE [Users]
-ADD CONSTRAINT [pk_userId] PRIMARY KEY ([Id]);
+ALTER TABLE [WorkStatuses]
+ADD CONSTRAINT [pk_workStatusId] PRIMARY KEY ([Id]);
 GO
-
-------------------------------------------------------Roles----------------------------------------------
-CREATE TABLE [Roles](
-[Id] INT IDENTITY(1,1),
-[Name] NVARCHAR(32) NOT NULL)
-GO
-
---Создание первичного ключа
-ALTER TABLE [Roles]
-ADD CONSTRAINT [pk_rolesId] PRIMARY KEY ([Id]);
-GO
-
-CREATE TABLE [RolesUsers](
-[UserId] INT,
-[RoleId] INT)
-GO
-
-------------------------------------------------------Roles----------------------------------------------
---Создание внешнего ключа
-ALTER TABLE [RolesUsers]
-ADD CONSTRAINT [fk_RolesUsers_to_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users]([Id]);
-GO
-
-ALTER TABLE [RolesUsers]
-ADD CONSTRAINT [fk_RolesUsers_to_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [Roles]([Id]);
-GO
-
-
-
 
 ----------------------------------------------------KindPhone--------------------------------------------
-
 CREATE TABLE [KindPhones](
 [Id] INT IDENTITY(1,1),
-[Kind] NVARCHAR(16) NOT NULL)
+[Kind] NVARCHAR(32) NOT NULL)
 GO
 --Создание первичного ключа
 ALTER TABLE [KindPhones]
@@ -80,7 +49,7 @@ GO
 
 ---------------------------------------------------Phones-------------------------------------------------
 CREATE TABLE [Phones](
-[Id] INT IDENTITY(1, 1) NOT NULL,
+[Id] INT IDENTITY(1, 1),
 [Number] NVARCHAR(16) NOT NULL,
 [KindId] INT NULL)
 GO
@@ -111,8 +80,8 @@ GO
 CREATE TABLE [Departments](
 [Id] INT IDENTITY(1, 1),
 [ParentID] INT NULL,
-[Name] NVARCHAR(32) NOT NULL,
-[Address] NVARCHAR(64) NULL,
+[Name] NVARCHAR(32) NULL,
+[Address] NVARCHAR(128) NULL,
 [Description] NVARCHAR(128) NULL)
 GO
 --Создание первичного ключа
@@ -123,8 +92,8 @@ GO
 
 
 ----------------------------------------------------Employees---------------------------------------------
-CREATE TABLE Employees (
-[Id] INT IDENTITY(1, 1) NOT NULL ,
+CREATE TABLE [Employees](
+[Id] INT IDENTITY(1, 1),
 [DepartmentId] INT NULL,
 [LastName] NVARCHAR(16) NULL,
 [FirstName] NVARCHAR(16) NULL,
@@ -133,7 +102,8 @@ CREATE TABLE Employees (
 [MaritalStatusId]INT NULL,
 [ImagePath] NVARCHAR(MAX) NULL,
 [BeginningWork] DATE  NULL,
-[EndWork] DATE NULL)
+[EndWork] DATE NULL,
+[WorkStatusId] INT NULL )
 GO
 
 --Создание первичного ключа
@@ -149,6 +119,11 @@ GO
 --Создание внешнего ключа
 ALTER TABLE [Employees]
 ADD CONSTRAINT [fk_maritalStatusId] FOREIGN KEY ([MaritalStatusId]) REFERENCES [MaritalStatuses]([Id]) ON DELETE SET NULL ;
+GO
+
+--Создание внешнего ключа
+ALTER TABLE [Employees]
+ADD CONSTRAINT [fk_workStatusId] FOREIGN KEY ([WorkStatusId]) REFERENCES [WorkStatuses]([Id]) ON DELETE SET NULL ;
 GO
 
 
@@ -202,9 +177,58 @@ ALTER TABLE [PhonesDepartments]
 ADD CONSTRAINT [fk_PhonesDepartments_to_PhonesId] FOREIGN KEY ([PhoneId]) REFERENCES [Phones]([Id]) ON DELETE CASCADE;
 GO
 
+------------------------------------------------------Users----------------------------------------------
+CREATE TABLE [Users](
+[Id] INT IDENTITY (1,1),
+[EmployeeId] INT NOT NULL,
+[Login] NVARCHAR(32) NOT NULL,
+[Password] NVARCHAR(64) NOT NULL)
+GO
+
+--Создание первичного ключа
+ALTER TABLE [Users]
+ADD CONSTRAINT [pk_UserId] PRIMARY KEY ([Id]);
+GO
+
+--Создание уникальности
+ALTER TABLE [Users]
+ADD CONSTRAINT [uq_UserId] UNIQUE ([EmployeeId]);
+GO
+
+--Создание внешнего ключа
+ALTER TABLE [Users]
+ADD CONSTRAINT [fk_UserId_to_EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employees]([Id]);
+GO
+
+------------------------------------------------------Roles----------------------------------------------
+CREATE TABLE [Roles](
+[Id] INT IDENTITY(1,1),
+[Name] NVARCHAR(32) NOT NULL)
+GO
+
+--Создание первичного ключа
+ALTER TABLE [Roles]
+ADD CONSTRAINT [pk_RolesId] PRIMARY KEY ([Id]);
+GO
+
+---------------------------------------------------RolesUsers--------------------------------------------
+CREATE TABLE [RolesUsers](
+[UserId] INT,
+[RoleId] INT)
+GO
+
+--Создание внешнего ключа
+ALTER TABLE [RolesUsers]
+ADD CONSTRAINT [fk_RolesUsers_to_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users]([Id]);
+GO
+
+ALTER TABLE [RolesUsers]
+ADD CONSTRAINT [fk_RolesUsers_to_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [Roles]([Id]);
+GO
+
 ----------------------------------------------------Emails-----------------------------------------------
 CREATE TABLE [Emails](
-[Id] INT IDENTITY(1, 1) NOT NULL,
+[Id] INT IDENTITY(1, 1),
 [EmployeeId] INT NOT NULL,
 [Address] VARCHAR(32) NOT NULL)
 GO
@@ -216,7 +240,7 @@ GO
 
 --Создание внешнего ключа
 ALTER TABLE [Emails]
-ADD CONSTRAINT [fk_Emails_to_EmployeesId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employees]([Id]);
+ADD CONSTRAINT [fk_Emails_to_EmployeesId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employees]([Id]) ON DELETE CASCADE;
 GO
 
 -----------------------------------------------------------------------------------------------------------
@@ -257,16 +281,16 @@ GO
 -----------------------------------------------------------------------------------------------------------
 
 ---------------------------------------------------PhoneTable----------------------------------------------
-Create Type [PhonesType] as TABLE(
+CREATE Type [PhonesType] as TABLE(
 [Id] INT null,
 [Number] NVARCHAR(16) null,
-[KindId] INT not null)
+[KindId] INT null)
 GO
 
 --------------------------------------------------EmailsTable----------------------------------------------
-Create Type [EmailsType] as TABLE
-([Id] INT null,
-[Address] INT null)
+CREATE Type [EmailsType] as TABLE
+([Id] INT NULL,
+[Address] NVARCHAR(32) NULL)
 GO
 
 
@@ -412,10 +436,14 @@ Select [E].[Id],
 	   [ImagePath],
 	   [BeginningWork],
 	   [EndWork],
-	   [MS].[Id] as [StatusId],
-	   [MS].[Status] as [Status] FROM [Employees] as [E]
-  JOIN [MaritalStatuses] as [MS]
+	   [MS].[Id] as [MaritalStatusId],
+	   [MS].[Status] as [MaritalStatus],
+	   [WS].[Id] as [WorkStatusId],
+	   [WS].[Status] as [WorkStatus] FROM [Employees] as [E]
+LEFT JOIN [MaritalStatuses] as [MS]
     ON [E].[MaritalStatusId] = [MS].[Id]
+LEFT JOIN [WorkStatuses] as [WS]
+    ON [E].[WorkStatusId] = [WS].[Id]
  WHERE [E].[Id] = @Id);
  GO
 
@@ -427,7 +455,7 @@ CREATE FUNCTION [dbo].[GetEmployeeBySerchParams](
 @MiddleName nvarchar(16) = '',
 @minTime INT,
 @maxTime INT,
-@IsWorking BIT)
+@WorkStatusId int)
 RETURNS TABLE
 AS
 RETURN SELECT [Id] as [EmployeeId],
@@ -436,11 +464,11 @@ RETURN SELECT [Id] as [EmployeeId],
 		  AND [FirstName] LIKE @FirstName +'%'
 		  AND [MiddleName] LIKE @MiddleName +'%'
 		  AND DATEDIFF( YEAR, BeginningWork, ISNULL(EndWork,GETDATE())) BETWEEN @minTime and @maxTime
-		  AND @IsWorking = IIF(EndWork is NULL, 0, 1 );
+		  AND WorkStatusId = @WorkStatusId;
 GO
 
  ---------------------------------------------AllEmployeesByPage----------------------------------------
-ALTER FUNCTION [dbo].[AllEmployeesByPage](@PageSize INT,@Page INT)
+CREATE FUNCTION [dbo].[AllEmployeesByPage](@PageSize INT,@Page INT)
 RETURNS Table
 AS
  return SELECT [Id] as [EmployeeId],
@@ -451,7 +479,7 @@ AS
 GO
 
  ----------------------------------------GetPageEmployeesByDepartmentId--------------------------------
-Create FUNCTION [dbo].[GetPageEmployeesByDepartmentId](@DepartmentId INT,@PageSize INT,@Page INT)
+CREATE FUNCTION [dbo].[GetPageEmployeesByDepartmentId](@DepartmentId INT,@PageSize INT,@Page INT)
 RETURNS Table
 AS
  RETURN SELECT [Id] as [EmployeeId],
@@ -653,8 +681,10 @@ Select [Id],
 	   [ImagePath],
 	   [BeginningWork],
 	   [EndWork],
-	   [StatusId],
-	   [Status] FROM [GetEmployeeById](@Id)
+	   [MaritalStatusId],
+	   [MaritalStatus],
+	   [WorkStatusId],
+	   [WorkStatus] FROM [GetEmployeeById](@Id)
 
 SELECT [Id],
 	   [EmployeeId],
@@ -678,11 +708,17 @@ SELECT [Id],
 GO
 
 -------------------------------------------------SelectEmployeesByDepartmentId-------------------------------
-alter PROCEDURE [SelectPageEmployeesByDepartmentId]
+CREATE PROCEDURE [SelectPageEmployeesByDepartmentId]
 @DepartmentId INT,
 @PageSize INT,
 @Page INT 
 AS
+
+IF @DepartmentId = 0
+EXEC [SelectAllEmployees] @PageSize,@Page;
+
+ELSE
+BEGIN
 CREATE TABLE [#Searched]([EmployeeId] INT,[DepartmentId] INT);
 INSERT INTO  [#Searched] 
 	  SELECT [EmployeeId], [DepartmentId] FROM [dbo].[GetPageEmployeesByDepartmentId](@DepartmentId,@PageSize,@Page)
@@ -697,10 +733,14 @@ SELECT [E].[Id],
 	   [ImagePath],
 	   [BeginningWork],
 	   [EndWork],
-	   [MS].[Status],
-	   [MaritalStatusId] as [StatusId] FROM Employees as [E]
+	   [MS].[Status] as [MaritalStatus],
+	   [MaritalStatusId],
+	   [WS].[Status] as [WorkStatus],
+	   [WorkStatusId]  FROM Employees as [E]
 LEFT JOIN [MaritalStatuses] as [MS]
 ON [E].[MaritalStatusId] =[Ms].[Id]
+LEFT JOIN [WorkStatuses] as [WS]
+ON [E].[WorkStatusId] =[WS].[Id]
   JOIN [#Searched] as [S]
 ON [S].[EmployeeId] = [E].[Id]; 
 
@@ -746,10 +786,11 @@ SELECT [Id],
 
 SELECT COUNT([ID]) as [Count] FROM [Employees]
 WHERE [DepartmentId] = @DepartmentId;
-
+END;
 GO
+
 ----------------------------------------------------SelectAllEmployees---------------------------------------
-alter PROCEDURE [SelectAllEmployees]
+CREATE PROCEDURE [SelectAllEmployees]
 @PageSize INT,
 @Page INT 
 AS
@@ -767,10 +808,14 @@ SELECT [E].[Id],
 	   [ImagePath],
 	   [BeginningWork],
 	   [EndWork],
-	   [MS].[Status],
-	   [MaritalStatusId] as [StatusId] FROM Employees as [E]
+	   [MS].[Status] as [MaritalStatus],
+	   [MaritalStatusId],
+	   [WS].[Status] as [WorkStatus],
+	   [WorkStatusId]  FROM Employees as [E]
 LEFT JOIN [MaritalStatuses] as [MS]
 ON [E].[MaritalStatusId] =[Ms].[Id]
+LEFT JOIN [WorkStatuses] as [WS]
+ON [E].[WorkStatusId] =[WS].[Id]
   JOIN [#Searched] as [S]
 ON [S].[EmployeeId] = [E].[Id]; 
 
@@ -815,26 +860,25 @@ SELECT [Id],
 	   [Kind];
 
 SELECT COUNT([ID]) as [Count] FROM [Employees];
-
 GO
 
 
 ----------------------------------------------------SelectPageEmployeesBySearchParams--------------------------------------------
 
-Create PROCEDURE [SelectPageEmployeesBySearchParams]
+CREATE PROCEDURE [SelectPageEmployeesBySearchParams]
 @LastName nvarchar(16) = '',
 @FirstName nvarchar(16) = '',
 @MiddleName nvarchar(16) = '',
-@minTime INT,
-@maxTime INT,
-@IsWorking BIT,
+@fromYear INT,
+@toYear INT,
+@WorkStatusId int,
 @PageSize INT,
 @Page INT
 AS
 
 CREATE TABLE [#Searched]([EmployeeId] INT,[DepartmentId] INT);
 INSERT INTO  [#Searched] 
-SELECT * FROM dbo.GetEmployeeBySerchParams(@LastName,@FirstName,@MiddleName,@minTime,@maxTime,@IsWorking)
+SELECT * FROM dbo.GetEmployeeBySerchParams(@LastName,@FirstName,@MiddleName,@fromYear,@toYear,@WorkStatusId)
     ORDER BY [EmployeeId]
 	OFFSET @PageSize *( @Page - 1 ) ROWS
 	FETCH NEXT @PageSize ROWS ONLY ;
@@ -848,12 +892,16 @@ SELECT [E].[Id],
 	   [ImagePath],
 	   [BeginningWork],
 	   [EndWork],
-	   [MS].[Status],
-	   [MaritalStatusId] as [StatusId] FROM Employees as [E]
+	   [MS].[Status] as [MaritalStatus],
+	   [MaritalStatusId],
+	   [WS].[Status] as [WorkStatus],
+	   [WorkStatusId]  FROM Employees as [E]
 LEFT JOIN [MaritalStatuses] as [MS]
 ON [E].[MaritalStatusId] =[Ms].[Id]
+LEFT JOIN [WorkStatuses] as [WS]
+ON [E].[WorkStatusId] =[WS].[Id]
   JOIN [#Searched] as [S]
-ON [S].[EmployeeId] = [E].[Id]; 
+ON [S].[EmployeeId] = [E].[Id];  
 
 SELECT [PE].[EmployeeId],
 	   [PE].[Id],
@@ -895,7 +943,7 @@ SELECT [Id],
 	   [KindId],
 	   [Kind];
 
-SELECT COUNT(*) as [Count] FROM dbo.GetEmployeeBySerchParams(@LastName,@FirstName,@MiddleName,@minTime,@maxTime,@IsWorking);
+SELECT COUNT(*) as [Count] FROM dbo.GetEmployeeBySerchParams(@LastName,@FirstName,@MiddleName,@fromYear,@toYear,@WorkStatusId);
 
 GO
 
@@ -909,6 +957,7 @@ CREATE PROCEDURE [InsertEmployee]
 @ImagePath nvarchar(max) = null,
 @BeginningWork date = null,
 @EndWork date = null,
+@WorkStatusId INT = null,  
 @MaritalStatusId int = null,
 @Phones [PhonesType] READONLY,
 @Emails [EmailsType] READONLY
@@ -922,7 +971,8 @@ INSERT INTO [Employees]
            ,[ImagePath]
            ,[BeginningWork]
            ,[EndWork]
-           ,[MaritalStatusId])
+           ,[MaritalStatusId]
+		   ,[WorkStatusId])
      VALUES
            (@LastName,
 			@FirstName,
@@ -932,7 +982,8 @@ INSERT INTO [Employees]
 			@ImagePath,
 			@BeginningWork,
 			@EndWork,
-			@MaritalStatusId);
+			@MaritalStatusId,
+			@WorkStatusId);
 
 DECLARE @Id INT = @@IDENTITY;
 
@@ -1005,6 +1056,7 @@ CREATE PROCEDURE [UpdateEmployee]
 @BeginningWork date = null,
 @EndWork date = null,
 @MaritalStatusId int = null,
+@WorkStatusId int = null,
 @Phones [PhonesType] READONLY,
 @Emails [EmailsType] READONLY
 AS
@@ -1020,7 +1072,8 @@ UPDATE [Employees]
           [ImagePath] = @ImagePath,
           [BeginningWork] = @BeginningWork,
           [EndWork] = @EndWork,
-          [MaritalStatusId] = @MaritalStatusId
+          [MaritalStatusId] = @MaritalStatusId,
+		  [WorkStatusId] = @WorkStatusId
 	WHERE [Id] = @Id;
 GO
 
@@ -1074,77 +1127,82 @@ SELECT [Id],
 WHERE [Id] = @Id;
 GO
 
+------------------------------------------------MARITALSTATUS-------------------------------------------------
+
+
+---------------------------------------------SelectAllWorkStatus--------------------------------------------
+CREATE PROCEDURE [SelectAllWorkStatus]
+AS
+SELECT [Id],
+	   [Status] FROM [WorkStatuses];
+GO
+
+-----------------------------------------------SelectWorkStatusById--------------------------------------------
+CREATE PROCEDURE [SelectWorkStatusById]
+@Id INT
+AS
+SELECT [Id],
+	   [Status] FROM [WorkStatuses]
+WHERE [Id] = @Id;
+GO
+
 -----------------------------------------------Users-------------------------------------------------------
 
--------------------------------------------SelectAllUsers-----------------------------------------------
-CREATE PROCEDURE [SelectAllUser]
-AS
-SELECT [Id],
-	   [Login],
-	   [Password],
-	   [Email] FROM [Users];
+---------------------------------------------SelectAllUsers-----------------------------------------------
+--CREATE PROCEDURE [SelectAllUser]
+--AS
+--SELECT [Id],
+--	   [Login],
+--	   [Password] FROM [Users];
 
-SELECT [U].[Id],
-       [R].[Name] FROM [Roles] as [R]
-JOIN [RolesUsers] as [RU]
-ON [R].[Id] = [RoleId]
-JOIN [Users] as [U]
-ON [U].[Id] = [UserId];
-GO
+--SELECT [U].[Id],
+--       [R].[Name] FROM [Users] as [R]
+--JOIN [LoginsUsers] as [RU]
+--ON [R].[Id] = [RoleId]
+--JOIN [Users] as [U]
+--ON [U].[Id] = [LoginId];
+--GO
 
 
--------------------------------------------SelectUserByLogin-----------------------------------------------
-alter PROCEDURE [SelectUserByLogin]
-@login NVARCHAR(32)
-AS
-SELECT [Id],
-	   [Login],
-	   [Password],
-	   [Email] FROM [Users]
-WHERE [Login] = @Login
+---------------------------------------------SelectUserByLogin-----------------------------------------------
+--CREATE PROCEDURE [SelectUserByLogin]
+--@login NVARCHAR(32)
+--AS
+--SELECT [Id],
+--	   [Login],
+--	   [Password]FROM [Logins]
+--WHERE [Login] = @Login
 
-SELECT [U].[Id],
-       [R].[Name] FROM [Roles] as [R]
-JOIN [RolesUsers] as [RU]
-ON [R].[Id] = [RoleId]
-JOIN [Users] as [U]
-ON [U].[Id] = [UserId]
-WHERE [Login] = @Login;
-GO
+--SELECT [U].[Id],
+--       [R].[Name] FROM [Logins] as [R]
+--JOIN [LoginsUsers] as [RU]
+--ON [R].[Id] = [RoleId]
+--JOIN [Logins] as [U]
+--ON [U].[Id] = [LoginId]
+--WHERE [Login] = @Login;
+--GO
 
--------------------------------------------SelectUserById--------------------------------------------------
-CREATE PROCEDURE [SelectUserById]
-@Id NVARCHAR(32)
-AS
-SELECT [Id],
-	   [Login],
-	   [Password],
-	   [Email] FROM [Users]
-WHERE [Id] = @Id
+---------------------------------------------SelectUserById--------------------------------------------------
+--CREATE PROCEDURE [SelectUserById]
+--@Id NVARCHAR(32)
+--AS
+--SELECT [Id],
+--	   [Login],
+--	   [Password]FROM [Logines]
+--WHERE [Id] = @Id
 
-SELECT [U].[Id],
-       [R].[Name] FROM [Roles] as [R]
-JOIN [RolesUsers] as [RU]
-ON [R].[Id] = [RoleId]
-JOIN [Users] as [U]
-ON [U].[Id] = [UserId]
-WHERE [U].[Id] = @Id;
-GO
+--SELECT [U].[Id],
+--       [R].[Name] FROM [Logines] as [R]
+--JOIN [RolesUsers] as [RU]
+--ON [R].[Id] = [RoleId]
+--JOIN [Users] as [U]
+--ON [U].[Id] = [UserId]
+--WHERE [U].[Id] = @Id;
+--GO
 
 -------------------------------------------------------------------------------------------------------------
 ------------------------------------------INSERT DATA FOR TEST-----------------------------------------------
 -------------------------------------------------------------------------------------------------------------
-
----------------------------------------------Add Users------------------------------------------------------
-INSERT INTO [Users](
-			[Login],
-			[Password],
-			[Email])
-VALUES 
-('Turbo','1234','turbo@mail.com'),
-('Den', '1234', 'Den@mail.ru'),
-('Red','1234','red@mail.com');
-GO
 
 ---------------------------------------------Add Roles------------------------------------------------------
 INSERT INTO [Roles](
@@ -1154,14 +1212,16 @@ VALUES
 ('editor');
 GO
 
----------------------------------------------Add UsersRoles------------------------------------------------------
-INSERT INTO [RolesUsers](
-			[UserId],
-			[RoleId])
-VALUES 
-(1,1),
-(2,2),
-(3,2);
+
+
+---------------------------------------------Add KindPhone------------------------------------------------------
+INSERT INTO [WorkStatuses]
+		    ([Status])
+VALUES
+('Работает'),
+('Отпуск'),
+('Командирован'),
+('Уволен');
 GO
 
 ---------------------------------------------Add KindPhone------------------------------------------------------
@@ -1255,16 +1315,17 @@ INSERT INTO [dbo].[Employees]
            ,[MaritalStatusId]
            ,[ImagePath]
            ,[BeginningWork]
-           ,[EndWork])
+           ,[EndWork]
+		   ,[WorkStatusId])
 VALUES
-('Федоров','Олег','Николаевич',1,'ул.Ветрова, д.10, кв.20',1,null,'2012-06-12',null),
-('Курленков','Николай','Валерьевич',2,'ул.Николаева, д.23, кв.20',2,null,'2017-07-18',null),
-('Авдеев','Евгений','Константинович',3,'ул.Утенева, д.14, кв.20',2,null,'2017-07-18','2018-01-18'),
-('Хорламов','Степан','Степанович',4,'ул.Лохова, д.16, кв.20',2,null,'2015-03-18',null),
-('Немиров','Федор','Николаевич',5,'ул.Брякова, д.25, кв.20',3,null,'2017-02-28',null),
-('Шеренков','Василий','Андреевич',6,'ул.Куренкова, д.27, кв.20',1,null,'2016-01-12','2017-09-18'),
-('Пупсов','Андрей','Григорьевич',1,'ул.Фаева, д.27, кв.34',2,null,'2016-07-01',null),
-('Кенотов','Николай','Андреевич',4,'ул.Куренкова, д.27, кв.20',1,null,'2014-09-15',null);
+('Федоров','Олег','Николаевич',1,'ул.Ветрова, д.10, кв.20',1,null,'2012-06-12',null,1),
+('Курленков','Николай','Валерьевич',2,'ул.Николаева, д.23, кв.20',2,null,'2017-07-18',null,1),
+('Авдеев','Евгений','Константинович',3,'ул.Утенева, д.14, кв.20',2,null,'2017-07-18','2018-01-18',1),
+('Хорламов','Степан','Степанович',4,'ул.Лохова, д.16, кв.20',2,null,'2015-03-18',null,1),
+('Немиров','Федор','Николаевич',5,'ул.Брякова, д.25, кв.20',3,null,'2017-02-28',null,1),
+('Шеренков','Василий','Андреевич',6,'ул.Куренкова, д.27, кв.20',1,null,'2016-01-12','2017-09-18',1),
+('Пупсов','Андрей','Григорьевич',1,'ул.Фаева, д.27, кв.34',2,null,'2016-07-01',null,1),
+('Кенотов','Николай','Андреевич',4,'ул.Куренкова, д.27, кв.20',1,null,'2014-09-15',null,1);
 GO
 
 ------------------------------------------PhonesEmployees----------------------------------------------------
@@ -1296,5 +1357,26 @@ INSERT INTO [dbo].[Emails]
 (4,'rvdvdf@mail.ru'),
 (5,'dfvdct@mail.ru'),
 (6,'gdfvdt@mail.ru');
+GO
+
+---------------------------------------------Add Users------------------------------------------------------
+INSERT INTO [Users](
+            [EmployeeId],
+			[Login],
+			[Password])
+VALUES 
+(1,'Turbo','1234'),
+(2,'Den', '1234'),
+(3,'Red','1234');
+GO
+
+---------------------------------------------Add LoginesRoles------------------------------------------------------
+INSERT INTO [RolesUsers](
+			[UserId],
+			[RoleId])
+VALUES 
+(1,1),
+(2,2),
+(3,2);
 GO
 

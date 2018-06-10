@@ -2,7 +2,7 @@
 
 namespace DM.PR.Common.Entities
 {
-    public class Department : IEntity
+    public class Department
     {
         public int Id { get; set; }
         public int? ParentId { get; set; }

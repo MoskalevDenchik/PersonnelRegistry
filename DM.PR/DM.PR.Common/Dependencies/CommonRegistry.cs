@@ -1,7 +1,9 @@
-using DM.PR.Common.Helpers;
+using DM.PR.Common.Services.Implement;
 using DM.PR.Common.Helpers.Implement;
-using DM.PR.Common.Logger;
 using StructureMap.Configuration.DSL;
+using DM.PR.Common.Services;
+using DM.PR.Common.Helpers;
+using DM.PR.Common.Logger;
 
 namespace DM.PR.Common.Dependencies
 {
@@ -10,8 +12,8 @@ namespace DM.PR.Common.Dependencies
         public CommonRegistry()
         {
             ForSingletonOf<IRecordLog>().Use<RecordLog>();
-            ForSingletonOf<IConfigManger>().Use<ConfigManager>();
-
+            For<IConfigManger>().Use<ConfigManager>();
+            ForSingletonOf<IÑachingService>().Use<ÑachingService>();
         }
     }
 }

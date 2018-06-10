@@ -195,7 +195,7 @@
     <Compile Include="Dependency\IoC.cs" />
     <Compile Include="Dependency\StructureMapDependencyScope.cs" />
     <Compile Include="Dependency\StructureMapScopeModule.cs" />
-    <Compile Include="HtmlHelpers\ImageHalper.cs" />
+    <Compile Include="Infrastructure\HtmlHelpers\ImageHalper.cs" />
     <Compile Include="Infrastructure\Attributes\AjaxOnly.cs" />
     <Compile Include="Models\Account\LoginViewModel.cs" />
     <Compile Include="Models\Department\DepartmentCreateViewModel.cs" />

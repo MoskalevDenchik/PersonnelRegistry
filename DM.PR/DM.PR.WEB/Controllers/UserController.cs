@@ -1,7 +1,7 @@
 ﻿using DM.PR.Common.Entities.Account;
 using DM.PR.Business.Providers;
 using DM.PR.Business.Services;
-using DM.PR.WEB.Models.User;        
+using DM.PR.WEB.Models.User;
 using DM.PR.Common.Helpers;
 using System.Web.Mvc;
 
@@ -85,7 +85,6 @@ namespace DM.PR.WEB.Controllers
             {
                 Login = model.Login,
                 Password = model.Password,
-                Email = model.Email,
                 Roles = model.Roles
             };
         }
@@ -97,7 +96,6 @@ namespace DM.PR.WEB.Controllers
                 Id = model.Id,
                 Login = model.Login,
                 Password = model.Password,
-                Email = model.Email,
                 Roles = model.Roles
             };
         }
