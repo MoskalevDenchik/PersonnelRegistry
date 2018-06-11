@@ -8,6 +8,10 @@ namespace DM.PR.Common.Entities
 
         public int TotalCount { get; set; }
 
+        public PagedData()
+        {
+
+        }
 
         public PagedData(IReadOnlyCollection<T> data, int totalCount)
         {

@@ -10,7 +10,18 @@ namespace DM.PR.Common.Helpers
             {
                 if (item == null)
                 {
-                    throw new ArgumentNullException(item.GetType().ToString(),"Hello");
+                    throw new ArgumentNullException(item.GetType().ToString(), "Hello");
+                }
+            }
+        }
+
+        public static void ThrowExceptionIfZeroOrNegative(params int[] values)
+        {
+            foreach (var item in values)
+            {
+                if (item <= 0)
+                {
+                    throw new Exception("Неверное число!");
                 }
             }
         }

@@ -1,11 +1,14 @@
 ﻿using DM.PR.Data.SpecificationCreators;
+using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using DM.PR.Data.Specifications;
 using DM.PR.Data.Repositories;
 using DM.PR.Common.Entities;
+using DM.PR.Common.Services;
 using DM.PR.Common.Helpers;
 using System;
-using DM.PR.Common.Services;
+
+[assembly: InternalsVisibleTo("DM.PR.Business.Test")]
 
 namespace DM.PR.Business.Providers.Implement
 {
@@ -25,26 +28,19 @@ namespace DM.PR.Business.Providers.Implement
 
         public Employee GetById(int id)
         {
-            if (id <= 0)
-            {
-                throw new Exception("Неверный ID");
-            }
-
+            Helper.ThrowExceptionIfZeroOrNegative(id);
             return _rep.GetById(id);
         }
 
         public IReadOnlyCollection<Employee> GetPage(int pageSize, int page, out int totalCount)
         {
-            if (pageSize <= 0 || page <= 0)
-            {
-                throw new Exception("Id пришел 0");
-            }
-            var cachKey = $"Employees_{pageSize}_{page}";
+            Helper.ThrowExceptionIfZeroOrNegative(pageSize, page);
 
+            var cachKey = $"Employees_{pageSize}_{page}";
             var pageData = _caching.Get<PagedData<Employee>>(cachKey);
             if (pageData == null)
             {
-                ISpecification findByPageSpecification = _creator.CreateFindByPageDataSpecification(pageSize, page);
+                var findByPageSpecification = _creator.CreateFindByPageDataSpecification(pageSize, page);
                 var list = _rep.FindBy(findByPageSpecification, out totalCount);
                 _caching.Add(cachKey, new PagedData<Employee>(list, totalCount), 20);
                 return list;
@@ -56,16 +52,13 @@ namespace DM.PR.Business.Providers.Implement
 
         public IReadOnlyCollection<Employee> GetPageByDepartmentId(int departmentId, int pageSize, int page, out int totalCount)
         {
-            if (departmentId < 0 || pageSize <= 0 || page <= 0)
-            {
-                throw new Exception("Id пришел 0");
-            }
-            var cachKey = $"Employees_{pageSize}_{page}_{departmentId}";
+            Helper.ThrowExceptionIfZeroOrNegative(departmentId, pageSize, page);
 
+            var cachKey = $"Employees_{pageSize}_{page}_{departmentId}";
             var pageData = _caching.Get<PagedData<Employee>>(cachKey);
             if (pageData == null)
             {
-                ISpecification findByPageAndDepartmentIdSpecification = _creator.CreateFindPageByDepartmentIdSpecification(departmentId, pageSize, page);
+                var findByPageAndDepartmentIdSpecification = _creator.CreateFindPageByDepartmentIdSpecification(departmentId, pageSize, page);
                 var list = _rep.FindBy(findByPageAndDepartmentIdSpecification, out totalCount);
                 _caching.Add(cachKey, new PagedData<Employee>(list, totalCount), 20);
                 return list;
@@ -77,10 +70,10 @@ namespace DM.PR.Business.Providers.Implement
 
         public IReadOnlyCollection<Employee> GetPageBySearchParams(string lastName, string firstName, string middledName, int fromYear, int toYear, int WorkStatusId, int pageSize, int page, out int totalCount)
         {
-            if (pageSize <= 0 || page <= 0 || fromYear < 0 || toYear < 0 || fromYear > toYear)
-            {
-                throw new Exception("Id пришел  или параметрыры неверны");
-            }
+            Helper.ThrowExceptionIfZeroOrNegative(pageSize, page, fromYear, toYear);
+
+            if (fromYear > toYear) { throw new Exception("Id пришел  или параметрыры неверны"); }  // уточнить
+
             ISpecification FindPageBySearchParamsSpecification = _creator.CreateFindPageBySearchParamsSpecification(lastName, firstName, middledName, fromYear, toYear, WorkStatusId, pageSize, page);
             return _rep.FindBy(FindPageBySearchParamsSpecification, out totalCount);
         }

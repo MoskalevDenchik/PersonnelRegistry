@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System;
 
 namespace DM.PR.Common.Entities
 {
-    public class Employee
+    public class Employee : IEntity
     {
         public int Id { get; set; }
 

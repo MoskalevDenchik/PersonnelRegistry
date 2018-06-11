@@ -1,6 +1,6 @@
 ﻿namespace DM.PR.Common.Entities
 {
-    public class BillBoard
+    public class BillBoard : IEntity
     {
         public int Id { get; set; }
 
