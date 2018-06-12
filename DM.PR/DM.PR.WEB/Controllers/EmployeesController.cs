@@ -28,7 +28,7 @@ namespace DM.PR.WEB.Controllers
         public EmployeesController(IEmployeeProvider employeeProvider, IEmployeeService employeeService, IWorkStatusProvider workStatusProvider,
             IDepartmentProvider departmentProvider, IMaritalStatusProvider maritalStatusProvider, IKindPhoneProvider kindPhoneProv)
         {
-            Helper.ThrowExceptionIfNull(employeeProvider, employeeService,
+            Inspector.ThrowExceptionIfNull(employeeProvider, employeeService,
                 departmentProvider, maritalStatusProvider, kindPhoneProv, workStatusProvider);
             _kindPhoneProv = kindPhoneProv;
             _employeeProvider = employeeProvider;

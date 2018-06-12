@@ -19,7 +19,7 @@ namespace DM.PR.Data.Core.Context.Implement
 
         public WcfBillBoardContext(IRecordLog log)
         {
-            Helper.ThrowExceptionIfNull(log);
+            Inspector.ThrowExceptionIfNull(log);
             _log = log;
         }
 

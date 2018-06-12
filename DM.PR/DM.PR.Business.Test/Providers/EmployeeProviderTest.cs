@@ -1,13 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DM.PR.Business.Providers.Implement;
 using DM.PR.Data.SpecificationCreators;
+using DM.PR.WEB.DependencyResolution;
 using System.Collections.Generic;
 using DM.PR.Data.Specifications;
 using DM.PR.Data.Repositories;
 using DM.PR.Common.Entities;
 using DM.PR.Common.Services;
-using System.Collections;
-using System.Reflection;
+using DM.PR.Common.Helpers;
 using System;
 using Moq;
 
@@ -20,9 +20,14 @@ namespace DM.PR.Business.Test.Providers
         private Mock<IСachingService> _cahing;
         private Mock<IRepository<Employee>> _repository;
         private Mock<IEmployeeSpecificationCreator> _specificationCreator;
+        private readonly IEnityReflector _reflector;
 
         private IReadOnlyCollection<Employee> _testList;
 
+        public EmployeeProviderTest()
+        {
+            _reflector = IoC.Initialize().GetInstance<IEnityReflector>();
+        }
 
         [TestInitialize]
         public void TestInitialize()
@@ -169,14 +174,17 @@ namespace DM.PR.Business.Test.Providers
         [TestMethod]
         public void GetPage_CahicngReturnedNull_FindByAndAddMethodsWasCalled()
         {
-            //arrange 
+            //arrange
+            int pageSize = 1;
+            int pageData = 1;
             _cahing.Setup(c => c.Get<PagedData<Employee>>(It.IsAny<string>())).Returns<PagedData<Employee>>(null);
 
             //act
-            var list = _provider.GetPage(1, 1, out int totalCount);
+            var list = _provider.GetPage(pageSize, pageData, out int totalCount);
 
             //assert 
-            _repository.Verify(r => r.FindBy(It.IsAny<ISpecification>()), Times.Never);
+            _specificationCreator.Verify(c => c.CreateFindByPageDataSpecification(pageSize, pageData), Times.Once);
+            _repository.Verify(r => r.FindBy(It.IsAny<ISpecification>(), out totalCount), Times.Once);
             _cahing.Verify(c => c.Add(It.IsAny<string>(), It.IsAny<PagedData<Employee>>(), It.IsAny<int>()), Times.Once);
         }
 
@@ -184,7 +192,7 @@ namespace DM.PR.Business.Test.Providers
         public void GetPage_CahicngReturnedNull_DataWasNotCahnged()
         {
             //arrange 
-            var expectedList = GetPropertyValueList(_testList);
+            var expectedPropertyValueList = _reflector.GetPropertyValueList(_testList);
             int expectedTotalCount = 2;
             _cahing.Setup(c => c.Get<PagedData<Employee>>(It.IsAny<string>())).Returns(new PagedData<Employee>() { Data = _testList, TotalCount = expectedTotalCount });
 
@@ -193,67 +201,31 @@ namespace DM.PR.Business.Test.Providers
             int actualTotalCount = totalCount;
 
             //assert     
-            CollectionAssert.AreEqual(expectedList, GetPropertyValueList(actualList));
+            CollectionAssert.AreEqual(expectedPropertyValueList, _reflector.GetPropertyValueList(actualList));
             Assert.AreEqual(expectedTotalCount, actualTotalCount);
         }
-        #endregion
 
-        #region Helpers
-
-        private List<object> GetPropertyValueList<T>(T obj)
+        [TestMethod]
+        public void GetPage_CahicngReturnedNotNull_DataWasNotCahnged()
         {
-            List<object> list = new List<object>();
+            //arrange 
+            int pageSize = 1;
+            int pageData = 1;
+            int expectedTotalCount = 2;
+            var expectedPropertyValueList = _reflector.GetPropertyValueList(_testList);
 
-            if (typeof(IEnumerable<IEntity>).IsAssignableFrom(typeof(T)))
-            {
-                foreach (var item in obj as IEnumerable)
-                {
-                    AddPropetyValues(item, list);
-                }
-            }
-            else
-            {
-                AddPropetyValues(obj, list);
-            }
+            _cahing.Setup(c => c.Get<PagedData<Employee>>(It.IsAny<string>())).Returns<PagedData<Employee>>(null);
+            _specificationCreator.Setup(s => s.CreateFindByPageDataSpecification(pageSize, pageData)).Returns(It.IsAny<ISpecification>);
+            _repository.Setup(s => s.FindBy(It.IsAny<ISpecification>(), out expectedTotalCount)).Returns(_testList);
 
-            return list;
+            //act
+            var actualList = _provider.GetPage(pageSize, pageData, out int totalCount);
+            int actualTotalCount = totalCount;
+
+            //assert     
+            CollectionAssert.AreEqual(expectedPropertyValueList, _reflector.GetPropertyValueList(actualList));
+            Assert.AreEqual(expectedTotalCount, actualTotalCount);
         }
-
-        private void AddPropetyValues<T>(T obj, List<object> list)
-        {
-            if (obj == null)
-            {
-                list.Add(null);
-                return;
-            }
-
-            PropertyInfo[] propetrties = obj.GetType().GetProperties();
-
-            foreach (PropertyInfo item in propetrties)
-            {
-                Type itemType = item.PropertyType;
-
-                if (typeof(IEnumerable<IEntity>).IsAssignableFrom(itemType))
-                {
-                    var entity = obj.GetType().GetProperty(item.Name).GetValue(obj);
-                    foreach (var podElement in entity as IEnumerable)
-                    {
-                        AddPropetyValues(podElement, list);
-                    }
-                }
-                else if (itemType.GetInterface(typeof(IEntity).Name) != null)
-                {
-                    var entity = obj.GetType().GetProperty(item.Name).GetValue(obj);
-                    AddPropetyValues(entity, list);
-                }
-                else
-                {
-                    list.Add(item.GetValue(obj));
-                }
-            }
-        }
-
-
 
         #endregion
     }

@@ -13,7 +13,7 @@ namespace DM.PR.Business.Services.Implement
 
         public LoginServices(IUserProvider prov)
         {
-            Helper.ThrowExceptionIfNull(prov);
+            Inspector.ThrowExceptionIfNull(prov);
             _prov = prov;
         }
 

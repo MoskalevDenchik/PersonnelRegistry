@@ -10,7 +10,7 @@ namespace DM.PR.Data.Specifications
 
         public DepartmentSpecificationCreator(IDepartmentParameterCreater paramCreator)
         {
-            Helper.ThrowExceptionIfNull(paramCreator);
+            Inspector.ThrowExceptionIfNull(paramCreator);
             _paramCreator = paramCreator;
         }
 

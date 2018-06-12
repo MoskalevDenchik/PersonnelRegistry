@@ -8,12 +8,18 @@ $(document).ready(function ()
     GetPageData(departmentId, pageSize);
 });
 
-$("#menu li").on('click', function ()
+$("#menu ").on('click', " li a", function ()
 {
-    var curent = $(this).html();
-    departmentId = $(curent).data("department");
+    var active = $("#menu li[class ='active']");
+    active.find("ul[class ='Children']").empty();
+    active.removeClass('active');
+    $(this).parent().addClass("active");
+
     pageNumber = 1;
+    departmentId = $(this).data("department");
     GetPageData(departmentId, pageSize);
+
+    UpdateMenu(departmentId);
 });
 
 $('#paged').on('click', 'li', function ()
@@ -31,6 +37,24 @@ $('#pageSize').on('change', function ()
     GetPageData(departmentId, pageSize);
 })
 
+function UpdateMenu(departmentId)
+{
+    $.ajax({
+        url: "/Navigation/GetDepartmentChildren",
+        type: "GET",
+        data: {
+            departmentId: departmentId,
+        },
+        success: function (response)
+        {
+            if (response != null)
+            {
+                $("#menu li[class ='active'] ul").append(response);
+            }
+        }
+    })
+}
+
 function GetPageData(departmentId, pageSize)
 {
     $("#EmployeesList").empty();
@@ -39,7 +63,6 @@ function GetPageData(departmentId, pageSize)
     $.ajax({
         url: "/Employees/GetPageEmployeesByDepartmentId",
         type: "GET",
-        dataType: 'html',
         data: {
             departmentId: departmentId,
             pageNumber: pageNumber,

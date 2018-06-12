@@ -5,6 +5,8 @@ using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using System.Web.Mvc;
 using System;
+using DM.PR.WEB.Infrastructure.Attributes;
+using System.Linq;
 
 namespace DM.PR.WEB.Controllers
 {
@@ -14,20 +16,37 @@ namespace DM.PR.WEB.Controllers
 
         public NavigationController(IDepartmentProvider departmentProvider)
         {
-            Helper.ThrowExceptionIfNull(departmentProvider);
+            Inspector.ThrowExceptionIfNull(departmentProvider);
             _departmentProvider = departmentProvider;
         }
+
 
         public ActionResult Menu()
         {
             var departments = _departmentProvider.GetAll();
-            if (departments.Equals(null))
+            if (departments == null)
             {
                 throw new Exception();
             }
 
-            return PartialView(MapDepartmentToDepartmentViewModel(departments));
+            var model = MapDepartmentToDepartmentViewModel(departments);
+
+            return PartialView(model.Where(x => x.ParentId == null).ToList());
         }
+
+        [AjaxOnly]
+        public ActionResult GetDepartmentChildren(int departmentId)
+        {
+            var departments = _departmentProvider.GetAll();
+            if (departments == null)
+            {
+                throw new Exception();
+            }
+            var model = MapDepartmentToDepartmentViewModel(departments).Where(x => x.ParentId == departmentId).ToList();
+
+            return PartialView("DepartmentChildren", model);
+        }
+
 
         #region Helpers
 

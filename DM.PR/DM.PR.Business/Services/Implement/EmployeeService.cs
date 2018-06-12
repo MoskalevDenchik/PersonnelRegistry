@@ -12,27 +12,28 @@ namespace DM.PR.Business.Services.Implement
 
         public EmployeeService(IRepository<Employee> employeeRepository, IСachingService caching)
         {
-            Helper.ThrowExceptionIfNull(employeeRepository);
+            Inspector.ThrowExceptionIfNull(employeeRepository);
             _rep = employeeRepository;
             _caching = caching;
         }
 
         public void Create(Employee employee)
         {
-            CleanCach();
             _rep.Add(employee);
+            CleanCach();
         }
 
         public void Delete(int id)
         {
-            CleanCach();
+            Inspector.ThrowExceptionIfZeroOrNegative(id);
             _rep.Remove(id);
+            CleanCach();
         }
 
         public void Edit(Employee employee)
         {
-            CleanCach();
             _rep.Update(employee);
+            CleanCach();
         }
 
         #region Helpers

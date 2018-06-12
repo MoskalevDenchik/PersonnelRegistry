@@ -1,0 +1,10 @@
+﻿@model IReadOnlyCollection<DM.PR.WEB.Models.Navigation.NavigationMenuViewModel>
+
+@foreach (var item in Model)
+{
+    <li>
+        <a href="#" data-department="@item.Id">@item.Name</a>
+        <ul class="Children"></ul>
+    </li>
+}
+

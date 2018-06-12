@@ -80,7 +80,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\MyAuthorizeAttribute.cs" />
     <Compile Include="Dependencies\BusinessRegistry.cs" />
     <Compile Include="Entities\UserPrincipal.cs" />
     <Compile Include="Helpers\CookiesConverter.cs" />
@@ -90,8 +89,10 @@
     <Compile Include="Providers\IMaritalStatusProvider.cs" />
     <Compile Include="Providers\Implement\MaritalStatusProvider.cs" />
     <Compile Include="Providers\Implement\KindPhoneProvider.cs" />
+    <Compile Include="Providers\Implement\RoleProvider.cs" />
     <Compile Include="Providers\Implement\UserProvider.cs" />
     <Compile Include="Providers\Implement\WorkStatusProvider.cs" />
+    <Compile Include="Providers\IRoleProvider.cs" />
     <Compile Include="Providers\IUserProvider.cs" />
     <Compile Include="Providers\IWorkStatusProvider.cs" />
     <Compile Include="Services\IDepartmentService.cs" />

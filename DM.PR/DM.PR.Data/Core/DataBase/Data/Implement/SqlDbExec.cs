@@ -11,7 +11,7 @@ namespace DM.PR.Data.Core.DataBase.Data.Implement
 
         public SqlDbExec(IConfigManger configManager)
         {
-            Helper.ThrowExceptionIfNull(configManager);
+            Inspector.ThrowExceptionIfNull(configManager);
             _configManager = configManager;
         }
 

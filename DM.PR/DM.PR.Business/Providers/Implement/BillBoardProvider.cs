@@ -11,7 +11,7 @@ namespace DM.PR.Business.Providers.Implement
 
         public BillBoardProvider(IRepository<BillBoard> rep)
         {
-            Helper.ThrowExceptionIfNull(rep);
+            Inspector.ThrowExceptionIfNull(rep);
             _rep = rep;
         }
 

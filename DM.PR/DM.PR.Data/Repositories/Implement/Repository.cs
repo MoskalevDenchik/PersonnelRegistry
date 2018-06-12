@@ -13,7 +13,7 @@ namespace DM.PR.Data.Repositories.Implement
 
         public Repository(IParameterCreater<T> creater, IDataContext<T> dataContext)
         {
-            Helper.ThrowExceptionIfNull(creater, dataContext);
+            Inspector.ThrowExceptionIfNull(creater, dataContext);
             _dataContext = dataContext;
             _parametersCreater = creater;
         }

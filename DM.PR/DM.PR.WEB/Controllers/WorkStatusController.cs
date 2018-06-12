@@ -14,7 +14,7 @@ namespace DM.PR.WEB.Controllers
 
         public WorkStatusController(IWorkStatusProvider workStatusProvider, IWorkStatusService workStatusService)
         {
-            Helper.ThrowExceptionIfNull(workStatusProvider, workStatusService);
+            Inspector.ThrowExceptionIfNull(workStatusProvider, workStatusService);
             _workStatusProvider = workStatusProvider;
             _workStatusService = workStatusService;
         }

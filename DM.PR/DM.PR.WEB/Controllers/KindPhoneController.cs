@@ -14,7 +14,7 @@ namespace DM.PR.WEB.Controllers
 
         public KindPhoneController(IKindPhoneProvider kindPhoneProvider, IKindPhoneService kindPhoneServ)
         {
-            Helper.ThrowExceptionIfNull(kindPhoneProvider, kindPhoneProvider);
+            Inspector.ThrowExceptionIfNull(kindPhoneProvider, kindPhoneProvider);
             _kindPhoneProvider = kindPhoneProvider;
             _kindPhoneServ = kindPhoneServ;
         }

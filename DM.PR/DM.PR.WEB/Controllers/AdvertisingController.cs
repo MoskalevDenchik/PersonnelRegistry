@@ -10,7 +10,7 @@ namespace DM.PR.WEB.Controllers
 
         public AdvertisingController(IBillBoardProvider adProvider)
         {
-            Helper.ThrowExceptionIfNull(adProvider);
+            Inspector.ThrowExceptionIfNull(adProvider);
             billBoardProv = adProvider;
         }
 

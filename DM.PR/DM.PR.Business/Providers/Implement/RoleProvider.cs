@@ -1,26 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using DM.PR.Common.Entities.Account;
+using System.Collections.Generic;               
 using DM.PR.Data.Repositories;
-using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 
 namespace DM.PR.Business.Providers.Implement
 {
-    internal class WorkStatusProvider : IWorkStatusProvider
+    internal class RoleProvider :IRoleProvider
     {
-        private readonly IRepository<WorkStatus> _rep;
+        private readonly IRepository<Role> _rep;
 
-        public WorkStatusProvider(IRepository<WorkStatus> rep)
+        public RoleProvider(IRepository<Role> rep)
         {
             Inspector.ThrowExceptionIfNull(rep);
             _rep = rep;
         }
-        public WorkStatus GetById(int id)
+        public Role GetById(int id)
         {
             Inspector.ThrowExceptionIfZeroOrNegative(id);
+            
             return _rep.GetById(id);
         }
 
-        public IReadOnlyCollection<WorkStatus> GetAll()
+        public IReadOnlyCollection<Role> GetAll()
         {
             return _rep.GetAll();
         }

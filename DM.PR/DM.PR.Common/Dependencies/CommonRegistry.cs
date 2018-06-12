@@ -14,6 +14,7 @@ namespace DM.PR.Common.Dependencies
             ForSingletonOf<IRecordLog>().Use<RecordLog>();
             For<IConfigManger>().Use<ConfigManager>();
             ForSingletonOf<IÑachingService>().Use<ÑachingService>();
+            For<IEnityReflector>().Use<EnityReflector>();
         }
     }
 }

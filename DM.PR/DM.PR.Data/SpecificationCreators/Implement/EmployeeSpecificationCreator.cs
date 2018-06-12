@@ -11,7 +11,7 @@ namespace DM.PR.Data.SpecificationCreators.Implement
 
         public EmployeeSpecificationCreator(IEmployeeParameterCreater paramCreator)
         {
-            Helper.ThrowExceptionIfNull(paramCreator);
+            Inspector.ThrowExceptionIfNull(paramCreator);
             _paramCreator = paramCreator;
         }
 

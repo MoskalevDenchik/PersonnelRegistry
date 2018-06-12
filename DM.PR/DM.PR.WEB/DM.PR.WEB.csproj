@@ -271,6 +271,7 @@
     <Content Include="Views\WorkStatus\Create.cshtml" />
     <Content Include="Views\WorkStatus\Edit.cshtml" />
     <Content Include="Views\Employees\WorkStatusSelect.cshtml" />
+    <Content Include="Views\Navigation\DepartmentChildren.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

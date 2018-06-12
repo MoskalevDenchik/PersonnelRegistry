@@ -14,7 +14,7 @@ namespace DM.PR.WEB.Controllers
 
         public UserController(IUserProvider userProv, IUserService userServ)
         {
-            Helper.ThrowExceptionIfNull(userProv, userProv);
+            Inspector.ThrowExceptionIfNull(userProv, userProv);
             _userProvider = userProv;
             _userServ = userServ;
         }

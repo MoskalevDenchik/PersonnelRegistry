@@ -22,7 +22,7 @@ namespace DM.PR.WEB.Controllers
 
         public DepartmentsController(IDepartmentProvider departmentProv, IDepartmentService departmentServ)
         {
-            Helper.ThrowExceptionIfNull(departmentProv, departmentProv);
+            Inspector.ThrowExceptionIfNull(departmentProv, departmentProv);
             _departmentProv = departmentProv;
             _departmentServ = departmentServ;
         }

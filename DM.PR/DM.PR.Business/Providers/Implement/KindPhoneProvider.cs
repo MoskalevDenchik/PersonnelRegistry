@@ -2,7 +2,6 @@
 using DM.PR.Data.Repositories;
 using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
-using System;
 
 namespace DM.PR.Business.Providers
 {
@@ -12,17 +11,13 @@ namespace DM.PR.Business.Providers
 
         public KindPhoneProvider(IRepository<KindPhone> rep)
         {
-            Helper.ThrowExceptionIfNull(rep);
+            Inspector.ThrowExceptionIfNull(rep);
             _rep = rep;
         }
 
         public KindPhone GetById(int id)
         {
-            if (id <= 0)
-            {
-                throw new Exception("Неверный ID");
-            }
-
+            Inspector.ThrowExceptionIfZeroOrNegative(id);
             return _rep.GetById(id);
         }
 

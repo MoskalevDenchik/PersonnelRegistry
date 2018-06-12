@@ -14,7 +14,7 @@ namespace DM.PR.Data.Core.Data.Implement
 
         public DbContext(IConverter<T> converter, DbExec dbExecutor)
         {
-            Helper.ThrowExceptionIfNull(converter, dbExecutor);
+            Inspector.ThrowExceptionIfNull(converter, dbExecutor);
             _converter = converter;
             _dbExecutor = dbExecutor;
         }

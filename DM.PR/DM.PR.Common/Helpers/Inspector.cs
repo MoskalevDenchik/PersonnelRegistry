@@ -2,7 +2,7 @@
 
 namespace DM.PR.Common.Helpers
 {
-    public static class Helper
+    public static class Inspector
     {
         public static void ThrowExceptionIfNull(params object[] obj)
         {

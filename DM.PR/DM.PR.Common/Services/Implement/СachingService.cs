@@ -16,9 +16,9 @@ namespace DM.PR.Common.Services.Implement
 
         public СachingService(IRecordLog log)
         {
-            Helper.ThrowExceptionIfNull(log);
+            Inspector.ThrowExceptionIfNull(log);
             _log = log;
-            _cache = MemoryCache.Default;
+            _cache = new MemoryCache("Aplication");
             _keyList = new List<string>();
 
         }
@@ -55,12 +55,13 @@ namespace DM.PR.Common.Services.Implement
 
         public void DeleteWhoContains(string key)
         {
-            var list = _keyList.FindAll(x => x.Contains(key)).ToArray();
-
-            foreach (var item in list)
+            foreach (KeyValuePair<string, object> item in _cache)
             {
-                Delete(item);
-                _keyList.Remove(item);
+                if (item.Key.Contains(key))
+                {
+                    Delete(item.Key);
+                }
+
             }
         }
 

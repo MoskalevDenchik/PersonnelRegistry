@@ -1,7 +1,6 @@
 ﻿using DM.PR.Data.Repositories;
 using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
-using System;
 
 namespace DM.PR.Business.Services.Implement
 {
@@ -11,7 +10,7 @@ namespace DM.PR.Business.Services.Implement
 
         public DepartmentService(IRepository<Department> departmentRepository)
         {
-            Helper.ThrowExceptionIfNull(departmentRepository);
+            Inspector.ThrowExceptionIfNull(departmentRepository);
             _rep = departmentRepository;
         }
 
@@ -27,10 +26,7 @@ namespace DM.PR.Business.Services.Implement
 
         public void Delete(int id)
         {
-            if (id <= 0)
-            {
-                throw new Exception("Неверный ID");
-            }
+            Inspector.ThrowExceptionIfZeroOrNegative(id);
             _rep.Remove(id);
         }
     }

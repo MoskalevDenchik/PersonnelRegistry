@@ -5,7 +5,6 @@ using DM.PR.Data.Specifications;
 using DM.PR.Data.Repositories;
 using DM.PR.Common.Helpers;
 using System.Linq;
-using System;
 
 namespace DM.PR.Business.Providers.Implement
 {
@@ -16,18 +15,14 @@ namespace DM.PR.Business.Providers.Implement
 
         public UserProvider(IRepository<User> rep, IUserSpecificationCreator specificCreator)
         {
-            Helper.ThrowExceptionIfNull(rep, specificCreator);
-            _rep = rep;
+            Inspector.ThrowExceptionIfNull(rep, specificCreator);
             _specificCreator = specificCreator;
+            _rep = rep;
         }
 
         public User GetById(int id)
         {
-            if (id <= 0)
-            {
-                throw new Exception("Неверный ID");
-            }
-
+            Inspector.ThrowExceptionIfZeroOrNegative(id);
             return _rep.GetById(id);
         }
 
