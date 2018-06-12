@@ -176,14 +176,14 @@ namespace DM.PR.Business.Test.Providers
         {
             //arrange
             int pageSize = 1;
-            int pageData = 1;
+            int PageNumber = 1;
             _cahing.Setup(c => c.Get<PagedData<Employee>>(It.IsAny<string>())).Returns<PagedData<Employee>>(null);
 
             //act
-            var list = _provider.GetPage(pageSize, pageData, out int totalCount);
+            var list = _provider.GetPage(pageSize, PageNumber, out int totalCount);
 
             //assert 
-            _specificationCreator.Verify(c => c.CreateFindByPageDataSpecification(pageSize, pageData), Times.Once);
+            _specificationCreator.Verify(c => c.CreateFindByPageDataSpecification(pageSize, PageNumber), Times.Once);
             _repository.Verify(r => r.FindBy(It.IsAny<ISpecification>(), out totalCount), Times.Once);
             _cahing.Verify(c => c.Add(It.IsAny<string>(), It.IsAny<PagedData<Employee>>(), It.IsAny<int>()), Times.Once);
         }
@@ -210,16 +210,16 @@ namespace DM.PR.Business.Test.Providers
         {
             //arrange 
             int pageSize = 1;
-            int pageData = 1;
+            int pageNumber = 1;
             int expectedTotalCount = 2;
             var expectedPropertyValueList = _reflector.GetPropertyValueList(_testList);
 
             _cahing.Setup(c => c.Get<PagedData<Employee>>(It.IsAny<string>())).Returns<PagedData<Employee>>(null);
-            _specificationCreator.Setup(s => s.CreateFindByPageDataSpecification(pageSize, pageData)).Returns(It.IsAny<ISpecification>);
+            _specificationCreator.Setup(s => s.CreateFindByPageDataSpecification(pageSize, pageNumber)).Returns(It.IsAny<ISpecification>);
             _repository.Setup(s => s.FindBy(It.IsAny<ISpecification>(), out expectedTotalCount)).Returns(_testList);
 
             //act
-            var actualList = _provider.GetPage(pageSize, pageData, out int totalCount);
+            var actualList = _provider.GetPage(pageSize, pageNumber, out int totalCount);
             int actualTotalCount = totalCount;
 
             //assert     

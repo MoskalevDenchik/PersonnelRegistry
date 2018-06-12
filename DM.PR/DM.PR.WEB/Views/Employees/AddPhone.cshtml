@@ -4,5 +4,11 @@
 }
 
 @Html.Hidden($"Phones[{Model.Number}].Id")
-@Html.TextBox($"Phones[{Model.Number}].Number", null, new { @class = "form-control" })
-@Html.DropDownList($"Phones[{Model.Number}].Kind.Id", new SelectList(Model.KindList, "Id", "Kind"), new { @class = "form-control" })
+<div class="row">
+    <div class="col-md-7 Number">
+        @Html.TextBox($"Phones[{Model.Number}].Number", null, new { @class = "form-control" })
+    </div>
+    <div class="col-md-5 Kind">
+        @Html.DropDownList($"Phones[{Model.Number}].Kind.Id", new SelectList(Model.KindList, "Id", "Kind"), new { @class = "form-control col-md-3" })
+    </div>
+</div>

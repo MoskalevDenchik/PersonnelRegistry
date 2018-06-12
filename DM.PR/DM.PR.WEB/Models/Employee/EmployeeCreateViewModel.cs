@@ -7,6 +7,7 @@ namespace DM.PR.WEB.Models.Employee
 {
     public class EmployeeCreateViewModel
     {
+        [Display(Name ="Отдел сверху")]
         public int DepartmentId { get; set; }
 
         [Display(Name ="Имя")]
@@ -33,7 +34,6 @@ namespace DM.PR.WEB.Models.Employee
         [Display(Name = "Статус")]
         public int  WorkStatusId { get; set; }
 
-        [Display(Name = "Фото")]
         public string ImagePath { get; set; }
 
         [Display(Name = "Дата приема на работу")]

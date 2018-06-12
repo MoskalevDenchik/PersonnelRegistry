@@ -4,4 +4,6 @@
 }
 
 @Html.Hidden($"Emails[{Model}].Id")
+<div class="row">
 @Html.TextBox($"Emails[{Model}].Address", null, new { @class = "form-control" })
+</div>

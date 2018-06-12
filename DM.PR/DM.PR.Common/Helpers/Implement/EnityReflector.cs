@@ -8,7 +8,7 @@ namespace DM.PR.Common.Helpers.Implement
 {
     internal class EnityReflector : IEnityReflector
     {
-        List<object> IEnityReflector.GetPropertyValueList<T>(T obj)
+        public List<object> GetPropertyValueList<T>(T obj)
         {
             List<object> list = new List<object>();
 
@@ -48,7 +48,7 @@ namespace DM.PR.Common.Helpers.Implement
                         AddPropetyValues(podElement, list);
                     }
                 }
-                else if (itemType.GetInterface(typeof(IEntity).Name) != null)
+                else if (typeof(IEntity).IsAssignableFrom(itemType))
                 {
                     var entity = obj.GetType().GetProperty(item.Name).GetValue(obj);
                     AddPropetyValues(entity, list);

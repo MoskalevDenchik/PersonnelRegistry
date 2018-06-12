@@ -14,13 +14,35 @@ textarea {
     max-width: 280px;
 }
 
-.list-group .list-group-item {
-    padding-bottom: 0px;
+#emplCreate label {
     padding-top: 0px;
+    font-size: 14px;
 }
 
-.well {
-    margin-bottom: 8px;
+#emplCreate #LastName {
+    margin-bottom: 0px;
+}
+
+#emplCreate div:nth-child(2) {
+    margin-bottom: 2px;
+}
+
+#emplCreate div:nth-child(3) {
+    margin-bottom: 5px;
+}
+
+#emplCreate textarea[name=Address] {
+    resize: none;
+}
+
+#emplCreate .Number {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+#emplCreate .Kind {
+    padding-right: 0px;
+    padding-left: 5px;
 }
 
 

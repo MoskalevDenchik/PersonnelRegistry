@@ -145,7 +145,6 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\UserImg.jpg" />
-    <Content Include="Content\Menu.css" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -157,6 +156,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Emails.js" />
+    <Content Include="Scripts\Employee\UpdateImage.js" />
     <Content Include="Scripts\ModifyButtons.js" />
     <Content Include="Scripts\Employee\EmployeePagin.js" />
     <Content Include="Scripts\Department\DepartmentPagin.js" />

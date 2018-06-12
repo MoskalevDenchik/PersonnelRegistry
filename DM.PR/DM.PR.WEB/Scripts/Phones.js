@@ -1,4 +1,8 @@
 ﻿phoneNumber = 0;
+$(document).ready(function ()
+{  
+    AddNewPhone();
+});
 
 $("#AddPhone").on('click', function ()
 {

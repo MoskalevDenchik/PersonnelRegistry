@@ -7,6 +7,7 @@ using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using DM.PR.WEB.Models;
 using System.Web.Mvc;
+using System.Web;
 
 namespace DM.PR.WEB.Controllers
 {
@@ -30,12 +31,12 @@ namespace DM.PR.WEB.Controllers
         {
             Inspector.ThrowExceptionIfNull(employeeProvider, employeeService,
                 departmentProvider, maritalStatusProvider, kindPhoneProv, workStatusProvider);
-            _kindPhoneProv = kindPhoneProv;
-            _employeeProvider = employeeProvider;
-            _employeeService = employeeService;
-            _departmentProvider = departmentProvider;
             _maritalStatusProvider = maritalStatusProvider;
             _workStatusProvider = workStatusProvider;
+            _departmentProvider = departmentProvider;
+            _employeeProvider = employeeProvider;
+            _employeeService = employeeService;
+            _kindPhoneProv = kindPhoneProv;
         }
         #endregion
 
@@ -102,6 +103,22 @@ namespace DM.PR.WEB.Controllers
         }
 
         #region Partial
+
+        [AjaxOnly]
+        public JsonResult AddImage()
+        {
+            string path = null;
+
+            var data = System.Web.HttpContext.Current.Request.Files["imageBrowes"];
+
+            if (data != null)
+            {
+                string fileName = System.IO.Path.GetFileName(data.FileName);
+                path = $"/Content/Images/{fileName}";
+                data.SaveAs(Server.MapPath(path));
+            }
+            return Json(new { imagePath = path });
+        }
 
         [AjaxOnly]
         public ActionResult GetPageEmployees(int pageSize, int pageNumber)

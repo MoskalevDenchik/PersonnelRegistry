@@ -1,4 +1,8 @@
 ﻿emailNumber = 0;
+$(document).ready(function ()
+{
+    AddNewEmail();
+});
 
 $("#AddEmail").on('click', function ()
 {
