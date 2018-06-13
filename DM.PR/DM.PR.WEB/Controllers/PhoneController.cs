@@ -1,18 +1,20 @@
-﻿using DM.PR.WEB.Models.KindPhone;
+﻿using DM.PR.WEB.Infrastructure.Attributes;
+using DM.PR.WEB.Models.KindPhone;
 using DM.PR.Business.Providers;
 using DM.PR.Business.Services;
 using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using System.Web.Mvc;
+using System.Collections.Generic;
 
 namespace DM.PR.WEB.Controllers
 {
-    public class KindPhoneController : Controller
+    public class PhoneController : Controller
     {
         private readonly IKindPhoneProvider _kindPhoneProvider;
         private readonly IKindPhoneService _kindPhoneServ;
 
-        public KindPhoneController(IKindPhoneProvider kindPhoneProvider, IKindPhoneService kindPhoneServ)
+        public PhoneController(IKindPhoneProvider kindPhoneProvider, IKindPhoneService kindPhoneServ)
         {
             Inspector.ThrowExceptionIfNull(kindPhoneProvider, kindPhoneProvider);
             _kindPhoneProvider = kindPhoneProvider;
@@ -75,6 +77,22 @@ namespace DM.PR.WEB.Controllers
         {
             _kindPhoneServ.Delete(id);
             return RedirectToAction("Index");
+        }
+
+        [ChildActionOnly]
+        public ActionResult EditPhone(List<Phone> phones)
+        {
+            ViewBag.phones = phones;
+            var list = _kindPhoneProvider.GetAll();
+            return PartialView("EditPhone", list);
+        }
+
+        [AjaxOnly]
+        public ActionResult AddPhone(int number = 0)
+        {
+            ViewBag.number = number;
+            var list = _kindPhoneProvider.GetAll();
+            return PartialView("AddPhone", list);
         }
 
         #region Mappers

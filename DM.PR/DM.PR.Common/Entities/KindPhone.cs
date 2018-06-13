@@ -2,7 +2,7 @@
 {
     public class KindPhone : IEntity
     {
-        public int Id { get; set; }
+        public int Id { get; set; } = 0;
         public string Kind { get; set; }
     }
 }

@@ -1,0 +1,19 @@
+﻿@model IReadOnlyCollection<KindPhone>
+@{
+    List<Phone> phones = ViewBag.phones;
+
+
+    for (int i = 0; i < phones.Count; i++)
+    {
+        <div class="row">
+            @Html.Hidden($"Phones[{i}].Id", phones[i].Id)
+            <div class="col-md-7 Number">
+                @Html.TextBox($"Phones[{i}].Number", phones[i].Number, new { @class = "form-control" })
+            </div>
+            <div class="col-md-5 Kind">
+                @Html.DropDownList($"Phones[{i}].Kind.Id", new SelectList(Model, "Id", "Kind", Model.Where(m => m.Id == i).Select(m => m.Kind)), new { @class = "form-control " })
+            </div>
+        </div>
+    }
+}
+

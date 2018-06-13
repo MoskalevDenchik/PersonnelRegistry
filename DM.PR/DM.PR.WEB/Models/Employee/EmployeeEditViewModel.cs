@@ -1,18 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;   
 using System.Collections.Generic;
 using DM.PR.Common.Entities;
 using System;
 
 namespace DM.PR.WEB.Models.Employee
 {
-    public class EmployeeCreateViewModel
+    public class EmployeeEditViewModel
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "Поле должно быть установлено")]
-        [Display(Name ="Отдел")]
+        [Display(Name = "Отдел")]
         public int DepartmentId { get; set; }
 
         [Required(ErrorMessage = "Поле должно быть установлено")]
-        [Display(Name ="Имя")]
+        [Display(Name = "Имя")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Поле должно быть установлено")]
@@ -36,7 +38,7 @@ namespace DM.PR.WEB.Models.Employee
         public int MaritalStatusId { get; set; }
 
         [Display(Name = "Статус")]
-        public int  WorkStatusId { get; set; }
+        public int WorkStatusId { get; set; }
 
         public string ImagePath { get; set; }
 

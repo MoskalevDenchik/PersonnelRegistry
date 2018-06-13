@@ -27,7 +27,7 @@ namespace DM.PR.Common.Entities
 
         public string ImagePath { get; set; }
 
-        public DateTime? BeginningWork { get; set; }
+        public DateTime BeginningWork { get; set; }
 
         public DateTime? EndWork { get; set; }
     }

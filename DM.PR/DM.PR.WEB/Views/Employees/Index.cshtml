@@ -13,7 +13,7 @@
                 <td>Статус</td>
             </tr>
         </thead>
-        <tbody id="tableData" class="text-center text-info tableClick" style="font-size:small; margin-bottom:2px"></tbody>
+        <tbody id="tableData" class="text-center text-info" style="font-size:small; margin-bottom:2px"></tbody>
     </table>
 </div>
 
@@ -28,24 +28,22 @@
             <option value="value">15</option>
         </select>
     </div>
-    <div class=" col-md-offset-3 col-md-5">
-        <form action="Employees/" class="form-inline" role="form" method="post" id="buttonForm">
+    <div class="col-md-offset-3 col-md-5">
+        <div class="row" id="buttonForm">
+            <div class="col-md-3">
+                @Html.ActionLink("Создать", "Create", null, new { @class = "btn btn-default" })
+            </div>
+            <div class="col-md-3">
+                @Html.ActionLink("Удалить", "Delete", null, new { @class = "btn btn-default changing disabled" })
+            </div>
+            <div class="col-md-3">
+                @Html.ActionLink("Изменить", "Edit", null, new { @class = "btn btn-default changing disabled" })
+            </div>
+            <div class="col-md-3">
+                @Html.ActionLink("Подробнее", "Details", null, new { @class = "btn btn-default changing disabled" })
+            </div>
+        </div>
 
-            <input type="hidden" name="id" id="userId" />
-            <div class="form-group" style="margin-bottom:5px">
-                @Html.ActionLink("Создать", "Create", null, new { @class = "btn btn-default form-control" })
-            </div>
-            <div class="form-group" style="margin-bottom:5px">
-                <input value="Удалить" data-action="Delete" type="submit" class="btn btn-default form-control disabled " />
-            </div>
-            <div class="form-group" style="margin-bottom:5px">
-                <input value="Изменить" data-action="Edit" type="submit" class="btn btn-default form-control disabled" />
-            </div>
-            <div class="form-group" style="margin-bottom:5px">
-                <input value="Подробнее" data-action="Details" type="submit" class="btn btn-default form-control disabled" />
-            </div>
-
-        </form>
     </div>
 </div>
 

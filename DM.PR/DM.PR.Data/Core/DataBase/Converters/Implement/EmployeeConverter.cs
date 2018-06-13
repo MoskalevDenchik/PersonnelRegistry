@@ -19,7 +19,7 @@ namespace DM.PR.Data.Core.Converters.Implement
                     LastName = empl.Field<string>("LastName"),
                     MiddleName = empl.Field<string>("MiddleName"),
                     Address = empl.Field<string>("Address"),
-                    BeginningWork = empl.Field<DateTime?>("BeginningWork"),
+                    BeginningWork = empl.Field<DateTime>("BeginningWork"),
                     EndWork = empl.Field<DateTime?>("EndWork"),
                     ImagePath = empl.Field<string>("ImagePath"),
                     Phones = ConvertToPhones(empl.Field<int>("Id"), "EmployeeId", dataSet.Tables[1]),

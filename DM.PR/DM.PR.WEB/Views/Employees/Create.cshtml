@@ -5,17 +5,19 @@
 @using (Html.BeginForm("Create"))
 {
     @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
 
     <div class="row" id="emplCreate">
         <div class="col-md-offset-1 col-md-3">
             <div class=" form-group">
                 <img src="~/Content/Images/UserImg.jpg" id="UserImage" class="img-responsive img-thumbnail" />
+                <input type="hidden" name="ImagePath" id=" are" value="/Content/Images/UserImg.jpg" />
             </div>
             <div class="form-group">
                 <div class="row">
-                    <input type="file"  id="imageBrowes" />
+                    <input type="file" id="imageBrowes" />
                 </div>
-                <div class="row text-center"> 
+                <div class="row text-center">
                     <input type="button" class="btn btn-default" id="UploadImg" value="Загрузить" />
                 </div>
             </div>
@@ -86,13 +88,13 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.MaritalStatusId, new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.Action("GetMaritalStatusList")
+                        @Html.Action("GetMaritalStatusList", "MaritalStatus")
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.WorkStatusId, new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.Action("GetWorkStatusList")
+                        @Html.Action("GetWorkStatusList", "WorkStatus")
                     </div>
                 </div>
                 <div class="form-group">
@@ -122,9 +124,8 @@
 
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
     <script src="~/Scripts/Phones.js"></script>
     <script src="~/Scripts/Emails.js"></script>
     <script src="~/Scripts/Employee/UpdateImage.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 }

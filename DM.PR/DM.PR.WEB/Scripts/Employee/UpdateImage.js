@@ -22,6 +22,8 @@ function UnloadImage()
         success: function (response)
         {
             $("#UserImage").attr("src", response.imagePath);
+            var a = $("input[type=hidden]:last").val();
+            $("input[type=hidden]:last").val(response.imagePath);
         }
     });
 }

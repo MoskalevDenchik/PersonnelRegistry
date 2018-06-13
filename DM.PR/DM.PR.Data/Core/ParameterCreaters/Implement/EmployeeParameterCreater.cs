@@ -52,6 +52,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
                   new SqlParameter("@BeginningWork",item.BeginningWork),
                   new SqlParameter("@EndWork",item.EndWork),
                   new SqlParameter("@MaritalStatusId",item?.MaritalStatus.Id),
+                  new SqlParameter("@WorkStatusId",item?.WorkStatus.Id),
                   new SqlParameter("@Phones",item.Phones!=null?ConvertToTable(item.Phones):null),
                   new SqlParameter("@Emails",item.Emails!=null?ConvertToTable(item.Emails):null)
                 }
@@ -74,7 +75,8 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
                     new SqlParameter("@ImagePath",item.ImagePath),
                     new SqlParameter("@BeginningWork",item.BeginningWork),
                     new SqlParameter("@EndWork",item.EndWork),
-                    new SqlParameter("@MaritalStatusId",item?.MaritalStatus),
+                    new SqlParameter("@WorkStatusId",item?.WorkStatus.Id),
+                    new SqlParameter("@MaritalStatusId",item?.MaritalStatus.Id),
                     new SqlParameter("@Phones",item.Phones!=null?ConvertToTable(item.Phones):null),
                     new SqlParameter("@Emails",item.Emails!=null?ConvertToTable(item.Emails):null)
                 }

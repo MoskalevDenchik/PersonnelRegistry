@@ -7,7 +7,8 @@ using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using DM.PR.WEB.Models;
 using System.Web.Mvc;
-using System.Web;
+using System.Linq;
+using System.IO;
 
 namespace DM.PR.WEB.Controllers
 {
@@ -15,28 +16,20 @@ namespace DM.PR.WEB.Controllers
     {
         #region Private
 
-        private IKindPhoneProvider _kindPhoneProv;
         private IEmployeeProvider _employeeProvider;
-        private IWorkStatusProvider _workStatusProvider;
         private IEmployeeService _employeeService;
         private IDepartmentProvider _departmentProvider;
-        private IMaritalStatusProvider _maritalStatusProvider;
 
         #endregion
 
         #region Ctors
 
-        public EmployeesController(IEmployeeProvider employeeProvider, IEmployeeService employeeService, IWorkStatusProvider workStatusProvider,
-            IDepartmentProvider departmentProvider, IMaritalStatusProvider maritalStatusProvider, IKindPhoneProvider kindPhoneProv)
+        public EmployeesController(IEmployeeProvider employeeProvider, IEmployeeService employeeService, IDepartmentProvider departmentProvider)
         {
-            Inspector.ThrowExceptionIfNull(employeeProvider, employeeService,
-                departmentProvider, maritalStatusProvider, kindPhoneProv, workStatusProvider);
-            _maritalStatusProvider = maritalStatusProvider;
-            _workStatusProvider = workStatusProvider;
+            Inspector.ThrowExceptionIfNull(employeeProvider, employeeService, departmentProvider);
             _departmentProvider = departmentProvider;
             _employeeProvider = employeeProvider;
             _employeeService = employeeService;
-            _kindPhoneProv = kindPhoneProv;
         }
         #endregion
 
@@ -58,7 +51,8 @@ namespace DM.PR.WEB.Controllers
         public ActionResult Details(int id = 0)
         {
             var employee = _employeeProvider.GetById(id);
-            return View(MapEmployeeToEmployeeDetailsViewModel(employee));
+            var model = MapEmployeeToEmployeeDetailsViewModel(employee);
+            return View(model);
         }
 
         public ActionResult Create()
@@ -69,10 +63,10 @@ namespace DM.PR.WEB.Controllers
         [HttpPost]
         public ActionResult Create(EmployeeCreateViewModel model)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(model);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
             var employee = MapEmployeeCreateViewModelToEmployee(model);
             _employeeService.Create(employee);
@@ -83,17 +77,21 @@ namespace DM.PR.WEB.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            return View(_employeeProvider.GetById(id));
+            var employee = _employeeProvider.GetById(id);
+            var model = MapEmployeeToEmployeeCreateViewModel(employee);
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult Edit(Employee employee)
+        public ActionResult Edit(EmployeeEditViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _employeeService.Edit(employee);
+                return View(model);
             }
-            return View(employee);
+            var employee = MapEmployeeEditViewModelToEmployee(model);
+            _employeeService.Edit(employee);
+            return RedirectToAction("Index");
         }
 
         public ActionResult Delete(int id = 0)
@@ -102,19 +100,16 @@ namespace DM.PR.WEB.Controllers
             return RedirectToAction("Index");
         }
 
-        #region Partial
+        #region Partial and Json
 
         [AjaxOnly]
         public JsonResult AddImage()
         {
             string path = null;
-
             var data = System.Web.HttpContext.Current.Request.Files["imageBrowes"];
-
             if (data != null)
             {
-                string fileName = System.IO.Path.GetFileName(data.FileName);
-                path = $"/Content/Images/{fileName}";
+                path = $"/Content/Images/{Path.GetFileName(data.FileName)}";
                 data.SaveAs(Server.MapPath(path));
             }
             return Json(new { imagePath = path });
@@ -131,43 +126,26 @@ namespace DM.PR.WEB.Controllers
         public ActionResult GetPageEmployeesByDepartmentId(int departmentId, int pageNumber, int pageSize)
         {
             var list = _employeeProvider.GetPageByDepartmentId(departmentId, pageSize, pageNumber, out int totalCount);
-            return PartialView("EmployeeSummary", new PagedData<Employee>(list, totalCount));
+            ViewBag.totalCount = totalCount;
+            return PartialView("EmployeeSummary", list);
         }
 
         [AjaxOnly]
         public ActionResult GetPageEmployeesBySearchParams(string middledName, string firstName, string lastName, int WorkStatusId, int pageNumber, int pageSize, int fromYear = 0, int toYear = 100)
         {
             var list = _employeeProvider.GetPageBySearchParams(lastName, firstName, middledName, fromYear, toYear, WorkStatusId, pageSize, pageNumber, out int totalCount);
-            return PartialView("EmployeeSummary", new PagedData<Employee>(list, totalCount));
+            ViewBag.totalCount = totalCount;
+            return PartialView("EmployeeSummary", list);
         }
 
-        [ChildActionOnly]
-        public PartialViewResult GetMaritalStatusList()
-        {
-            var list = _maritalStatusProvider.GetAll();
-            return PartialView("MaritalStatusSelect", list);
-        }
 
         [ChildActionOnly]
-        public PartialViewResult GetWorkStatusList()
+        public PartialViewResult GetDepartmentList(int selectedId = 0)
         {
-            var list = _workStatusProvider.GetAll();
-            return PartialView("WorkStatusSelect", list);
-        }
-
-        [ChildActionOnly]
-        public PartialViewResult GetDepartmentList()
-        {
+            ViewBag.departmentId = selectedId;
             var list = _departmentProvider.GetAll();
             var model = MapDepartmentToDepartmentSelectModel(list);
             return PartialView("DepartmentSelect", model);
-        }
-
-        [AjaxOnly]
-        public ActionResult AddPhone(int number = 0)
-        {
-            var list = _kindPhoneProv.GetAll();
-            return PartialView("AddPhone", new AddPhoneViewModel { KindList = list, Number = number });
         }
 
         [AjaxOnly]
@@ -229,9 +207,50 @@ namespace DM.PR.WEB.Controllers
                 ImagePath = model.ImagePath,
                 Phones = model.Phones,
                 Emails = model.Emails,
-                MaritalStatus = new MaritalStatus { Id = model.DepartmentId }
+                MaritalStatus = new MaritalStatus { Id = model.MaritalStatusId }
             };
         }
+
+        private EmployeeEditViewModel MapEmployeeToEmployeeCreateViewModel(Employee empl)
+        {
+            return new EmployeeEditViewModel()
+            {
+                Id = empl.Id,
+                DepartmentId = empl.Department.Id,
+                FirstName = empl.FirstName,
+                LastName = empl.LastName,
+                MiddleName = empl.MiddleName,
+                MaritalStatusId = empl.MaritalStatus.Id,
+                WorkStatusId = empl.WorkStatus.Id,
+                Address = empl.Address,
+                BeginningWork = empl.BeginningWork,
+                EndWork = empl.EndWork,
+                ImagePath = empl.ImagePath,
+                Phones = empl.Phones,
+                Emails = empl.Emails
+            };
+        }
+
+        private Employee MapEmployeeEditViewModelToEmployee(EmployeeEditViewModel model)
+        {
+            return new Employee()
+            {
+                Id = model.Id,
+                Department = new Department { Id = model.DepartmentId },
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                MiddleName = model.MiddleName,
+                Address = model.Address,
+                BeginningWork = model.BeginningWork,
+                WorkStatus = new WorkStatus { Id = model.WorkStatusId },
+                EndWork = model.EndWork,
+                ImagePath = model.ImagePath,
+                Phones = model.Phones,
+                Emails = model.Emails,
+                MaritalStatus = new MaritalStatus { Id = model.MaritalStatusId }
+            };
+        }
+
 
         #endregion
     }

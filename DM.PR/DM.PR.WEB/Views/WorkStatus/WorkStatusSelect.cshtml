@@ -1,0 +1,11 @@
+﻿@model  IReadOnlyCollection<DM.PR.Common.Entities.WorkStatus>
+@{
+    var selectedId = ViewBag.workStatusId;
+    var selectedItem = Model.Where(m => m.Id == selectedId).Select(m => m.Status);
+    var selectedValue = selectedId == 0 ? "Выберите статус" : null;
+}
+<div>
+    @Html.DropDownList("WorkStatusId", new SelectList(Model, "Id", "Status", selectedItem), selectedValue, new { @class = "form-control" })
+</div>
+
+

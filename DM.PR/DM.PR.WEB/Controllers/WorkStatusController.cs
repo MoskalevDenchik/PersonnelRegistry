@@ -76,6 +76,20 @@ namespace DM.PR.WEB.Controllers
             _workStatusService.Delete(id);
             return RedirectToAction("Index");
         }
+        
+        #region Partial and Json
+
+
+        [ChildActionOnly]
+        public PartialViewResult GetWorkStatusList(int selectedId = 0)
+        {
+            ViewBag.workStatusId = selectedId;
+            var list = _workStatusProvider.GetAll();
+            return PartialView("WorkStatusSelect", list);
+        }
+
+
+        #endregion
 
         #region Mappers
 

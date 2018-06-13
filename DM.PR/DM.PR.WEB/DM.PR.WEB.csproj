@@ -155,6 +155,7 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\EditPhones.js" />
     <Content Include="Scripts\Emails.js" />
     <Content Include="Scripts\Employee\UpdateImage.js" />
     <Content Include="Scripts\ModifyButtons.js" />
@@ -173,6 +174,7 @@
     <Content Include="Scripts\Navigation.js" />
     <Content Include="Scripts\Phones.js" />
     <Content Include="Scripts\Search.js" />
+    <Content Include="Scripts\EditEmails.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -185,7 +187,7 @@
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\KindPhoneController.cs" />
+    <Compile Include="Controllers\PhoneController.cs" />
     <Compile Include="Controllers\MaritalStatusController.cs" />
     <Compile Include="Controllers\NavigationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -207,6 +209,7 @@
     <Compile Include="Models\Employee\AddPhoneViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeDetailsViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeCreateViewModel.cs" />
+    <Compile Include="Models\Employee\EmployeeEditViewModel.cs" />
     <Compile Include="Models\KindPhone\KindPhoneCreateViewModel.cs" />
     <Compile Include="Models\KindPhone\KindPhoneEditViewModel.cs" />
     <Compile Include="Models\MaritalStatus\MaritalStatusCreateViewModel.cs" />
@@ -244,7 +247,7 @@
     <Content Include="Views\Error\ServerError.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Employees\DepartmentSelect.cshtml" />
-    <Content Include="Views\Employees\MaritalStatusSelect.cshtml" />
+    <Content Include="Views\MaritalStatus\MaritalStatusSelect.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -254,24 +257,25 @@
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\KindPhone\Index.cshtml" />
-    <Content Include="Views\KindPhone\Details.cshtml" />
-    <Content Include="Views\KindPhone\Create.cshtml" />
-    <Content Include="Views\KindPhone\Edit.cshtml" />
+    <Content Include="Views\Phone\Index.cshtml" />
+    <Content Include="Views\Phone\Details.cshtml" />
+    <Content Include="Views\Phone\Create.cshtml" />
+    <Content Include="Views\Phone\Edit.cshtml" />
     <Content Include="Views\MaritalStatus\Index.cshtml" />
     <Content Include="Views\MaritalStatus\Details.cshtml" />
     <Content Include="Views\MaritalStatus\Create.cshtml" />
     <Content Include="Views\MaritalStatus\Edit.cshtml" />
     <Content Include="Views\Employees\DepartmentNavigation.cshtml" />
-    <Content Include="Views\Employees\AddPhone.cshtml" />
+    <Content Include="Views\Phone\AddPhone.cshtml" />
     <Content Include="Views\Employees\AddEmail.cshtml" />
     <Content Include="Views\Departments\DepartmentSelect.cshtml" />
     <Content Include="Views\WorkStatus\Index.cshtml" />
     <Content Include="Views\WorkStatus\Details.cshtml" />
     <Content Include="Views\WorkStatus\Create.cshtml" />
     <Content Include="Views\WorkStatus\Edit.cshtml" />
-    <Content Include="Views\Employees\WorkStatusSelect.cshtml" />
+    <Content Include="Views\WorkStatus\WorkStatusSelect.cshtml" />
     <Content Include="Views\Navigation\DepartmentChildren.cshtml" />
+    <Content Include="Views\Phone\EditPhone.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

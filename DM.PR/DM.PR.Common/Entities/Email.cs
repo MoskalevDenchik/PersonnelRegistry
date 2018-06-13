@@ -2,7 +2,7 @@
 {
     public class Email : IEntity
     {
-        public int Id { get; set; }
+        public int Id { get; set; } 
         public string Address { get; set; }
     }
 }

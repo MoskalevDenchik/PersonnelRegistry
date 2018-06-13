@@ -1,11 +1,10 @@
-﻿$("#buttonForm input[type='submit']").on('click', function ()
+﻿$("#buttonForm a").on("click", function ()
 {
-    var action = $("#buttonForm").attr('action') + $(this).data("action");
-    $("#buttonForm").attr('action', action);
+    var action = $(this).attr("href") + '/' + $("#tableData tr[class='active'] td:first").text();
+    $(this).attr("href", action)
 })
 
-
-$('.tableClick').on('click', 'tr', function ()
+$('#tableData').on('click', 'tr', function ()
 {
     var clickedRow = $(this);
 
@@ -18,14 +17,7 @@ $('.tableClick').on('click', 'tr', function ()
     });
     clickedRow.toggleClass("active");
 
-    $("#buttonForm input[type='submit']").toggleClass("disabled", !($(this).hasClass("active")));
-
-    $('#userId').val(clickedRow.children(0).html());
+    $("#buttonForm a").filter(".changing").toggleClass("disabled", !($(this).hasClass("active")));
 })
 
-$('.selectlist').on('change', function ()
-{
-    $('.selectlist option:selected').html();
-    $('#myForm').submit();
-})
 
