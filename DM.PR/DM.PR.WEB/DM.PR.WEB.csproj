@@ -270,7 +270,6 @@
     <Content Include="Views\Employees\AddEmail.cshtml" />
     <Content Include="Views\Departments\DepartmentSelect.cshtml" />
     <Content Include="Views\WorkStatus\Index.cshtml" />
-    <Content Include="Views\WorkStatus\Details.cshtml" />
     <Content Include="Views\WorkStatus\Create.cshtml" />
     <Content Include="Views\WorkStatus\Edit.cshtml" />
     <Content Include="Views\WorkStatus\WorkStatusSelect.cshtml" />

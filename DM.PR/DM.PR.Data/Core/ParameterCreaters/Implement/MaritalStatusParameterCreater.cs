@@ -3,7 +3,6 @@ using DM.PR.Data.Specifications;
 using System.Data.SqlClient;
 using DM.PR.Common.Entities;
 using DM.PR.Data.Entity;
-using System;
 
 namespace DM.PR.Data.Core.ParameterCreaters.Implement
 {
@@ -37,17 +36,39 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
         }
         public IInputParameter CreateForAdd(MaritalStatus item)
         {
-            throw new NotImplementedException();
+            return new DbInputParameter
+            {
+                Procedure = "InsertMaritalStatus",
+                Parameters = new SqlParameter[]
+                 {
+                    new SqlParameter("@Status", item.Status)
+                 }
+            };
         }
 
         public IInputParameter CreateForRemove(int id)
         {
-            throw new NotImplementedException();
+            return new DbInputParameter
+            {
+                Procedure = "DeleteMaritalStatus",
+                Parameters = new SqlParameter[]
+               {
+                    new SqlParameter("@Id", id)
+               }
+            };
         }
 
         public IInputParameter CreateForUpdate(MaritalStatus item)
         {
-            throw new NotImplementedException();
+            return new DbInputParameter
+            {
+                Procedure = "UpdateMaritalStatus",
+                Parameters = new SqlParameter[]
+                 {
+                    new SqlParameter("@Id", item.Id),
+                    new SqlParameter("@Status", item.Status)
+                 }
+            };
         }
     }
 }

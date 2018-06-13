@@ -44,7 +44,7 @@ namespace DM.PR.WEB.Controllers
                 return View(model);
             }
 
-            var user = MapUserCreateViewModelToUser(model);
+            var user = MapMaritalStatusCreateViewModelToMaritalStatus(model);
             _kindPhoneServ.Create(user);
 
             return RedirectToAction("Index");
@@ -52,8 +52,9 @@ namespace DM.PR.WEB.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            var user = _maritalStatusProvider.GetById(id);
-            return View(user);
+            var maritalStatus = _maritalStatusProvider.GetById(id);
+            var model = MapMaritalStatusToMaritalStatusEditViewModel(maritalStatus);
+            return View(model);
         }
 
         [HttpPost]
@@ -64,19 +65,18 @@ namespace DM.PR.WEB.Controllers
                 return View(model);
             }
 
-            var user = MapUserEditViewModelToUser(model);
+            var user = MapMaritalStatusEditViewModelToMaritalStatus(model);
             _kindPhoneServ.Edit(user);
 
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
         public ActionResult Delete(int id = 0)
         {
             _kindPhoneServ.Delete(id);
             return RedirectToAction("Index");
         }
-        
+
         #region Partial and Json
 
         [ChildActionOnly]
@@ -92,7 +92,7 @@ namespace DM.PR.WEB.Controllers
 
         #region Mappers
 
-        private MaritalStatus MapUserCreateViewModelToUser(MaritalStatusCreateViewModel model)
+        private MaritalStatus MapMaritalStatusCreateViewModelToMaritalStatus(MaritalStatusCreateViewModel model)
         {
             return new MaritalStatus
             {
@@ -100,12 +100,21 @@ namespace DM.PR.WEB.Controllers
             };
         }
 
-        private MaritalStatus MapUserEditViewModelToUser(MaritalStatusEditViewModel model)
+        private MaritalStatus MapMaritalStatusEditViewModelToMaritalStatus(MaritalStatusEditViewModel model)
         {
             return new MaritalStatus
             {
                 Id = model.Id,
                 Status = model.Status
+            };
+        }
+
+        private MaritalStatusEditViewModel MapMaritalStatusToMaritalStatusEditViewModel(MaritalStatus maritalStatus)
+        {
+            return new MaritalStatusEditViewModel
+            {
+                Id = maritalStatus.Id,
+                Status = maritalStatus.Status
             };
         }
 

@@ -1,16 +1,17 @@
-﻿@model IEnumerable<DM.PR.Common.Entities.MaritalStatus>
+﻿@model IReadOnlyCollection<MaritalStatus>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<h2 class="text-center">Семейные положения сотрудников</h2>
+<br />
+
+<table class="table table-bordered text-center" style="background-color:white">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
+        <th class="text-center">
+            Семейное положение
         </th>
-        <th></th>
+        <th class="text-center">
+            Действие
+        </th>
     </tr>
-
     @foreach (var item in Model)
     {
         <tr>
@@ -18,11 +19,13 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) /
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>
     }
-
 </table>
+
+<div class="col-md-offset-11">
+    @Html.ActionLink("Создать", "Create", null, new { @class = "btn btn-default" })
+</div>
