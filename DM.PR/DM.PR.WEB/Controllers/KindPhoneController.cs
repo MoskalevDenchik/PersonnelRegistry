@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace DM.PR.WEB.Controllers
 {
+    [Authorize(Roles = "admin,editor")]
     public class KindPhoneController : Controller
     {
         private readonly IKindPhoneProvider _kindPhoneProvider;

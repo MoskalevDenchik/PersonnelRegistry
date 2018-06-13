@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace DM.PR.WEB.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class UserController : Controller
     {
         private readonly IUserProvider _userProvider;

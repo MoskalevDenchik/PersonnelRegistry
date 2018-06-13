@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace DM.PR.WEB.Controllers
 {
+    [Authorize(Roles = "admin,editor")]
     public class MaritalStatusController : Controller
     {
         private readonly IMaritalStatusProvider _maritalStatusProvider;

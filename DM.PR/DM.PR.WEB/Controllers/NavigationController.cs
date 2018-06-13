@@ -1,12 +1,12 @@
-﻿using DM.PR.WEB.Models.Navigation;
+﻿using DM.PR.WEB.Infrastructure.Attributes;
+using DM.PR.WEB.Models.Navigation;
 using System.Collections.Generic;
 using DM.PR.Business.Providers;
 using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using System.Web.Mvc;
-using System;
-using DM.PR.WEB.Infrastructure.Attributes;
 using System.Linq;
+using System;
 
 namespace DM.PR.WEB.Controllers
 {
@@ -20,7 +20,7 @@ namespace DM.PR.WEB.Controllers
             _departmentProvider = departmentProvider;
         }
 
-
+        [ChildActionOnly]
         public ActionResult Menu()
         {
             var departments = _departmentProvider.GetAll();

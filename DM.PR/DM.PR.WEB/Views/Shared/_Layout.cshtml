@@ -24,12 +24,6 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Search", "Search", "Employees", null, new { @class = "navbar-brand" })</li>
                     <li>@Html.ActionLink("Navigation", "Navigation", "Employees", null, new { @class = "navbar-brand" })</li>
-                    <li>@Html.ActionLink("Eployees", "Index", "Employees", new { departmen = (string)null }, new { @class = "navbar-brand" })</li>
-                    <li>@Html.ActionLink("Departments", "Index", "Departments", null, new { @class = "navbar-brand" })</li>
-                    <li>@Html.ActionLink("Users", "Index", "User", null, new { @class = "navbar-brand" })</li>
-                    <li>@Html.ActionLink("KindPhones", "Index", "KindPhone", null, new { @class = "navbar-brand" })</li>
-                    <li>@Html.ActionLink("MaritalStatuses", "Index", "MaritalStatus", null, new { @class = "navbar-brand" })</li>
-                    <li>@Html.ActionLink("WorkStatuses", "Index", "WorkStatus", null, new { @class = "navbar-brand" })</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

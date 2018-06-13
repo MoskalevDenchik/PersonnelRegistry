@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace DM.PR.WEB.Controllers
 {
+    [Authorize(Roles = "admin,editor")]
     public class DepartmentsController : Controller
     {
         #region Private

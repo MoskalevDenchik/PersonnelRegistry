@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace DM.PR.WEB.Controllers
 {
+    [Authorize(Roles = "admin,editor")]
     public class WorkStatusController : Controller
     {
         private readonly IWorkStatusProvider _workStatusProvider;
@@ -62,7 +63,7 @@ namespace DM.PR.WEB.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);                                         
+                return View(model);
             }
 
             var user = MapWorkStatusEditViewModelToWorkStatus(model);
@@ -79,7 +80,7 @@ namespace DM.PR.WEB.Controllers
 
         #region Partial and Json
 
-
+        [AllowAnonymous]
         [ChildActionOnly]
         public PartialViewResult GetWorkStatusList(int selectedId = 0)
         {

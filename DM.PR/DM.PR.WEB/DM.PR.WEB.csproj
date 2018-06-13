@@ -188,6 +188,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KindPhoneController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MaritalStatusController.cs" />
     <Compile Include="Controllers\NavigationController.cs" />
     <Compile Include="Controllers\PhoneController.cs" />
@@ -274,6 +275,7 @@
     <Content Include="Views\WorkStatus\WorkStatusSelect.cshtml" />
     <Content Include="Views\Navigation\DepartmentChildren.cshtml" />
     <Content Include="Views\Phone\EditPhone.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

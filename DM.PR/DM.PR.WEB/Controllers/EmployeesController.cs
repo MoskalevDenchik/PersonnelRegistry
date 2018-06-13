@@ -7,7 +7,6 @@ using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using DM.PR.WEB.Models;
 using System.Web.Mvc;
-using System.Linq;
 using System.IO;
 
 namespace DM.PR.WEB.Controllers
@@ -33,6 +32,7 @@ namespace DM.PR.WEB.Controllers
         }
         #endregion
 
+        [Authorize(Roles = "admin,editor")]
         public ActionResult Index()
         {
             return View();
@@ -48,6 +48,7 @@ namespace DM.PR.WEB.Controllers
             return View("DepartmentNavigation");
         }
 
+        [Authorize(Roles = "admin,editor")]
         public ActionResult Details(int id = 0)
         {
             var employee = _employeeProvider.GetById(id);
@@ -55,6 +56,7 @@ namespace DM.PR.WEB.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             return View();
@@ -74,7 +76,7 @@ namespace DM.PR.WEB.Controllers
             return RedirectToAction("Index");
         }
 
-
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(int id = 0)
         {
             var employee = _employeeProvider.GetById(id);
@@ -94,6 +96,7 @@ namespace DM.PR.WEB.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(int id = 0)
         {
             _employeeService.Delete(id);

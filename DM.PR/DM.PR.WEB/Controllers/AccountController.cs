@@ -1,7 +1,6 @@
-﻿using DM.PR.Business.Services;
-using DM.PR.Common.Entities.Account;
+﻿using DM.PR.Common.Entities.Account;
 using DM.PR.WEB.Models.Account;
-using System;
+using DM.PR.Business.Services;
 using System.Web.Mvc;
 
 namespace DM.PR.WEB.Controllers

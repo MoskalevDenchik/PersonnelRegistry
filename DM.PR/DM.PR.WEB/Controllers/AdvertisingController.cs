@@ -14,10 +14,10 @@ namespace DM.PR.WEB.Controllers
             billBoardProv = adProvider;
         }
 
+        [ChildActionOnly]
         public PartialViewResult ListOfAd()
         {
             var content = billBoardProv.GetAll();
-
             return content == null ? PartialView("NoAd") : PartialView(content);
         }
     }
