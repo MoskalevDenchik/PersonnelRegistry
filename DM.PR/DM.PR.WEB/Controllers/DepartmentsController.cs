@@ -6,6 +6,7 @@ using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using DM.PR.WEB.Models;
 using System.Web.Mvc;
+using DM.PR.WEB.Models.Department;
 
 namespace DM.PR.WEB.Controllers
 {
@@ -51,16 +52,17 @@ namespace DM.PR.WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Department department)
+        public ActionResult Edit(DepartmentEditViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View(department);
+                return View(model);
             }
 
+            var department = MapDepartmentEditToDepartment(model);
             _departmentServ.Edit(department);
             return RedirectToAction("Index");
-        }                                                                           
+        }
 
         public ActionResult Create()
         {
@@ -147,6 +149,19 @@ namespace DM.PR.WEB.Controllers
                 Address = department.Address,
                 Description = department.Description,
                 Phones = department.Phones,
+            };
+        }
+
+        public Department MapDepartmentEditToDepartment(DepartmentEditViewModel model)
+        {
+            return new Department()
+            {
+                Id = model.Id,
+                Name = model.Name,
+                ParentId = model.ParentId,
+                Address = model.Address,
+                Description = model.Description,
+                Phones = model.Phones,
             };
         }
 

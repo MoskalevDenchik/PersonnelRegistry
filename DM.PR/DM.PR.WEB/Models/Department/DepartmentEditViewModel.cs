@@ -1,11 +1,13 @@
-﻿using DM.PR.Common.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using DM.PR.Common.Entities;
 
-namespace DM.PR.WEB.Models
+namespace DM.PR.WEB.Models.Department
 {
-    public class DepartmentCreateViewModel
+    public class DepartmentEditViewModel
     {
+        public int Id { get; set; }
+
         [Display(Name = "Отдел сверху")]
         public int? ParentId { get; set; }
 

@@ -17,30 +17,27 @@
     </div>
 
     <div class="col-md-1">
-        <select id="pageSize">
+        <select id="pageSize" class="form-control">
             <option value="value">5</option>
             <option value="value">10</option>
             <option value="value">15</option>
         </select>
     </div>
-    <div class=" col-md-offset-3 col-md-5">
-        <form action="Departments/" class="form-inline" role="form" method="post" id="buttonForm">
-
-            <input type="hidden" name="id" id="userId" />
-            <div class="form-group" style="margin-bottom:5px">
-                @Html.ActionLink("Создать", "Create", null, new { @class = "btn btn-default form-control" })
+    <div class="col-md-offset-3 col-md-5">
+        <div class="row" id="buttonForm">
+            <div class="col-md-3">
+                @Html.ActionLink("Создать", "Create", null, new { @class = "btn btn-default" })
             </div>
-            <div class="form-group" style="margin-bottom:5px">
-                <input value="Удалить" data-action="Delete" type="submit" class="btn btn-default form-control disabled " />
+            <div class="col-md-3">
+                @Html.ActionLink("Удалить", "Delete", null, new { @class = "btn btn-default changing disabled" })
             </div>
-            <div class="form-group" style="margin-bottom:5px">
-                <input value="Изменить" data-action="Edit" type="submit" class="btn btn-default form-control disabled" />
+            <div class="col-md-3">
+                @Html.ActionLink("Изменить", "Edit", null, new { @class = "btn btn-default changing disabled" })
             </div>
-            <div class="form-group" style="margin-bottom:5px">
-                <input value="Подробнее" data-action="Details" type="submit" class="btn btn-default form-control disabled" />
+            <div class="col-md-3">
+                @Html.ActionLink("Подробнее", "Details", null, new { @class = "btn btn-default changing disabled" })
             </div>
-
-        </form>
+        </div>
     </div>
 </div>
 

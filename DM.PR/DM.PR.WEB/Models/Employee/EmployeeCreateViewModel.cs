@@ -7,19 +7,19 @@ namespace DM.PR.WEB.Models.Employee
 {
     public class EmployeeCreateViewModel
     {
-        [Required(ErrorMessage = "Поле должно быть установлено")]
+        [Required(ErrorMessage = "Введите название отдела")]
         [Display(Name ="Отдел")]
         public int DepartmentId { get; set; }
 
-        [Required(ErrorMessage = "Поле должно быть установлено")]
+        [Required(ErrorMessage = "Введите имя")]
         [Display(Name ="Имя")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Поле должно быть установлено")]
+        [Required(ErrorMessage = "Введите отчество")]
         [Display(Name = "Отчество")]
         public string MiddleName { get; set; }
 
-        [Required(ErrorMessage = "Поле должно быть установлено")]
+        [Required(ErrorMessage = "Введите фамилию")]
         [Display(Name = "Фамилия")]
         public string LastName { get; set; }
 
@@ -32,9 +32,11 @@ namespace DM.PR.WEB.Models.Employee
         [Display(Name = "Домашний адрес")]
         public string Address { get; set; }
 
+        [Required(ErrorMessage = "Укажите семейное положение")]
         [Display(Name = "Семейный положение")]
         public int MaritalStatusId { get; set; }
 
+        [Required(ErrorMessage = "Укажите статус")]
         [Display(Name = "Статус")]
         public int  WorkStatusId { get; set; }
 

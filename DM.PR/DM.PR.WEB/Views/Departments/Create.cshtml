@@ -7,6 +7,7 @@
 @using (Html.BeginForm("Create"))
 {
     @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
 
     <div class="form-horizontal">
         <div class="form-group">
@@ -21,14 +22,12 @@
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">                                                                
+        <div class="form-group">
             <div class="col-md-offset-4 col-md-8">
-                @Html.TextAreaFor(model => model.Address,new { @class = "form-control", placeholder = "Адрес..." } )
+                @Html.TextAreaFor(model => model.Address, new { @class = "form-control", placeholder = "Адрес..." })
                 @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             <div class="col-md-offset-4 col-md-8">
                 @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Описание..." })
@@ -36,27 +35,29 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.Phones, new { @class = "control-label col-md-4" })
-            @Html.ValidationMessageFor(model => model.Phones, "", new { @class = "text-danger" })
-            <div class="row">
-                <div class="col-md-6" id="Phones">
-
+            <div class="col-md-offset-4 col-md-4">
+                @Html.ValidationMessageFor(model => model.Phones, "", new { @class = "text-danger" })
+                <div class="row">
+                    @Html.LabelFor(model => model.Phones, new { @class = "control-label col-md-4" })
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-12" id="Phones">
+                </div>                                                  
+                <div class="col-md-12 text-center">
                     <a id="AddPhone" class="btn btn-default">Добавить телефон</a>
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Добавить" class="btn btn-default" />
+            <div class="row text-center">
+                <input type="submit" value="Сохранить" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
-<script src="~/Scripts/Phones.js"></script>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/Phones.js"></script>
 }
