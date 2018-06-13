@@ -1,4 +1,4 @@
-﻿using DM.PR.WEB.Models.WorkStatus;  
+﻿using DM.PR.WEB.Models.WorkStatus;
 using DM.PR.Business.Providers;
 using DM.PR.Business.Services;
 using DM.PR.Common.Entities;
@@ -27,8 +27,8 @@ namespace DM.PR.WEB.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            var user = _workStatusProvider.GetById(id);
-            return View(user);
+            var model = _workStatusProvider.GetById(id);
+            return View(model);
         }
 
         public ActionResult Create()
@@ -44,7 +44,7 @@ namespace DM.PR.WEB.Controllers
                 return View(model);
             }
 
-            var user = MapUserCreateViewModelToUser(model);
+            var user = MapWorkStatusCreateViewModelToWorkStatus(model);
             _workStatusService.Create(user);
 
             return RedirectToAction("Index");
@@ -52,8 +52,9 @@ namespace DM.PR.WEB.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            var user = _workStatusProvider.GetById(id);
-            return View(user);
+            var workStatus = _workStatusProvider.GetById(id);
+            var model = MapWorkStatusToWorkStatusEditViewModel(workStatus);
+            return View(model);
         }
 
         [HttpPost]
@@ -61,22 +62,21 @@ namespace DM.PR.WEB.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(model);                                         
             }
 
-            var user = MapUserEditViewModelToUser(model);
+            var user = MapWorkStatusEditViewModelToWorkStatus(model);
             _workStatusService.Edit(user);
 
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
         public ActionResult Delete(int id = 0)
         {
             _workStatusService.Delete(id);
             return RedirectToAction("Index");
         }
-        
+
         #region Partial and Json
 
 
@@ -93,7 +93,7 @@ namespace DM.PR.WEB.Controllers
 
         #region Mappers
 
-        private WorkStatus MapUserCreateViewModelToUser(WorkStatusCreateViewModel model)
+        private WorkStatus MapWorkStatusCreateViewModelToWorkStatus(WorkStatusCreateViewModel model)
         {
             return new WorkStatus
             {
@@ -101,7 +101,16 @@ namespace DM.PR.WEB.Controllers
             };
         }
 
-        private WorkStatus MapUserEditViewModelToUser(WorkStatusEditViewModel model)
+        private WorkStatusEditViewModel MapWorkStatusToWorkStatusEditViewModel(WorkStatus workStatus)
+        {
+            return new WorkStatusEditViewModel
+            {
+                Id = workStatus.Id,
+                Status = workStatus.Status
+            };
+        }
+
+        private WorkStatus MapWorkStatusEditViewModelToWorkStatus(WorkStatusEditViewModel model)
         {
             return new WorkStatus
             {

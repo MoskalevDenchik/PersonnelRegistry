@@ -41,7 +41,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
                 Procedure = "InsertWorkStatus",
                 Parameters = new SqlParameter[]
                 {
-                    new SqlParameter("@Name", item.Status)
+                    new SqlParameter("@Status", item.Status)
                 }
             };
         }
@@ -54,7 +54,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
                 Parameters = new SqlParameter[]
                 {
                     new SqlParameter("@Id", item.Id),
-                    new SqlParameter("@Name", item.Status)
+                    new SqlParameter("@Status", item.Status)
                 }
             };
         }

@@ -1,4 +1,5 @@
 ﻿using DM.PR.WEB.Infrastructure.Attributes;
+using DM.PR.WEB.Models.Department;
 using System.Collections.Generic;
 using DM.PR.Business.Providers;
 using DM.PR.Business.Services;
@@ -6,7 +7,6 @@ using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using DM.PR.WEB.Models;
 using System.Web.Mvc;
-using DM.PR.WEB.Models.Department;
 
 namespace DM.PR.WEB.Controllers
 {
