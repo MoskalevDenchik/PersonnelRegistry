@@ -187,9 +187,10 @@
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\PhoneController.cs" />
+    <Compile Include="Controllers\KindPhoneController.cs" />
     <Compile Include="Controllers\MaritalStatusController.cs" />
     <Compile Include="Controllers\NavigationController.cs" />
+    <Compile Include="Controllers\PhoneController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WorkStatusController.cs" />
     <Compile Include="Dependency\DefaultRegistry.cs" />
@@ -257,12 +258,10 @@
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\Phone\Index.cshtml" />
-    <Content Include="Views\Phone\Details.cshtml" />
-    <Content Include="Views\Phone\Create.cshtml" />
-    <Content Include="Views\Phone\Edit.cshtml" />
+    <Content Include="Views\KindPhone\Index.cshtml" />
+    <Content Include="Views\KindPhone\Create.cshtml" />
+    <Content Include="Views\KindPhone\Edit.cshtml" />
     <Content Include="Views\MaritalStatus\Index.cshtml" />
-    <Content Include="Views\MaritalStatus\Details.cshtml" />
     <Content Include="Views\MaritalStatus\Create.cshtml" />
     <Content Include="Views\MaritalStatus\Edit.cshtml" />
     <Content Include="Views\Employees\DepartmentNavigation.cshtml" />
