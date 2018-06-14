@@ -1,20 +1,19 @@
-﻿@model IEnumerable<DM.PR.Common.Entities.Account.User>
+﻿@model IReadOnlyCollection<DM.PR.Common.Entities.Account.User>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<h2 class="text-center">Пользователи системы</h2>
+<br />
+
+<table class="table table-bordered text-center" style="background-color:white">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Login)
+        <th class="text-center">
+            Логин
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
+        <th class="text-center">
+            Пароль
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
+        <th class="text-center">
+            Действие
         </th>
-        <th></th>
     </tr>
 
     @foreach (var item in Model)
@@ -24,39 +23,16 @@
                 @Html.DisplayFor(modelItem => item.Login)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Password)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("Подробнее", "Details", "Employees", new { id = item.EmployeeId }, null)/
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }) /
+                @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
             </td>
         </tr>
     }
-
 </table>
-@*<table>
-    <thead>
-        <tr>
-            <td>Id</td>
-            <td>Name</td>
-            <td>E-mail</td>
-            <td>Pasword</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>Id</td>
-                <td>Name</td>
-                <td>E-mail</td>
-                <td>Pasword</td>
-            </tr>
-        }
-    </tbody>
-
-</table>*@
+<div class="col-md-offset-9">
+    @Html.ActionLink("Добавить нового пользователя", "Search", "Employees",null, new { @class = "btn btn-default" })
+</div>

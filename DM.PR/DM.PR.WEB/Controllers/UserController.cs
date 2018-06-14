@@ -32,9 +32,10 @@ namespace DM.PR.WEB.Controllers
             return View(user);
         }
 
-        public ActionResult Create()
+        public ActionResult Create(int employeeId = 0)
         {
-            return View();
+            var model = new UserCreateViewModel { EmployeeId = employeeId };
+            return View(model);
         }
 
         [HttpPost]
