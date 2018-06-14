@@ -8,7 +8,7 @@ namespace DM.PR.WEB.Models.User
     {
         public int EmployeeId { get; set; }
 
-        [Required(ErrorMessage = "Введите логи")]
+        [Required(ErrorMessage = "Введите логин")]
         public string Login { get; set; }
 
         [Required(ErrorMessage = "Введите пароль")]

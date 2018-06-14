@@ -10,6 +10,7 @@ using DM.PR.Common.Services;
 using DM.PR.Common.Helpers;
 using System;
 using Moq;
+using DM.PR.Common.Helpers.Implement;
 
 namespace DM.PR.Business.Test.Providers
 {
@@ -26,7 +27,7 @@ namespace DM.PR.Business.Test.Providers
 
         public EmployeeProviderTest()
         {
-            _reflector = IoC.Initialize().GetInstance<IEnityReflector>();
+            _reflector = new EnityReflector();
         }
 
         [TestInitialize]
@@ -183,7 +184,7 @@ namespace DM.PR.Business.Test.Providers
             var list = _provider.GetPage(pageSize, PageNumber, out int totalCount);
 
             //assert 
-            _specificationCreator.Verify(c => c.CreateFindByPageDataSpecification(pageSize, PageNumber), Times.Once);
+            _specificationCreator.Verify(c => c.CreateSpecification(pageSize, PageNumber), Times.Once);
             _repository.Verify(r => r.FindBy(It.IsAny<ISpecification>(), out totalCount), Times.Once);
             _cahing.Verify(c => c.Add(It.IsAny<string>(), It.IsAny<PagedData<Employee>>(), It.IsAny<int>()), Times.Once);
         }
@@ -215,7 +216,7 @@ namespace DM.PR.Business.Test.Providers
             var expectedPropertyValueList = _reflector.GetPropertyValueList(_testList);
 
             _cahing.Setup(c => c.Get<PagedData<Employee>>(It.IsAny<string>())).Returns<PagedData<Employee>>(null);
-            _specificationCreator.Setup(s => s.CreateFindByPageDataSpecification(pageSize, pageNumber)).Returns(It.IsAny<ISpecification>);
+            _specificationCreator.Setup(s => s.CreateSpecification(pageSize, pageNumber)).Returns(It.IsAny<ISpecification>);
             _repository.Setup(s => s.FindBy(It.IsAny<ISpecification>(), out expectedTotalCount)).Returns(_testList);
 
             //act

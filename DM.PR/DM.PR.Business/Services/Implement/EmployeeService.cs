@@ -19,8 +19,7 @@ namespace DM.PR.Business.Services.Implement
 
         public void Create(Employee employee)
         {
-            _rep.Add(employee);
-            CleanCach();
+            _rep.Add(employee);    
         }
 
         public void Delete(int id)

@@ -1,13 +1,15 @@
 ﻿using DM.PR.Data.Core.InputParameters.Creaters;
 using DM.PR.Common.Entities.Account;
+using System.Collections.Generic;
 using DM.PR.Data.Specifications;
 using System.Data.SqlClient;
 using DM.PR.Data.Entity;
+using System.Data;
 using System;
 
 namespace DM.PR.Data.Core.ParameterCreaters.Implement
 {
-    internal class UserParameterCreater : IParameterCreater<User> , IUserParameterCreator
+    internal class UserParameterCreater : IParameterCreater<User>, IUserParameterCreator
     {
         public IInputParameter CreateForGetById(int id)
         {
@@ -37,7 +39,17 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
 
         public IInputParameter CreateForAdd(User item)
         {
-            throw new NotImplementedException();
+            return new DbInputParameter
+            {
+                Procedure = "InsertUser",
+                Parameters = new SqlParameter[]
+                {
+                    new SqlParameter("@EmployeeId", item.Id),
+                    new SqlParameter("@Login",item.Login),
+                    new SqlParameter("@Password",item.Password),
+                    new SqlParameter("@Roles", item.Roles!=null? ConvertToTable(item.Roles):null)
+                }
+            };
         }
 
         public IInputParameter CreateForUpdate(User item)
@@ -61,5 +73,22 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
                 }
             };
         }
+
+        #region Converters
+
+        private static DataTable ConvertToTable(IReadOnlyCollection<Role> users)
+        {
+            var table = new DataTable("Users");
+            table.Columns.Add("Id", typeof(int));
+            table.Columns.Add("Name", typeof(string));
+
+            foreach (var item in users)
+            {
+                table.Rows.Add(item.Id, item.Name);
+            }
+            return table;
+        }
+
+        #endregion
     }
 }

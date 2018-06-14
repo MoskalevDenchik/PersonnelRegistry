@@ -28,6 +28,7 @@ namespace DM.PR.Data.Dependencies
 
             For<DbExec>().Use<SqlDbExec>();
 
+            For<IDataContext<Role>>().Use<DbContext<Role>>();
             For<IDataContext<User>>().Use<DbContext<User>>();
             For<IDataContext<Employee>>().Use<DbContext<Employee>>();
             For<IDataContext<BillBoard>>().Use<WcfBillBoardContext>();
@@ -36,6 +37,7 @@ namespace DM.PR.Data.Dependencies
             For<IDataContext<WorkStatus>>().Use<DbContext<WorkStatus>>();
             For<IDataContext<MaritalStatus>>().Use<DbContext<MaritalStatus>>();
 
+            For<IRepository<Role>>().Use<Repository<Role>>();
             For<IRepository<User>>().Use<Repository<User>>();
             For<IRepository<Employee>>().Use<Repository<Employee>>();
             For<IRepository<BillBoard>>().Use<Repository<BillBoard>>();
@@ -44,6 +46,7 @@ namespace DM.PR.Data.Dependencies
             For<IRepository<WorkStatus>>().Use<Repository<WorkStatus>>();
             For<IRepository<MaritalStatus>>().Use<Repository<MaritalStatus>>();
 
+            For<IParameterCreater<Role>>().Use<RoleParameterCreater>();
             For<IParameterCreater<User>>().Use<UserParameterCreater>();
             For<IParameterCreater<Employee>>().Use<EmployeeParameterCreater>();
             For<IParameterCreater<BillBoard>>().Use<BillBoardParameterCreater>();
@@ -52,6 +55,7 @@ namespace DM.PR.Data.Dependencies
             For<IParameterCreater<WorkStatus>>().Use<WorkStatusParameterCreater>();
             For<IParameterCreater<MaritalStatus>>().Use<MaritalStatusParameterCreater>();
 
+            For<IConverter<Role>>().Use<RoleConverter>();
             For<IConverter<User>>().Use<UserConverter>();
             For<IConverter<Employee>>().Use<EmployeeConverter>();
             For<IConverter<KindPhone>>().Use<KindPhoneConverter>();

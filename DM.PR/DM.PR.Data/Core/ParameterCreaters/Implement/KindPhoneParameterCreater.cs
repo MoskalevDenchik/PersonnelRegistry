@@ -6,7 +6,7 @@ using DM.PR.Data.Entity;
 
 namespace DM.PR.Data.Core.ParameterCreaters.Implement
 {
-    class KindPhoneParameterCreater : IParameterCreater<KindPhone>
+    internal class KindPhoneParameterCreater : IParameterCreater<KindPhone>
     {
         public IInputParameter CreateForGetById(int id)
         {

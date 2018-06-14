@@ -3,7 +3,9 @@ using DM.PR.Common.Entities;
 using System.Collections;
 using System.Reflection;
 using System;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("DM.PR.Business.Test")]
 namespace DM.PR.Common.Helpers.Implement
 {
     internal class EnityReflector : IEnityReflector
