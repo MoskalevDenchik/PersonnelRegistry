@@ -15,10 +15,10 @@ namespace DM.PR.Business.Providers.Implement
     internal class EmployeeProvider : IEmployeeProvider
     {
         private readonly IRepository<Employee> _rep;
-        private readonly IСachingService _caching;
+        private readonly IСacheStorage _caching;
         private readonly IEmployeeSpecificationCreator _specificationCreator;
 
-        public EmployeeProvider(IRepository<Employee> rep, IEmployeeSpecificationCreator creator, IСachingService caching)
+        public EmployeeProvider(IRepository<Employee> rep, IEmployeeSpecificationCreator creator, IСacheStorage caching)
         {
             Inspector.ThrowExceptionIfNull(rep, creator, caching);
             _rep = rep;

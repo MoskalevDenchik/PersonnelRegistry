@@ -17,7 +17,7 @@ namespace DM.PR.Business.Test.Providers
     public class EmployeeProviderTest
     {
         private EmployeeProvider _provider;
-        private Mock<IСachingService> _cahing;
+        private Mock<IСacheStorage> _cahing;
         private Mock<IRepository<Employee>> _repository;
         private Mock<IEmployeeSpecificationCreator> _specificationCreator;
         private readonly IEnityReflector _reflector;
@@ -32,7 +32,7 @@ namespace DM.PR.Business.Test.Providers
         [TestInitialize]
         public void TestInitialize()
         {
-            _cahing = new Mock<IСachingService>();
+            _cahing = new Mock<IСacheStorage>();
             _specificationCreator = new Mock<IEmployeeSpecificationCreator>();
             _repository = new Mock<IRepository<Employee>>();
             _provider = new EmployeeProvider(_repository.Object, _specificationCreator.Object, _cahing.Object);

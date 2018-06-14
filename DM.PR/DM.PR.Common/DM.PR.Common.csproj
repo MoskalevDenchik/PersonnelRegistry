@@ -86,8 +86,8 @@
     <Compile Include="Logger\IRecordLog.cs" />
     <Compile Include="Logger\RecordLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Implement\СachingService.cs" />
-    <Compile Include="Services\IСachingService.cs" />
+    <Compile Include="Services\Implement\СacheStorage.cs" />
+    <Compile Include="Services\IСacheStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Log.config">

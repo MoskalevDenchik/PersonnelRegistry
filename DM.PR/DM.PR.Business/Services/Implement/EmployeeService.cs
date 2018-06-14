@@ -8,9 +8,9 @@ namespace DM.PR.Business.Services.Implement
     internal class EmployeeService : IEmployeeService
     {
         private readonly IRepository<Employee> _rep;
-        private readonly IСachingService _caching;
+        private readonly IСacheStorage _caching;
 
-        public EmployeeService(IRepository<Employee> employeeRepository, IСachingService caching)
+        public EmployeeService(IRepository<Employee> employeeRepository, IСacheStorage caching)
         {
             Inspector.ThrowExceptionIfNull(employeeRepository);
             _rep = employeeRepository;
