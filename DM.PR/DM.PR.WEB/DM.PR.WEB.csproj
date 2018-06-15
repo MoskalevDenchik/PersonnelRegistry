@@ -173,6 +173,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Navigation.js" />
     <Content Include="Scripts\Phones.js" />
+    <Content Include="Scripts\Roles\AddRole.js" />
     <Content Include="Scripts\Search.js" />
     <Content Include="Scripts\EditEmails.js" />
     <Content Include="Web.config" />
@@ -276,6 +277,7 @@
     <Content Include="Views\Phone\EditPhone.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\SelectRole.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

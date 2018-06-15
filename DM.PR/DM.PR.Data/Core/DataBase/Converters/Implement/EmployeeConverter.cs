@@ -22,6 +22,7 @@ namespace DM.PR.Data.Core.Converters.Implement
                     BeginningWork = empl.Field<DateTime>("BeginningWork"),
                     EndWork = empl.Field<DateTime?>("EndWork"),
                     ImagePath = empl.Field<string>("ImagePath"),
+                    HasRole = empl.Field<bool>("HasRole"),
                     Phones = ConvertToPhones(empl.Field<int>("Id"), "EmployeeId", dataSet.Tables[1]),
                     Emails = ConvertToEmails(empl.Field<int>("Id"), dataSet.Tables[2]),
                     Department = ConvertToDepartmnent(empl.Field<int>("DepartmentId"), dataSet.Tables[3], dataSet.Tables[4]),

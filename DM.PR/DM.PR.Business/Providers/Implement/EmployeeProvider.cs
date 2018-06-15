@@ -34,38 +34,18 @@ namespace DM.PR.Business.Providers.Implement
 
         public IReadOnlyCollection<Employee> GetPage(int pageSize, int page, out int totalCount)
         {
-            Inspector.ThrowExceptionIfZeroOrNegative(pageSize, page);
 
-            var cachKey = $"Employees_{pageSize}_{page}";
-            var pageData = _caching.Get<PagedData<Employee>>(cachKey);
-            if (pageData == null)
-            {
-                var findByPageSpecification = _specificationCreator.CreateSpecification(pageSize, page);
-                var list = _rep.FindBy(findByPageSpecification, out totalCount);
-                _caching.Add(cachKey, new PagedData<Employee>(list, totalCount), 20);
-                return list;
-            }
-
-            totalCount = pageData.TotalCount;
-            return pageData.Data;
+            var findByPageSpecification = _specificationCreator.CreateSpecification(pageSize, page);
+            return _rep.FindBy(findByPageSpecification, out totalCount);
         }
 
         public IReadOnlyCollection<Employee> GetPageByDepartmentId(int departmentId, int pageSize, int page, out int totalCount)
         {
             Inspector.ThrowExceptionIfZeroOrNegative(pageSize, page);
 
-            var cachKey = $"Employees_{pageSize}_{page}_{departmentId}";
-            var pageData = _caching.Get<PagedData<Employee>>(cachKey);
-            if (pageData == null)
-            {
-                var findByPageAndDepartmentIdSpecification = _specificationCreator.CreateSpecification(departmentId, pageSize, page);
-                var list = _rep.FindBy(findByPageAndDepartmentIdSpecification, out totalCount);
-                _caching.Add(cachKey, new PagedData<Employee>(list, totalCount), 20);
-                return list;
-            }
+            var findByPageAndDepartmentIdSpecification = _specificationCreator.CreateSpecification(departmentId, pageSize, page);
+            return _rep.FindBy(findByPageAndDepartmentIdSpecification, out totalCount);
 
-            totalCount = pageData.TotalCount;
-            return pageData.Data;
         }
 
         public IReadOnlyCollection<Employee> GetPageBySearchParams(string lastName, string firstName, string middledName, int fromYear, int toYear, int WorkStatusId, int pageSize, int page, out int totalCount)

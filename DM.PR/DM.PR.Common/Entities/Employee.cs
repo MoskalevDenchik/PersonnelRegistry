@@ -30,5 +30,7 @@ namespace DM.PR.Common.Entities
         public DateTime BeginningWork { get; set; }
 
         public DateTime? EndWork { get; set; }
+
+        public bool HasRole { get; set; }
     }
 }

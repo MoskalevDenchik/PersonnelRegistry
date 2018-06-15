@@ -36,7 +36,14 @@
         <div class="row">
             @if (User.IsInRole("admin"))
             {
-                @Html.ActionLink("Сделать пользователем системы", "Create", "User", new { employeeId = @item.Id }, null);
+                if (item.HasRole)
+                {
+                    @Html.ActionLink("Редактировать пользователя", "Edit", "User", new { employeeId = @item.Id }, null);  
+                }
+                else
+                {
+                    @Html.ActionLink("Сделать пользователем системы", "Create", "User", new { employeeId = @item.Id }, null);
+                }
             }
         </div>
     </div>

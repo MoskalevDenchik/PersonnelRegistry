@@ -10,6 +10,7 @@ namespace DM.PR.Business.Dependencies
     {
         public BusinessRegistry()
         {
+            For<IRoleProvider>().Use<RoleProvider>();
             For<IUserProvider>().Use<UserProvider>();
             For<IEmployeeProvider>().Use<EmployeeProvider>();
             For<IBillBoardProvider>().Use<BillBoardProvider>();

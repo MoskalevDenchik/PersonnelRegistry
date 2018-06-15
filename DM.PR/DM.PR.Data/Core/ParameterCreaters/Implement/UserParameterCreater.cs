@@ -44,7 +44,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
                 Procedure = "InsertUser",
                 Parameters = new SqlParameter[]
                 {
-                    new SqlParameter("@EmployeeId", item.Id),
+                    new SqlParameter("@EmployeeId", item.EmployeeId),
                     new SqlParameter("@Login",item.Login),
                     new SqlParameter("@Password",item.Password),
                     new SqlParameter("@Roles", item.Roles!=null? ConvertToTable(item.Roles):null)
@@ -59,7 +59,14 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
 
         public IInputParameter CreateForRemove(int id)
         {
-            throw new NotImplementedException();
+            return new DbInputParameter
+            {
+                Procedure = "DeleteUser",
+                Parameters = new SqlParameter[]
+                {
+                    new SqlParameter("@Id", id)
+                }
+            };
         }
 
         public IInputParameter CreateForFindByLogin(string login)

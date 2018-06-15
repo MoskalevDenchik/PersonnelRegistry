@@ -11,11 +11,13 @@ namespace DM.PR.WEB.Controllers
     public class UserController : Controller
     {
         private readonly IUserProvider _userProvider;
+        private readonly IRoleProvider _roleProvider;
         private readonly IUserService _userServ;
 
-        public UserController(IUserProvider userProv, IUserService userServ)
+        public UserController(IUserProvider userProv, IUserService userServ, IRoleProvider roleProvider)
         {
-            Inspector.ThrowExceptionIfNull(userProv, userProv);
+            Inspector.ThrowExceptionIfNull(userProv, userProv, roleProvider);
+            _roleProvider = roleProvider;
             _userProvider = userProv;
             _userServ = userServ;
         }
@@ -71,13 +73,24 @@ namespace DM.PR.WEB.Controllers
 
             return RedirectToAction("Index");
         }
-
-        [HttpPost]
+                     
         public ActionResult Delete(int id = 0)
         {
             _userServ.Delete(id);
             return RedirectToAction("Index");
         }
+
+        #region Partial
+
+        public ActionResult AddRole(int selectedId = 0, int number = 0)
+        {
+            ViewBag.number = number;
+            ViewBag.selectedId = selectedId;
+            var roles = _roleProvider.GetAll();
+            return PartialView("SelectRole", roles);
+        }
+
+        #endregion
 
         #region Mappers
 
@@ -85,9 +98,10 @@ namespace DM.PR.WEB.Controllers
         {
             return new User
             {
+                EmployeeId = model.EmployeeId,
                 Login = model.Login,
                 Password = model.Password,
-                Roles = model.Roles
+                Roles = model.Roles 
             };
         }
 
