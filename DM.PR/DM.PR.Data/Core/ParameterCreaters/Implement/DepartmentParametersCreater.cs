@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using DM.PR.Data.Specifications;
 using DM.PR.Common.Entities;
-using System.Data.SqlClient;
 using DM.PR.Data.Entity;
 using System.Data;
 
@@ -9,19 +7,16 @@ namespace DM.PR.Data.Core.InputParameters.Creaters.Implement
 {
     internal class DepartmentParameterCreater : IParameterCreater<Department>, IDepartmentParameterCreater
     {
-        public IInputParameter CreateForGetById(int id)
+        public override IInputParameter CreateForGetById(int id)
         {
             return new DbInputParameter
             {
                 Procedure = "SelectDepartmentById",
-                Parameters = new SqlParameter[]
-                {
-                    new SqlParameter("@Id", id)
-                }
+                Parameters = { { "@Id", id } }
             };
         }
 
-        public IInputParameter CreateForGetAll()
+        public override IInputParameter CreateForGetAll()
         {
             return new DbInputParameter
             {
@@ -30,55 +25,45 @@ namespace DM.PR.Data.Core.InputParameters.Creaters.Implement
             };
         }
 
-        public IInputParameter CreateForFindBy(ISpecification specification)
-        {
-            return specification.GetSpecific();
-        }
-
-        public IInputParameter CreateForAdd(Department item)
+        public override IInputParameter CreateForAdd(Department item)
         {
             return new DbInputParameter
             {
                 Procedure = "InsertDepartment",
-
-                Parameters = new SqlParameter[]
+                Parameters =
                 {
-                    new SqlParameter("@Name", item.Name),
-                    new SqlParameter("@ParentId", item.ParentId),
-                    new SqlParameter("@Address", item.Address),
-                    new SqlParameter("@Description", item.Description),
-                    new SqlParameter("@Phones", item.Phones!=null? ConvertToTable(item.Phones):null)
+                    {"@Name", item.Name},
+                    {"@Address", item.Address },
+                    {"@ParentId", item.ParentId },
+                    {"@Description", item.Description},
+                    {"@Phones", item.Phones!=null? ConvertToTable(item.Phones):null}
                 }
             };
         }
 
-        public IInputParameter CreateForUpdate(Department item)
+        public override IInputParameter CreateForUpdate(Department item)
         {
             return new DbInputParameter
             {
                 Procedure = "UpdateDepartment",
-                Parameters = new SqlParameter[]
+                Parameters =
                 {
-                    new SqlParameter("@Id",item.Id),
-                    new SqlParameter("@ParentId", item.ParentId),
-                    new SqlParameter("@Name", item.Name),
-                    new SqlParameter("@Address", item.Address),
-                    new SqlParameter("@Description", item.Description),
-                    new SqlParameter("@Phones", item.Phones!=null? ConvertToTable(item.Phones):null)
-
+                    {"@Id",item.Id},
+                    {"@Name", item.Name },
+                    {"@Address", item.Address},
+                    {"@ParentId", item.ParentId},
+                    {"@Description", item.Description},
+                    {"@Phones", item.Phones!=null? ConvertToTable(item.Phones):null}
                 }
             };
         }
 
-        public IInputParameter CreateForRemove(int id)
+        public override IInputParameter CreateForRemove(int id)
         {
             return new DbInputParameter
             {
                 Procedure = "DeleteDepartmentById",
-                Parameters = new SqlParameter[]
-                {
-                    new SqlParameter("@Id", id)
-                }
+                Parameters = { { "@Id", id } }
             };
         }
 
@@ -87,11 +72,7 @@ namespace DM.PR.Data.Core.InputParameters.Creaters.Implement
             return new DbInputParameter
             {
                 Procedure = "SelectAllDepartmtsByPage",
-                Parameters = new SqlParameter[]
-                {
-                    new SqlParameter("@PageSize",pageSize),
-                    new SqlParameter("@Page",page),
-                }
+                Parameters = { { "@PageSize", pageSize }, { "@Page", page } }
             };
         }
 

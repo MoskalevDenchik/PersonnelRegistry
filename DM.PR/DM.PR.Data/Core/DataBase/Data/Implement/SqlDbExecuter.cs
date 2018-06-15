@@ -1,15 +1,16 @@
-﻿using System.Data.SqlClient;
+﻿using System.Collections.Generic;
+using System.Data.SqlClient;
 using DM.PR.Common.Helpers;
 using DM.PR.Data.Entity;
 using System.Data;
 
 namespace DM.PR.Data.Core.DataBase.Data.Implement
 {
-    internal class SqlDbExec : DbExec
+    internal class SqlDbExecuter : DbExecuter
     {
         private readonly IConfigManger _configManager;
 
-        public SqlDbExec(IConfigManger configManager)
+        public SqlDbExecuter(IConfigManger configManager)
         {
             Inspector.ThrowExceptionIfNull(configManager);
             _configManager = configManager;
@@ -39,10 +40,24 @@ namespace DM.PR.Data.Core.DataBase.Data.Implement
 
             if (parameter.Parameters != null)
             {
-                command.Parameters.AddRange(parameter.Parameters);
+                command.Parameters.AddRange(MapToSqlParameter(parameter.Parameters).ToArray());
             }
 
             return command;
         }
+
+        private List<SqlParameter> MapToSqlParameter(Dictionary<string, object> parameters)
+        {
+            var dataParameters = new List<SqlParameter>();
+
+            foreach (var item in parameters)
+            {
+                dataParameters.Add(new SqlParameter(item.Key, item.Value));
+            }
+
+            return dataParameters;
+        }
+
+
     }
 }

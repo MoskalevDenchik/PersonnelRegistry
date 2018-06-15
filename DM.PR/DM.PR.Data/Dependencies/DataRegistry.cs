@@ -26,7 +26,7 @@ namespace DM.PR.Data.Dependencies
         public DataRegistry()
         {
 
-            For<DbExec>().Use<SqlDbExec>();
+            For<DbExecuter>().Use<SqlDbExecuter>();
 
             For<IDataContext<Role>>().Use<DbContext<Role>>();
             For<IDataContext<User>>().Use<DbContext<User>>();

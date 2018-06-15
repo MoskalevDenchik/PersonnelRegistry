@@ -10,9 +10,9 @@ namespace DM.PR.Data.Core.Data.Implement
     internal class DbContext<T> : IDataContext<T>
     {
         private IConverter<T> _converter;
-        private DbExec _dbExecutor;
+        private DbExecuter _dbExecutor;
 
-        public DbContext(IConverter<T> converter, DbExec dbExecutor)
+        public DbContext(IConverter<T> converter, DbExecuter dbExecutor)
         {
             Inspector.ThrowExceptionIfNull(converter, dbExecutor);
             _converter = converter;

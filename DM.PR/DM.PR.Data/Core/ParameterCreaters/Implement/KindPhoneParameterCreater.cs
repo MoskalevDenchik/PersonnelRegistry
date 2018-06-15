@@ -1,6 +1,4 @@
 ﻿using DM.PR.Data.Core.InputParameters.Creaters;
-using DM.PR.Data.Specifications;
-using System.Data.SqlClient;
 using DM.PR.Common.Entities;
 using DM.PR.Data.Entity;
 
@@ -8,19 +6,16 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
 {
     internal class KindPhoneParameterCreater : IParameterCreater<KindPhone>
     {
-        public IInputParameter CreateForGetById(int id)
+        public override IInputParameter CreateForGetById(int id)
         {
             return new DbInputParameter
             {
                 Procedure = "SelectKindPhoneById",
-                Parameters = new SqlParameter[]
-                {
-                    new SqlParameter("@Id", id)
-                }
+                Parameters = { { "@Id", id } }
             };
         }
 
-        public IInputParameter CreateForGetAll()
+        public override IInputParameter CreateForGetAll()
         {
             return new DbInputParameter
             {
@@ -28,46 +23,31 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
                 Parameters = null
             };
         }
-        public IInputParameter CreateForFindBy(ISpecification specification)
-        {
-            return specification.GetSpecific();
-        }
 
-        public IInputParameter CreateForAdd(KindPhone item)
+        public override IInputParameter CreateForAdd(KindPhone item)
         {
             return new DbInputParameter
             {
                 Procedure = "InsertKindPhone",
-                Parameters = new SqlParameter[]
-                {
-                    new SqlParameter("@Kind", item.Kind)
-                }
+                Parameters = { { "@Kind", item.Kind } }
             };
         }
-        public IInputParameter CreateForUpdate(KindPhone item)
+        public override IInputParameter CreateForUpdate(KindPhone item)
         {
             return new DbInputParameter
             {
                 Procedure = "UpdateKindPhone",
-                Parameters = new SqlParameter[]
-               {
-                    new SqlParameter("@Id", item.Id),
-                    new SqlParameter("@Kind", item.Kind)
-               }
+                Parameters = { { "@Id", item.Id }, { "@Kind", item.Kind } }
             };
         }
 
-        public IInputParameter CreateForRemove(int id)
+        public override IInputParameter CreateForRemove(int id)
         {
             return new DbInputParameter
             {
                 Procedure = "DeleteKindPhone",
-                Parameters = new SqlParameter[]
-                {
-                    new SqlParameter("@Id", id)
-                }
+                Parameters = { { "@Id", id } }
             };
         }
-
     }
 }

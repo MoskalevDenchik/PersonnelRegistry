@@ -75,10 +75,10 @@
     <Compile Include="Core\DataBase\Converters\Implement\RoleConverter.cs" />
     <Compile Include="Core\DataBase\Converters\Implement\UserConverter.cs" />
     <Compile Include="Core\DataBase\Converters\Implement\WorkStatusConverter.cs" />
-    <Compile Include="Core\DataBase\Data\DbExec.cs" />
+    <Compile Include="Core\DataBase\Data\DbExecuter.cs" />
     <Compile Include="Core\Context\IDataContext.cs" />
     <Compile Include="Core\Context\Implement\DbContext.cs" />
-    <Compile Include="Core\DataBase\Data\Implement\SqlDbExec.cs" />
+    <Compile Include="Core\DataBase\Data\Implement\SqlDbExecuter.cs" />
     <Compile Include="Core\ParameterCreaters\IDepartmentParametersCreater.cs" />
     <Compile Include="Core\ParameterCreaters\IEmployeeParameterCreater.cs" />
     <Compile Include="Core\ParameterCreaters\Implement\BillBoardParameterCreater.cs" />

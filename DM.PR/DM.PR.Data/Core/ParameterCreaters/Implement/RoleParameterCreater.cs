@@ -1,27 +1,22 @@
 ﻿using DM.PR.Data.Core.InputParameters.Creaters;
 using DM.PR.Common.Entities.Account;
-using DM.PR.Data.Specifications;
-using System.Data.SqlClient;
 using DM.PR.Data.Entity;
-using System;                        
+using System;
 
 namespace DM.PR.Data.Core.ParameterCreaters.Implement
 {
     internal class RoleParameterCreater : IParameterCreater<Role>
     {
-        public IInputParameter CreateForGetById(int id)
+        public override IInputParameter CreateForGetById(int id)
         {
             return new DbInputParameter
             {
                 Procedure = "SelectRoleById",
-                Parameters = new SqlParameter[]
-                 {
-                    new SqlParameter("@Id", id)
-                 }
+                Parameters = { { "@Id", id } }
             };
         }
 
-        public IInputParameter CreateForGetAll()
+        public override IInputParameter CreateForGetAll()
         {
             return new DbInputParameter
             {
@@ -30,21 +25,16 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             };
         }
 
-        public IInputParameter CreateForFindBy(ISpecification specification)
-        {
-            return specification.GetSpecific();
-        }
-
-        public IInputParameter CreateForAdd(Role item)
+        public override IInputParameter CreateForAdd(Role item)
         {
             throw new NotImplementedException();
         }
-        public IInputParameter CreateForUpdate(Role item)
+        public override IInputParameter CreateForUpdate(Role item)
         {
             throw new NotImplementedException();
         }
 
-        public IInputParameter CreateForRemove(int id)
+        public override IInputParameter CreateForRemove(int id)
         {
             throw new NotImplementedException();
         }

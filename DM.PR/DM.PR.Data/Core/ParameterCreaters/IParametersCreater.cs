@@ -1,15 +1,20 @@
-﻿using DM.PR.Data.Entity;
-using DM.PR.Data.Specifications;
+﻿using DM.PR.Data.Specifications;
+using DM.PR.Data.Entity;
 
 namespace DM.PR.Data.Core.InputParameters.Creaters
 {
-    internal interface IParameterCreater<T>
+    internal abstract class IParameterCreater<T>
     {
-        IInputParameter CreateForGetById(int id);
-        IInputParameter CreateForGetAll();
-        IInputParameter CreateForFindBy(ISpecification specification);
-        IInputParameter CreateForAdd(T item);
-        IInputParameter CreateForRemove(int id);
-        IInputParameter CreateForUpdate(T item);
+        public IInputParameter CreateForFindBy(ISpecification specification)
+        {
+            return specification.GetSpecific();
+        }
+
+        public abstract IInputParameter CreateForGetById(int id);
+        public abstract IInputParameter CreateForGetAll();
+        public abstract IInputParameter CreateForAdd(T item);
+        public abstract IInputParameter CreateForRemove(int id);
+        public abstract IInputParameter CreateForUpdate(T item);
     }
 }
+

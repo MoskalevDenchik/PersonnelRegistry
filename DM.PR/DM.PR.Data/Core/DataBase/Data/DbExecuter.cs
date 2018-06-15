@@ -2,12 +2,13 @@
 using DM.PR.Data.Entity;
 using System.Data;
 using System;
+using System.Collections.Generic;
 
 namespace DM.PR.Data.Core.DataBase.Data
 {
-    internal abstract class DbExec
+    internal abstract class DbExecuter
     {
-        protected abstract IDbConnection GetConnection();
+        protected abstract IDbConnection GetConnection();                               
         protected abstract IDbDataAdapter GetAdapter(IDbCommand command);
         protected abstract IDbCommand GetProcedureCommand(IDbConnection connection, DbInputParameter parameter);
 
