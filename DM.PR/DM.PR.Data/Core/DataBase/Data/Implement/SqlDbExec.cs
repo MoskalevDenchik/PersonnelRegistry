@@ -25,7 +25,7 @@ namespace DM.PR.Data.Core.DataBase.Data.Implement
 
         protected override IDbConnection GetConnection()
         {
-            return new SqlConnection(_configManager.GetConnectionString("DataConnection"));
+            return new SqlConnection(_configManager.GetConnectionString("Connection"));
         }
 
         protected override IDbCommand GetProcedureCommand(IDbConnection connection, DbInputParameter parameter)

@@ -1,25 +1,33 @@
-
 USE [master]
 GO
+
 ------------------------------------------------DataBase-----------------------------------------------
-CREATE DATABASE [PersonDB]
+CREATE DATABASE [PR_DB]
  CONTAINMENT = NONE
  ON  PRIMARY 
-( NAME = N'PersonDB',
-  FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\PersonDB.mdf' , 
+( NAME = N'PR_DB',
+  FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\PR_DB.mdf' , 
   SIZE = 8192KB , 
   MAXSIZE = UNLIMITED, 
   FILEGROWTH = 65536KB )
  LOG ON 
-( NAME = N'PersonDB_log',
-  FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\PersonDB_log.ldf' ,
+( NAME = N'PR_DB_log',
+  FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\PR_DB_log.ldf' ,
   SIZE = 8192KB , 
   MAXSIZE = 2048GB ,
-  FILEGROWTH = 65536KB )
+  FILEGROWTH = 65536KB );
 GO
 
-USE [PersonDB]
+USE [PR_DB]
 GO
+
+CREATE LOGIN [PR_user]   
+    WITH PASSWORD = '1234';  
+GO  
+  
+CREATE USER PR_user FOR LOGIN PR_user
+ALTER ROLE db_owner ADD MEMBER PR_user 
+GO 
 
 
 ---------------------------------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
-using System.Web;
-using DM.PR.WEB.App_Start;
 using StructureMap.Web.Pipeline;
+using DM.PR.WEB.App_Start;
+using System.Web;
 
 namespace DM.PR.WEB.DependencyResolution
 {

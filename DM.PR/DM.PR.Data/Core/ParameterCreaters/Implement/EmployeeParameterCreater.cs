@@ -56,7 +56,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
                   new SqlParameter("@Phones",item.Phones!=null?ConvertToTable(item.Phones):null),
                   new SqlParameter("@Emails",item.Emails!=null?ConvertToTable(item.Emails):null)
                 }
-            };                                            
+            };
         }
 
         public IInputParameter CreateForUpdate(Employee item)
@@ -143,7 +143,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
 
         #region Converters
 
-        private static DataTable ConvertToTable(IReadOnlyCollection<Email> emails)
+        private DataTable ConvertToTable(IReadOnlyCollection<Email> emails)
         {
             var table = new DataTable("Emails");
             table.Columns.Add("Id", typeof(int));
@@ -156,7 +156,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             return table;
         }
 
-        private static DataTable ConvertToTable(IReadOnlyCollection<Phone> phones)
+        private DataTable ConvertToTable(IReadOnlyCollection<Phone> phones)
         {
             var table = new DataTable("Phones");
             table.Columns.Add("Id", typeof(int));

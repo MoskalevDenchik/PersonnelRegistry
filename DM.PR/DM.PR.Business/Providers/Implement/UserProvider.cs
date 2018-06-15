@@ -40,5 +40,11 @@ namespace DM.PR.Business.Providers.Implement
         {
             return _rep.GetAll();
         }
+
+        public User GetByEmployeeId(int employeeId)
+        {
+            ISpecification specification = _specificCreator.CreateSpecification(employeeId);
+            return _rep.FindBy(specification).First();
+        }
     }
 }

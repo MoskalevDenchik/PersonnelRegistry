@@ -25,6 +25,7 @@ namespace DM.PR.Business.Providers.Implement
             {
                 var data = _rep.GetAll();
                 _cache.Add("BillBoard", data, 1);
+                return data;
             }
             return list;
         }

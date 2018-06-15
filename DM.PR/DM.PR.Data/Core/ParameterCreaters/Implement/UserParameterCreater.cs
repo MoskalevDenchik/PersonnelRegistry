@@ -81,6 +81,19 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             };
         }
 
+
+        public IInputParameter CreateForFindByEmployeeId(int employeeId)
+        {
+            return new DbInputParameter
+            {
+                Procedure = "SelectUserByEmployeeId",
+                Parameters = new SqlParameter[]
+                {
+                    new SqlParameter("@Id", employeeId)
+                }
+            };
+        }
+
         #region Converters
 
         private static DataTable ConvertToTable(IReadOnlyCollection<Role> users)

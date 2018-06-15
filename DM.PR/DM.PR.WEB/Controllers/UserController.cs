@@ -4,6 +4,7 @@ using DM.PR.Business.Services;
 using DM.PR.WEB.Models.User;
 using DM.PR.Common.Helpers;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace DM.PR.WEB.Controllers
 {
@@ -54,10 +55,11 @@ namespace DM.PR.WEB.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Edit(int id = 0)
+        public ActionResult Edit(int employeeId = 0)
         {
-            var user = _userProvider.GetById(id);
-            return View(user);
+            var user = _userProvider.GetByEmployeeId(employeeId);
+            var model = MapUserToUserEditViewModel(user);
+            return View(model);
         }
 
         [HttpPost]
@@ -73,7 +75,7 @@ namespace DM.PR.WEB.Controllers
 
             return RedirectToAction("Index");
         }
-                     
+
         public ActionResult Delete(int id = 0)
         {
             _userServ.Delete(id);
@@ -101,7 +103,7 @@ namespace DM.PR.WEB.Controllers
                 EmployeeId = model.EmployeeId,
                 Login = model.Login,
                 Password = model.Password,
-                Roles = model.Roles 
+                Roles = model.Roles
             };
         }
 
@@ -113,6 +115,17 @@ namespace DM.PR.WEB.Controllers
                 Login = model.Login,
                 Password = model.Password,
                 Roles = model.Roles
+            };
+        }
+
+        private UserEditViewModel MapUserToUserEditViewModel(User model)
+        {
+            return new UserEditViewModel
+            {
+                Id = model.Id,
+                Login = model.Login,
+                Password = model.Password,
+                Roles = model.Roles.ToList()
             };
         }
 

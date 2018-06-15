@@ -7,6 +7,7 @@ namespace DM.PR.Business.Providers
     {
         User GetById(int id);
         User GetByLogin(string login);
+        User GetByEmployeeId(int employeeId);
         IReadOnlyCollection<User> GetAll();
     }
 }

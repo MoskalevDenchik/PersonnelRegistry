@@ -1,9 +1,9 @@
-using System;
-using System.Web.Mvc;
 using StructureMap.Configuration.DSL;
-using StructureMap.Graph;
-using StructureMap.Pipeline;
 using StructureMap.TypeRules;
+using StructureMap.Pipeline;
+using StructureMap.Graph;
+using System.Web.Mvc;
+using System;
 
 namespace DM.PR.WEB.DependencyResolution
 {

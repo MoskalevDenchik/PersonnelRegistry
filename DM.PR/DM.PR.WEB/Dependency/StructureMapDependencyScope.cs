@@ -1,9 +1,9 @@
-using System;
+using Microsoft.Practices.ServiceLocation;
 using System.Collections.Generic;
+using StructureMap;
 using System.Linq;
 using System.Web;
-using Microsoft.Practices.ServiceLocation;
-using StructureMap;
+using System;
 
 namespace DM.PR.WEB.DependencyResolution
 {
