@@ -5,9 +5,9 @@ using System;
 
 namespace DM.PR.Data.Core.ParameterCreaters.Implement
 {
-    internal class RoleParameterCreater : IParameterCreater<Role>
+    internal class RoleParameterCreater : ParameterCreater<Role>
     {
-        public override IInputParameter CreateForGetById(int id)
+        public override IInputParameter CreateGetById(int id)
         {
             return new DbInputParameter
             {
@@ -16,7 +16,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             };
         }
 
-        public override IInputParameter CreateForGetAll()
+        public override IInputParameter CreateGetAll()
         {
             return new DbInputParameter
             {
@@ -25,16 +25,16 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             };
         }
 
-        public override IInputParameter CreateForAdd(Role item)
+        public override IInputParameter CreateAdd(Role item)
         {
             throw new NotImplementedException();
         }
-        public override IInputParameter CreateForUpdate(Role item)
+        public override IInputParameter CreateUpdate(Role item)
         {
             throw new NotImplementedException();
         }
 
-        public override IInputParameter CreateForRemove(int id)
+        public override IInputParameter CreateRemove(int id)
         {
             throw new NotImplementedException();
         }

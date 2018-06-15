@@ -1,5 +1,5 @@
-﻿using DM.PR.Common.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using DM.PR.Common.Entities;
 using System.Data;
 using System.Linq;
 
@@ -26,7 +26,7 @@ namespace DM.PR.Data.Core.Converters.Implement
         public IEnumerable<Department> ConvertToList(DataSet dataSet, out int outputParameter)
         {
             outputParameter = dataSet.Tables[2].AsEnumerable().Select(x => x.Field<int>("Count")).First();
-            return ConvertToList(dataSet).ToList();
+            return ConvertToList(dataSet);
         }
            
         private List<Phone> ConvertToPhones(int entityId, DataTable table)

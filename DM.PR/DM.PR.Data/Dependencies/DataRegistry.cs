@@ -46,14 +46,14 @@ namespace DM.PR.Data.Dependencies
             For<IRepository<WorkStatus>>().Use<Repository<WorkStatus>>();
             For<IRepository<MaritalStatus>>().Use<Repository<MaritalStatus>>();
 
-            For<IParameterCreater<Role>>().Use<RoleParameterCreater>();
-            For<IParameterCreater<User>>().Use<UserParameterCreater>();
-            For<IParameterCreater<Employee>>().Use<EmployeeParameterCreater>();
-            For<IParameterCreater<BillBoard>>().Use<BillBoardParameterCreater>();
-            For<IParameterCreater<KindPhone>>().Use<KindPhoneParameterCreater>();
-            For<IParameterCreater<Department>>().Use<DepartmentParameterCreater>();
-            For<IParameterCreater<WorkStatus>>().Use<WorkStatusParameterCreater>();
-            For<IParameterCreater<MaritalStatus>>().Use<MaritalStatusParameterCreater>();
+            For<ParameterCreater<Role>>().Use<RoleParameterCreater>();
+            For<ParameterCreater<User>>().Use<UserParameterCreater>();
+            For<ParameterCreater<Employee>>().Use<EmployeeParameterCreater>();
+            For<ParameterCreater<BillBoard>>().Use<BillBoardParameterCreater>();
+            For<ParameterCreater<KindPhone>>().Use<KindPhoneParameterCreater>();
+            For<ParameterCreater<Department>>().Use<DepartmentParameterCreater>();
+            For<ParameterCreater<WorkStatus>>().Use<WorkStatusParameterCreater>();
+            For<ParameterCreater<MaritalStatus>>().Use<MaritalStatusParameterCreater>();
 
             For<IConverter<Role>>().Use<RoleConverter>();
             For<IConverter<User>>().Use<UserConverter>();

@@ -7,9 +7,9 @@ using System;
 
 namespace DM.PR.Data.Core.ParameterCreaters.Implement
 {
-    internal class UserParameterCreater : IParameterCreater<User>, IUserParameterCreator
+    internal class UserParameterCreater : ParameterCreater<User>, IUserParameterCreator
     {
-        public override IInputParameter CreateForGetById(int id)
+        public override IInputParameter CreateGetById(int id)
         {
             return new DbInputParameter
             {
@@ -18,7 +18,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             };
         }
 
-        public override IInputParameter CreateForGetAll()
+        public override IInputParameter CreateGetAll()
         {
             return new DbInputParameter
             {
@@ -28,7 +28,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
         }
          
 
-        public override IInputParameter CreateForAdd(User item)
+        public override IInputParameter CreateAdd(User item)
         {
             return new DbInputParameter
             {
@@ -43,12 +43,12 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             };
         }
 
-        public override IInputParameter CreateForUpdate(User item)
+        public override IInputParameter CreateUpdate(User item)
         {
             throw new NotImplementedException();
         }
 
-        public override IInputParameter CreateForRemove(int id)
+        public override IInputParameter CreateRemove(int id)
         {
             return new DbInputParameter
             {

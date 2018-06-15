@@ -6,9 +6,9 @@ using System.Data;
 
 namespace DM.PR.Data.Core.ParameterCreaters.Implement
 {
-    internal class EmployeeParameterCreater : IParameterCreater<Employee>, IEmployeeParameterCreater
+    internal class EmployeeParameterCreater : ParameterCreater<Employee>, IEmployeeParameterCreater
     {
-        public override IInputParameter CreateForGetById(int id)
+        public override IInputParameter CreateGetById(int id)
         {
             return new DbInputParameter
             {
@@ -17,7 +17,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             };
         }
 
-        public override IInputParameter CreateForGetAll()
+        public override IInputParameter CreateGetAll()
         {
             return new DbInputParameter
             {
@@ -27,7 +27,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
         }
 
 
-        public override IInputParameter CreateForAdd(Employee item)
+        public override IInputParameter CreateAdd(Employee item)
         {
             return new DbInputParameter
             {
@@ -50,7 +50,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             };
         }
 
-        public override IInputParameter CreateForUpdate(Employee item)
+        public override IInputParameter CreateUpdate(Employee item)
         {
             return new DbInputParameter
             {
@@ -74,7 +74,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             };
         }
 
-        public override IInputParameter CreateForRemove(int id)
+        public override IInputParameter CreateRemove(int id)
         {
             return new DbInputParameter
             {

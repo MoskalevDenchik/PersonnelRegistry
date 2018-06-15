@@ -6,28 +6,28 @@ using System;
 
 namespace DM.PR.Data.Core.ParameterCreaters.Implement
 {
-    internal class BillBoardParameterCreater : IParameterCreater<BillBoard>
+    internal class BillBoardParameterCreater : ParameterCreater<BillBoard>
     {
-        public override IInputParameter CreateForGetById(int id)
+        public override IInputParameter CreateGetById(int id)
         {
             throw new NotImplementedException();
         }
-        public override IInputParameter CreateForGetAll()
+        public override IInputParameter CreateGetAll()
         {
             return new WcfInputParameter();
         }
 
-        public override IInputParameter CreateForAdd(BillBoard item)
+        public override IInputParameter CreateAdd(BillBoard item)
         {
             throw new NotImplementedException();
         }
 
-        public override IInputParameter CreateForRemove(int id)
+        public override IInputParameter CreateRemove(int id)
         {
             throw new NotImplementedException();
         }
 
-        public override IInputParameter CreateForUpdate(BillBoard item)
+        public override IInputParameter CreateUpdate(BillBoard item)
         {
             throw new NotImplementedException();
         }

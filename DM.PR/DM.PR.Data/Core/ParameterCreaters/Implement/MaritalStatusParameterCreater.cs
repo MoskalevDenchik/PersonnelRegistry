@@ -4,9 +4,9 @@ using DM.PR.Data.Entity;
 
 namespace DM.PR.Data.Core.ParameterCreaters.Implement
 {
-    internal class MaritalStatusParameterCreater : IParameterCreater<MaritalStatus>
+    internal class MaritalStatusParameterCreater : ParameterCreater<MaritalStatus>
     {
-        public override IInputParameter CreateForGetById(int id)
+        public override IInputParameter CreateGetById(int id)
         {
             return new DbInputParameter
             {
@@ -15,7 +15,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             };
         }
 
-        public override IInputParameter CreateForGetAll()
+        public override IInputParameter CreateGetAll()
         {
 
             return new DbInputParameter
@@ -25,7 +25,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             };
         }
 
-        public override IInputParameter CreateForAdd(MaritalStatus item)
+        public override IInputParameter CreateAdd(MaritalStatus item)
         {
             return new DbInputParameter
             {
@@ -34,7 +34,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             };
         }
 
-        public override IInputParameter CreateForRemove(int id)
+        public override IInputParameter CreateRemove(int id)
         {
             return new DbInputParameter
             {
@@ -43,7 +43,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             };
         }
 
-        public override IInputParameter CreateForUpdate(MaritalStatus item)
+        public override IInputParameter CreateUpdate(MaritalStatus item)
         {
             return new DbInputParameter
             {

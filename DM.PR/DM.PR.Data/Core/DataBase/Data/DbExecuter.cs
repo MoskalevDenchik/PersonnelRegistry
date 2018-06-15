@@ -2,24 +2,21 @@
 using DM.PR.Data.Entity;
 using System.Data;
 using System;
-using System.Collections.Generic;
 
 namespace DM.PR.Data.Core.DataBase.Data
 {
     internal abstract class DbExecuter
     {
-        protected abstract IDbConnection GetConnection();                               
+        protected abstract IDbConnection GetConnection();
         protected abstract IDbDataAdapter GetAdapter(IDbCommand command);
         protected abstract IDbCommand GetProcedureCommand(IDbConnection connection, DbInputParameter parameter);
 
         private T ExecuteCommand<T>(Func<IDbCommand, T> executeCommand, DbInputParameter parameter)
         {
             using (IDbConnection connection = GetConnection())
+            using (IDbCommand command = GetProcedureCommand(connection, parameter))
             {
-                using (IDbCommand command = GetProcedureCommand(connection, parameter))
-                {
-                    return executeCommand(command);
-                }
+                return executeCommand(command);
             }
         }
 
@@ -42,8 +39,7 @@ namespace DM.PR.Data.Core.DataBase.Data
             return ExecuteCommand(command =>
             {
                 command.Connection.Open();
-                int result = command.ExecuteNonQuery();
-                return result;
+                return command.ExecuteNonQuery();
             }
             , parameter);
         }
