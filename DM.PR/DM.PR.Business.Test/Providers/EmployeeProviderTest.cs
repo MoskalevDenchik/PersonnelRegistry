@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DM.PR.Business.Providers.Implement;
 using DM.PR.Data.SpecificationCreators;
-using DM.PR.WEB.DependencyResolution;
 using System.Collections.Generic;
 using DM.PR.Data.Specifications;
 using DM.PR.Data.Repositories;
@@ -36,7 +35,7 @@ namespace DM.PR.Business.Test.Providers
             _cahing = new Mock<IСacheStorage>();
             _specificationCreator = new Mock<IEmployeeSpecificationCreator>();
             _repository = new Mock<IRepository<Employee>>();
-            _provider = new EmployeeProvider(_repository.Object, _specificationCreator.Object, _cahing.Object);
+            _provider = new EmployeeProvider(_repository.Object, _specificationCreator.Object);
 
             _testList = new List<Employee>{
             new Employee
@@ -149,14 +148,14 @@ namespace DM.PR.Business.Test.Providers
         [ExpectedException(typeof(Exception))]
         public void GetPage_PageSize0_ThrowException()
         {
-            _provider.GetPage(0, 1, out int totalCount);
+            _provider.GetEmployees(0, 1, out int totalCount);
         }
 
         [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void GetPage_PageNumber0_ThrowException()
         {
-            _provider.GetPage(1, 0, out int totalCount);
+            _provider.GetEmployees(1, 0, out int totalCount);
         }
 
         [TestMethod]
@@ -166,7 +165,7 @@ namespace DM.PR.Business.Test.Providers
             _cahing.Setup(c => c.Get<PagedData<Employee>>(It.IsAny<string>())).Returns(It.IsAny<PagedData<Employee>>());
 
             //act
-            _provider.GetPage(1, 1, out int totalCount);
+            _provider.GetEmployees(1, 1, out int totalCount);
 
             //assert     
             _repository.Verify(r => r.FindBy(It.IsAny<ISpecification>()), Times.Never);
@@ -181,7 +180,7 @@ namespace DM.PR.Business.Test.Providers
             _cahing.Setup(c => c.Get<PagedData<Employee>>(It.IsAny<string>())).Returns<PagedData<Employee>>(null);
 
             //act
-            var list = _provider.GetPage(pageSize, PageNumber, out int totalCount);
+            var list = _provider.GetEmployees(pageSize, PageNumber, out int totalCount);
 
             //assert 
             _specificationCreator.Verify(c => c.CreateSpecification(pageSize, PageNumber), Times.Once);
@@ -198,7 +197,7 @@ namespace DM.PR.Business.Test.Providers
             _cahing.Setup(c => c.Get<PagedData<Employee>>(It.IsAny<string>())).Returns(new PagedData<Employee>() { Data = _testList, TotalCount = expectedTotalCount });
 
             //act
-            var actualList = _provider.GetPage(1, 1, out int totalCount);
+            var actualList = _provider.GetEmployees(1, 1, out int totalCount);
             int actualTotalCount = totalCount;
 
             //assert     
@@ -220,7 +219,7 @@ namespace DM.PR.Business.Test.Providers
             _repository.Setup(s => s.FindBy(It.IsAny<ISpecification>(), out expectedTotalCount)).Returns(_testList);
 
             //act
-            var actualList = _provider.GetPage(pageSize, pageNumber, out int totalCount);
+            var actualList = _provider.GetEmployees(pageSize, pageNumber, out int totalCount);
             int actualTotalCount = totalCount;
 
             //assert     

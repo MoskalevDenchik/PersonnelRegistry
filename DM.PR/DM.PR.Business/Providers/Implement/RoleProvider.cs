@@ -1,11 +1,11 @@
 ﻿using DM.PR.Common.Entities.Account;
-using System.Collections.Generic;               
+using System.Collections.Generic;
 using DM.PR.Data.Repositories;
 using DM.PR.Common.Helpers;
 
 namespace DM.PR.Business.Providers.Implement
 {
-    internal class RoleProvider :IRoleProvider
+    internal class RoleProvider : IRoleProvider
     {
         private readonly IRepository<Role> _rep;
 
@@ -16,8 +16,11 @@ namespace DM.PR.Business.Providers.Implement
         }
         public Role GetById(int id)
         {
-            Inspector.ThrowExceptionIfZeroOrNegative(id);
-            
+            if (id <= 0)
+            {
+                return null;
+            }
+
             return _rep.GetById(id);
         }
 

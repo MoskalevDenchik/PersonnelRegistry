@@ -4,6 +4,6 @@ namespace DM.PR.Data.SpecificationCreators
 {
     public interface IUserSpecificationCreator
     {
-        ISpecification CreateFindByLoginSpecification(string login);
+        ISpecification CreateSpecification(string login);
     }
 }

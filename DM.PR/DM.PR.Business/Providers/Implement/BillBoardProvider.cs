@@ -24,7 +24,7 @@ namespace DM.PR.Business.Providers.Implement
             if (list == null)
             {
                 var data = _rep.GetAll();
-                _cache.Add("BillBoard", data, 60);
+                _cache.Add("BillBoard", data, 1);
             }
             return list;
         }

@@ -103,7 +103,8 @@ CREATE TABLE [Employees](
 [ImagePath] NVARCHAR(MAX) NULL,
 [BeginningWork] DATE  NULL,
 [EndWork] DATE NULL,
-[WorkStatusId] INT NULL )
+[WorkStatusId] INT NULL,
+[HasRole] BIT DEFAULT 0);
 GO
 
 --Создание первичного ключа
@@ -145,11 +146,11 @@ GO
 
 --Создание внешнего ключа
 ALTER TABLE [PhonesEmployees]
-ADD CONSTRAINT [fk_PhonesEmploees_to_EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employees]([Id]);
+ADD CONSTRAINT [fk_PhonesEmploees_to_EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employees]([Id]) ON DELETE CASCADE;
 GO
 
 ALTER TABLE [PhonesEmployees]
-ADD CONSTRAINT [fk_PhonesEmployees_to_PnoneId] FOREIGN KEY ([PhoneId]) REFERENCES [Phones]([Id]);
+ADD CONSTRAINT [fk_PhonesEmployees_to_PnoneId] FOREIGN KEY ([PhoneId]) REFERENCES [Phones]([Id]) ON DELETE CASCADE;
 GO
 
 -------------------------------------------------PhonesDepartment--------------------------------------
@@ -180,7 +181,7 @@ GO
 ------------------------------------------------------Users----------------------------------------------
 CREATE TABLE [Users](
 [Id] INT IDENTITY (1,1),
-[EmployeeId] INT NOT NULL,
+[EmployeeId] INT NULL,
 [Login] NVARCHAR(32) NOT NULL,
 [Password] NVARCHAR(64) NOT NULL)
 GO
@@ -197,7 +198,7 @@ GO
 
 --Создание внешнего ключа
 ALTER TABLE [Users]
-ADD CONSTRAINT [fk_UserId_to_EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employees]([Id]);
+ADD CONSTRAINT [fk_UserId_to_EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employees]([Id]) ON DELETE CASCADE;
 GO
 
 ------------------------------------------------------Roles----------------------------------------------
@@ -219,11 +220,11 @@ GO
 
 --Создание внешнего ключа
 ALTER TABLE [RolesUsers]
-ADD CONSTRAINT [fk_RolesUsers_to_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users]([Id]);
+ADD CONSTRAINT [fk_RolesUsers_to_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users]([Id]) ON DELETE CASCADE;
 GO
 
 ALTER TABLE [RolesUsers]
-ADD CONSTRAINT [fk_RolesUsers_to_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [Roles]([Id]);
+ADD CONSTRAINT [fk_RolesUsers_to_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [Roles]([Id]) ON DELETE CASCADE;
 GO
 
 ----------------------------------------------------Emails-----------------------------------------------
@@ -276,6 +277,7 @@ SELECT [EmployeeId],
 GO
 
 
+
 -----------------------------------------------------------------------------------------------------------
 -----------------------------------------------------TYPES-------------------------------------------------
 -----------------------------------------------------------------------------------------------------------
@@ -292,6 +294,13 @@ CREATE Type [EmailsType] as TABLE
 ([Id] INT NULL,
 [Address] NVARCHAR(32) NULL)
 GO
+
+--------------------------------------------------RolesTable----------------------------------------------
+CREATE Type [RolesType] as TABLE
+([Id] INT NULL,
+[Role] NVARCHAR(32) NULL)
+GO
+
 
 
 -----------------------------------------------------------------------------------------------------------
@@ -436,6 +445,7 @@ Select [E].[Id],
 	   [ImagePath],
 	   [BeginningWork],
 	   [EndWork],
+	   [HasRole],
 	   [MS].[Id] as [MaritalStatusId],
 	   [MS].[Status] as [MaritalStatus],
 	   [WS].[Id] as [WorkStatusId],
@@ -464,11 +474,11 @@ RETURN SELECT [Id] as [EmployeeId],
 		  AND [FirstName] LIKE @FirstName +'%'
 		  AND [MiddleName] LIKE @MiddleName +'%'
 		  AND DATEDIFF( YEAR, BeginningWork, ISNULL(EndWork,GETDATE())) BETWEEN @minTime and @maxTime
-		  AND WorkStatusId = @WorkStatusId;
+		  AND WorkStatusId = IIF(@WorkStatusId = 0, [WorkStatusId],@WorkStatusId);
 GO
 
  ---------------------------------------------AllEmployeesByPage----------------------------------------
-CREATE FUNCTION [dbo].[AllEmployeesByPage](@PageSize INT,@Page INT)
+CREATE FUNCTION [dbo].[GetAllEmployeesByPage](@PageSize INT,@Page INT)
 RETURNS Table
 AS
  return SELECT [Id] as [EmployeeId],
@@ -504,7 +514,7 @@ GO
 ----------------------------------------------------DEPARTMENT-------------------------------------------------
 
 -------------------------------------------------GetAllDepartmts-----------------------------------------------
-create PROCEDURE [SelectAllDepartments]
+CREATE PROCEDURE [SelectAllDepartments]
 AS
 SELECT [Id]
       ,[ParentID]
@@ -618,7 +628,7 @@ AS
 UPDATE [Phones]
    SET [Number] = [a].[Number],
 	   [KindId] = [a].[KindId] FROM @Phones  as [a]
- WHERE [Phones].[Id] = [a].[Id] and [a].[Id] is NOT NULL and [a].[Number] is NOT NULL;
+ WHERE [Phones].[Id] = [a].[Id] and [a].[Id] != 0 and [a].[Number] is NOT NULL;
 
 DELETE [Phones]
  WHERE [Id] IN (SELECT [Id] From @Phones	
@@ -631,7 +641,7 @@ INSERT INTO [PhonesDepartmentView](
 	 SELECT @DepartmentId,
 	        [Number],
             [KindId] FROM @Phones as [a] 
-	  WHERE [a].[Id] is NULL;
+	  WHERE [a].[Id] = 0;
 GO
 -------------------------------------------------UpdateDepartment---------------------------------------------
 CREATE PROCEDURE [UpdateDepartment]
@@ -642,7 +652,7 @@ CREATE PROCEDURE [UpdateDepartment]
 @Description nvarchar(128) = NULL,
 @Phones [PhonesType] READONLY
 AS
-EXEC [UpdateDepartmentPhone] @Id, @Phones;
+EXEC [UpdateDepartmentPhones] @Id, @Phones;
 
 UPDATE [dbo].[Departments]
    SET [ParentID] = @ParentId
@@ -659,6 +669,7 @@ AS
 DELETE FROM [dbo].[Phones] 
 	  WHERE [Id] IN (SELECT [PhoneId] FROM [dbo].[PhonesDepartments]
 					  WHERE [DepartmentId] = @Id);
+
 DELETE FROM [dbo].[Departments]
 	  WHERE [Id] = @Id;
 GO
@@ -681,6 +692,7 @@ Select [Id],
 	   [ImagePath],
 	   [BeginningWork],
 	   [EndWork],
+	   [HasRole],
 	   [MaritalStatusId],
 	   [MaritalStatus],
 	   [WorkStatusId],
@@ -733,6 +745,7 @@ SELECT [E].[Id],
 	   [ImagePath],
 	   [BeginningWork],
 	   [EndWork],
+	   [HasRole],
 	   [MS].[Status] as [MaritalStatus],
 	   [MaritalStatusId],
 	   [WS].[Status] as [WorkStatus],
@@ -797,7 +810,7 @@ AS
 
 CREATE TABLE [#Searched](EmployeeId INT,DepartmentId INT);
 INSERT INTO  [#Searched] 
-	  SELECT [EmployeeId], [DepartmentId] FROM dbo.AllEmployeesByPage(@PageSize,@Page);
+	  SELECT [EmployeeId], [DepartmentId] FROM dbo.GetAllEmployeesByPage(@PageSize,@Page);
 
 SELECT [E].[Id],
 	   [LastName],
@@ -808,6 +821,7 @@ SELECT [E].[Id],
 	   [ImagePath],
 	   [BeginningWork],
 	   [EndWork],
+	   [HasRole],
 	   [MS].[Status] as [MaritalStatus],
 	   [MaritalStatusId],
 	   [WS].[Status] as [WorkStatus],
@@ -892,6 +906,7 @@ SELECT [E].[Id],
 	   [ImagePath],
 	   [BeginningWork],
 	   [EndWork],
+	   [HasRole],
 	   [MS].[Status] as [MaritalStatus],
 	   [MaritalStatusId],
 	   [WS].[Status] as [WorkStatus],
@@ -1010,7 +1025,7 @@ AS
 UPDATE [Phones]
    SET [Number] = [a].[Number],
 	   [KindId] = [a].[KindId] FROM @Phones  as [a]
- WHERE [Phones].[Id] = [a].[Id] and [a].[Id] is NOT NULL and [a].[Number] is NOT NULL;
+ WHERE [Phones].[Id] = [a].[Id] and [a].[Id] != 0 and [a].[Number] is NOT NULL;
 
 DELETE [Phones]
  WHERE [Id] IN (SELECT [Id] From @Phones	
@@ -1023,7 +1038,7 @@ INSERT INTO [PhonesEmployeeView](
 	 SELECT @EmployeeId,
 	        [Number],
             [KindId] FROM @Phones as [a] 
-	  WHERE [a].[Id] is NULL;
+	  WHERE [a].[Id] = 0 ;
 GO
 
 ---------------------------------------------UpdateEmployeeEmail---------------------------------------------
@@ -1033,7 +1048,7 @@ CREATE PROCEDURE [UpdateEmployeeEmails]
 AS
 UPDATE [Emails]
    SET [Address] = [a].[Address] FROM @Emails as[a]
- WHERE [Emails].[Id] = [a].[Id] and [a].[Id] is NOT NULL and [a].[Address] is NOT NULL;
+ WHERE [Emails].[Id] = [a].[Id] and [a].[Id] != 0 and [a].[Address] is NOT NULL;
 
 DELETE [Emails]
  WHERE [Id] IN (SELECT [Id] From @Emails	
@@ -1042,7 +1057,7 @@ DELETE [Emails]
 INSERT INTO [Emails](
 			[Address])
 	 SELECT [Address] FROM @Emails as [a]
-	  WHERE [a].[Id] is NULL;
+	  WHERE [a].[Id] = 0;
 GO
 -------------------------------------------------UpdateEmployee---------------------------------------------
 CREATE PROCEDURE [UpdateEmployee]
@@ -1084,8 +1099,11 @@ AS
 DELETE FROM [dbo].[Phones] 
 	  WHERE [Id] IN (SELECT [PhoneId] FROM [dbo].[PhonesEmployees]
 					  WHERE [EmployeeId] = @Id);
+					  
+DELETE FROM [dbo].[Emails]
+      WHERE [EmployeeId] = @id;  
 
-DELETE FROM [dbo].[Departments]
+DELETE FROM [dbo].[Employees]
 	  WHERE [Id] = @Id;
 GO
 
@@ -1107,6 +1125,32 @@ SELECT [Id],
 	   [Kind] FROM [KindPhones]
 WHERE [Id] = @Id;
 GO
+------------------------------------------------InsertKindPhone--------------------------------------------
+CREATE PROCEDURE [InsertKindPhone]
+@Kind NVARCHAR(32)
+AS
+INSERT INTO [KindPhones]
+VALUES (@Kind);
+GO
+
+------------------------------------------------UpdateKindPhone--------------------------------------------
+CREATE PROCEDURE [UpdateKindPhone]
+@Id INT,
+@Kind NVARCHAR(32)
+AS
+UPDATE [KindPhones]
+SET [Kind] = @Kind  
+WHERE Id = @Id;
+GO
+
+------------------------------------------------DeleteKindPhone--------------------------------------------
+CREATE PROCEDURE [DeleteKindPhone]
+@Id INT
+AS
+DELETE  [KindPhones]
+WHERE [Id] = @id;
+GO
+
 
 ------------------------------------------------MARITALSTATUS-------------------------------------------------
 
@@ -1125,6 +1169,32 @@ AS
 SELECT [Id],
 	   [Status] FROM MaritalStatuses
 WHERE [Id] = @Id;
+GO
+
+------------------------------------------------InsertMaritalStatus--------------------------------------------
+CREATE PROCEDURE [InsertMaritalStatus]
+@Status NVARCHAR(32)
+AS
+INSERT INTO [MaritalStatuses]
+VALUES (@Status);
+GO
+
+------------------------------------------------UpdateMaritalStatus--------------------------------------------
+CREATE PROCEDURE [UpdateMaritalStatus]
+@Id INT,
+@Status NVARCHAR(32)
+AS
+UPDATE [MaritalStatuses]
+SET [Status] = @Status  
+WHERE Id = @Id;
+GO
+
+------------------------------------------------DeleteMaritalStatus--------------------------------------------
+CREATE PROCEDURE [DeleteMaritalStatus]
+@Id INT
+AS
+DELETE  [MaritalStatuses]
+WHERE [Id] = @id;
 GO
 
 ------------------------------------------------MARITALSTATUS-------------------------------------------------
@@ -1146,59 +1216,177 @@ SELECT [Id],
 WHERE [Id] = @Id;
 GO
 
------------------------------------------------Users-------------------------------------------------------
+------------------------------------------------InsertWorkStatus--------------------------------------------
+CREATE PROCEDURE [InsertWorkStatus]
+@Status NVARCHAR(32)
+AS
+INSERT INTO [WorkStatuses]
+VALUES (@Status);
+GO
+
+------------------------------------------------UpdateWorkStatus--------------------------------------------
+CREATE PROCEDURE [UpdateWorkStatus]
+@Id INT,
+@Status NVARCHAR(32)
+AS
+UPDATE [WorkStatuses]
+SET [Status] = @Status  
+WHERE Id = @Id;
+GO
+
+------------------------------------------------DeleteWorkStatus------------------------------------------
+CREATE PROCEDURE [DeleteWorkStatus]
+@Id INT
+AS
+DELETE  [WorkStatuses]
+WHERE [Id] = @id;
+GO
+
+---------------------------------------------------Users--------------------------------------------------
 
 ---------------------------------------------SelectAllUsers-----------------------------------------------
---CREATE PROCEDURE [SelectAllUser]
---AS
---SELECT [Id],
---	   [Login],
---	   [Password] FROM [Users];
+CREATE PROCEDURE [SelectAllUsers]
+AS
+SELECT [U].[Id],
+	   [U].[EmployeeId],
+	   [Login],
+	   [Password] FROM [Users] as [U]
+JOIN [Employees] as [E]
+ON [E].[Id] = [U].[EmployeeId];
 
---SELECT [U].[Id],
---       [R].[Name] FROM [Users] as [R]
---JOIN [LoginsUsers] as [RU]
---ON [R].[Id] = [RoleId]
---JOIN [Users] as [U]
---ON [U].[Id] = [LoginId];
---GO
+SELECT  [U].[Id] as [UserId],
+        [Emails].[Id] as [Id],
+		[Address] FROM [Emails]
+JOIN [Users] as [U]
+ON [U].[EmployeeId] = [Emails].[EmployeeId];
+
+
+SELECT [U].[Id] as [UserId],
+	   [R].[Id], 
+       [R].[Name] FROM [Roles] as [R]
+JOIN [RolesUsers] as [RU]
+ON [R].[Id] = [RoleId]
+JOIN [Users] as [U]
+ON [U].[Id] = [UserId];
+GO
 
 
 ---------------------------------------------SelectUserByLogin-----------------------------------------------
---CREATE PROCEDURE [SelectUserByLogin]
---@login NVARCHAR(32)
---AS
---SELECT [Id],
---	   [Login],
---	   [Password]FROM [Logins]
---WHERE [Login] = @Login
+CREATE PROCEDURE [SelectUserByLogin]
+@Login NVARCHAR(32)
+AS
+SELECT [U].[Id],
+	   [U].[EmployeeId],
+	   [Login],
+	   [Password] FROM [Users] as [U]
+JOIN [Employees] as [E]
+ON [E].[Id] = [U].[EmployeeId]
+WHERE [U].[Login] = @Login;
 
---SELECT [U].[Id],
---       [R].[Name] FROM [Logins] as [R]
---JOIN [LoginsUsers] as [RU]
---ON [R].[Id] = [RoleId]
---JOIN [Logins] as [U]
---ON [U].[Id] = [LoginId]
---WHERE [Login] = @Login;
---GO
+SELECT  [U].[Id] as [UserId],
+        [Emails].[Id],
+		[Address] FROM [Emails]
+JOIN [Users] as [U]
+ON [U].[EmployeeId] = [Emails].[EmployeeId]
+WHERE [U].[Login] = @Login;
+
+
+SELECT [U].[Id] as [UserId],
+	   [R].[Id], 
+       [R].[Name] FROM [Roles] as [R]
+JOIN [RolesUsers] as [RU]
+ON [R].[Id] = [RoleId]
+JOIN [Users] as [U]
+ON [U].[Id] = [UserId]
+WHERE [U].[Login] = @Login;
+GO
 
 ---------------------------------------------SelectUserById--------------------------------------------------
---CREATE PROCEDURE [SelectUserById]
---@Id NVARCHAR(32)
---AS
---SELECT [Id],
---	   [Login],
---	   [Password]FROM [Logines]
---WHERE [Id] = @Id
+CREATE PROCEDURE [SelectUserById]
+@Id INT
+AS
+SELECT [U].[Id],
+	   [U].[EmployeeId],
+	   [Login],
+	   [Password] FROM [Users] as [U]
+JOIN [Employees] as [E]
+ON [E].[Id] = [U].[EmployeeId]
+WHERE [U].[Id] = @Id;
 
---SELECT [U].[Id],
---       [R].[Name] FROM [Logines] as [R]
---JOIN [RolesUsers] as [RU]
---ON [R].[Id] = [RoleId]
---JOIN [Users] as [U]
---ON [U].[Id] = [UserId]
---WHERE [U].[Id] = @Id;
---GO
+SELECT  [U].[Id] as [UserId],
+        [Emails].[Id] as [Id],
+		[Address] FROM [Emails]
+JOIN [Users] as [U]
+ON [U].[EmployeeId] = [Emails].[EmployeeId]
+WHERE [U].[Id] = @Id;
+
+
+SELECT [U].[Id] as [UserId],
+	   [R].[Id], 
+       [R].[Name] FROM [Roles] as [R]
+JOIN [RolesUsers] as [RU]
+ON [R].[Id] = [RoleId]
+JOIN [Users] as [U]
+ON [U].[Id] = [UserId]
+WHERE [U].[Id] = @Id;
+GO
+
+---------------------------------------------InsertUser--------------------------------------------------
+CREATE PROCEDURE [InsertUser]
+@EmployeeId INT,
+@Login NVARCHAR(64),
+@Password NVARCHAR(64),
+@Roles [RolesType] READONLY 
+AS
+INSERT INTO [Users](
+			[EmployeeId],
+			[Login],
+			[Password])
+	VALUES
+			(@EmployeeId,
+			 @Login,
+			 @Password);
+DECLARE @UserId INT = @@IDENTITY;
+
+UPDATE [Employees]
+SET [HasRole] = 1
+WHERE [Id] = @EmployeeId;
+ 
+
+INSERT INTO [RolesUsers](
+			[RoleId],
+			[UserId])
+     SELECT [Id], 
+	        @UserId FROM @Roles;
+GO
+
+---------------------------------------------DeleteUser--------------------------------------------------
+CREATE PROCEDURE [DeleteUser]
+@Id INT
+AS 
+UPDATE [Employees]
+SET [HasRole] = 0
+WHERE [Id] = (SELECT [EmployeeId] FROM [Users] WHERE [Id] = @Id);
+ 
+DELETE [Users]
+WHERE [Id] = @Id;
+
+GO
+ 
+
+
+-----------------------------------------------Roles-------------------------------------------------------
+
+---------------------------------------------SelectAllRoles------------------------------------------------
+
+CREATE PROCEDURE [SelectAllRoles]
+AS
+SELECT [Id],
+       [Name] FROM [Roles];
+GO
+
+
+
 
 -------------------------------------------------------------------------------------------------------------
 ------------------------------------------INSERT DATA FOR TEST-----------------------------------------------
@@ -1281,10 +1469,10 @@ INSERT INTO [dbo].[Departments](
             [Description])
 VALUES
 (null,'Отдел кадров','ул.Еловая, д.10, оф.20','Отдел занимается кадрами'),
-(null,'Отдел продаж','ул.Сосновая, д.23, оф.11','Отдел занимается продажами'),
+(1,'Отдел продаж','ул.Сосновая, д.23, оф.11','Отдел занимается продажами'),
 (null,'Отдел рекламы','ул.Кедровая, д.13, оф.23','Отдел занимается рекламой'),
 (null,'Отдел развития','ул.Вафельная, д.40, оф.20','Отдел занимается развитием'),
-(null,'Отдел финансов','ул.Еловая, д.13, оф.20','Отдел занимается финансами'),
+(1,'Отдел финансов','ул.Еловая, д.13, оф.20','Отдел занимается финансами'),
 (null,'Отдел транспорта','ул.Кенова, д.10, оф.206','Отдел занимается транспортом');
 GO
 
@@ -1316,16 +1504,17 @@ INSERT INTO [dbo].[Employees]
            ,[ImagePath]
            ,[BeginningWork]
            ,[EndWork]
-		   ,[WorkStatusId])
+		   ,[WorkStatusId]
+		   ,[HasRole])
 VALUES
-('Федоров','Олег','Николаевич',1,'ул.Ветрова, д.10, кв.20',1,null,'2012-06-12',null,1),
-('Курленков','Николай','Валерьевич',2,'ул.Николаева, д.23, кв.20',2,null,'2017-07-18',null,1),
-('Авдеев','Евгений','Константинович',3,'ул.Утенева, д.14, кв.20',2,null,'2017-07-18','2018-01-18',1),
-('Хорламов','Степан','Степанович',4,'ул.Лохова, д.16, кв.20',2,null,'2015-03-18',null,1),
-('Немиров','Федор','Николаевич',5,'ул.Брякова, д.25, кв.20',3,null,'2017-02-28',null,1),
-('Шеренков','Василий','Андреевич',6,'ул.Куренкова, д.27, кв.20',1,null,'2016-01-12','2017-09-18',1),
-('Пупсов','Андрей','Григорьевич',1,'ул.Фаева, д.27, кв.34',2,null,'2016-07-01',null,1),
-('Кенотов','Николай','Андреевич',4,'ул.Куренкова, д.27, кв.20',1,null,'2014-09-15',null,1);
+('Федоров','Олег','Николаевич',1,'ул.Ветрова, д.10, кв.20',1,'/Content/Images/UserImg.jpg','2012-06-12',null,1,1),
+('Курленков','Николай','Валерьевич',2,'ул.Николаева, д.23, кв.20',2,'/Content/Images/UserImg.jpg','2017-07-18',null,1,1),
+('Авдеев','Евгений','Константинович',3,'ул.Утенева, д.14, кв.20',2,'/Content/Images/UserImg.jpg','2017-07-18','2018-01-18',1,1),
+('Хорламов','Степан','Степанович',4,'ул.Лохова, д.16, кв.20',2,'/Content/Images/UserImg.jpg','2015-03-18',null,1,0),
+('Немиров','Федор','Николаевич',5,'ул.Брякова, д.25, кв.20',3,'/Content/Images/UserImg.jpg','2017-02-28',null,1,0),
+('Шеренков','Василий','Андреевич',6,'ул.Куренкова, д.27, кв.20',1,'/Content/Images/UserImg.jpg','2016-01-12','2017-09-18',1,0),
+('Пупсов','Андрей','Григорьевич',1,'ул.Фаева, д.27, кв.34',2,'/Content/Images/UserImg.jpg','2016-07-01',null,1,0),
+('Кенотов','Николай','Андреевич',4,'ул.Куренкова, д.27, кв.20',1,'/Content/Images/UserImg.jpg','2014-09-15',null,1,0);
 GO
 
 ------------------------------------------PhonesEmployees----------------------------------------------------

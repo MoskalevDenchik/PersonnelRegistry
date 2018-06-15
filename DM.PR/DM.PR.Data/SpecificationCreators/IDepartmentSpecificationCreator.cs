@@ -2,6 +2,6 @@
 {
     public interface IDepartmentSpecificationCreator
     {
-        ISpecification CreateFindByPageDataSpecification(int pageSize, int pageCount);
+        ISpecification CreateSpecification(int pageSize, int pageCount);
     }
 }

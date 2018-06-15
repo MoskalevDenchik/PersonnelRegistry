@@ -16,7 +16,10 @@ namespace DM.PR.Business.Providers.Implement
         }
         public WorkStatus GetById(int id)
         {
-            Inspector.ThrowExceptionIfZeroOrNegative(id);
+            if (id <= 0)
+            {
+                return null;
+            }
             return _rep.GetById(id);
         }
 

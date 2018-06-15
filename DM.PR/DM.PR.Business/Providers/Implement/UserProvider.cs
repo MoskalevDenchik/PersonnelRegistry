@@ -22,14 +22,18 @@ namespace DM.PR.Business.Providers.Implement
 
         public User GetById(int id)
         {
-            Inspector.ThrowExceptionIfZeroOrNegative(id);
+            if (id <= 0)
+            {
+                return null;
+            }
+
             return _rep.GetById(id);
         }
 
         public User GetByLogin(string login)
         {
-            ISpecification findByLoginSpecification = _specificCreator.CreateFindByLoginSpecification(login);
-            return _rep.FindBy(findByLoginSpecification).FirstOrDefault();
+            ISpecification specification = _specificCreator.CreateSpecification(login);
+            return _rep.FindBy(specification).FirstOrDefault();
         }
 
         public IReadOnlyCollection<User> GetAll()

@@ -17,8 +17,6 @@ namespace DM.PR.Business.Services.Implement
             _prov = prov;
         }
 
-        #region Public Methods
-
         public SignInStatus SignIn(string login, string password)
         {
             if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
@@ -45,8 +43,6 @@ namespace DM.PR.Business.Services.Implement
         {
             FormsAuthentication.SignOut();
         }
-
-        #endregion
 
         #region Helpers
 

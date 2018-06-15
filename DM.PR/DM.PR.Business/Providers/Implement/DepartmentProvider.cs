@@ -20,7 +20,11 @@ namespace DM.PR.Business.Providers.Implement
 
         public Department GetById(int id)
         {
-            Inspector.ThrowExceptionIfZeroOrNegative(id);
+            if (id <= 0)
+            {                                                               
+                return null;
+            }
+
             return _rep.GetById(id);
         }
 
@@ -31,10 +35,14 @@ namespace DM.PR.Business.Providers.Implement
 
         public IReadOnlyCollection<Department> GetPage(int pageSize, int pageNumber, out int totalCount)
         {
-            Inspector.ThrowExceptionIfZeroOrNegative(pageSize, pageNumber);
+            if (pageSize <= 0 || pageNumber <= 0)
+            {
+                totalCount = 0;
+                return null;
+            }
 
-            ISpecification findByPageSpecification = _specificationCreator.CreateFindByPageDataSpecification(pageSize, pageNumber);
-            return _rep.FindBy(findByPageSpecification, out totalCount);
+            ISpecification specification = _specificationCreator.CreateSpecification(pageSize, pageNumber);
+            return _rep.FindBy(specification, out totalCount);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using DM.PR.Data.Repositories;
 using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
+using System;
 
 namespace DM.PR.Business.Services.Implement
 {
@@ -26,7 +27,10 @@ namespace DM.PR.Business.Services.Implement
 
         public void Delete(int id)
         {
-            Inspector.ThrowExceptionIfZeroOrNegative(id);
+            if (id <= 0)
+            {
+                throw new Exception("Invalid Id");
+            }
             _rep.Remove(id);
         }
     }

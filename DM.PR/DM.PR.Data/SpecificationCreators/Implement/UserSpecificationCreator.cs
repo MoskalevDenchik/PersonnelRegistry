@@ -15,7 +15,7 @@ namespace DM.PR.Data.SpecificationCreators.Implement
             _paramCreator = paramCreator;
         }
 
-        public ISpecification CreateFindByLoginSpecification(string login)
+        public ISpecification CreateSpecification(string login)
         {
             return new Specification(_paramCreator.CreateForFindByLogin(login));
         }

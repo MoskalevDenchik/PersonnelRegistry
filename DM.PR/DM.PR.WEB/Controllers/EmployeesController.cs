@@ -121,14 +121,14 @@ namespace DM.PR.WEB.Controllers
         [AjaxOnly]
         public ActionResult GetPageEmployees(int pageSize, int pageNumber)
         {
-            var list = _employeeProvider.GetPage(pageSize, pageNumber, out int totalCount);
+            var list = _employeeProvider.GetEmployees(pageSize, pageNumber, out int totalCount);
             return Json(new { Data = list, TotalCount = totalCount }, JsonRequestBehavior.AllowGet);
         }
 
         [AjaxOnly]
         public ActionResult GetPageEmployeesByDepartmentId(int departmentId, int pageNumber, int pageSize)
         {
-            var list = _employeeProvider.GetPageByDepartmentId(departmentId, pageSize, pageNumber, out int totalCount);
+            var list = _employeeProvider.GetEmployees(departmentId, pageSize, pageNumber, out int totalCount);
             ViewBag.totalCount = totalCount;
             return PartialView("EmployeeSummary", list);
         }
@@ -136,7 +136,7 @@ namespace DM.PR.WEB.Controllers
         [AjaxOnly]
         public ActionResult GetPageEmployeesBySearchParams(string middledName, string firstName, string lastName, int pageNumber, int pageSize, int WorkStatusId = 0, int fromYear = 0, int toYear = 100)
         {
-            var list = _employeeProvider.GetPageBySearchParams(lastName, firstName, middledName, fromYear, toYear, WorkStatusId, pageSize, pageNumber, out int totalCount);
+            var list = _employeeProvider.GetEmloyees(lastName, firstName, middledName, fromYear, toYear, WorkStatusId, pageSize, pageNumber, out int totalCount);
             ViewBag.totalCount = totalCount;
             return PartialView("EmployeeSummary", list);
         }

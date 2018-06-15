@@ -17,7 +17,11 @@ namespace DM.PR.Business.Providers
 
         public KindPhone GetById(int id)
         {
-            Inspector.ThrowExceptionIfZeroOrNegative(id);
+            if (id <= 0)
+            {
+                return null;
+            }
+
             return _rep.GetById(id);
         }
 

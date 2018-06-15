@@ -15,16 +15,5 @@ namespace DM.PR.Common.Helpers
             }
         }
 
-        public static void ThrowExceptionIfZeroOrNegative(params int[] values)
-        {
-            foreach (var item in values)
-            {
-                if (item <= 0)
-                {
-                    throw new Exception("Неверное число!");
-                }
-            }
-        }
-
     }
 }
