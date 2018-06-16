@@ -12,7 +12,7 @@ namespace DM.PR.Data.Core.Converters.Implement
             return dataSet.Tables[0].AsEnumerable().Select(d => new Department
             {
                 Id = d.Field<int>("id"),
-                ParentId = d.Field<int?>("ParentId"),
+                ParentId = d.Field<int>("ParentId"),
                 Name = d.Field<string>("Name"),
                 Address = d.Field<string>("Address"),
                 Description = d.Field<string>("Description"),

@@ -6,7 +6,7 @@ namespace DM.PR.WEB.Models
     public class DepartmentCreateViewModel
     {
         [Display(Name = "Отдел сверху")]
-        public int? ParentId { get; set; }
+        public int ParentId { get; set; }
 
         [Required(ErrorMessage = "Введите название отдела")]
         [Display(Name = "Название")]

@@ -9,10 +9,7 @@ namespace DM.PR.Data.Entity
         public Dictionary<string, object> Parameters
         {
             get => _parameters;
-            set
-            {
-                _parameters = value;
-            }
+            set => _parameters = value;
         }
     }
 }

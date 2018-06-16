@@ -24,6 +24,7 @@ namespace DM.PR.WEB.Models.Employee
         public string LastName { get; set; }
 
         [Display(Name = "Emails")]
+        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Некорректный адрес")]
         public List<Email> Emails { get; set; }
 
         [Display(Name = "Домашний телефон")]

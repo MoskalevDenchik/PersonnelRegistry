@@ -47,7 +47,7 @@ namespace DM.PR.Data.Core.Converters.Implement
                 {
                     Id = dep.Field<int>("Id"),
                     Name = dep.Field<string>("Name"),
-                    ParentId = dep.Field<int?>("ParentId"),
+                    ParentId = dep.Field<int>("ParentId"),
                     Address = dep.Field<string>("Address"),
                     Description = dep.Field<string>("Description"),
                     Phones = tables[1].AsEnumerable().Where(phone => phone.Field<int>("DepartmentId") == departmentId).Select(phone => new Phone

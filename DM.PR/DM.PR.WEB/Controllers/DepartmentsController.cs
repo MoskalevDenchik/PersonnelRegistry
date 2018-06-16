@@ -32,7 +32,7 @@ namespace DM.PR.WEB.Controllers
         public ActionResult Details(int id = 0)
         {
             var department = _departmentProv.GetById(id);
-            var parent = department.ParentId != null ? _departmentProv.GetById((int)department.ParentId) : null;
+            var parent = department.ParentId > 0 ? _departmentProv.GetById(department.ParentId) : null;
 
             var model = MapDepartmentToDepartmentDetailsViewModel(department, parent);
             return View(model);
