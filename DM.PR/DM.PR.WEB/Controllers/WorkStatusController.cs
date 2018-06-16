@@ -11,9 +11,9 @@ namespace DM.PR.WEB.Controllers
     public class WorkStatusController : Controller
     {
         private readonly IProvider<WorkStatus> _workStatusProvider;
-        private readonly IWorkStatusService _workStatusService;
+        private readonly IEntityService<WorkStatus> _workStatusService;
 
-        public WorkStatusController(IProvider<WorkStatus> workStatusProvider, IWorkStatusService workStatusService)
+        public WorkStatusController(IProvider<WorkStatus> workStatusProvider, IEntityService<WorkStatus> workStatusService)
         {
             Inspector.ThrowExceptionIfNull(workStatusProvider, workStatusService);
             _workStatusProvider = workStatusProvider;

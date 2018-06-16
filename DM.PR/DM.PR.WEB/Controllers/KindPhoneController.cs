@@ -11,9 +11,9 @@ namespace DM.PR.WEB.Controllers
     public class KindPhoneController : Controller
     {
         private readonly IProvider<KindPhone> _kindPhoneProvider;
-        private readonly IKindPhoneService _kindPhoneServ;
+        private readonly IEntityService<KindPhone> _kindPhoneServ;
 
-        public KindPhoneController(IProvider<KindPhone> kindPhoneProvider, IKindPhoneService kindPhoneServ)
+        public KindPhoneController(IProvider<KindPhone> kindPhoneProvider, IEntityService<KindPhone> kindPhoneServ)
         {
             Inspector.ThrowExceptionIfNull(kindPhoneProvider, kindPhoneProvider);
             _kindPhoneProvider = kindPhoneProvider;

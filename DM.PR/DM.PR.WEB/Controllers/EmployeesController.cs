@@ -16,14 +16,14 @@ namespace DM.PR.WEB.Controllers
         #region Private
 
         private IEmployeeProvider _employeeProvider;
-        private IEmployeeService _employeeService;
         private IDepartmentProvider _departmentProvider;
+        private IEntityService<Employee> _employeeService;
 
         #endregion
 
         #region Ctors
 
-        public EmployeesController(IEmployeeProvider employeeProvider, IEmployeeService employeeService, IDepartmentProvider departmentProvider)
+        public EmployeesController(IEmployeeProvider employeeProvider, IEntityService<Employee> employeeService, IDepartmentProvider departmentProvider)
         {
             Inspector.ThrowExceptionIfNull(employeeProvider, employeeService, departmentProvider);
             _departmentProvider = departmentProvider;

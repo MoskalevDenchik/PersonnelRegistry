@@ -16,13 +16,13 @@ namespace DM.PR.WEB.Controllers
         #region Private
 
         private readonly IDepartmentProvider _departmentProv;
-        private readonly IDepartmentService _departmentServ;
+        private readonly IEntityService<Department> _departmentServ;
 
         #endregion
 
         #region Ctors
 
-        public DepartmentsController(IDepartmentProvider departmentProv, IDepartmentService departmentServ)
+        public DepartmentsController(IDepartmentProvider departmentProv, IEntityService<Department> departmentServ)
         {
             Inspector.ThrowExceptionIfNull(departmentProv, departmentProv);
             _departmentProv = departmentProv;

@@ -1,37 +1,39 @@
 ﻿using DM.PR.Data.Repositories;
-using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using System;
 
 namespace DM.PR.Business.Services.Implement
 {
-    internal class WorkStatusService : IWorkStatusService
+    public class EntityService<T> : IEntityService<T>
     {
-        private readonly IRepository<WorkStatus> _rep;
+        private readonly IRepository<T> _rep;
 
-        public WorkStatusService(IRepository<WorkStatus> rep)
+        public EntityService(IRepository<T> rep)
         {
             Inspector.ThrowExceptionIfNull(rep);
             _rep = rep;
         }
 
-        public void Create(WorkStatus workStatus)
+        public virtual void Create(T entity)
         {
-            _rep.Add(workStatus);
+            _rep.Add(entity);
         }
 
-        public void Edit(WorkStatus workStatus)
+        public virtual void Edit(T entity)
         {
-            _rep.Update(workStatus);
+            _rep.Update(entity);
         }
 
-        public void Delete(int id)
+        public virtual void Delete(int id)
         {
             if (id <= 0)
             {
                 throw new Exception("Invalid Id");
             }
+
             _rep.Remove(id);
         }
+
+
     }
 }

@@ -21,13 +21,13 @@ namespace DM.PR.Business.Dependencies
             For<IProvider<WorkStatus>>().Use<Provider<WorkStatus>>();
             For<IProvider<MaritalStatus>>().Use<Provider<MaritalStatus>>();
 
-            For<IUserService>().Use<UserService>();
             For<ILoginServices>().Use<LoginServices>();
-            For<IEmployeeService>().Use<EmployeeService>();
-            For<IKindPhoneService>().Use<KindPhoneService>();
-            For<IWorkStatusService>().Use<WorkStatusService>();
-            For<IDepartmentService>().Use<DepartmentService>();
-            For<IMaritalStatusService>().Use<MaritalStatusService>();
+            For<IEntityService<User>>().Use<EntityService<User>>();
+            For<IEntityService<Employee>>().Use<EntityService<Employee>>();
+            For<IEntityService<KindPhone>>().Use<EntityService<KindPhone>>();
+            For<IEntityService<WorkStatus>>().Use<EntityService<WorkStatus>>();
+            For<IEntityService<Department>>().Use<EntityService<Department>>();
+            For<IEntityService<MaritalStatus>>().Use<EntityService<MaritalStatus>>();
         }
     }
 }

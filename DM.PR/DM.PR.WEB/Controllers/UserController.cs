@@ -13,9 +13,9 @@ namespace DM.PR.WEB.Controllers
     {
         private readonly IUserProvider _userProvider;
         private readonly IProvider<Role> _roleProvider;
-        private readonly IUserService _userServ;
+        private readonly IEntityService<User> _userServ;
 
-        public UserController(IUserProvider userProv, IUserService userServ, IProvider<Role> roleProvider)
+        public UserController(IUserProvider userProv, IEntityService<User> userServ, IProvider<Role> roleProvider)
         {
             Inspector.ThrowExceptionIfNull(userProv, userProv, roleProvider);
             _roleProvider = roleProvider;

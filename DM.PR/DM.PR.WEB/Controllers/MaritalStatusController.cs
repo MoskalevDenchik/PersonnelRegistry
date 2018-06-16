@@ -11,9 +11,9 @@ namespace DM.PR.WEB.Controllers
     public class MaritalStatusController : Controller
     {
         private readonly IProvider<MaritalStatus> _maritalStatusProvider;
-        private readonly IMaritalStatusService _kindPhoneServ;
+        private readonly IEntityService<MaritalStatus> _kindPhoneServ;
 
-        public MaritalStatusController(IProvider<MaritalStatus> maritalStatusProvider, IMaritalStatusService maritalStatusServ)
+        public MaritalStatusController(IProvider<MaritalStatus> maritalStatusProvider, IEntityService<MaritalStatus> maritalStatusServ)
         {
             Inspector.ThrowExceptionIfNull(maritalStatusProvider, maritalStatusServ);
             _maritalStatusProvider = maritalStatusProvider;
