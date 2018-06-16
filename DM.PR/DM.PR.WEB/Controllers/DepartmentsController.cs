@@ -40,7 +40,8 @@ namespace DM.PR.WEB.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            var model = _departmentProv.GetById(id);
+            var department = _departmentProv.GetById(id);
+            var model = MapDepartmentToDepartmentEditViewModel(department);
             return View(model);
         }
 
@@ -109,18 +110,17 @@ namespace DM.PR.WEB.Controllers
             return departments.Select(d => new DepartmentSelectModel { Id = d.Id, Name = d.Name }).ToList();
         }
 
-
         private DepartmentDeatailsViewModel MapDepartmentToDepartmentDetailsViewModel(Department department, Department parent)
         {
             return new DepartmentDeatailsViewModel()
             {
                 Id = department.Id,
-                ParentId = department.ParentId,
-                ParentName = parent?.Name,
                 Name = department.Name,
+                ParentName = parent?.Name,
+                Phones = department.Phones,
                 Address = department.Address,
-                Description = department.Description,
-                Phones = department.Phones
+                ParentId = department.ParentId,
+                Description = department.Description
             };
         }
 
@@ -129,8 +129,8 @@ namespace DM.PR.WEB.Controllers
             return new Department()
             {
                 Name = department.Name,
-                ParentId = department.ParentId,
                 Address = department.Address,
+                ParentId = department.ParentId,
                 Description = department.Description,
                 Phones = department.Phones.Select(number => new Phone { Number = number }).ToList(),
             };
@@ -142,10 +142,23 @@ namespace DM.PR.WEB.Controllers
             {
                 Id = model.Id,
                 Name = model.Name,
-                ParentId = model.ParentId,
                 Address = model.Address,
+                ParentId = model.ParentId,
                 Description = model.Description,
                 Phones = model.Phones.Select(number => new Phone { Number = number }).ToList()
+            };
+        }
+
+        public DepartmentEditViewModel MapDepartmentToDepartmentEditViewModel(Department department)
+        {
+            return new DepartmentEditViewModel()
+            {
+                Id = department.Id,
+                Name = department.Name,
+                Address = department.Address,
+                ParentId = department.ParentId,
+                Description = department.Description,
+                Phones = department.Phones.Select(phone => phone.Number).ToList()
             };
         }
 
