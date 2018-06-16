@@ -3,6 +3,8 @@ using DM.PR.Business.Services.Implement;
 using StructureMap.Configuration.DSL;
 using DM.PR.Business.Providers;
 using DM.PR.Business.Services;
+using DM.PR.Common.Entities;
+using DM.PR.Common.Entities.Account;
 
 namespace DM.PR.Business.Dependencies
 {
@@ -10,14 +12,14 @@ namespace DM.PR.Business.Dependencies
     {
         public BusinessRegistry()
         {
-            For<IRoleProvider>().Use<RoleProvider>();
             For<IUserProvider>().Use<UserProvider>();
+            For<IProvider<Role>>().Use<Provider<Role>>();
             For<IEmployeeProvider>().Use<EmployeeProvider>();
-            For<IBillBoardProvider>().Use<BillBoardProvider>();
-            For<IKindPhoneProvider>().Use<KindPhoneProvider>();
+            For<IProvider<BillBoard>>().Use<BillBoardProvider>();
             For<IDepartmentProvider>().Use<DepartmentProvider>();
-            For<IMaritalStatusProvider>().Use<MaritalStatusProvider>();
-            For<IWorkStatusProvider>().Use<WorkStatusProvider>();
+            For<IProvider<KindPhone>>().Use<Provider<KindPhone>>();
+            For<IProvider<WorkStatus>>().Use<Provider<WorkStatus>>();
+            For<IProvider<MaritalStatus>>().Use<Provider<MaritalStatus>>();
 
             For<IUserService>().Use<UserService>();
             For<ILoginServices>().Use<LoginServices>();

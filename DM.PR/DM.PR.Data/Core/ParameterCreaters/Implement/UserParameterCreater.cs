@@ -57,7 +57,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             };
         }
 
-        public IInputParameter CreateForFindByLogin(string login)
+        public IInputParameter CreateByLogin(string login)
         {
             return new DbInputParameter
             {
@@ -66,7 +66,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             };
         }
 
-        public IInputParameter CreateForFindByEmployeeId(int employeeId)
+        public IInputParameter CreateByEmployeeId(int employeeId)
         {
             return new DbInputParameter
             {

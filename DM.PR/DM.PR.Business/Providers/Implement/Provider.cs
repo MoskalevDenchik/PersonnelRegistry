@@ -1,20 +1,21 @@
-﻿using DM.PR.Common.Entities.Account;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DM.PR.Data.Repositories;
 using DM.PR.Common.Helpers;
 
 namespace DM.PR.Business.Providers.Implement
 {
-    internal class RoleProvider : IRoleProvider
-    {
-        private readonly IRepository<Role> _rep;
 
-        public RoleProvider(IRepository<Role> rep)
+    public class Provider<T> : IProvider<T> where T : class
+    {
+        private readonly IRepository<T> _rep;
+
+        public Provider(IRepository<T> rep)
         {
             Inspector.ThrowExceptionIfNull(rep);
             _rep = rep;
         }
-        public Role GetById(int id)
+
+        public virtual T GetById(int id)
         {
             if (id <= 0)
             {
@@ -23,8 +24,7 @@ namespace DM.PR.Business.Providers.Implement
 
             return _rep.GetById(id);
         }
-
-        public IReadOnlyCollection<Role> GetAll()
+        public virtual IReadOnlyCollection<T> GetAll()
         {
             return _rep.GetAll();
         }

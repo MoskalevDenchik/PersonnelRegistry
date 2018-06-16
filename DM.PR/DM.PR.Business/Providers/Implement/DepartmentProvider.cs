@@ -6,31 +6,16 @@ using DM.PR.Common.Helpers;
 
 namespace DM.PR.Business.Providers.Implement
 {
-    internal class DepartmentProvider : IDepartmentProvider
+    internal class DepartmentProvider : Provider<Department>, IDepartmentProvider
     {
         private readonly IRepository<Department> _rep;
         private readonly IDepartmentSpecificationCreator _specificationCreator;
 
-        public DepartmentProvider(IRepository<Department> rep, IDepartmentSpecificationCreator creater)
+        public DepartmentProvider(IRepository<Department> rep, IDepartmentSpecificationCreator creater) : base(rep)
         {
             Inspector.ThrowExceptionIfNull(rep, creater);
             _rep = rep;
             _specificationCreator = creater;
-        }
-
-        public Department GetById(int id)
-        {
-            if (id <= 0)
-            {                                                               
-                return null;
-            }
-
-            return _rep.GetById(id);
-        }
-
-        public IReadOnlyCollection<Department> GetAll()
-        {
-            return _rep.GetAll();
         }
 
         public IReadOnlyCollection<Department> GetPage(int pageSize, int pageNumber, out int totalCount)

@@ -83,7 +83,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             };
         }
 
-        public IInputParameter CreateForFindByPageData(int pageSize, int page)
+        public IInputParameter CreateFind(int pageSize, int page)
         {
             return new DbInputParameter
             {
@@ -92,7 +92,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             };
         }
 
-        public IInputParameter CreateForFindPageByDepartmentId(int departmentId, int pageSize, int page)
+        public IInputParameter CreateByDepartmentId(int departmentId, int pageSize, int page)
         {
             return new DbInputParameter
             {
@@ -101,7 +101,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             };
         }
 
-        public IInputParameter CreateForFindPageBySearchParams(string lastName, string firstName, string middledName, int fromYear, int toYear, int WorkStatusId, int pageSize, int page)
+        public IInputParameter CreateBySearchParams(string lastName, string firstName, string middledName, int fromYear, int toYear, int WorkStatusId, int pageSize, int page)
         {
             return new DbInputParameter
             {

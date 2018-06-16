@@ -12,10 +12,10 @@ namespace DM.PR.WEB.Controllers
     public class UserController : Controller
     {
         private readonly IUserProvider _userProvider;
-        private readonly IRoleProvider _roleProvider;
+        private readonly IProvider<Role> _roleProvider;
         private readonly IUserService _userServ;
 
-        public UserController(IUserProvider userProv, IUserService userServ, IRoleProvider roleProvider)
+        public UserController(IUserProvider userProv, IUserService userServ, IProvider<Role> roleProvider)
         {
             Inspector.ThrowExceptionIfNull(userProv, userProv, roleProvider);
             _roleProvider = roleProvider;

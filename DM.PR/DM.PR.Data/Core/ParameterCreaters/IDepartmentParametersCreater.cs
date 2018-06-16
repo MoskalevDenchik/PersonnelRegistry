@@ -4,7 +4,7 @@ namespace DM.PR.Data.Core.InputParameters.Creaters
 {
     internal interface IDepartmentParameterCreater
     {
-        IInputParameter CreateForFindByPageData(int pageSize, int page);
+        IInputParameter CreateFind(int pageSize, int page);
     }
 }
 

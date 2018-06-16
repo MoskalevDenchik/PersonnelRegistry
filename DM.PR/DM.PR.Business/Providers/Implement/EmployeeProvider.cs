@@ -10,26 +10,16 @@ using DM.PR.Common.Helpers;
 
 namespace DM.PR.Business.Providers.Implement
 {
-    internal class EmployeeProvider : IEmployeeProvider
+    internal class EmployeeProvider : Provider<Employee>, IEmployeeProvider
     {
         private readonly IRepository<Employee> _rep;
         private readonly IEmployeeSpecificationCreator _specificationCreator;
 
-        public EmployeeProvider(IRepository<Employee> rep, IEmployeeSpecificationCreator creator)
+        public EmployeeProvider(IRepository<Employee> rep, IEmployeeSpecificationCreator creator) : base(rep)
         {
             Inspector.ThrowExceptionIfNull(rep, creator);
             _specificationCreator = creator;
             _rep = rep;
-        }
-
-        public Employee GetById(int id)
-        {
-            if (id <= 0)
-            {
-                return null;
-            }
-
-            return _rep.GetById(id);
         }
 
         public IReadOnlyCollection<Employee> GetEmployees(int pageSize, int page, out int totalCount)
@@ -54,10 +44,9 @@ namespace DM.PR.Business.Providers.Implement
 
             ISpecification specification = _specificationCreator.CreateSpecification(departmentId, pageSize, page);
             return _rep.FindBy(specification, out totalCount);
-
         }
 
-        public IReadOnlyCollection<Employee> GetEmloyees(string lastName, string firstName, string middledName, int fromYear, int toYear, int WorkStatusId, int pageSize, int page, out int totalCount)
+        public IReadOnlyCollection<Employee> GetEmployees(string lastName, string firstName, string middledName, int fromYear, int toYear, int WorkStatusId, int pageSize, int page, out int totalCount)
         {
             if (page <= 0 || page <= 0 || fromYear < 0 || toYear < 0)
             {

@@ -9,9 +9,9 @@ namespace DM.PR.WEB.Controllers
 {
     public class PhoneController : Controller
     {
-        private readonly IKindPhoneProvider _kindPhoneProvider;
+        private readonly IProvider<KindPhone> _kindPhoneProvider;
 
-        public PhoneController(IKindPhoneProvider kindPhoneProvider)
+        public PhoneController(IProvider<KindPhone> kindPhoneProvider)
         {
             Inspector.ThrowExceptionIfNull(kindPhoneProvider, kindPhoneProvider);
             _kindPhoneProvider = kindPhoneProvider;

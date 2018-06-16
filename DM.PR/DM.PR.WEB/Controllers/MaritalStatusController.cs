@@ -10,14 +10,14 @@ namespace DM.PR.WEB.Controllers
     [Authorize(Roles = "admin,editor")]
     public class MaritalStatusController : Controller
     {
-        private readonly IMaritalStatusProvider _maritalStatusProvider;
+        private readonly IProvider<MaritalStatus> _maritalStatusProvider;
         private readonly IMaritalStatusService _kindPhoneServ;
 
-        public MaritalStatusController(IMaritalStatusProvider kindPhoneProvider, IMaritalStatusService kindPhoneServ)
+        public MaritalStatusController(IProvider<MaritalStatus> maritalStatusProvider, IMaritalStatusService maritalStatusServ)
         {
-            Inspector.ThrowExceptionIfNull(kindPhoneProvider, kindPhoneProvider);
-            _maritalStatusProvider = kindPhoneProvider;
-            _kindPhoneServ = kindPhoneServ;
+            Inspector.ThrowExceptionIfNull(maritalStatusProvider, maritalStatusServ);
+            _maritalStatusProvider = maritalStatusProvider;
+            _kindPhoneServ = maritalStatusServ;
         }
 
         public ActionResult Index()

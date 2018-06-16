@@ -10,10 +10,10 @@ namespace DM.PR.WEB.Controllers
     [Authorize(Roles = "admin,editor")]
     public class KindPhoneController : Controller
     {
-        private readonly IKindPhoneProvider _kindPhoneProvider;
+        private readonly IProvider<KindPhone> _kindPhoneProvider;
         private readonly IKindPhoneService _kindPhoneServ;
 
-        public KindPhoneController(IKindPhoneProvider kindPhoneProvider, IKindPhoneService kindPhoneServ)
+        public KindPhoneController(IProvider<KindPhone> kindPhoneProvider, IKindPhoneService kindPhoneServ)
         {
             Inspector.ThrowExceptionIfNull(kindPhoneProvider, kindPhoneProvider);
             _kindPhoneProvider = kindPhoneProvider;

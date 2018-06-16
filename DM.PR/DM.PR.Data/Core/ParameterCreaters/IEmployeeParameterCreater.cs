@@ -4,10 +4,10 @@ namespace DM.PR.Data.Core.ParameterCreaters
 {
     internal interface IEmployeeParameterCreater
     {
-        IInputParameter CreateForFindByPageData(int pageSize, int page);
+        IInputParameter CreateFind(int pageSize, int page);
 
-        IInputParameter CreateForFindPageByDepartmentId(int departmentId, int pageSize, int page);
+        IInputParameter CreateByDepartmentId(int departmentId, int pageSize, int page);
 
-        IInputParameter CreateForFindPageBySearchParams(string lastName, string firstName, string middledName, int fromYear, int toYear, int WorkStatusId, int pageSize, int page);
+        IInputParameter CreateBySearchParams(string lastName, string firstName, string middledName, int fromYear, int toYear, int WorkStatusId, int pageSize, int page);
     }
 }

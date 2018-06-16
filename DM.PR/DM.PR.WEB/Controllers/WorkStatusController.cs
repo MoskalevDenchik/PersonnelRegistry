@@ -10,10 +10,10 @@ namespace DM.PR.WEB.Controllers
     [Authorize(Roles = "admin,editor")]
     public class WorkStatusController : Controller
     {
-        private readonly IWorkStatusProvider _workStatusProvider;
+        private readonly IProvider<WorkStatus> _workStatusProvider;
         private readonly IWorkStatusService _workStatusService;
 
-        public WorkStatusController(IWorkStatusProvider workStatusProvider, IWorkStatusService workStatusService)
+        public WorkStatusController(IProvider<WorkStatus> workStatusProvider, IWorkStatusService workStatusService)
         {
             Inspector.ThrowExceptionIfNull(workStatusProvider, workStatusService);
             _workStatusProvider = workStatusProvider;

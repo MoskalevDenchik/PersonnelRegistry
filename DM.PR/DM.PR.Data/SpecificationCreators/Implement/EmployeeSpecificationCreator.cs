@@ -17,17 +17,17 @@ namespace DM.PR.Data.SpecificationCreators.Implement
 
         public ISpecification CreateSpecification(int pageSize, int pageint)
         {
-            return new Specification(_paramCreator.CreateForFindByPageData(pageSize, pageint));
+            return new Specification(_paramCreator.CreateFind(pageSize, pageint));
         }
 
         public ISpecification CreateSpecification(int departmentId, int pageSize, int page)
         {
-            return new Specification(_paramCreator.CreateForFindPageByDepartmentId(departmentId, pageSize, page));
+            return new Specification(_paramCreator.CreateByDepartmentId(departmentId, pageSize, page));
         }
 
         public ISpecification CreateSpecification(string lastName, string firstName, string middledName, int fromYear, int toYear, int WorkStatusId, int pageSize, int page)
         {
-            return new Specification(_paramCreator.CreateForFindPageBySearchParams(lastName, firstName, middledName, fromYear, toYear, WorkStatusId, pageSize, page));
+            return new Specification(_paramCreator.CreateBySearchParams(lastName, firstName, middledName, fromYear, toYear, WorkStatusId, pageSize, page));
         }
     }
 }

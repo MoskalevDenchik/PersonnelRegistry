@@ -136,7 +136,7 @@ namespace DM.PR.WEB.Controllers
         [AjaxOnly]
         public ActionResult GetPageEmployeesBySearchParams(string middledName, string firstName, string lastName, int pageNumber, int pageSize, int WorkStatusId = 0, int fromYear = 0, int toYear = 100)
         {
-            var list = _employeeProvider.GetEmloyees(lastName, firstName, middledName, fromYear, toYear, WorkStatusId, pageSize, pageNumber, out int totalCount);
+            var list = _employeeProvider.GetEmployees(lastName, firstName, middledName, fromYear, toYear, WorkStatusId, pageSize, pageNumber, out int totalCount);
             ViewBag.totalCount = totalCount;
             return PartialView("EmployeeSummary", list);
         }

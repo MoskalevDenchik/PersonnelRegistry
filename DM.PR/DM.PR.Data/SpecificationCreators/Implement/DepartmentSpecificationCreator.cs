@@ -16,7 +16,7 @@ namespace DM.PR.Data.Specifications
 
         public ISpecification CreateSpecification(int PageSize, int Page)
         {
-            return new Specification(_paramCreator.CreateForFindByPageData(PageSize, Page));
+            return new Specification(_paramCreator.CreateFind(PageSize, Page));
         }
     }
 }

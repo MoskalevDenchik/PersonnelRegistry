@@ -17,12 +17,12 @@ namespace DM.PR.Data.SpecificationCreators.Implement
 
         public ISpecification CreateSpecification(string login)
         {
-            return new Specification(_paramCreator.CreateForFindByLogin(login));
+            return new Specification(_paramCreator.CreateByLogin(login));
         }
 
         public ISpecification CreateSpecification(int employeeId)
         {
-            return new Specification(_paramCreator.CreateForFindByEmployeeId(employeeId));
+            return new Specification(_paramCreator.CreateByEmployeeId(employeeId));
         }
     }
 }

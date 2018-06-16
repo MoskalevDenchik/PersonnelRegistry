@@ -4,7 +4,7 @@ namespace DM.PR.Data.Core.ParameterCreaters
 {
     internal interface IUserParameterCreator
     {
-        IInputParameter CreateForFindByLogin(string login);
-        IInputParameter CreateForFindByEmployeeId(int employeeId);
+        IInputParameter CreateByLogin(string login);
+        IInputParameter CreateByEmployeeId(int employeeId);
     }
 }

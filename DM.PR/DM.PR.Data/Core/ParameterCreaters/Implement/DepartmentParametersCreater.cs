@@ -67,7 +67,7 @@ namespace DM.PR.Data.Core.InputParameters.Creaters.Implement
             };
         }
 
-        public IInputParameter CreateForFindByPageData(int pageSize, int page)
+        public IInputParameter CreateFind(int pageSize, int page)
         {
             return new DbInputParameter
             {
