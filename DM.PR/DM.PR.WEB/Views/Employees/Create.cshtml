@@ -23,16 +23,24 @@
             </div>
             <br />
             <div class="form-group">
-                <div class="row">
-                    @Html.ValidationMessageFor(model => model.Phones, "", new { @class = "text-danger" })
-                    <div class="row">
-                        @Html.LabelFor(model => model.Phones, new { @class = "control-label col-md-4" })
-                    </div>
-                    <div class="col-md-12" id="Phones">
-                    </div>
-                    <div class="col-md-12 text-center">
-                        <a id="AddPhone" class="btn btn-default">Добавить телефон</a>
-                    </div>
+                @Html.LabelFor(model => model.HomePhone, new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.HomePhone, new { @class = "form-control ", placeholder = "Введите номер телефона..." })
+                    @Html.ValidationMessageFor(model => model.HomePhone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.WorkPhone, new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.WorkPhone, new { @class = "form-control ", placeholder = "Введите номер телефона..." })
+                    @Html.ValidationMessageFor(model => model.WorkPhone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.MobilePhone, new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.MobilePhone, new { @class = "form-control ", placeholder = "Введите номер телефона..." })
+                    @Html.ValidationMessageFor(model => model.MobilePhone, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
@@ -56,6 +64,8 @@
                     @Html.LabelFor(model => model.DepartmentId, new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
                         @Html.Action("GetDepartmentList")
+                        @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
+
                     </div>
                 </div>
                 <div class="form-group">
@@ -89,12 +99,14 @@
                     @Html.LabelFor(model => model.MaritalStatusId, new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
                         @Html.Action("GetMaritalStatusList", "MaritalStatus")
+                        @Html.ValidationMessageFor(model => model.MaritalStatusId, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.WorkStatusId, new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
                         @Html.Action("GetWorkStatusList", "WorkStatus")
+                        @Html.ValidationMessageFor(model => model.WorkStatusId, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -125,7 +137,6 @@
 
 @section Scripts {
     <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
-    <script src="~/Scripts/Phones.js"></script>
     <script src="~/Scripts/Emails.js"></script>
     <script src="~/Scripts/Employee/UpdateImage.js"></script>
 }

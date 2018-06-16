@@ -11,13 +11,10 @@ namespace DM.PR.Data.Core.DataBase.Converters.Implement
     {
         public IEnumerable<Role> ConvertToList(DataSet dataSet)
         {
-            return dataSet.Tables[0].AsEnumerable().Select(x =>
+            return dataSet.Tables[0].AsEnumerable().Select(x => new Role
             {
-                return new Role
-                {
-                    Id = x.Field<int>("Id"),
-                    Name = x.Field<string>("Name")
-                };
+                Id = x.Field<int>("Id"),
+                Name = x.Field<string>("Name")
             });
         }
 

@@ -32,7 +32,6 @@ namespace DM.PR.Data.Dependencies
             For<IDataContext<User>>().Use<DbContext<User>>();
             For<IDataContext<Employee>>().Use<DbContext<Employee>>();
             For<IDataContext<BillBoard>>().Use<WcfBillBoardContext>();
-            For<IDataContext<KindPhone>>().Use<DbContext<KindPhone>>();
             For<IDataContext<Department>>().Use<DbContext<Department>>();
             For<IDataContext<WorkStatus>>().Use<DbContext<WorkStatus>>();
             For<IDataContext<MaritalStatus>>().Use<DbContext<MaritalStatus>>();
@@ -41,7 +40,6 @@ namespace DM.PR.Data.Dependencies
             For<IRepository<User>>().Use<Repository<User>>();
             For<IRepository<Employee>>().Use<Repository<Employee>>();
             For<IRepository<BillBoard>>().Use<Repository<BillBoard>>();
-            For<IRepository<KindPhone>>().Use<Repository<KindPhone>>();
             For<IRepository<Department>>().Use<Repository<Department>>();
             For<IRepository<WorkStatus>>().Use<Repository<WorkStatus>>();
             For<IRepository<MaritalStatus>>().Use<Repository<MaritalStatus>>();
@@ -50,7 +48,6 @@ namespace DM.PR.Data.Dependencies
             For<ParameterCreater<User>>().Use<UserParameterCreater>();
             For<ParameterCreater<Employee>>().Use<EmployeeParameterCreater>();
             For<ParameterCreater<BillBoard>>().Use<BillBoardParameterCreater>();
-            For<ParameterCreater<KindPhone>>().Use<KindPhoneParameterCreater>();
             For<ParameterCreater<Department>>().Use<DepartmentParameterCreater>();
             For<ParameterCreater<WorkStatus>>().Use<WorkStatusParameterCreater>();
             For<ParameterCreater<MaritalStatus>>().Use<MaritalStatusParameterCreater>();
@@ -58,7 +55,6 @@ namespace DM.PR.Data.Dependencies
             For<IConverter<Role>>().Use<RoleConverter>();
             For<IConverter<User>>().Use<UserConverter>();
             For<IConverter<Employee>>().Use<EmployeeConverter>();
-            For<IConverter<KindPhone>>().Use<KindPhoneConverter>();
             For<IConverter<Department>>().Use<DepartmentConverter>();
             For<IConverter<WorkStatus>>().Use<WorkStatusConverter>();
             For<IConverter<MaritalStatus>>().Use<MaritalStatusConverter>();

@@ -7,7 +7,7 @@ namespace DM.PR.WEB.Models.Employee
 {
     public class EmployeeCreateViewModel
     {
-        [Required(ErrorMessage = "Введите название отдела")]
+        [Required(ErrorMessage = "Выберите отдел")]
         [Display(Name ="Отдел")]
         public int DepartmentId { get; set; }
 
@@ -26,8 +26,16 @@ namespace DM.PR.WEB.Models.Employee
         [Display(Name = "Emails")]
         public List<Email> Emails { get; set; }
 
-        [Display(Name = "Телефоны")]
-        public List<Phone> Phones { get; set; }
+        [Display(Name = "Домашний телефон")]
+        public string HomePhone { get; set; }
+
+        [Required(ErrorMessage = "Введите рабочий телефон")]
+        [Display(Name = "Рабочий телефон")]
+        public string WorkPhone { get; set; }
+
+        [Required(ErrorMessage = "Введите мобильный телефон")]
+        [Display(Name = "Мобильный телефон")]
+        public string MobilePhone { get; set; }
 
         [Display(Name = "Домашний адрес")]
         public string Address { get; set; }
@@ -42,7 +50,7 @@ namespace DM.PR.WEB.Models.Employee
 
         public string ImagePath { get; set; }
 
-        [Required(ErrorMessage = "Поле должно быть установлено")]
+        [Required(ErrorMessage = "Выберите дату приема на работу")]
         [Display(Name = "Дата приема на работу")]
         [DataType(DataType.Date)]
         public DateTime BeginningWork { get; set; }

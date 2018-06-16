@@ -10,13 +10,10 @@ namespace DM.PR.Data.Core.Converters.Implement
     {
         public IEnumerable<MaritalStatus> ConvertToList(DataSet dataSet)
         {
-            return dataSet.Tables[0].AsEnumerable().Select(x =>
+            return dataSet.Tables[0].AsEnumerable().Select(x => new MaritalStatus
             {
-                return new MaritalStatus
-                {
-                    Id = x.Field<int>("Id"),
-                    Status = x.Field<string>("Status")
-                };
+                Id = x.Field<int>("Id"),
+                Status = x.Field<string>("Status")
             });
         }
 
@@ -24,6 +21,6 @@ namespace DM.PR.Data.Core.Converters.Implement
         {
             throw new NotImplementedException();
         }
-       
+
     }
 }

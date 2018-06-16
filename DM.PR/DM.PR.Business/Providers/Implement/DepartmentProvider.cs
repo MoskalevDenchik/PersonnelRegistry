@@ -18,7 +18,7 @@ namespace DM.PR.Business.Providers.Implement
             _specificationCreator = creater;
         }
 
-        public IReadOnlyCollection<Department> GetPage(int pageSize, int pageNumber, out int totalCount)
+        public IReadOnlyCollection<Department> GetDepartments(int pageSize, int pageNumber, out int totalCount)
         {
             if (pageSize <= 0 || pageNumber <= 0)
             {

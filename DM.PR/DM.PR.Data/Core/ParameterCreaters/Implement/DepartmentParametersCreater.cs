@@ -82,12 +82,11 @@ namespace DM.PR.Data.Core.InputParameters.Creaters.Implement
         {
             var table = new DataTable("Phones");
             table.Columns.Add("Id", typeof(int));
-            table.Columns.Add("Number", typeof(string));
-            table.Columns.Add("KindId", typeof(int));
+            table.Columns.Add("Number", typeof(string));  
 
             foreach (var item in phones)
             {
-                table.Rows.Add(item.Id, item.Number, item.Kind.Id);
+                table.Rows.Add(item.Id, item.Number);
             }
             return table;
         }

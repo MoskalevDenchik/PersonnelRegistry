@@ -69,10 +69,6 @@ namespace DM.PR.Data.Core.Context.Implement
             throw new NotImplementedException();
         }
 
-        public PagedData<BillBoard> GetPageEntities(IInputParameter parameter)
-        {
-            throw new NotImplementedException();
-        }
 
         public void Save(IInputParameter parameter)
         {

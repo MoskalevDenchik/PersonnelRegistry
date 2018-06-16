@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using DM.PR.Common.Helpers;
 using DM.PR.Data.Entity;
 using System.Data;
+using System.Linq;
 
 namespace DM.PR.Data.Core.DataBase.Data.Implement
 {
@@ -18,10 +18,7 @@ namespace DM.PR.Data.Core.DataBase.Data.Implement
 
         protected override IDbDataAdapter GetAdapter(IDbCommand command)
         {
-            return new SqlDataAdapter
-            {
-                SelectCommand = command as SqlCommand
-            };
+            return new SqlDataAdapter(command as SqlCommand);
         }
 
         protected override IDbConnection GetConnection()
@@ -31,33 +28,16 @@ namespace DM.PR.Data.Core.DataBase.Data.Implement
 
         protected override IDbCommand GetProcedureCommand(IDbConnection connection, DbInputParameter parameter)
         {
-            SqlCommand command = new SqlCommand
-            {
-                CommandText = parameter.Procedure,
-                Connection = connection as SqlConnection,
+            var command = new SqlCommand(parameter.Procedure, connection as SqlConnection)
+            {                                                    
                 CommandType = CommandType.StoredProcedure,
             };
 
             if (parameter.Parameters != null)
             {
-                command.Parameters.AddRange(MapToSqlParameter(parameter.Parameters).ToArray());
+                command.Parameters.AddRange(parameter.Parameters.Select(d => new SqlParameter(d.Key, d.Value)).ToArray());
             }
-
             return command;
         }
-
-        private List<SqlParameter> MapToSqlParameter(Dictionary<string, object> parameters)
-        {
-            var dataParameters = new List<SqlParameter>();
-
-            foreach (var item in parameters)
-            {
-                dataParameters.Add(new SqlParameter(item.Key, item.Value));
-            }
-
-            return dataParameters;
-        }
-
-
     }
 }

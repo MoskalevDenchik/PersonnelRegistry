@@ -10,39 +10,30 @@ namespace DM.PR.Data.Core.Converters.Implement
     {
         public IEnumerable<Employee> ConvertToList(DataSet dataSet)
         {
-            return dataSet.Tables[0].AsEnumerable().Select(empl =>
+            return dataSet.Tables[0].AsEnumerable().Select(empl => new Employee
             {
-                return new Employee
-                {
-                    Id = empl.Field<int>("Id"),
-                    HasRole = empl.Field<bool>("HasRole"),
-                    Address = empl.Field<string>("Address"),
-                    LastName = empl.Field<string>("LastName"),
-                    EndWork = empl.Field<DateTime?>("EndWork"),
-                    ImagePath = empl.Field<string>("ImagePath"),
-                    FirstName = empl.Field<string>("FirstName"),
-                    MiddleName = empl.Field<string>("MiddleName"),
-                    BeginningWork = empl.Field<DateTime>("BeginningWork"),
-                    Phones = ConvertToPhones(empl.Field<int>("Id"), "EmployeeId", dataSet.Tables[1]),
-                    Emails = ConvertToEmails(empl.Field<int>("Id"), dataSet.Tables[2]),
-                    Department = ConvertToDepartmnent(empl.Field<int>("DepartmentId"), dataSet.Tables[3], dataSet.Tables[4]),
-                    MaritalStatus = new MaritalStatus
-                    {
-                        Id = empl.Field<int>("MaritalStatusId"),
-                        Status = empl.Field<string>("MaritalStatus")
-                    },
-                    WorkStatus = new WorkStatus
-                    {
-                        Id = empl.Field<int>("WorkStatusId"),
-                        Status = empl.Field<string>("WorkStatus")
-                    }
-                };
+                Id = empl.Field<int>("Id"),
+                HasRole = empl.Field<bool>("HasRole"),
+                Address = empl.Field<string>("Address"),
+                LastName = empl.Field<string>("LastName"),
+                EndWork = empl.Field<DateTime?>("EndWork"),
+                ImagePath = empl.Field<string>("ImagePath"),
+                FirstName = empl.Field<string>("FirstName"),
+                HomePhone = empl.Field<string>("HomePhone"),
+                WorkPhone = empl.Field<string>("WorkPhone"),
+                MiddleName = empl.Field<string>("MiddleName"),
+                MobilePhone = empl.Field<string>("MobilePhone"),
+                BeginningWork = empl.Field<DateTime>("BeginningWork"),
+                Emails = ConvertToEmails(empl.Field<int>("Id"), dataSet.Tables[1]),
+                Department = ConvertToDepartmnent(empl.Field<int>("DepartmentId"), dataSet.Tables[2], dataSet.Tables[3]),
+                WorkStatus = new WorkStatus { Id = empl.Field<int>("WorkStatusId"), Status = empl.Field<string>("WorkStatus") },
+                MaritalStatus = new MaritalStatus { Id = empl.Field<int>("MaritalStatusId"), Status = empl.Field<string>("MaritalStatus") },
             });
         }
 
         public IEnumerable<Employee> ConvertToList(DataSet dataSet, out int outputParameter)
         {
-            outputParameter = dataSet.Tables[5].AsEnumerable().Select(x => x.Field<int>("Count")).First();
+            outputParameter = dataSet.Tables[4].AsEnumerable().Select(x => x.Field<int>("Count")).First();
             return ConvertToList(dataSet);
         }
 
@@ -59,35 +50,20 @@ namespace DM.PR.Data.Core.Converters.Implement
                     ParentId = dep.Field<int?>("ParentId"),
                     Address = dep.Field<string>("Address"),
                     Description = dep.Field<string>("Description"),
-                    Phones = ConvertToPhones(dep.Field<int>("Id"), "DepartmentId", tables[1])
+                    Phones = tables[1].AsEnumerable().Where(phone => phone.Field<int>("DepartmentId") == departmentId).Select(phone => new Phone
+                    {
+                        Id = phone.Field<int>("Id"),
+                        Number = phone.Field<string>("Number")
+                    }).ToList()
                 };
             }).FirstOrDefault();
         }
         private List<Email> ConvertToEmails(int employeeId, DataTable table)
         {
-            return table.AsEnumerable().Where(email => email.Field<int>("EmployeeId") == employeeId).Select(email =>
+            return table.AsEnumerable().Where(email => email.Field<int>("EmployeeId") == employeeId).Select(email => new Email
             {
-                return new Email
-                {
-                    Id = email.Field<int>("Id"),
-                    Address = email.Field<string>("Address")
-                };
-            }).ToList();
-        }
-        private List<Phone> ConvertToPhones(int entityId, string EntityName, DataTable table)
-        {
-            return table.AsEnumerable().Where(phone => phone.Field<int>(EntityName) == entityId).Select(phone =>
-            {
-                return new Phone
-                {
-                    Id = phone.Field<int>("Id"),
-                    Number = phone.Field<string>("Number"),
-                    Kind = new KindPhone
-                    {
-                        Id = phone.Field<int>("KindId"),
-                        Kind = phone.Field<string>("Kind")
-                    }
-                };
+                Id = email.Field<int>("Id"),
+                Address = email.Field<string>("Address")
             }).ToList();
         }
 

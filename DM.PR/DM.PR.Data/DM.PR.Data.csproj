@@ -70,7 +70,6 @@
     <Compile Include="Core\DataBase\Converters\IConverter.cs" />
     <Compile Include="Core\DataBase\Converters\Implement\DepartmentConverter.cs" />
     <Compile Include="Core\DataBase\Converters\Implement\EmployeeConverter.cs" />
-    <Compile Include="Core\DataBase\Converters\Implement\KindPhoneConverter.cs" />
     <Compile Include="Core\DataBase\Converters\Implement\MaritalStatusConverter.cs" />
     <Compile Include="Core\DataBase\Converters\Implement\RoleConverter.cs" />
     <Compile Include="Core\DataBase\Converters\Implement\UserConverter.cs" />
@@ -87,7 +86,6 @@
     <Compile Include="Core\ParameterCreaters\Implement\RoleParameterCreater.cs" />
     <Compile Include="Core\ParameterCreaters\Implement\WorkStatusParameterCreater.cs" />
     <Compile Include="Core\ParameterCreaters\IUserParameterCreator.cs" />
-    <Compile Include="Core\ParameterCreaters\Implement\KindPhoneParameterCreater.cs" />
     <Compile Include="Core\ParameterCreaters\Implement\MaritalStatusParameterCreater.cs" />
     <Compile Include="Core\ParameterCreaters\Implement\UserParameterCreater.cs" />
     <Compile Include="Core\ParameterCreaters\IParametersCreater.cs" />

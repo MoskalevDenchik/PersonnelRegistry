@@ -7,20 +7,15 @@ using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using DM.PR.WEB.Models;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace DM.PR.WEB.Controllers
 {
     [Authorize(Roles = "admin,editor")]
     public class DepartmentsController : Controller
     {
-        #region Private
-
         private readonly IDepartmentProvider _departmentProv;
         private readonly IEntityService<Department> _departmentServ;
-
-        #endregion
-
-        #region Ctors
 
         public DepartmentsController(IDepartmentProvider departmentProv, IEntityService<Department> departmentServ)
         {
@@ -28,9 +23,6 @@ namespace DM.PR.WEB.Controllers
             _departmentProv = departmentProv;
             _departmentServ = departmentServ;
         }
-
-
-        #endregion
 
         public ActionResult Index()
         {
@@ -95,7 +87,7 @@ namespace DM.PR.WEB.Controllers
         [AjaxOnly]
         public ActionResult GetAll(int pageSize, int pageNumber)
         {
-            var model = _departmentProv.GetPage(pageSize, pageNumber, out int totalPage);
+            var model = _departmentProv.GetDepartments(pageSize, pageNumber, out int totalPage);
             return Json(new { Data = model, TotalCount = totalPage }, JsonRequestBehavior.AllowGet);
         }
 
@@ -114,16 +106,7 @@ namespace DM.PR.WEB.Controllers
 
         private IReadOnlyCollection<DepartmentSelectModel> MapDepartmentToDepartmentSelectModel(IReadOnlyCollection<Department> departments)
         {
-            var list = new List<DepartmentSelectModel>();
-            foreach (var item in departments)
-            {
-                list.Add(new DepartmentSelectModel()
-                {
-                    Id = (int)item.Id,
-                    Name = item.Name
-                });
-            }
-            return list;
+            return departments.Select(d => new DepartmentSelectModel { Id = d.Id, Name = d.Name }).ToList();
         }
 
 
@@ -149,7 +132,7 @@ namespace DM.PR.WEB.Controllers
                 ParentId = department.ParentId,
                 Address = department.Address,
                 Description = department.Description,
-                Phones = department.Phones,
+                Phones = department.Phones.Select(number => new Phone { Number = number }).ToList(),
             };
         }
 
@@ -162,7 +145,7 @@ namespace DM.PR.WEB.Controllers
                 ParentId = model.ParentId,
                 Address = model.Address,
                 Description = model.Description,
-                Phones = model.Phones,
+                Phones = model.Phones.Select(number => new Phone { Number = number }).ToList()
             };
         }
 

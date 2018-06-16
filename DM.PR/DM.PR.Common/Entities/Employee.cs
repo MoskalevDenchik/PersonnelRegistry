@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 using System;
 
 namespace DM.PR.Common.Entities
@@ -9,16 +10,24 @@ namespace DM.PR.Common.Entities
 
         public Department Department { get; set; }
 
+        [StringLength(16, ErrorMessage = "Длина строки должна быть до 16 символов")]
         public string FirstName { get; set; }
 
+        [StringLength(16, ErrorMessage = "Длина строки должна быть до 16 символов")]
         public string MiddleName { get; set; }
 
+        [StringLength(16, ErrorMessage = "Длина строки должна быть до 16 символов")]
         public string LastName { get; set; }
 
-        public List<Phone> Phones { get; set; }
+        public string MobilePhone { get; set; }
+
+        public string HomePhone { get; set; }
+
+        public string WorkPhone { get; set; }
 
         public List<Email> Emails { get; set; }
 
+        [StringLength(16, MinimumLength = 3, ErrorMessage = "Длина строки должна быть от 3 до 50 символов")]
         public string Address { get; set; }
 
         public MaritalStatus MaritalStatus { get; set; }

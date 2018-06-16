@@ -190,7 +190,6 @@ namespace DM.PR.WEB.Controllers
                 BeginningOfWork = empl.BeginningWork,
                 EndOfWork = empl.EndWork,
                 ImagePath = empl.ImagePath,
-                Phones = empl.Phones,
                 Emails = empl.Emails
             };
         }
@@ -208,7 +207,6 @@ namespace DM.PR.WEB.Controllers
                 WorkStatus = new WorkStatus { Id = model.WorkStatusId },
                 EndWork = model.EndWork,
                 ImagePath = model.ImagePath,
-                Phones = model.Phones,
                 Emails = model.Emails,
                 MaritalStatus = new MaritalStatus { Id = model.MaritalStatusId }
             };
@@ -229,7 +227,6 @@ namespace DM.PR.WEB.Controllers
                 BeginningWork = empl.BeginningWork,
                 EndWork = empl.EndWork,
                 ImagePath = empl.ImagePath,
-                Phones = empl.Phones,
                 Emails = empl.Emails
             };
         }
@@ -248,7 +245,6 @@ namespace DM.PR.WEB.Controllers
                 WorkStatus = new WorkStatus { Id = model.WorkStatusId },
                 EndWork = model.EndWork,
                 ImagePath = model.ImagePath,
-                Phones = model.Phones,
                 Emails = model.Emails,
                 MaritalStatus = new MaritalStatus { Id = model.MaritalStatusId }
             };

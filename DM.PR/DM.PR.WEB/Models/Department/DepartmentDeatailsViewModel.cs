@@ -1,15 +1,12 @@
-﻿using DM.PR.Common.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;       
+using DM.PR.Common.Entities;
 
 namespace DM.PR.WEB.Models
 {
     public class DepartmentDeatailsViewModel
     {
 
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public int? ParentId { get; set; }
         public string ParentName { get; set; }
         public string Name { get; set; }

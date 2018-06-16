@@ -7,6 +7,6 @@ namespace DM.PR.Business.Providers
     {
         Department GetById(int id);
         IReadOnlyCollection<Department> GetAll();
-        IReadOnlyCollection<Department> GetPage(int pageSize, int pageNumber, out int totalCount);
+        IReadOnlyCollection<Department> GetDepartments(int pageSize, int pageNumber, out int totalCount);
     }
 }

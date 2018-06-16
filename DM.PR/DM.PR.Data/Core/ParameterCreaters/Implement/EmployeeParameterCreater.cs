@@ -43,8 +43,10 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
                     {"@BeginningWork",item.BeginningWork},
                     {"@EndWork",item.EndWork},
                     {"@MaritalStatusId",item?.MaritalStatus.Id},
-                    {"@WorkStatusId",item?.WorkStatus.Id},
-                    {"@Phones",item.Phones!=null?ConvertToTable(item.Phones):null},
+                    {"@HomePhone",item.HomePhone},
+                    {"@MobilePhone",item.MobilePhone},
+                    {"@WorkPhone",item.WorkPhone},
+                    {"@WorkStatusId",item?.WorkStatus.Id},                           
                     {"@Emails",item.Emails!=null?ConvertToTable(item.Emails):null}
                 }
             };
@@ -66,9 +68,11 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
                     {"@ImagePath",item.ImagePath},
                     {"@BeginningWork",item.BeginningWork},
                     {"@EndWork",item.EndWork},
+                    {"@HomePhone",item.HomePhone},
+                    {"@MobilePhone",item.MobilePhone},
+                    {"@WorkPhone",item.WorkPhone},
                     {"@MaritalStatusId",item?.MaritalStatus.Id},
-                    {"@WorkStatusId",item?.WorkStatus.Id},
-                    {"@Phones",item.Phones!=null?ConvertToTable(item.Phones):null},
+                    {"@WorkStatusId",item?.WorkStatus.Id},                          
                     {"@Emails",item.Emails!=null?ConvertToTable(item.Emails):null}
                 }
             };
@@ -134,20 +138,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             }
             return table;
         }
-
-        private DataTable ConvertToTable(IReadOnlyCollection<Phone> phones)
-        {
-            var table = new DataTable("Phones");
-            table.Columns.Add("Id", typeof(int));
-            table.Columns.Add("Number", typeof(string));
-            table.Columns.Add("KindId", typeof(int));
-
-            foreach (var item in phones)
-            {
-                table.Rows.Add(item.Id, item.Number, item.Kind.Id);
-            }
-            return table;
-        }
+        
 
         #endregion
     }

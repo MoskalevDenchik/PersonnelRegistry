@@ -46,39 +46,7 @@ namespace DM.PR.Business.Test.Providers
                 MiddleName = "midleName",
                 LastName = "lastName",
                 MaritalStatus = new MaritalStatus { Id = 2, Status = "SameStatus" },
-                Department = new Department
-                {
-                    Id = 2,
-                    Name = "SameName",
-                    Address = "SameAddress",
-                    ParentId = 1,
-                    Description = "SameDescription",
-                    Phones = new List<Phone> {
-                        new Phone {
-                            Id = 1,
-                            Kind = new KindPhone { Id = 1, Kind = "SameKind" },
-                            Number = "123"
-                        },
-                         new Phone {
-                            Id = 2,
-                            Kind = new KindPhone { Id = 2, Kind = "SameKind" },
-                            Number = "123"
-                        }
-                    }
-                },
-                WorkStatus = new WorkStatus { Id = 3, Status = "SameStatus " },
-                Phones = new List<Phone> {
-                    new Phone
-                    {
-                        Id = 3,
-                        Kind = new KindPhone { Id = 2, Kind = "SameKind" },
-                        Number = "123"
-                    },
-                    new Phone {
-                        Id = 4,
-                        Kind = new KindPhone { Id = 2, Kind = "SameKind" },
-                        Number = "123"
-                    } },
+                
                 Emails = new List<Email>
                 {
                     new Email { Id = 1, Address = "SameAddress" },
@@ -96,44 +64,7 @@ namespace DM.PR.Business.Test.Providers
                 MiddleName = "midleName",
                 LastName = "lastName",
                 MaritalStatus = new MaritalStatus { Id = 2, Status = "SameStatus" },
-                Department = new Department
-                {
-                    Id = 2,
-                    Name = "SameName",
-                    Address = "SameAddress",
-                    ParentId = 1,
-                    Description = "SameDescription",
-                    Phones = new List<Phone> {
-                        new Phone {
-                            Id = 1,
-                            Kind = new KindPhone { Id = 1, Kind = "SameKind" },
-                            Number = "123"
-                        },
-                         new Phone {
-                            Id = 2,
-                            Kind = new KindPhone { Id = 2, Kind = "SameKind" },
-                            Number = "123"
-                        }
-                    }
-                },
-                WorkStatus = new WorkStatus { Id = 3, Status = "SameStatus " },
-                Phones = new List<Phone> {
-                    new Phone
-                    {
-                        Id = 3,
-                        Kind = new KindPhone { Id = 2, Kind = "SameKind" },
-                        Number = "123"
-                    },
-                    new Phone {
-                        Id = 4,
-                        Kind = new KindPhone { Id = 2, Kind = "SameKind" },
-                        Number = "123"
-                    } },
-                Emails = new List<Email>
-                {
-                    new Email { Id = 1, Address = "SameAddress" },
-                    new Email { Id = 2, Address = "SameAddress" }
-                },
+                
                 BeginningWork = new DateTime(2018, 1, 1),
                 EndWork = new DateTime(2018, 1, 1),
                 ImagePath = "String ",
@@ -162,7 +93,7 @@ namespace DM.PR.Business.Test.Providers
         public void GetPage_CahicngReturnedNotNull_FindByWasNotCalled()
         {
             //arrange 
-            _cahing.Setup(c => c.Get<PagedData<Employee>>(It.IsAny<string>())).Returns(It.IsAny<PagedData<Employee>>());
+          //  _cahing.Setup(c => c.Get<PagedData<Employee>>(It.IsAny<string>())).Returns(It.IsAny<PagedData<Employee>>());
 
             //act
             _provider.GetEmployees(1, 1, out int totalCount);
@@ -177,7 +108,7 @@ namespace DM.PR.Business.Test.Providers
             //arrange
             int pageSize = 1;
             int PageNumber = 1;
-            _cahing.Setup(c => c.Get<PagedData<Employee>>(It.IsAny<string>())).Returns<PagedData<Employee>>(null);
+          //  _cahing.Setup(c => c.Get<PagedData<Employee>>(It.IsAny<string>())).Returns<PagedData<Employee>>(null);
 
             //act
             var list = _provider.GetEmployees(pageSize, PageNumber, out int totalCount);
@@ -185,7 +116,7 @@ namespace DM.PR.Business.Test.Providers
             //assert 
             _specificationCreator.Verify(c => c.CreateSpecification(pageSize, PageNumber), Times.Once);
             _repository.Verify(r => r.FindBy(It.IsAny<ISpecification>(), out totalCount), Times.Once);
-            _cahing.Verify(c => c.Add(It.IsAny<string>(), It.IsAny<PagedData<Employee>>(), It.IsAny<int>()), Times.Once);
+         //   _cahing.Verify(c => c.Add(It.IsAny<string>(), It.IsAny<PagedData<Employee>>(), It.IsAny<int>()), Times.Once);
         }
 
         [TestMethod]
@@ -194,7 +125,7 @@ namespace DM.PR.Business.Test.Providers
             //arrange 
             var expectedPropertyValueList = _reflector.GetPropertyValueList(_testList);
             int expectedTotalCount = 2;
-            _cahing.Setup(c => c.Get<PagedData<Employee>>(It.IsAny<string>())).Returns(new PagedData<Employee>() { Data = _testList, TotalCount = expectedTotalCount });
+          //  _cahing.Setup(c => c.Get<PagedData<Employee>>(It.IsAny<string>())).Returns(new PagedData<Employee>() { Data = _testList, TotalCount = expectedTotalCount });
 
             //act
             var actualList = _provider.GetEmployees(1, 1, out int totalCount);
@@ -214,7 +145,7 @@ namespace DM.PR.Business.Test.Providers
             int expectedTotalCount = 2;
             var expectedPropertyValueList = _reflector.GetPropertyValueList(_testList);
 
-            _cahing.Setup(c => c.Get<PagedData<Employee>>(It.IsAny<string>())).Returns<PagedData<Employee>>(null);
+          //  _cahing.Setup(c => c.Get<PagedData<Employee>>(It.IsAny<string>())).Returns<PagedData<Employee>>(null);
             _specificationCreator.Setup(s => s.CreateSpecification(pageSize, pageNumber)).Returns(It.IsAny<ISpecification>);
             _repository.Setup(s => s.FindBy(It.IsAny<ISpecification>(), out expectedTotalCount)).Returns(_testList);
 

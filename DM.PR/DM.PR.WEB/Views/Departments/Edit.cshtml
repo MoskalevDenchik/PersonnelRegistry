@@ -1,4 +1,4 @@
-﻿@model DM.PR.Common.Entities.Department
+﻿@model DM.PR.WEB.Models.Department.DepartmentEditViewModel
 
 <h2 class="text-center">Добавьте новый отдел</h2> <br />
 
@@ -36,12 +36,29 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-4 col-md-4">
-                @Html.ValidationMessageFor(model => model.Phones, "", new { @class = "text-danger" })
                 <div class="row">
                     @Html.LabelFor(model => model.Phones, new { @class = "control-label col-md-4" })
                 </div>
                 <div class="col-md-12" id="Phones">
-                    @Html.Action("EditPhone", "Phone", new { phones = Model.Phones })
+                    @if (Model?.Phones != null)
+                    {
+                        for (int i = 0; i < Model.Phones.Count; i++)
+                        {
+                            <div class="row">
+                                <div class="col-md-7 Number">
+                                    @Html.TextBoxFor(model => model.Phones[i], null, new { @class = "form-control", placeholder = "Введите номер...." })
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col-md-7 Number">
+                                @Html.TextBoxFor(model => model.Phones[0], null, new { @class = "form-control", placeholder = "Введите номер...." })
+                            </div>
+                        </div>
+                    }
                 </div>
                 <div class="col-md-12 text-center">
                     <a id="AddPhone" class="btn btn-default">Добавить телефон</a>

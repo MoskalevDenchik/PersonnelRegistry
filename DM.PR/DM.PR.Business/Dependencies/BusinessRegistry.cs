@@ -17,14 +17,12 @@ namespace DM.PR.Business.Dependencies
             For<IEmployeeProvider>().Use<EmployeeProvider>();
             For<IProvider<BillBoard>>().Use<BillBoardProvider>();
             For<IDepartmentProvider>().Use<DepartmentProvider>();
-            For<IProvider<KindPhone>>().Use<Provider<KindPhone>>();
             For<IProvider<WorkStatus>>().Use<Provider<WorkStatus>>();
             For<IProvider<MaritalStatus>>().Use<Provider<MaritalStatus>>();
 
             For<ILoginServices>().Use<LoginServices>();
             For<IEntityService<User>>().Use<EntityService<User>>();
             For<IEntityService<Employee>>().Use<EntityService<Employee>>();
-            For<IEntityService<KindPhone>>().Use<EntityService<KindPhone>>();
             For<IEntityService<WorkStatus>>().Use<EntityService<WorkStatus>>();
             For<IEntityService<Department>>().Use<EntityService<Department>>();
             For<IEntityService<MaritalStatus>>().Use<EntityService<MaritalStatus>>();

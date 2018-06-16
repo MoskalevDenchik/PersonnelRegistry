@@ -10,13 +10,10 @@ namespace DM.PR.Data.Core.DataBase.Converters.Implement
     {
         public IEnumerable<WorkStatus> ConvertToList(DataSet dataSet)
         {
-            return dataSet.Tables[0].AsEnumerable().Select(x =>
+            return dataSet.Tables[0].AsEnumerable().Select(x => new WorkStatus
             {
-                return new WorkStatus
-                {
-                    Id = x.Field<int>("Id"),
-                    Status = x.Field<string>("Status")
-                };
+                Id = x.Field<int>("Id"),
+                Status = x.Field<string>("Status")
             });
         }
 

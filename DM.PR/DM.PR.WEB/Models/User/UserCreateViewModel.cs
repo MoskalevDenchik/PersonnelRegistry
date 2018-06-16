@@ -14,6 +14,7 @@ namespace DM.PR.WEB.Models.User
         [Required(ErrorMessage = "Введите пароль")]
         public string Password { get; set; }
 
+        [Compare("Password", ErrorMessage = "Пароль и подтверждение не совпадают")]
         [Required(ErrorMessage = "Подтвердите пароль")]
         public string ConfirmPassword { get; set; }
 

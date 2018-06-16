@@ -19,7 +19,14 @@ namespace DM.PR.WEB.Models
 
         public string LastName { get; set; }
 
-        public List<Phone> Phones { get; set; }
+        [Display(Name = "Домашний телефон")]
+        public string HomePhone { get; set; }
+                                                              
+        [Display(Name = "Рабочий телефон")]
+        public string WorkPhone { get; set; }
+                                                              
+        [Display(Name = "Мобильный телефон")]
+        public string MobilePhone { get; set; }
 
         public List<Email> Emails { get; set; }
 

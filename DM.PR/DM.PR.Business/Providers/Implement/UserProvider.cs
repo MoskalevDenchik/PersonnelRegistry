@@ -27,6 +27,11 @@ namespace DM.PR.Business.Providers.Implement
 
         public User GetByEmployeeId(int employeeId)
         {
+            if (employeeId < 0)
+            {
+                return null;
+            }
+
             ISpecification specification = _specificCreator.CreateSpecification(employeeId);
             return _rep.FindBy(specification).First();
         }
