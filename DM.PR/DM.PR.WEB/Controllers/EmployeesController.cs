@@ -7,6 +7,7 @@ using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using DM.PR.WEB.Models;
 using System.Web.Mvc;
+using System.Linq;
 using System.IO;
 
 namespace DM.PR.WEB.Controllers
@@ -163,16 +164,7 @@ namespace DM.PR.WEB.Controllers
 
         private IReadOnlyCollection<DepartmentSelectModel> MapDepartmentToDepartmentSelectModel(IReadOnlyCollection<Department> departments)
         {
-            var list = new List<DepartmentSelectModel>();
-            foreach (var item in departments)
-            {
-                list.Add(new DepartmentSelectModel()
-                {
-                    Id = item.Id,
-                    Name = item.Name
-                });
-            }
-            return list;
+            return departments.Select(d => new DepartmentSelectModel { Id = d.Id, Name = d.Name }).ToList();
         }
 
         private EmployeeDetailsViewModel MapEmployeeToEmployeeDetailsViewModel(Employee empl)
@@ -180,17 +172,17 @@ namespace DM.PR.WEB.Controllers
             return new EmployeeDetailsViewModel()
             {
                 Id = empl.Id,
-                DepartmentName = empl.Department.Name,
-                FirstName = empl.FirstName,
-                LastName = empl.LastName,
-                MiddleName = empl.MiddleName,
-                MaritalStatus = empl.MaritalStatus.Status,
-                WorkStatus = empl.WorkStatus.Status,
+                Emails = empl.Emails,
                 Address = empl.Address,
-                BeginningOfWork = empl.BeginningWork,
+                LastName = empl.LastName,
                 EndOfWork = empl.EndWork,
+                FirstName = empl.FirstName,
                 ImagePath = empl.ImagePath,
-                Emails = empl.Emails
+                MiddleName = empl.MiddleName,
+                WorkStatus = empl.WorkStatus.Status,
+                BeginningOfWork = empl.BeginningWork,
+                DepartmentName = empl.Department.Name,
+                MaritalStatus = empl.MaritalStatus.Status
             };
         }
 
@@ -198,16 +190,16 @@ namespace DM.PR.WEB.Controllers
         {
             return new Employee()
             {
-                Department = new Department { Id = model.DepartmentId },
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                MiddleName = model.MiddleName,
+                Emails = model.Emails,
                 Address = model.Address,
+                EndWork = model.EndWork,
+                LastName = model.LastName,
+                ImagePath = model.ImagePath,
+                FirstName = model.FirstName,
+                MiddleName = model.MiddleName,
                 BeginningWork = model.BeginningWork,
                 WorkStatus = new WorkStatus { Id = model.WorkStatusId },
-                EndWork = model.EndWork,
-                ImagePath = model.ImagePath,
-                Emails = model.Emails,
+                Department = new Department { Id = model.DepartmentId },
                 MaritalStatus = new MaritalStatus { Id = model.MaritalStatusId }
             };
         }
@@ -217,17 +209,17 @@ namespace DM.PR.WEB.Controllers
             return new EmployeeEditViewModel()
             {
                 Id = empl.Id,
-                DepartmentId = empl.Department.Id,
-                FirstName = empl.FirstName,
-                LastName = empl.LastName,
-                MiddleName = empl.MiddleName,
-                MaritalStatusId = empl.MaritalStatus.Id,
-                WorkStatusId = empl.WorkStatus.Id,
+                Emails = empl.Emails,
                 Address = empl.Address,
-                BeginningWork = empl.BeginningWork,
                 EndWork = empl.EndWork,
+                LastName = empl.LastName,
                 ImagePath = empl.ImagePath,
-                Emails = empl.Emails
+                FirstName = empl.FirstName,
+                MiddleName = empl.MiddleName,
+                DepartmentId = empl.Department.Id,
+                WorkStatusId = empl.WorkStatus.Id,
+                BeginningWork = empl.BeginningWork,
+                MaritalStatusId = empl.MaritalStatus.Id
             };
         }
 
@@ -236,20 +228,19 @@ namespace DM.PR.WEB.Controllers
             return new Employee()
             {
                 Id = model.Id,
-                Department = new Department { Id = model.DepartmentId },
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                MiddleName = model.MiddleName,
+                Emails = model.Emails,
                 Address = model.Address,
+                EndWork = model.EndWork,
+                LastName = model.LastName,
+                FirstName = model.FirstName,
+                ImagePath = model.ImagePath,
+                MiddleName = model.MiddleName,
                 BeginningWork = model.BeginningWork,
                 WorkStatus = new WorkStatus { Id = model.WorkStatusId },
-                EndWork = model.EndWork,
-                ImagePath = model.ImagePath,
-                Emails = model.Emails,
+                Department = new Department { Id = model.DepartmentId },
                 MaritalStatus = new MaritalStatus { Id = model.MaritalStatusId }
             };
         }
-
 
         #endregion
     }

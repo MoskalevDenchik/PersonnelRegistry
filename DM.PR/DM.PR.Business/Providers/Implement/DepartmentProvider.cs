@@ -29,5 +29,16 @@ namespace DM.PR.Business.Providers.Implement
             ISpecification specification = _specificationCreator.CreateSpecification(pageSize, pageNumber);
             return _rep.FindBy(specification, out totalCount);
         }
+
+        public IReadOnlyCollection<Department> GetDepartments(int parentId)
+        {
+            if (parentId < 0)
+            {
+                return null;
+            }
+
+            ISpecification specification = _specificationCreator.CreateSpecification(parentId);
+            return _rep.FindBy(specification);
+        }
     }
 }

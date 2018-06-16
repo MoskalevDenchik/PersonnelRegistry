@@ -1,8 +1,8 @@
-using DM.PR.WEB.App_Start;
-using WebActivatorEx;
-using System.Web.Mvc;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using DM.PR.WEB.DependencyResolution;
+using DM.PR.WEB.App_Start;
+using System.Web.Mvc;
+using WebActivatorEx;
 using StructureMap;
 
 [assembly: PreApplicationStartMethod(typeof(StructuremapMvc), "Start")]

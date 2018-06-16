@@ -2,6 +2,7 @@
 {
     public interface IDepartmentSpecificationCreator
     {
+        ISpecification CreateSpecification(int parentId);
         ISpecification CreateSpecification(int pageSize, int pageCount);
     }
 }

@@ -76,6 +76,15 @@ namespace DM.PR.Data.Core.InputParameters.Creaters.Implement
             };
         }
 
+        public IInputParameter CreateFind(int parentId)
+        {
+            return new DbInputParameter
+            {
+                Procedure = "SelectDepartmentByParentId",
+                Parameters = { { "@Id", parentId } }
+            };
+        }
+
         #region Converters
 
         private static DataTable ConvertToTable(IReadOnlyCollection<Phone> phones)

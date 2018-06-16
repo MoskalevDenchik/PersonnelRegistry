@@ -18,5 +18,10 @@ namespace DM.PR.Data.Specifications
         {
             return new Specification(_paramCreator.CreateFind(PageSize, Page));
         }
+
+        public ISpecification CreateSpecification(int parentId)
+        {
+            return new Specification(_paramCreator.CreateFind(parentId));
+        }
     }
 }
