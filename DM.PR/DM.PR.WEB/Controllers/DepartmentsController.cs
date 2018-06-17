@@ -54,7 +54,7 @@ namespace DM.PR.WEB.Controllers
             }
 
             var department = MapDepartmentEditToDepartment(model);
-            _departmentServ.Edit(department);
+            _departmentServ.Save(department);
             return RedirectToAction("Index");
         }
 
@@ -72,14 +72,14 @@ namespace DM.PR.WEB.Controllers
             }
 
             var department = MapDepartmentCreateToDepartment(model);
-            _departmentServ.Create(department);
+            _departmentServ.Save(department);
 
             return RedirectToAction("Index");
         }
 
         public ActionResult Delete(int id = 0)
         {
-            _departmentServ.Delete(id);
+            _departmentServ.Remove(id);
             return RedirectToAction("Index");
         }
 

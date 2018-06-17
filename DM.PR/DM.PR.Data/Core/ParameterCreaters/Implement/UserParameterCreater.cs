@@ -3,57 +3,56 @@ using DM.PR.Common.Entities.Account;
 using System.Collections.Generic;
 using DM.PR.Data.Entity;
 using System.Data;
-using System;
 
 namespace DM.PR.Data.Core.ParameterCreaters.Implement
 {
-    internal class UserParameterCreater : ParameterCreater<User>, IUserParameterCreator
+    internal class UserParameterCreater : IParameterCreater<User>, IUserParameterCreator
     {
-        public override IInputParameter CreateGetById(int id)
+        public IInputParameter CreateGetById(int id)
         {
             return new DbInputParameter
             {
                 Procedure = "SelectUserById",
-                Parameters = { { "@Id", id } }
-            };
-        }
-
-        public override IInputParameter CreateGetAll()
-        {
-            return new DbInputParameter
-            {
-                Procedure = "SelectAllUsers",
-                Parameters = null
-            };
-        }
-         
-
-        public override IInputParameter CreateAdd(User item)
-        {
-            return new DbInputParameter
-            {
-                Procedure = "InsertUser",
                 Parameters =
                 {
-                    {"@EmployeeId", item.EmployeeId},
-                    {"@Login",item.Login},
-                    {"@Password",item.Password},
-                    {"@Roles", item.Roles!=null? ConvertToTable(item.Roles):null }
+                    {nameof(id), id}
                 }
             };
         }
 
-        public override IInputParameter CreateUpdate(User item)
+        public IInputParameter CreateGetAll()
         {
-            throw new NotImplementedException();
+            return new DbInputParameter
+            {
+                Procedure = "SelectAllUsers"
+            };
         }
 
-        public override IInputParameter CreateRemove(int id)
+        public IInputParameter CreateSave(User item)
+        {
+            return new DbInputParameter
+            {
+                Procedure = "SaveUser",
+                Parameters =
+                {
+                    {nameof(item.Id), item.Id},
+                    {nameof(item.EmployeeId), item.EmployeeId},
+                    {nameof(item.Login),item.Login},
+                    {nameof(item.Password),item.Password},
+                    {nameof(item.Roles), item.Roles!=null? ConvertToTable(item.Roles):null }
+                }
+            };
+        }
+
+        public IInputParameter CreateRemove(int id)
         {
             return new DbInputParameter
             {
                 Procedure = "DeleteUser",
-                Parameters = { { "@Id", id } }
+                Parameters =
+                {
+                    {nameof(id), id}
+                }
             };
         }
 
@@ -62,7 +61,10 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             return new DbInputParameter
             {
                 Procedure = "SelectUserByLogin",
-                Parameters = { { "@Login", login } }
+                Parameters =
+                {
+                    {nameof(login), login}
+                }
             };
         }
 
@@ -71,7 +73,10 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             return new DbInputParameter
             {
                 Procedure = "SelectUserByEmployeeId",
-                Parameters = { { "@Id", employeeId } }
+                Parameters =
+                {
+                    {nameof(employeeId), employeeId}
+                }
             };
         }
 

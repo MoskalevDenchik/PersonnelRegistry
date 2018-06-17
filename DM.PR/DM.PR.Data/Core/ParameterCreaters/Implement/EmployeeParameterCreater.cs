@@ -6,120 +6,108 @@ using System.Data;
 
 namespace DM.PR.Data.Core.ParameterCreaters.Implement
 {
-    internal class EmployeeParameterCreater : ParameterCreater<Employee>, IEmployeeParameterCreater
+    internal class EmployeeParameterCreater : IParameterCreater<Employee>, IEmployeeParameterCreater
     {
-        public override IInputParameter CreateGetById(int id)
+        public IInputParameter CreateGetById(int id)
         {
             return new DbInputParameter
             {
                 Procedure = "SelectEmployeeById",
-                Parameters = { { "@Id", id } }
-            };
-        }
-
-        public override IInputParameter CreateGetAll()
-        {
-            return new DbInputParameter
-            {
-                Procedure = "SelectAllEmployees",
-                Parameters = null
-            };
-        }
-
-
-        public override IInputParameter CreateAdd(Employee item)
-        {
-            return new DbInputParameter
-            {
-                Procedure = "InsertEmployee",
                 Parameters =
                 {
-                    {"@DepartmentId",item?.Department.Id},
-                    {"@LastName ",item.LastName},
-                    {"@FirstName",item.FirstName},
-                    {"@MiddleName",item.MiddleName},
-                    {"@Address",item.Address},
-                    {"@ImagePath",item.ImagePath},
-                    {"@BeginningWork",item.BeginningWork},
-                    {"@EndWork",item.EndWork},
-                    {"@MaritalStatusId",item?.MaritalStatus.Id},
-                    {"@HomePhone",item.HomePhone},
-                    {"@MobilePhone",item.MobilePhone},
-                    {"@WorkPhone",item.WorkPhone},
-                    {"@WorkStatusId",item?.WorkStatus.Id},                           
-                    {"@Emails",item.Emails!=null?ConvertToTable(item.Emails):null}
+                    {nameof(id), id}
                 }
             };
         }
 
-        public override IInputParameter CreateUpdate(Employee item)
+        public IInputParameter CreateGetAll()
         {
             return new DbInputParameter
             {
-                Procedure = "UpdateEmployee",
+                Procedure = "SelectAllEmployees"
+            };
+        }
+
+        public IInputParameter CreateSave(Employee item)
+        {
+            return new DbInputParameter
+            {
+                Procedure = "SaveEmployee",
                 Parameters =
                 {
-                    {"@Id",item.Id},
-                    {"@DepartmentId",item?.Department.Id},
-                    {"@LastName ",item.LastName},
-                    {"@FirstName",item.FirstName},
-                    {"@MiddleName",item.MiddleName},
-                    {"@Address",item.Address},
-                    {"@ImagePath",item.ImagePath},
-                    {"@BeginningWork",item.BeginningWork},
-                    {"@EndWork",item.EndWork},
-                    {"@HomePhone",item.HomePhone},
-                    {"@MobilePhone",item.MobilePhone},
-                    {"@WorkPhone",item.WorkPhone},
-                    {"@MaritalStatusId",item?.MaritalStatus.Id},
-                    {"@WorkStatusId",item?.WorkStatus.Id},                          
-                    {"@Emails",item.Emails!=null?ConvertToTable(item.Emails):null}
+                    {nameof(item.Id),item.Id},
+                    {nameof(item.Department)+"Id",item.Department.Id},
+                    {nameof(item.LastName),item.LastName},
+                    {nameof(item.FirstName),item.FirstName},
+                    {nameof(item.MiddleName),item.MiddleName},
+                    {nameof(item.Address),item.Address},
+                    {nameof(item.ImagePath),item.ImagePath},
+                    {nameof(item.BeginningWork),item.BeginningWork},
+                    {nameof(item.EndWork),item.EndWork},
+                    {nameof(item.HomePhone),item.HomePhone},
+                    {nameof(item.MobilePhone),item.MobilePhone},
+                    {nameof(item.WorkPhone),item.WorkPhone},
+                    {nameof(item.MaritalStatus)+"Id",item?.MaritalStatus?.Id??0},
+                    {nameof(item.WorkStatus)+"Id",item?.WorkStatus?.Id??0},
+                    {nameof(item.Id),item.Emails!=null?ConvertToTable(item.Emails):null}
                 }
             };
         }
 
-        public override IInputParameter CreateRemove(int id)
+        public IInputParameter CreateRemove(int id)
         {
             return new DbInputParameter
             {
-                Procedure = "DeleteEmployeeById",
-                Parameters = { { "@Id", id } }
+                Procedure = "DeleteEmployee",
+                Parameters =
+                {
+                    {nameof(id), id }
+                }
             };
         }
 
-        public IInputParameter CreateFind(int pageSize, int page)
+        public IInputParameter CreateFind(int pageSize, int pageNumber)
         {
             return new DbInputParameter
             {
-                Procedure = "SelectAllEmployees",
-                Parameters = { { "@PageSize", pageSize }, { "@Page", page } }
+                Procedure = "SelectPageEmployees",
+                Parameters =
+                {
+                    {nameof(pageSize), pageSize},
+                    {nameof(pageNumber), pageNumber}
+                }
             };
         }
 
-        public IInputParameter CreateByDepartmentId(int departmentId, int pageSize, int page)
+        public IInputParameter CreateByDepartmentId(int departmentId, int pageSize, int pageNumber)
         {
             return new DbInputParameter
             {
                 Procedure = "SelectPageEmployeesByDepartmentId",
-                Parameters = { { "@DepartmentId", departmentId }, { "@PageSize", pageSize }, { "@Page", page } }
+                Parameters =
+                {
+                    {nameof(departmentId), departmentId},
+                    {nameof(pageSize), pageSize},
+                    {nameof(pageNumber), pageNumber}
+                }
             };
         }
 
-        public IInputParameter CreateBySearchParams(string lastName, string firstName, string middledName, int fromYear, int toYear, int WorkStatusId, int pageSize, int page)
+        public IInputParameter CreateBySearchParams(string lastName, string firstName, string middledName, int fromYear, int toYear, int WorkStatusId, int pageSize, int pageNumber)
         {
             return new DbInputParameter
             {
                 Procedure = "SelectPageEmployeesBySearchParams",
                 Parameters =
                 {
-                   {"@LastName", lastName},
-                   {"@FirstName", firstName},
-                   {"@MiddleName", middledName},
-                   {"@FromYear", fromYear},
-                   {"@ToYear", toYear},
-                   {"@WorkStatusId", WorkStatusId},
-                   {"@PageSize",pageSize},
-                   {"@Page",page}
+                   {nameof(lastName), lastName},
+                   {nameof(firstName), firstName},
+                   {nameof(middledName), middledName},
+                   {nameof(fromYear), fromYear},
+                   {nameof(toYear), toYear},
+                   {nameof(WorkStatusId), WorkStatusId},
+                   {nameof(pageSize),pageSize},
+                   {nameof(pageNumber),pageNumber}
                 }
             };
         }
@@ -138,7 +126,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             }
             return table;
         }
-        
+
 
         #endregion
     }

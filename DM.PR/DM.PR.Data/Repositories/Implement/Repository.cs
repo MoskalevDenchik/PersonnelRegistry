@@ -10,9 +10,9 @@ namespace DM.PR.Data.Repositories.Implement
     internal class Repository<T> : IRepository<T>
     {
         private readonly IDataContext<T> _dataContext;
-        private readonly ParameterCreater<T> _parameterCreater;
+        private readonly IParameterCreater<T> _parameterCreater;
 
-        public Repository(ParameterCreater<T> creater, IDataContext<T> dataContext)
+        public Repository(IParameterCreater<T> creater, IDataContext<T> dataContext)
         {
             Inspector.ThrowExceptionIfNull(creater, dataContext);
             _dataContext = dataContext;
@@ -33,19 +33,19 @@ namespace DM.PR.Data.Repositories.Implement
 
         public IReadOnlyCollection<T> FindBy(ISpecification specification)
         {
-            IInputParameter findByParameter = _parameterCreater.CreateFindBy(specification);
+            IInputParameter findByParameter = specification.GetSpecific();
             return _dataContext.GetEntities(findByParameter);
         }
 
         public IReadOnlyCollection<T> FindBy(ISpecification specification, out int outputParameter)
         {
-            IInputParameter findByParameter = _parameterCreater.CreateFindBy(specification);
+            IInputParameter findByParameter = specification.GetSpecific();
             return _dataContext.GetEntities(findByParameter, out outputParameter);
         }
 
-        public void Add(T item)
+        public void Save(T item)
         {
-            IInputParameter addByParameter = _parameterCreater.CreateAdd(item);
+            IInputParameter addByParameter = _parameterCreater.CreateSave(item);
             _dataContext.Save(addByParameter);
         }
 
@@ -53,12 +53,6 @@ namespace DM.PR.Data.Repositories.Implement
         {
             IInputParameter removeByParameter = _parameterCreater.CreateRemove(id);
             _dataContext.Save(removeByParameter);
-        }
-
-        public void Update(T item)
-        {
-            IInputParameter updateByParameter = _parameterCreater.CreateUpdate(item);
-            _dataContext.Save(updateByParameter);
         }
     }
 }

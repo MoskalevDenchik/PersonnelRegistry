@@ -46,7 +46,7 @@ namespace DM.PR.WEB.Controllers
             }
 
             var user = MapWorkStatusCreateViewModelToWorkStatus(model);
-            _workStatusService.Create(user);
+            _workStatusService.Save(user);
 
             return RedirectToAction("Index");
         }
@@ -67,14 +67,14 @@ namespace DM.PR.WEB.Controllers
             }
 
             var user = MapWorkStatusEditViewModelToWorkStatus(model);
-            _workStatusService.Edit(user);
+            _workStatusService.Save(user);
 
             return RedirectToAction("Index");
         }
 
         public ActionResult Delete(int id = 0)
         {
-            _workStatusService.Delete(id);
+            _workStatusService.Remove(id);
             return RedirectToAction("Index");
         }
 

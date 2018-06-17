@@ -29,13 +29,13 @@ namespace DM.PR.Data.Core.DataBase.Data.Implement
         protected override IDbCommand GetProcedureCommand(IDbConnection connection, DbInputParameter parameter)
         {
             var command = new SqlCommand(parameter.Procedure, connection as SqlConnection)
-            {                                                    
+            {
                 CommandType = CommandType.StoredProcedure,
             };
 
             if (parameter.Parameters != null)
             {
-                command.Parameters.AddRange(parameter.Parameters.Select(d => new SqlParameter(d.Key, d.Value)).ToArray());
+                command.Parameters.AddRange(parameter.Parameters.Select(d => new SqlParameter($"@{d.Key}", d.Value)).ToArray());
             }
             return command;
         }

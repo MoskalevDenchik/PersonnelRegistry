@@ -6,7 +6,7 @@ using DM.PR.Common.Helpers;
 
 namespace DM.PR.Business.Providers.Implement
 {
-    internal class BillBoardProvider : Provider<BillBoard>, IProvider<BillBoard>
+    internal class BillBoardProvider : Provider<BillBoard>
     {
         private readonly IRepository<BillBoard> _rep;
         private readonly IСacheStorage _cache;

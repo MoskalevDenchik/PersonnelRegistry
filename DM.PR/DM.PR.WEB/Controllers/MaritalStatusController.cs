@@ -46,7 +46,7 @@ namespace DM.PR.WEB.Controllers
             }
 
             var user = MapMaritalStatusCreateViewModelToMaritalStatus(model);
-            _kindPhoneServ.Create(user);
+            _kindPhoneServ.Save(user);
 
             return RedirectToAction("Index");
         }
@@ -67,14 +67,14 @@ namespace DM.PR.WEB.Controllers
             }
 
             var user = MapMaritalStatusEditViewModelToMaritalStatus(model);
-            _kindPhoneServ.Edit(user);
+            _kindPhoneServ.Save(user);
 
             return RedirectToAction("Index");
         }
 
         public ActionResult Delete(int id = 0)
         {
-            _kindPhoneServ.Delete(id);
+            _kindPhoneServ.Remove(id);
             return RedirectToAction("Index");
         }
 

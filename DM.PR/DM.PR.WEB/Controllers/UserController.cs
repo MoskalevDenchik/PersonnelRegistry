@@ -50,7 +50,7 @@ namespace DM.PR.WEB.Controllers
             }
 
             var user = MapUserCreateViewModelToUser(model);
-            _userServ.Create(user);
+            _userServ.Save(user);
 
             return RedirectToAction("Index");
         }
@@ -71,14 +71,14 @@ namespace DM.PR.WEB.Controllers
             }
 
             var user = MapUserEditViewModelToUser(model);
-            _userServ.Edit(user);
+            _userServ.Save(user);
 
             return RedirectToAction("Index");
         }
 
         public ActionResult Delete(int id = 0)
         {
-            _userServ.Delete(id);
+            _userServ.Remove(id);
             return RedirectToAction("Index");
         }
 

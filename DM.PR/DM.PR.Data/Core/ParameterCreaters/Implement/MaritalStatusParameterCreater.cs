@@ -4,51 +4,50 @@ using DM.PR.Data.Entity;
 
 namespace DM.PR.Data.Core.ParameterCreaters.Implement
 {
-    internal class MaritalStatusParameterCreater : ParameterCreater<MaritalStatus>
+    internal class MaritalStatusParameterCreater : IParameterCreater<MaritalStatus>
     {
-        public override IInputParameter CreateGetById(int id)
+        public IInputParameter CreateGetById(int id)
         {
             return new DbInputParameter
             {
                 Procedure = "GetMaritalStatusById",
-                Parameters = { { "@Id", id } }
+                Parameters =
+                {
+                    {nameof(id), id}
+                }
             };
         }
 
-        public override IInputParameter CreateGetAll()
-        {
-
-            return new DbInputParameter
-            {
-                Procedure = "GetAllMaritalStatuses",
-                Parameters = null
-            };
-        }
-
-        public override IInputParameter CreateAdd(MaritalStatus item)
+        public IInputParameter CreateGetAll()
         {
             return new DbInputParameter
             {
-                Procedure = "InsertMaritalStatus",
-                Parameters = { { "@Status", item.Status } }
+                Procedure = "GetAllMaritalStatuses"
             };
         }
 
-        public override IInputParameter CreateRemove(int id)
+        public IInputParameter CreateSave(MaritalStatus item)
+        {
+            return new DbInputParameter
+            {
+                Procedure = "SaveMaritalStatus",
+                Parameters =
+                {
+                    {nameof(item.Id), item.Id},
+                    {nameof(item.Status), item.Status}
+                }
+            };
+        }
+
+        public IInputParameter CreateRemove(int id)
         {
             return new DbInputParameter
             {
                 Procedure = "DeleteMaritalStatus",
-                Parameters = { { "@Id", id } }
-            };
-        }
-
-        public override IInputParameter CreateUpdate(MaritalStatus item)
-        {
-            return new DbInputParameter
-            {
-                Procedure = "UpdateMaritalStatus",
-                Parameters = { { "@Id", item.Id }, { "@Status", item.Status } }
+                Parameters =
+                {
+                    {nameof(id), id }
+                }
             };
         }
     }

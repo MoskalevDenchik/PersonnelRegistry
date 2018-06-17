@@ -5,74 +5,66 @@ using System.Data;
 
 namespace DM.PR.Data.Core.InputParameters.Creaters.Implement
 {
-    internal class DepartmentParameterCreater : ParameterCreater<Department>, IDepartmentParameterCreater
+    internal class DepartmentParameterCreater : IParameterCreater<Department>, IDepartmentParameterCreater
     {
-        public override IInputParameter CreateGetById(int id)
+        public IInputParameter CreateGetById(int id)
         {
             return new DbInputParameter
             {
                 Procedure = "SelectDepartmentById",
-                Parameters = { { "@Id", id } }
-            };
-        }
-
-        public override IInputParameter CreateGetAll()
-        {
-            return new DbInputParameter
-            {
-                Procedure = "SelectAllDepartments",
-                Parameters = null
-            };
-        }
-
-        public override IInputParameter CreateAdd(Department item)
-        {
-            return new DbInputParameter
-            {
-                Procedure = "InsertDepartment",
                 Parameters =
                 {
-                    {"@Name", item.Name},
-                    {"@Address", item.Address },
-                    {"@ParentId", item.ParentId },
-                    {"@Description", item.Description},
-                    {"@Phones", item.Phones!=null? ConvertToTable(item.Phones):null}
+                    {nameof(id), id}
                 }
             };
         }
 
-        public override IInputParameter CreateUpdate(Department item)
+        public IInputParameter CreateGetAll()
         {
             return new DbInputParameter
             {
-                Procedure = "UpdateDepartment",
+                Procedure = "SelectAllDepartments"
+            };
+        }
+
+        public IInputParameter CreateSave(Department item)
+        {
+            return new DbInputParameter
+            {
+                Procedure = "SaveDepartment",
                 Parameters =
-                {
-                    {"@Id",item.Id},
-                    {"@Name", item.Name },
-                    {"@Address", item.Address},
-                    {"@ParentId", item.ParentId},
-                    {"@Description", item.Description},
-                    {"@Phones", item.Phones!=null? ConvertToTable(item.Phones):null}
+                {   {nameof(item.Id), item.Id },
+                    {nameof(item.Name), item.Name},
+                    {nameof(item.Address), item.Address },
+                    {nameof(item.ParentId), item.ParentId },
+                    {nameof(item.Description), item.Description},
+                    {nameof(item.Phones), item.Phones!=null? ConvertToTable(item.Phones):null}
                 }
             };
         }
 
-        public override IInputParameter CreateRemove(int id)
+        public IInputParameter CreateRemove(int id)
         {
             return new DbInputParameter
             {
-                Procedure = "DeleteDepartmentById",
-                Parameters = { { "@Id", id } }
+                Procedure = "DeleteDepartment",
+                Parameters =
+                {
+                    {nameof(id), id}
+                }
             };
         }
 
-        public IInputParameter CreateFind(int pageSize, int page)
+        public IInputParameter CreateFind(int pageSize, int pageNumber)
         {
             return new DbInputParameter
             {
-                Procedure = "SelectAllDepartmtsByPage",
-                Parameters = { { "@PageSize", pageSize }, { "@Page", page } }
+                Procedure = "SelectPageDepartmts",
+                Parameters =
+                {
+                    {nameof(pageSize), pageSize},
+                    {nameof(pageNumber), pageNumber}
+                }
             };
         }
 
@@ -81,7 +73,10 @@ namespace DM.PR.Data.Core.InputParameters.Creaters.Implement
             return new DbInputParameter
             {
                 Procedure = "SelectDepartmentByParentId",
-                Parameters = { { "@Id", parentId } }
+                Parameters =
+                {
+                    {nameof(parentId), parentId}
+                }
             };
         }
 
@@ -91,7 +86,7 @@ namespace DM.PR.Data.Core.InputParameters.Creaters.Implement
         {
             var table = new DataTable("Phones");
             table.Columns.Add("Id", typeof(int));
-            table.Columns.Add("Number", typeof(string));  
+            table.Columns.Add("Number", typeof(string));
 
             foreach (var item in phones)
             {

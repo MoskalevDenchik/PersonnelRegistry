@@ -5,36 +5,34 @@ using System;
 
 namespace DM.PR.Data.Core.ParameterCreaters.Implement
 {
-    internal class RoleParameterCreater : ParameterCreater<Role>
+    internal class RoleParameterCreater : IParameterCreater<Role>
     {
-        public override IInputParameter CreateGetById(int id)
+        public IInputParameter CreateGetById(int id)
         {
             return new DbInputParameter
             {
                 Procedure = "SelectRoleById",
-                Parameters = { { "@Id", id } }
+                Parameters =
+                {
+                    {nameof(id), id }
+                }
             };
         }
 
-        public override IInputParameter CreateGetAll()
+        public IInputParameter CreateGetAll()
         {
             return new DbInputParameter
             {
-                Procedure = "SelectAllRoles",
-                Parameters = null
+                Procedure = "SelectAllRoles"
             };
         }
 
-        public override IInputParameter CreateAdd(Role item)
-        {
-            throw new NotImplementedException();
-        }
-        public override IInputParameter CreateUpdate(Role item)
+        public IInputParameter CreateSave(Role item)
         {
             throw new NotImplementedException();
         }
 
-        public override IInputParameter CreateRemove(int id)
+        public IInputParameter CreateRemove(int id)
         {
             throw new NotImplementedException();
         }

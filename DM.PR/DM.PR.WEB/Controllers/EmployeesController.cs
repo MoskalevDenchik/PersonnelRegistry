@@ -72,7 +72,7 @@ namespace DM.PR.WEB.Controllers
             }
 
             var employee = MapEmployeeCreateViewModelToEmployee(model);
-            _employeeService.Create(employee);
+            _employeeService.Save(employee);
 
             return RedirectToAction("Index");
         }
@@ -93,14 +93,14 @@ namespace DM.PR.WEB.Controllers
                 return View(model);
             }
             var employee = MapEmployeeEditViewModelToEmployee(model);
-            _employeeService.Edit(employee);
+            _employeeService.Save(employee);
             return RedirectToAction("Index");
         }
 
         [Authorize(Roles = "admin")]
         public ActionResult Delete(int id = 0)
         {
-            _employeeService.Delete(id);
+            _employeeService.Remove(id);
             return RedirectToAction("Index");
         }
 

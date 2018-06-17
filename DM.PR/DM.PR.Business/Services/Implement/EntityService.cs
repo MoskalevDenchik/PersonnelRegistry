@@ -14,17 +14,12 @@ namespace DM.PR.Business.Services.Implement
             _rep = rep;
         }
 
-        public virtual void Create(T entity)
+        public virtual void Save(T entity)
         {
-            _rep.Add(entity);
-        }
+            _rep.Save(entity);
+        }  
 
-        public virtual void Edit(T entity)
-        {
-            _rep.Update(entity);
-        }
-
-        public virtual void Delete(int id)
+        public virtual void Remove(int id)
         {
             if (id <= 0)
             {
@@ -33,7 +28,5 @@ namespace DM.PR.Business.Services.Implement
 
             _rep.Remove(id);
         }
-
-
     }
 }
