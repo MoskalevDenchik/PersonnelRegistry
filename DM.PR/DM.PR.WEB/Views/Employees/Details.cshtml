@@ -4,11 +4,11 @@
     Layout = "~/Views/Shared/_Details.cshtml";
 
     MvcHtmlString EndOfWork = Model.EndOfWork == null ? null
-        : new MvcHtmlString($" to {Html.DisplayFor(m => m.EndOfWork).ToString()}");
+        : new MvcHtmlString($" по {Html.DisplayFor(m => m.EndOfWork).ToString()}");
 
 }
 
-<div class="row">
+<div class="row" style="font-size: 17px;">
     <div class="col-md-5" style="padding:20px 35px">
         <img src=@Model.ImagePath class="img-thumbnail img-responsive" />
     </div>
@@ -33,7 +33,7 @@
         </div>
         <div class="row">
             <div class="col-md-4 text-right">
-                <span class="text-info">Семейное положение:</span>
+                <span class="text-info">С/П:</span>
             </div>
             <div class="col-md-8 text-left">
                 <span class="text-uppercase">@Model.MaritalStatus</span>
@@ -48,27 +48,13 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4 text-right">
-                <span class="text-info">Домашний телефон:</span>
+            <div class="col-md-4  text-right">
+                <span class="text-info">Телефоны:</span>
             </div>
             <div class="col-md-8 text-left">
-                <span class="text-uppercase">@Model.HomePhone</span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 text-right">
-                <span class="text-info">Мобильный телефон:</span>
-            </div>
-            <div class="col-md-8 text-left">
-                <span class="text-uppercase">@Model.MobilePhone</span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 text-right">
-                <span class="text-info">Рабочий телефон:</span>
-            </div>
-            <div class="col-md-8 text-left">
-                <span class="text-uppercase">@Model.WorkPhone</span>
+                <p> @Model.HomePhone (Домашний)</p>
+                <p> @Model.WorkPhone (Рабочий)</p>
+                <p> @Model.MobilePhone (Мобильный)</p>
             </div>
         </div>
         <div class="row">
@@ -77,9 +63,9 @@
             </div>
             <div class="col-md-8 text-left">
                 @foreach (var item in Model.Emails)
-            {
-                <p>@item.Address</p>
-        }
+                {
+                    <p>@item.Address</p>
+                }
             </div>
         </div>
         <div class="row">
@@ -98,9 +84,7 @@
                 <p> с @Html.DisplayFor(m => m.BeginningOfWork)  @EndOfWork</p>
             </div>
         </div>
-
     </div>
-
     <div class="col-md-6">
     </div>
 </div>
