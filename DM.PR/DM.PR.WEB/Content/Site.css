@@ -31,6 +31,18 @@ textarea {
     margin-bottom: 5px;
 }
 
+#emplCreate div:nth-child(7) {
+    margin-bottom: 2px;
+}
+
+#emplCreate div:nth-child(8) {
+    margin-bottom: 5px;
+}
+
+#emplCreate #Emails input {
+    margin-bottom: 5px;
+}
+
 #emplCreate textarea[name=Address] {
     resize: none;
 }

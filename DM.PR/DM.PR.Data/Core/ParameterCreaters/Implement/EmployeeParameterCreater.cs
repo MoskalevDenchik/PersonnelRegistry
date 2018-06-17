@@ -49,7 +49,7 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
                     {nameof(item.WorkPhone),item.WorkPhone},
                     {nameof(item.MaritalStatus)+"Id",item?.MaritalStatus?.Id??0},
                     {nameof(item.WorkStatus)+"Id",item?.WorkStatus?.Id??0},
-                    {nameof(item.Id),item.Emails!=null?ConvertToTable(item.Emails):null}
+                    {nameof(item.Emails),item.Emails!=null?ConvertToTable(item.Emails):null}
                 }
             };
         }

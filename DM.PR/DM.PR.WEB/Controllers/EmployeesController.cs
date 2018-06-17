@@ -60,18 +60,19 @@ namespace DM.PR.WEB.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
-            return View();
+            ViewBag.title = "Добавьте сотрудника";
+            return View("Save",new EmployeeSaveViewModel { Emails = new List<Email> { new Email() } });
         }
 
         [HttpPost]
-        public ActionResult Create(EmployeeCreateViewModel model)
+        public ActionResult Create(EmployeeSaveViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View("Save",model);
             }
 
-            var employee = MapEmployeeCreateViewModelToEmployee(model);
+            var employee = MapEmployeeSaveViewModelToEmployee(model);
             _employeeService.Save(employee);
 
             return RedirectToAction("Index");
@@ -80,19 +81,20 @@ namespace DM.PR.WEB.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Edit(int id = 0)
         {
+            ViewBag.title = "Редактируйте сотрудника";
             var employee = _employeeProvider.GetById(id);
-            var model = MapEmployeeToEmployeeCreateViewModel(employee);
-            return View(model);
+            var model = MapEmployeeToEmployeeSaveViewModel(employee);
+            return View("Save",model);
         }
 
         [HttpPost]
-        public ActionResult Edit(EmployeeEditViewModel model)
+        public ActionResult Edit(EmployeeSaveViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View("Save",model);
             }
-            var employee = MapEmployeeEditViewModelToEmployee(model);
+            var employee = MapEmployeeSaveViewModelToEmployee(model);
             _employeeService.Save(employee);
             return RedirectToAction("Index");
         }
@@ -176,6 +178,9 @@ namespace DM.PR.WEB.Controllers
                 Address = empl.Address,
                 LastName = empl.LastName,
                 EndOfWork = empl.EndWork,
+                HomePhone = empl.HomePhone,
+                MobilePhone = empl.MobilePhone,
+                WorkPhone = empl.WorkPhone,
                 FirstName = empl.FirstName,
                 ImagePath = empl.ImagePath,
                 MiddleName = empl.MiddleName,
@@ -185,33 +190,18 @@ namespace DM.PR.WEB.Controllers
                 MaritalStatus = empl.MaritalStatus.Status
             };
         }
-
-        private Employee MapEmployeeCreateViewModelToEmployee(EmployeeCreateViewModel model)
+       
+        private EmployeeSaveViewModel MapEmployeeToEmployeeSaveViewModel(Employee empl)
         {
-            return new Employee()
-            {
-                Emails = model.Emails,
-                Address = model.Address,
-                EndWork = model.EndWork,
-                LastName = model.LastName,
-                ImagePath = model.ImagePath,
-                FirstName = model.FirstName,
-                MiddleName = model.MiddleName,
-                BeginningWork = model.BeginningWork,
-                WorkStatus = new WorkStatus { Id = model.WorkStatusId },
-                Department = new Department { Id = model.DepartmentId },
-                MaritalStatus = new MaritalStatus { Id = model.MaritalStatusId }
-            };
-        }
-
-        private EmployeeEditViewModel MapEmployeeToEmployeeCreateViewModel(Employee empl)
-        {
-            return new EmployeeEditViewModel()
+            return new EmployeeSaveViewModel()
             {
                 Id = empl.Id,
                 Emails = empl.Emails,
                 Address = empl.Address,
                 EndWork = empl.EndWork,
+                HomePhone = empl.HomePhone,
+                MobilePhone = empl.MobilePhone,
+                WorkPhone = empl.WorkPhone,
                 LastName = empl.LastName,
                 ImagePath = empl.ImagePath,
                 FirstName = empl.FirstName,
@@ -223,7 +213,7 @@ namespace DM.PR.WEB.Controllers
             };
         }
 
-        private Employee MapEmployeeEditViewModelToEmployee(EmployeeEditViewModel model)
+        private Employee MapEmployeeSaveViewModelToEmployee(EmployeeSaveViewModel model)
         {
             return new Employee()
             {
@@ -232,6 +222,9 @@ namespace DM.PR.WEB.Controllers
                 Address = model.Address,
                 EndWork = model.EndWork,
                 LastName = model.LastName,
+                HomePhone = model.HomePhone,
+                MobilePhone = model.MobilePhone,
+                WorkPhone = model.WorkPhone,
                 FirstName = model.FirstName,
                 ImagePath = model.ImagePath,
                 MiddleName = model.MiddleName,

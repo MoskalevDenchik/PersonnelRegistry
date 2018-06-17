@@ -1,5 +1,3 @@
 ﻿@model int
 
-<div class="row">
-    @Html.TextBox($"Emails[{Model}].Address", null, new { @class = "form-control", placeholder = "Введите почтовый адрес...." })
-</div>
+@Html.TextBox($"Emails[{Model}].Address", null, new { @class = "form-control", placeholder = "Введите почтовый адрес...." })

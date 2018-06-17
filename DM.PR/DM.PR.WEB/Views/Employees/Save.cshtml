@@ -1,11 +1,12 @@
-﻿@model DM.PR.WEB.Models.Employee.EmployeeCreateViewModel
+﻿@model DM.PR.WEB.Models.Employee.EmployeeSaveViewModel
 
-<h2 class="text-center">Добавьте нового сотрудника</h2> <br />
+<h2 class="text-center">@ViewBag.title</h2> <br />
 
 @using (Html.BeginForm("Create"))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
+    @Html.HiddenFor(model=>model.Id)
 
     <div class="row" id="emplCreate">
         <div class="col-md-offset-1 col-md-3">
@@ -23,38 +24,22 @@
             </div>
             <br />
             <div class="form-group">
-                @Html.LabelFor(model => model.HomePhone, new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.TextBoxFor(model => model.HomePhone, new { @class = "form-control ", placeholder = "Введите номер телефона..." })
-                    @Html.ValidationMessageFor(model => model.HomePhone, "", new { @class = "text-danger" })
+                <div class="col-md-12">
+                    @Html.Action("GetWorkStatusList", "WorkStatus", new { selectedId = Model.WorkStatusId > 0 ? Model.WorkStatusId : 0 })
+                    @Html.ValidationMessageFor(model => model.WorkStatusId, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.WorkPhone, new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.TextBoxFor(model => model.WorkPhone, new { @class = "form-control ", placeholder = "Введите номер телефона..." })
-                    @Html.ValidationMessageFor(model => model.WorkPhone, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.BeginningWork, new { @class = "control-label" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.BeginningWork, new { htmlAttributes = new { @class = "form-control", placeholder = "Дата приема на работу..." } })
+                    @Html.ValidationMessageFor(model => model.BeginningWork, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.MobilePhone, new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.TextBoxFor(model => model.MobilePhone, new { @class = "form-control ", placeholder = "Введите номер телефона..." })
-                    @Html.ValidationMessageFor(model => model.MobilePhone, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    @Html.ValidationMessageFor(model => model.Emails, "", new { @class = "text-danger" })
-                    <div class="row">
-                        @Html.LabelFor(model => model.Emails, new { @class = "control-label col-md-4" })
-                    </div>
-                    <div class="col-md-12" id="Emails">
-
-                    </div>
-                    <div class="col-md-12 text-center">
-                        <a id="AddEmail" class="btn btn-default">Добавить Email</a>
-                    </div>
+                @Html.LabelFor(model => model.EndWork, new { @class = "control-label" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.EndWork, new { htmlAttributes = new { @class = "form-control", placeholder = "Дата увальнения..." } })
                 </div>
             </div>
         </div>
@@ -63,9 +48,8 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.DepartmentId, new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.Action("GetDepartmentList")
+                        @Html.Action("GetDepartmentList", new { selectedId = Model.DepartmentId > 0 ? Model.DepartmentId : 0 })
                         @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
-
                     </div>
                 </div>
                 <div class="form-group">
@@ -98,29 +82,45 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.MaritalStatusId, new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.Action("GetMaritalStatusList", "MaritalStatus")
+                        @Html.Action("GetMaritalStatusList", "MaritalStatus", new { selectedId = Model?.MaritalStatusId > 0 ? Model.MaritalStatusId : 0 })
                         @Html.ValidationMessageFor(model => model.MaritalStatusId, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.WorkStatusId, new { @class = "control-label col-md-4" })
+                    @Html.Label("Телефоны", new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.Action("GetWorkStatusList", "WorkStatus")
-                        @Html.ValidationMessageFor(model => model.WorkStatusId, "", new { @class = "text-danger" })
+                        @Html.TextBoxFor(model => model.HomePhone, new { @class = "form-control ", placeholder = "Домашний телефон..." })
+                        @Html.ValidationMessageFor(model => model.HomePhone, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.BeginningWork, new { @class = "control-label col-md-4" })
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.BeginningWork, new { htmlAttributes = new { @class = "form-control", placeholder = "Дата приема на работу..." } })
-                        @Html.ValidationMessageFor(model => model.BeginningWork, "", new { @class = "text-danger" })
+                    <div class="col-md-offset-4 col-md-8">
+                        @Html.TextBoxFor(model => model.WorkPhone, new { @class = "form-control ", placeholder = "Рабочий телефон..." })
+                        @Html.ValidationMessageFor(model => model.WorkPhone, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.EndWork, new { @class = "control-label col-md-4" })
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.EndWork, new { htmlAttributes = new { @class = "form-control", placeholder = "Дата увальнения..." } })
-                        @Html.ValidationMessageFor(model => model.Emails, "", new { @class = "text-danger" })
+                    <div class=" col-md-offset-4 col-md-8">
+                        @Html.TextBoxFor(model => model.MobilePhone, new { @class = "form-control ", placeholder = "Мобильный телефон..." })
+                        @Html.ValidationMessageFor(model => model.MobilePhone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Emails[0].Address, new { @class = "control-label col-md-4" })
+                    <div class="col-md-8" id="Emails">
+                        @for (int i = 0; i < Model.Emails.Count; i++)
+                        {
+                            <div id="email">
+                                @Html.HiddenFor(Model => Model.Emails[i].Id)
+                                @Html.TextBoxFor(model => model.Emails[i].Address, new { @class = "form-control ", placeholder = "Почтовый адрес..." })
+                                @Html.ValidationMessageFor(model => model.Emails[i].Address, "", new { @class = "text-danger" })
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-5">
+                        <a id="AddEmail" class="btn btn-default">Добавить Email</a>
                     </div>
                 </div>
             </div>
@@ -136,7 +136,7 @@
 
 
 @section Scripts {
-    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/Employee/Create.js"></script>
     <script src="~/Scripts/Emails.js"></script>
     <script src="~/Scripts/Employee/UpdateImage.js"></script>
 }

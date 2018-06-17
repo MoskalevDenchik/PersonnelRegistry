@@ -209,8 +209,7 @@
     <Compile Include="Models\Department\DepartmentEditViewModel.cs" />
     <Compile Include="Models\Department\DepartmentSelectModel.cs" />
     <Compile Include="Models\Employee\EmployeeDetailsViewModel.cs" />
-    <Compile Include="Models\Employee\EmployeeCreateViewModel.cs" />
-    <Compile Include="Models\Employee\EmployeeEditViewModel.cs" />
+    <Compile Include="Models\Employee\EmployeeSaveViewModel.cs" />
     <Compile Include="Models\MaritalStatus\MaritalStatusCreateViewModel.cs" />
     <Compile Include="Models\MaritalStatus\MaritalStatusEditViewModel.cs" />
     <Compile Include="Models\Navigation\NavigationMenuViewModel.cs" />
@@ -233,9 +232,8 @@
     <Content Include="Views\Employees\EmployeeSummary.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
     <Content Include="Views\Departments\Details.cshtml" />
-    <Content Include="Views\Employees\Create.cshtml" />
+    <Content Include="Views\Employees\Save.cshtml" />
     <Content Include="Views\Employees\Details.cshtml" />
-    <Content Include="Views\Employees\Edit.cshtml" />
     <Content Include="Views\Shared\_Details.cshtml" />
     <Content Include="Views\Departments\Edit.cshtml" />
     <Content Include="Views\Departments\Index.cshtml" />

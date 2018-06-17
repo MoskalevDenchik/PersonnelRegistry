@@ -10,10 +10,8 @@ namespace DM.PR.WEB.App_Start
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
-
-            bundles.Add(new ScriptBundle("~/bundles/jqueryajax").Include(
-                      "~/Scripts/jquery.unobtrusive-ajax.js"));
+                        "~/Scripts/jquery.validate*",
+                        "~/Scripts/jquery.unobtrusive*"));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
@@ -23,7 +21,7 @@ namespace DM.PR.WEB.App_Start
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/bootstrap-theme.css",
+                      "~/Content/bootstrap-theme.css",                           
                       "~/Content/site.css"));
         }
     }
