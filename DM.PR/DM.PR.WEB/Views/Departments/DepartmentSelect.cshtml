@@ -1,6 +1,9 @@
 ﻿@model IReadOnlyCollection<DepartmentSelectModel>
-
+@{
+    int selectedId = ViewBag.departmentId;
+    var selectedItem = Model.Where(m => m.Id == selectedId).Select(m => m.Name);
+    string selectedValue = selectedId == 0 ? "Выберите отдел сверху" : null;
+}
 <div>
-    @Html.DropDownList("ParentId", new SelectList(Model, "Id", "Name"), "Выбирете отдел сверху ", new { @class = "form-control " })
+    @Html.DropDownList("ParentId", new SelectList(Model, "Id", "Name", selectedItem), selectedValue, new { @class = "form-control " })
 </div>
-

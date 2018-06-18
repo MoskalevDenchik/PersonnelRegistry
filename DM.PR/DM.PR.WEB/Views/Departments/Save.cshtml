@@ -1,0 +1,67 @@
+﻿@model DM.PR.WEB.Models.DepartmentSaveViewModel
+
+
+<h2 class="text-center">@ViewBag.title</h2> <br />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-8">
+                @Html.Action("GetParentDepartment", new { selectedId = Model.ParentId > 0 ? Model.ParentId : 0 })
+                @Html.ValidationMessageFor(model => model.ParentId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-8">
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Название отдела..." })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-8">
+                @Html.TextAreaFor(model => model.Address, new { @class = "form-control", placeholder = "Адрес..." })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-8">
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Описание..." })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class=" col-md-offset-2 col-md-2">
+                @Html.LabelFor(model => model.Phones, new { @class = "control-label col-md-4" })
+            </div>
+            <div class="col-md-8" id="Phones">
+                @for (int i = 0; i < Model.Phones.Count; i++)
+                {
+                    <div id="phone">
+                        @Html.HiddenFor(Model => Model.Phones[i].Id)
+                        @Html.TextBoxFor(model => model.Phones[i].Number, new { @class = "form-control ", placeholder = "Номер телефона..." })
+                        @Html.ValidationMessageFor(model => model.Phones[i].Number, "", new { @class = "text-danger" })
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-5">
+                <a id="AddEmail" class="btn btn-default">Добавить Телефон</a>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row text-center">
+                <input type="submit" id="Save" value="Сохранить" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @*<script src="~/Scripts/Phones.js"></script>*@
+}

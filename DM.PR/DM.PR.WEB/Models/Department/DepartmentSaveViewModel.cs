@@ -1,10 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using DM.PR.Common.Entities;
 
 namespace DM.PR.WEB.Models
 {
-    public class DepartmentCreateViewModel
+    public class DepartmentSaveViewModel
     {
+        public int Id { get; set; }
+
         [Display(Name = "Отдел сверху")]
         public int ParentId { get; set; }
 
@@ -21,6 +24,6 @@ namespace DM.PR.WEB.Models
         public string Description { get; set; }
 
         [Display(Name = "Телефоны")]
-        public List<string> Phones { get; set; }
+        public List<Phone> Phones { get; set; }
     }
 }

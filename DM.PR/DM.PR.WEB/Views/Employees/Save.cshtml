@@ -2,7 +2,7 @@
 
 <h2 class="text-center">@ViewBag.title</h2> <br />
 
-@using (Html.BeginForm("Create"))
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
