@@ -23,9 +23,11 @@ namespace DM.PR.Business.Providers.Implement
             var list = _cache.Get<IReadOnlyCollection<BillBoard>>("BillBoard");
             if (list == null)
             {
-                var data = _rep.GetAll();
-                _cache.Add("BillBoard", data, 1);
-                return data;
+                list = _rep.GetAll();
+                if (list != null)
+                {
+                    _cache.Add("BillBoard", list, 1);    
+                }
             }
             return list;
         }

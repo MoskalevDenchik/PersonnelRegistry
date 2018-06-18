@@ -7,15 +7,23 @@ using DM.PR.Common.Helpers;
 using DM.PR.Data.Core.Data;
 using DM.PR.Common.Logger;
 using DM.PR.Data.Entity;
+using System.Linq;
 using System.IO;
 using System;
+using System.ServiceModel;
 
 namespace DM.PR.Data.Core.Context.Implement
 {
     public class WcfBillBoardContext : IDataContext<BillBoard>
     {
-        private IAdService _service;
+        #region Private
+
+        private IAdService _adClient;
         private readonly IRecordLog _log;
+
+        #endregion
+
+        #region Ctors
 
         public WcfBillBoardContext(IRecordLog log)
         {
@@ -23,71 +31,63 @@ namespace DM.PR.Data.Core.Context.Implement
             _log = log;
         }
 
+        #endregion
+
         public IReadOnlyCollection<BillBoard> GetEntities(IInputParameter parameter)
         {
+
+            AdvertisingService.Entities.BillBoard[] borders = null;
+
+            ChannelFactory<IAdService> factory = CreateFactory();
             try
             {
-                _service = CreateChanel();
-            }
-            catch (Exception ex)
-            {
-                _log.MakeInfo(ex.Message);
-                _service = null;
-            }
-
-
-            AdvertisingService.Entities.BillBoard[] bor;
-            try
-            {
-                bor = _service.GetRandomBiilBoards();
+                _adClient = factory.CreateChannel();
+                borders = _adClient.GetRandomBiilBoards();
             }
             catch (Exception ex)
             {
                 _log.MakeInfo(ex.Message);
                 return null;
             }
-
-            var list = new List<Common.Entities.BillBoard>();
-
-            foreach (var item in bor)
+            finally
             {
-                list.Add(new Common.Entities.BillBoard
+                ((IClientChannel)_adClient).Close();
+                factory.Close();
+            }
+
+            List<BillBoard> list = null;
+
+            if (borders != null)
+            {
+                list = borders.Select(x => new BillBoard
                 {
-                    Id = item.Id,
-                    Name = item.Name,
-                    Description = item.Description,
-                    Image = item.Image,
-                    Link = item.Link
-                });
+                    Id = x.Id,
+                    Name = x.Name,
+                    Description = x.Description,
+                    Image = x.Image,
+                    Link = x.Link
+                }).ToList();
             }
 
             return list;
         }
 
-        public BillBoard GetEntity(IInputParameter parameter)
-        {
-            throw new NotImplementedException();
-        }
+        public BillBoard GetEntity(IInputParameter parameter) => throw new NotImplementedException();
 
+        public void Save(IInputParameter parameter) => throw new NotImplementedException();
 
-        public void Save(IInputParameter parameter)
-        {
-            throw new NotImplementedException();
-        }
+        public IReadOnlyCollection<BillBoard> GetEntities(IInputParameter parameter, out int outputParameter) => throw new NotImplementedException();
 
-        public IAdService CreateChanel()
+        #region Helpers
+
+        public ChannelFactory<IAdService> CreateFactory()
         {
             var absolutePath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.PrivateBinPath, "DM.PR.Data.dll.config");
             var configuration = ConfigurationManager.OpenMappedExeConfiguration(
                  new ExeConfigurationFileMap { ExeConfigFilename = absolutePath }, ConfigurationUserLevel.None);
-            var channelFactory =
-                       new ConfigurationChannelFactory<IAdService>("BasicHttpBinding_IAdService", configuration, null);
-            return channelFactory.CreateChannel();
+            return new ConfigurationChannelFactory<IAdService>("BasicHttpBinding_IAdService", configuration, null);
         }
 
-        public IReadOnlyCollection<BillBoard> GetEntities(IInputParameter parameter, out int outputParameter)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
     }
 }

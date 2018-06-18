@@ -8,77 +8,59 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
 {
     internal class UserParameterCreater : IParameterCreater<User>, IUserParameterCreator
     {
-        public IInputParameter CreateGetById(int id)
+        public IInputParameter CreateGetById(int id) => new DbInputParameter
         {
-            return new DbInputParameter
+            Procedure = "SelectUserById",
+            Parameters =
             {
-                Procedure = "SelectUserById",
-                Parameters =
-                {
-                    {nameof(id), id}
-                }
-            };
-        }
+                {nameof(id), id}
+            }
+        };
 
-        public IInputParameter CreateGetAll()
+        public IInputParameter CreateGetAll() => new DbInputParameter
         {
-            return new DbInputParameter
-            {
-                Procedure = "SelectAllUsers"
-            };
-        }
+            Procedure = "SelectAllUsers"
+        };
 
-        public IInputParameter CreateSave(User item)
+        public IInputParameter CreateSave(User item) => new DbInputParameter
         {
-            return new DbInputParameter
+            Procedure = "SaveUser",
+            Parameters =
             {
-                Procedure = "SaveUser",
-                Parameters =
-                {
-                    {nameof(item.Id), item.Id},
-                    {nameof(item.EmployeeId), item.EmployeeId},
-                    {nameof(item.Login),item.Login},
-                    {nameof(item.Password),item.Password},
-                    {nameof(item.Roles), item.Roles!=null? ConvertToTable(item.Roles):null }
-                }
-            };
-        }
+                {nameof(item.Id), item.Id},
+                {nameof(item.EmployeeId), item.EmployeeId},
+                {nameof(item.Login),item.Login},
+                {nameof(item.Password),item.Password},
+                {nameof(item.Roles), item.Roles!=null? ConvertToTable(item.Roles):null }
+            }
+        };
 
-        public IInputParameter CreateRemove(int id)
+        public IInputParameter CreateRemove(int id) => new DbInputParameter
         {
-            return new DbInputParameter
+            Procedure = "DeleteUser",
+            Parameters =
             {
-                Procedure = "DeleteUser",
-                Parameters =
-                {
-                    {nameof(id), id}
-                }
-            };
-        }
+                {nameof(id), id}
+            }
+        };
 
-        public IInputParameter CreateByLogin(string login)
+        public IInputParameter CreateByLogin(string login) => new DbInputParameter
         {
-            return new DbInputParameter
+            Procedure = "SelectUserByLogin",
+            Parameters =
             {
-                Procedure = "SelectUserByLogin",
-                Parameters =
-                {
-                    {nameof(login), login}
-                }
-            };
-        }
+                {nameof(login), login}
+            }
+        };
 
-        public IInputParameter CreateByEmployeeId(int employeeId)
+        public IInputParameter CreateByEmployeeId(int employeeId) => new DbInputParameter
         {
-            return new DbInputParameter
+            Procedure = "SelectUserByEmployeeId",
+            Parameters =
             {
-                Procedure = "SelectUserByEmployeeId",
-                Parameters =
-                {
-                    {nameof(employeeId), employeeId}
-                }
-            };
-        }
+                {nameof(employeeId), employeeId}
+            }
+        };
 
         #region Converters
 

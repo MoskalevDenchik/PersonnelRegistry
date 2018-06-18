@@ -7,78 +7,60 @@ namespace DM.PR.Data.Core.InputParameters.Creaters.Implement
 {
     internal class DepartmentParameterCreater : IParameterCreater<Department>, IDepartmentParameterCreater
     {
-        public IInputParameter CreateGetById(int id)
+        public IInputParameter CreateGetById(int id) => new DbInputParameter
         {
-            return new DbInputParameter
+            Procedure = "SelectDepartmentById",
+            Parameters =
             {
-                Procedure = "SelectDepartmentById",
-                Parameters =
-                {
-                    {nameof(id), id}
-                }
-            };
-        }
+                {nameof(id), id}
+            }
+        };
 
-        public IInputParameter CreateGetAll()
+        public IInputParameter CreateGetAll() => new DbInputParameter
         {
-            return new DbInputParameter
-            {
-                Procedure = "SelectAllDepartments"
-            };
-        }
+            Procedure = "SelectAllDepartments"
+        };
 
-        public IInputParameter CreateSave(Department item)
+        public IInputParameter CreateSave(Department item) => new DbInputParameter
         {
-            return new DbInputParameter
-            {
-                Procedure = "SaveDepartment",
-                Parameters =
-                {   {nameof(item.Id), item.Id },
-                    {nameof(item.Name), item.Name},
-                    {nameof(item.Address), item.Address },
-                    {nameof(item.ParentId), item.ParentId },
-                    {nameof(item.Description), item.Description},
-                    {nameof(item.Phones), item.Phones!=null? ConvertToTable(item.Phones):null}
-                }
-            };
-        }
+            Procedure = "SaveDepartment",
+            Parameters =
+            {   {nameof(item.Id), item.Id },
+                {nameof(item.Name), item.Name},
+                {nameof(item.Address), item.Address },
+                {nameof(item.ParentId), item.ParentId },
+                {nameof(item.Description), item.Description},
+                {nameof(item.Phones), item.Phones!=null? ConvertToTable(item.Phones):null}
+            }
+        };
 
-        public IInputParameter CreateRemove(int id)
+        public IInputParameter CreateRemove(int id) => new DbInputParameter
         {
-            return new DbInputParameter
+            Procedure = "DeleteDepartment",
+            Parameters =
             {
-                Procedure = "DeleteDepartment",
-                Parameters =
-                {
-                    {nameof(id), id}
-                }
-            };
-        }
+                {nameof(id), id}
+            }
+        };
 
-        public IInputParameter CreateFind(int pageSize, int pageNumber)
+        public IInputParameter CreateFind(int pageSize, int pageNumber) => new DbInputParameter
         {
-            return new DbInputParameter
+            Procedure = "SelectPageDepartmts",
+            Parameters =
             {
-                Procedure = "SelectPageDepartmts",
-                Parameters =
-                {
-                    {nameof(pageSize), pageSize},
-                    {nameof(pageNumber), pageNumber}
-                }
-            };
-        }
+                {nameof(pageSize), pageSize},
+                {nameof(pageNumber), pageNumber}
+            }
+        };
 
-        public IInputParameter CreateFind(int parentId)
+        public IInputParameter CreateFind(int parentId) => new DbInputParameter
         {
-            return new DbInputParameter
+            Procedure = "SelectDepartmentByParentId",
+            Parameters =
             {
-                Procedure = "SelectDepartmentByParentId",
-                Parameters =
-                {
-                    {nameof(parentId), parentId}
-                }
-            };
-        }
+                {nameof(parentId), parentId}
+            }
+        };
 
         #region Converters
 

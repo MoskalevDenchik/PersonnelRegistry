@@ -8,18 +8,12 @@ namespace DM.PR.Data.Core.DataBase.Converters.Implement
 {
     internal class WorkStatusConverter : IConverter<WorkStatus>
     {
-        public IEnumerable<WorkStatus> ConvertToList(DataSet dataSet)
+        public IEnumerable<WorkStatus> ConvertToList(DataSet dataSet) => dataSet.Tables[0].AsEnumerable().Select(x => new WorkStatus
         {
-            return dataSet.Tables[0].AsEnumerable().Select(x => new WorkStatus
-            {
-                Id = x.Field<int>("Id"),
-                Status = x.Field<string>("Status")
-            });
-        }
+            Id = x.Field<int>("Id"),
+            Status = x.Field<string>("Status")
+        });
 
-        public IEnumerable<WorkStatus> ConvertToList(DataSet dataSet, out int outputParameter)
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<WorkStatus> ConvertToList(DataSet dataSet, out int outputParameter) => throw new NotImplementedException();
     }
 }

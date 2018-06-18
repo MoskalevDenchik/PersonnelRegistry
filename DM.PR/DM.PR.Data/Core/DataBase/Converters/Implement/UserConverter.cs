@@ -9,24 +9,19 @@ namespace DM.PR.Data.Core.Converters.Implement
 {
     internal class UserConverter : IConverter<User>
     {
-        public IEnumerable<User> ConvertToList(DataSet dataSet)
+        public IEnumerable<User> ConvertToList(DataSet dataSet) => dataSet.Tables[0].AsEnumerable().Select(user => new User
         {
-            return dataSet.Tables[0].AsEnumerable().Select(user => new User
-            {
-                Id = user.Field<int>("Id"),
-                EmployeeId = user.Field<int>("EmployeeId"),
-                Login = user.Field<string>("Login"),
-                Password = user.Field<string>("Password"),
-                Emails = ConvertToEmails(user.Field<int>("Id"), dataSet.Tables[1]),
-                Roles = ConvertToRoles(user.Field<int>("Id"), dataSet.Tables[2])
+            Id = user.Field<int>("Id"),
+            EmployeeId = user.Field<int>("EmployeeId"),
+            Login = user.Field<string>("Login"),
+            Password = user.Field<string>("Password"),
+            Emails = ConvertToEmails(user.Field<int>("Id"), dataSet.Tables[1]),
+            Roles = ConvertToRoles(user.Field<int>("Id"), dataSet.Tables[2])
+        });
 
-            });
-        }
+        public IEnumerable<User> ConvertToList(DataSet dataSet, out int outputParameter) => throw new NotImplementedException();
 
-        public IEnumerable<User> ConvertToList(DataSet dataSet, out int outputParameter)
-        {
-            throw new NotImplementedException();
-        }
+        #region Helpers
 
         private IReadOnlyCollection<Role> ConvertToRoles(int userId, DataTable table)
         {
@@ -45,5 +40,7 @@ namespace DM.PR.Data.Core.Converters.Implement
                 Address = email.Field<string>("Address")
             }).ToList();
         }
+
+        #endregion
     }
 }

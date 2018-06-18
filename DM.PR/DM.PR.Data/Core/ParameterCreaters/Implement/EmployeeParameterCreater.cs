@@ -8,109 +8,88 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
 {
     internal class EmployeeParameterCreater : IParameterCreater<Employee>, IEmployeeParameterCreater
     {
-        public IInputParameter CreateGetById(int id)
+        public IInputParameter CreateGetById(int id) => new DbInputParameter
         {
-            return new DbInputParameter
+            Procedure = "SelectEmployeeById",
+            Parameters =
             {
-                Procedure = "SelectEmployeeById",
-                Parameters =
-                {
-                    {nameof(id), id}
-                }
-            };
-        }
+                {nameof(id), id}
+            }
+        };
 
-        public IInputParameter CreateGetAll()
+        public IInputParameter CreateGetAll() => new DbInputParameter
         {
-            return new DbInputParameter
-            {
-                Procedure = "SelectAllEmployees"
-            };
-        }
+            Procedure = "SelectAllEmployees"
+        };
 
-        public IInputParameter CreateSave(Employee item)
+        public IInputParameter CreateSave(Employee item) => new DbInputParameter
         {
-            return new DbInputParameter
+            Procedure = "SaveEmployee",
+            Parameters =
             {
-                Procedure = "SaveEmployee",
-                Parameters =
-                {
-                    {nameof(item.Id),item.Id},
-                    {nameof(item.Department)+"Id",item.Department.Id},
-                    {nameof(item.LastName),item.LastName},
-                    {nameof(item.FirstName),item.FirstName},
-                    {nameof(item.MiddleName),item.MiddleName},
-                    {nameof(item.Address),item.Address},
-                    {nameof(item.ImagePath),item.ImagePath},
-                    {nameof(item.BeginningWork),item.BeginningWork},
-                    {nameof(item.EndWork),item.EndWork},
-                    {nameof(item.HomePhone),item.HomePhone},
-                    {nameof(item.MobilePhone),item.MobilePhone},
-                    {nameof(item.WorkPhone),item.WorkPhone},
-                    {nameof(item.MaritalStatus)+"Id",item?.MaritalStatus?.Id??0},
-                    {nameof(item.WorkStatus)+"Id",item?.WorkStatus?.Id??0},
-                    {nameof(item.Emails),item.Emails!=null?ConvertToTable(item.Emails):null}
-                }
-            };
-        }
+                {nameof(item.Id),item.Id},
+                {nameof(item.Department)+"Id",item.Department.Id},
+                {nameof(item.LastName),item.LastName},
+                {nameof(item.FirstName),item.FirstName},
+                {nameof(item.MiddleName),item.MiddleName},
+                {nameof(item.Address),item.Address},
+                {nameof(item.ImagePath),item.ImagePath},
+                {nameof(item.BeginningWork),item.BeginningWork},
+                {nameof(item.EndWork),item.EndWork},
+                {nameof(item.HomePhone),item.HomePhone},
+                {nameof(item.MobilePhone),item.MobilePhone},
+                {nameof(item.WorkPhone),item.WorkPhone},
+                {nameof(item.MaritalStatus)+"Id",item?.MaritalStatus?.Id??0},
+                {nameof(item.WorkStatus)+"Id",item?.WorkStatus?.Id??0},
+                {nameof(item.Emails),item.Emails!=null?ConvertToTable(item.Emails):null}
+            }
+        };
 
-        public IInputParameter CreateRemove(int id)
+        public IInputParameter CreateRemove(int id) => new DbInputParameter
         {
-            return new DbInputParameter
+            Procedure = "DeleteEmployee",
+            Parameters =
             {
-                Procedure = "DeleteEmployee",
-                Parameters =
-                {
-                    {nameof(id), id }
-                }
-            };
-        }
+                {nameof(id), id }
+            }
+        };
 
-        public IInputParameter CreateFind(int pageSize, int pageNumber)
+        public IInputParameter CreateFind(int pageSize, int pageNumber) => new DbInputParameter
         {
-            return new DbInputParameter
+            Procedure = "SelectPageEmployees",
+            Parameters =
             {
-                Procedure = "SelectPageEmployees",
-                Parameters =
-                {
-                    {nameof(pageSize), pageSize},
-                    {nameof(pageNumber), pageNumber}
-                }
-            };
-        }
+                {nameof(pageSize), pageSize},
+                {nameof(pageNumber), pageNumber}
+            }
+        };
 
-        public IInputParameter CreateByDepartmentId(int departmentId, int pageSize, int pageNumber)
+        public IInputParameter CreateByDepartmentId(int departmentId, int pageSize, int pageNumber) => new DbInputParameter
         {
-            return new DbInputParameter
+            Procedure = "SelectPageEmployeesByDepartmentId",
+            Parameters =
             {
-                Procedure = "SelectPageEmployeesByDepartmentId",
-                Parameters =
-                {
-                    {nameof(departmentId), departmentId},
-                    {nameof(pageSize), pageSize},
-                    {nameof(pageNumber), pageNumber}
-                }
-            };
-        }
+                {nameof(departmentId), departmentId},
+                {nameof(pageSize), pageSize},
+                {nameof(pageNumber), pageNumber}
+            }
+        };
 
-        public IInputParameter CreateBySearchParams(string lastName, string firstName, string middledName, int fromYear, int toYear, int WorkStatusId, int pageSize, int pageNumber)
+        public IInputParameter CreateBySearchParams(string lastName, string firstName, string middledName, int fromYear, int toYear, int WorkStatusId, int pageSize, int pageNumber) => new DbInputParameter
         {
-            return new DbInputParameter
+            Procedure = "SelectPageEmployeesBySearchParams",
+            Parameters =
             {
-                Procedure = "SelectPageEmployeesBySearchParams",
-                Parameters =
-                {
-                   {nameof(lastName), lastName},
-                   {nameof(firstName), firstName},
-                   {nameof(middledName), middledName},
-                   {nameof(fromYear), fromYear},
-                   {nameof(toYear), toYear},
-                   {nameof(WorkStatusId), WorkStatusId},
-                   {nameof(pageSize),pageSize},
-                   {nameof(pageNumber),pageNumber}
-                }
-            };
-        }
+                {nameof(lastName), lastName},
+                {nameof(firstName), firstName},
+                {nameof(middledName), middledName},
+                {nameof(fromYear), fromYear},
+                {nameof(toYear), toYear},
+                {nameof(WorkStatusId), WorkStatusId},
+                {nameof(pageSize),pageSize},
+                {nameof(pageNumber),pageNumber}
+            }
+        };
 
         #region Converters
 
@@ -126,7 +105,6 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             }
             return table;
         }
-
 
         #endregion
     }

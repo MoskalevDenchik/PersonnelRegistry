@@ -37,9 +37,6 @@ namespace DM.PR.Data.Core.Data.Implement
             return _converter.ConvertToList(executeResult, out outputParameter).ToList();
         }
 
-        public void Save(IInputParameter parameter)
-        {
-            _dbExecutor.GetExecuteResult(parameter as DbInputParameter);
-        }
+        public void Save(IInputParameter parameter) => _dbExecutor.GetExecuteResult(parameter as DbInputParameter);
     }
 }

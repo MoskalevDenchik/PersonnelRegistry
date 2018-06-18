@@ -20,7 +20,7 @@ namespace DM.PR.Common.Services.Implement
 
         public bool Add<T>(string key, T value, int seconds)
         {
-            return _cache.Add(key, value, DateTime.Now.AddHours(seconds));
+            return _cache.Add(key, value, DateTime.Now.AddMinutes(seconds));
         }
 
         public void Delete(string key)

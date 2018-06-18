@@ -7,19 +7,17 @@ namespace DM.PR.Data.Core.Converters.Implement
 {
     internal class DepartmentConverter : IConverter<Department>
     {
-        public IEnumerable<Department> ConvertToList(DataSet dataSet)
+        public IEnumerable<Department> ConvertToList(DataSet dataSet) => dataSet.Tables[0].AsEnumerable().Select(d => new Department
         {
-            return dataSet.Tables[0].AsEnumerable().Select(d => new Department
-            {
-                Id = d.Field<int>("id"),
-                ParentId = d.Field<int>("ParentId"),
-                Name = d.Field<string>("Name"),
-                Address = d.Field<string>("Address"),
-                Description = d.Field<string>("Description"),
-                Phones = ConvertToPhones(d.Field<int>("id"), dataSet.Tables[1])
+            Id = d.Field<int>("id"),
+            ParentId = d.Field<int>("ParentId"),
+            Name = d.Field<string>("Name"),
+            Address = d.Field<string>("Address"),
+            Description = d.Field<string>("Description"),
+            Phones = ConvertToPhones(d.Field<int>("id"), dataSet.Tables[1])
 
-            });
-        }
+        });
+
 
         public IEnumerable<Department> ConvertToList(DataSet dataSet, out int outputParameter)
         {

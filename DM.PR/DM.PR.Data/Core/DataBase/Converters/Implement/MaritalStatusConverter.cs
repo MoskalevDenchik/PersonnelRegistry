@@ -8,19 +8,12 @@ namespace DM.PR.Data.Core.Converters.Implement
 {
     internal class MaritalStatusConverter : IConverter<MaritalStatus>
     {
-        public IEnumerable<MaritalStatus> ConvertToList(DataSet dataSet)
+        public IEnumerable<MaritalStatus> ConvertToList(DataSet dataSet) => dataSet.Tables[0].AsEnumerable().Select(x => new MaritalStatus
         {
-            return dataSet.Tables[0].AsEnumerable().Select(x => new MaritalStatus
-            {
-                Id = x.Field<int>("Id"),
-                Status = x.Field<string>("Status")
-            });
-        }
+            Id = x.Field<int>("Id"),
+            Status = x.Field<string>("Status")
+        });
 
-        public IEnumerable<MaritalStatus> ConvertToList(DataSet dataSet, out int outputParameter)
-        {
-            throw new NotImplementedException();
-        }
-
+        public IEnumerable<MaritalStatus> ConvertToList(DataSet dataSet, out int outputParameter) => throw new NotImplementedException();
     }
 }

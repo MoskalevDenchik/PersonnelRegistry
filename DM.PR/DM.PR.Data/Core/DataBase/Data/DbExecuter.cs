@@ -20,28 +20,21 @@ namespace DM.PR.Data.Core.DataBase.Data
             }
         }
 
-        public DataSet GetDataSet(DbInputParameter parameter)
+        public DataSet GetDataSet(DbInputParameter parameter) => ExecuteCommand(command =>
         {
-            return ExecuteCommand(command =>
+            using (var adapter = GetAdapter(command) as DbDataAdapter)
             {
-                using (var adapter = GetAdapter(command) as DbDataAdapter)
-                {
-                    var dataSet = new DataSet();
-                    adapter.Fill(dataSet);
-                    return dataSet;
-                }
+                var dataSet = new DataSet();
+                adapter.Fill(dataSet);
+                return dataSet;
             }
-            , parameter);
-        }
+        }, parameter);
 
-        public int GetExecuteResult(DbInputParameter parameter)
+
+        public int GetExecuteResult(DbInputParameter parameter) => ExecuteCommand(command =>
         {
-            return ExecuteCommand(command =>
-            {
-                command.Connection.Open();
-                return command.ExecuteNonQuery();
-            }
-            , parameter);
-        }
+            command.Connection.Open();
+            return command.ExecuteNonQuery();
+        }, parameter);
     }
 }

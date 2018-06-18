@@ -7,35 +7,22 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
 {
     internal class RoleParameterCreater : IParameterCreater<Role>
     {
-        public IInputParameter CreateGetById(int id)
+        public IInputParameter CreateGetById(int id) => new DbInputParameter
         {
-            return new DbInputParameter
+            Procedure = "SelectRoleById",
+            Parameters =
             {
-                Procedure = "SelectRoleById",
-                Parameters =
-                {
-                    {nameof(id), id }
-                }
-            };
-        }
+                {nameof(id), id }
+            }
+        };
 
-        public IInputParameter CreateGetAll()
+        public IInputParameter CreateGetAll() => new DbInputParameter
         {
-            return new DbInputParameter
-            {
-                Procedure = "SelectAllRoles"
-            };
-        }
+            Procedure = "SelectAllRoles"
+        };
 
-        public IInputParameter CreateSave(Role item)
-        {
-            throw new NotImplementedException();
-        }
+        public IInputParameter CreateSave(Role item) => throw new NotImplementedException();
 
-        public IInputParameter CreateRemove(int id)
-        {
-            throw new NotImplementedException();
-        }
-
+        public IInputParameter CreateRemove(int id) => throw new NotImplementedException();
     }
 }

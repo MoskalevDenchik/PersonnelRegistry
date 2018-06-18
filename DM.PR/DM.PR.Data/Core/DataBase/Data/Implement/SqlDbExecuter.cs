@@ -16,15 +16,9 @@ namespace DM.PR.Data.Core.DataBase.Data.Implement
             _configManager = configManager;
         }
 
-        protected override IDbDataAdapter GetAdapter(IDbCommand command)
-        {
-            return new SqlDataAdapter(command as SqlCommand);
-        }
+        protected override IDbDataAdapter GetAdapter(IDbCommand command) => new SqlDataAdapter(command as SqlCommand);
 
-        protected override IDbConnection GetConnection()
-        {
-            return new SqlConnection(_configManager.GetConnectionString("Connection"));
-        }
+        protected override IDbConnection GetConnection() => new SqlConnection(_configManager.GetConnectionString("Connection"));
 
         protected override IDbCommand GetProcedureCommand(IDbConnection connection, DbInputParameter parameter)
         {

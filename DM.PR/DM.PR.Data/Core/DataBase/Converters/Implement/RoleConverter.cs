@@ -9,18 +9,12 @@ namespace DM.PR.Data.Core.DataBase.Converters.Implement
 {
     internal class RoleConverter : IConverter<Role>
     {
-        public IEnumerable<Role> ConvertToList(DataSet dataSet)
+        public IEnumerable<Role> ConvertToList(DataSet dataSet) => dataSet.Tables[0].AsEnumerable().Select(x => new Role
         {
-            return dataSet.Tables[0].AsEnumerable().Select(x => new Role
-            {
-                Id = x.Field<int>("Id"),
-                Name = x.Field<string>("Name")
-            });
-        }
+            Id = x.Field<int>("Id"),
+            Name = x.Field<string>("Name")
+        });
 
-        public IEnumerable<Role> ConvertToList(DataSet dataSet, out int outputParameter)
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<Role> ConvertToList(DataSet dataSet, out int outputParameter) => throw new NotImplementedException();
     }
 }

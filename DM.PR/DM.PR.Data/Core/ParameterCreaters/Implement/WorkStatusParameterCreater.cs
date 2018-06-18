@@ -6,49 +6,37 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
 {
     internal class WorkStatusParameterCreater : IParameterCreater<WorkStatus>
     {
-        public IInputParameter CreateGetById(int id)
+        public IInputParameter CreateGetById(int id) => new DbInputParameter
         {
-            return new DbInputParameter
+            Procedure = "SelectWorkStatusById",
+            Parameters =
             {
-                Procedure = "SelectWorkStatusById",
-                Parameters =
-                {
-                    {nameof(id), id}
-                }
-            };
-        }
+                {nameof(id), id}
+            }
+        };
 
-        public IInputParameter CreateGetAll()
+        public IInputParameter CreateGetAll() => new DbInputParameter
         {
-            return new DbInputParameter
-            {
-                Procedure = "SelectAllWorkStatus"
-            };
-        }
+            Procedure = "SelectAllWorkStatus"
+        };
 
-        public IInputParameter CreateSave(WorkStatus item)
+        public IInputParameter CreateSave(WorkStatus item) => new DbInputParameter
         {
-            return new DbInputParameter
+            Procedure = "SaveWorkStatus",
+            Parameters =
             {
-                Procedure = "SaveWorkStatus",
-                Parameters =
-                {
-                    {nameof(item.Id), item.Id},
-                    {nameof(item.Status), item.Status}
-                }
-            };
-        }
+                {nameof(item.Id), item.Id},
+                {nameof(item.Status), item.Status}
+            }
+        };
 
-        public IInputParameter CreateRemove(int id)
+        public IInputParameter CreateRemove(int id) => new DbInputParameter
         {
-            return new DbInputParameter
+            Procedure = "DeleteWorkStatus",
+            Parameters =
             {
-                Procedure = "DeleteWorkStatus",
-                Parameters =
-                {
-                    {nameof(id), id}
-                }
-            };
-        }
+                {nameof(id), id}
+            }
+        };
     }
 }
