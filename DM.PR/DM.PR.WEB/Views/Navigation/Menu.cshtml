@@ -4,12 +4,12 @@
 <div>
     <ul id="menu" class="nav">
         <li>
-            <a href="#" class="active" data-department="0" name="0">Все</a>
+            <a class="active" data-department="0" name="0">Все</a>
         </li>
         @foreach (var item in Model)
         {
             <li>
-                <a href="#" data-department="@item.Id">@item.Name</a>
+                <a data-department="@item.Id">@item.Name</a>
                 <ul class="Children"></ul>
             </li>
         }

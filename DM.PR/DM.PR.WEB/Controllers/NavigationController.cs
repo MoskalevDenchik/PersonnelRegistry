@@ -6,7 +6,6 @@ using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using System.Web.Mvc;
 using System.Linq;
-using System;
 
 namespace DM.PR.WEB.Controllers
 {
@@ -23,46 +22,33 @@ namespace DM.PR.WEB.Controllers
         [ChildActionOnly]
         public ActionResult Menu()
         {
-            var departments = _departmentProvider.GetAll();
-            if (departments == null)
-            {
-                throw new Exception();
-            }
-
+            var departments = _departmentProvider.GetDepartments(0);
             var model = MapDepartmentToDepartmentViewModel(departments);
-
-            return PartialView(model.Where(x => x.ParentId == null).ToList());
+            return PartialView(model);
         }
+
+        #region Partial and Json
 
         [AjaxOnly]
         public ActionResult GetDepartmentChildren(int departmentId)
         {
-            var departments = _departmentProvider.GetAll();
-            if (departments == null)
-            {
-                throw new Exception();
-            }
-            var model = MapDepartmentToDepartmentViewModel(departments).Where(x => x.ParentId == departmentId).ToList();
-
+            var departments = _departmentProvider.GetDepartments(departmentId);
+            var model = MapDepartmentToDepartmentViewModel(departments);
             return PartialView("DepartmentChildren", model);
         }
 
+        #endregion
 
         #region Helpers
 
         private IReadOnlyCollection<NavigationMenuViewModel> MapDepartmentToDepartmentViewModel(IEnumerable<Department> departments)
         {
-            var departmentsViewModel = new List<NavigationMenuViewModel>();
-            foreach (var item in departments)
+            return departments.Select(x => new NavigationMenuViewModel
             {
-                departmentsViewModel.Add(new NavigationMenuViewModel()
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    ParentId = item.ParentId
-                });
-            }
-            return departmentsViewModel;
+                Id = x.Id,
+                Name = x.Name,
+                ParentId = x.ParentId
+            }).ToList(); ;
         }
 
         #endregion

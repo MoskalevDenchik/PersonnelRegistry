@@ -35,9 +35,7 @@ namespace DM.PR.Data.Core.Context.Implement
 
         public IReadOnlyCollection<BillBoard> GetEntities(IInputParameter parameter)
         {
-
             AdvertisingService.Entities.BillBoard[] borders = null;
-
             ChannelFactory<IAdService> factory = CreateFactory();
             try
             {

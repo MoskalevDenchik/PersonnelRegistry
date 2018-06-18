@@ -61,7 +61,7 @@ namespace DM.PR.WEB.Controllers
         public ActionResult Create()
         {
             ViewBag.title = "Добавьте сотрудника";
-            return View("Save",new EmployeeSaveViewModel { Emails = new List<Email> { new Email() } });
+            return View("Save", new EmployeeSaveViewModel { Emails = new List<Email> { new Email() } });
         }
 
         [HttpPost]
@@ -69,7 +69,7 @@ namespace DM.PR.WEB.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Save",model);
+                return View("Save", model);
             }
 
             var employee = MapEmployeeSaveViewModelToEmployee(model);
@@ -84,7 +84,7 @@ namespace DM.PR.WEB.Controllers
             ViewBag.title = "Редактируйте сотрудника";
             var employee = _employeeProvider.GetById(id);
             var model = MapEmployeeToEmployeeSaveViewModel(employee);
-            return View("Save",model);
+            return View("Save", model);
         }
 
         [HttpPost]
@@ -92,7 +92,7 @@ namespace DM.PR.WEB.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Save",model);
+                return View("Save", model);
             }
             var employee = MapEmployeeSaveViewModelToEmployee(model);
             _employeeService.Save(employee);
@@ -129,12 +129,14 @@ namespace DM.PR.WEB.Controllers
         }
 
         [AjaxOnly]
-        public ActionResult GetPageEmployeesByDepartmentId(int departmentId, int pageNumber, int pageSize)
+        public ActionResult GetEmployees(int departmentId, int pageNumber, int pageSize)
         {
             var list = _employeeProvider.GetEmployees(departmentId, pageSize, pageNumber, out int totalCount);
             ViewBag.totalCount = totalCount;
-            return PartialView("EmployeeSummary", list);
+            var model = MapEmployeesToEmployeesSummaryViewModel(list);
+            return PartialView("EmployeeSummary", model);
         }
+
 
         [AjaxOnly]
         public ActionResult GetPageEmployeesBySearchParams(string middledName, string firstName, string lastName, int pageNumber, int pageSize, int WorkStatusId = 0, int fromYear = 0, int toYear = 100)
@@ -164,76 +166,86 @@ namespace DM.PR.WEB.Controllers
 
         #region Mappers
 
+
+
         private IReadOnlyCollection<DepartmentSelectModel> MapDepartmentToDepartmentSelectModel(IReadOnlyCollection<Department> departments)
         {
             return departments.Select(d => new DepartmentSelectModel { Id = d.Id, Name = d.Name }).ToList();
         }
 
-        private EmployeeDetailsViewModel MapEmployeeToEmployeeDetailsViewModel(Employee empl)
+        private IReadOnlyCollection<EmployeeSummaryViewModel> MapEmployeesToEmployeesSummaryViewModel(IReadOnlyCollection<Employee> list)
         {
-            return new EmployeeDetailsViewModel()
+            return list.Select(empl => new EmployeeSummaryViewModel
             {
                 Id = empl.Id,
-                Emails = empl.Emails,
-                Address = empl.Address,
+                HasRole = empl.HasRole,
                 LastName = empl.LastName,
-                EndOfWork = empl.EndWork,
-                HomePhone = empl.HomePhone,
-                MobilePhone = empl.MobilePhone,
                 WorkPhone = empl.WorkPhone,
-                FirstName = empl.FirstName,
+                FirstName = empl.FirstName,                              
                 ImagePath = empl.ImagePath,
                 MiddleName = empl.MiddleName,
-                WorkStatus = empl.WorkStatus.Status,
-                BeginningOfWork = empl.BeginningWork,
-                DepartmentName = empl.Department.Name,
-                MaritalStatus = empl.MaritalStatus.Status
-            };
-        }
-       
-        private EmployeeSaveViewModel MapEmployeeToEmployeeSaveViewModel(Employee empl)
-        {
-            return new EmployeeSaveViewModel()
-            {
-                Id = empl.Id,
-                Emails = empl.Emails,
-                Address = empl.Address,
-                EndWork = empl.EndWork,
-                HomePhone = empl.HomePhone,
-                MobilePhone = empl.MobilePhone,
-                WorkPhone = empl.WorkPhone,
-                LastName = empl.LastName,
-                ImagePath = empl.ImagePath,
-                FirstName = empl.FirstName,
-                MiddleName = empl.MiddleName,
-                DepartmentId = empl.Department.Id,
-                WorkStatusId = empl.WorkStatus.Id,
-                BeginningWork = empl.BeginningWork,
-                MaritalStatusId = empl.MaritalStatus.Id
-            };
+                DepartmentName = empl.Department.Name
+
+            }).ToList();
         }
 
-        private Employee MapEmployeeSaveViewModelToEmployee(EmployeeSaveViewModel model)
+
+        private EmployeeDetailsViewModel MapEmployeeToEmployeeDetailsViewModel(Employee empl) => new EmployeeDetailsViewModel
         {
-            return new Employee()
-            {
-                Id = model.Id,
-                Emails = model.Emails,
-                Address = model.Address,
-                EndWork = model.EndWork,
-                LastName = model.LastName,
-                HomePhone = model.HomePhone,
-                MobilePhone = model.MobilePhone,
-                WorkPhone = model.WorkPhone,
-                FirstName = model.FirstName,
-                ImagePath = model.ImagePath,
-                MiddleName = model.MiddleName,
-                BeginningWork = model.BeginningWork,
-                WorkStatus = new WorkStatus { Id = model.WorkStatusId },
-                Department = new Department { Id = model.DepartmentId },
-                MaritalStatus = new MaritalStatus { Id = model.MaritalStatusId }
-            };
-        }
+            Id = empl.Id,
+            Emails = empl.Emails,
+            Address = empl.Address,
+            LastName = empl.LastName,
+            EndOfWork = empl.EndWork,
+            HomePhone = empl.HomePhone,
+            MobilePhone = empl.MobilePhone,
+            WorkPhone = empl.WorkPhone,
+            FirstName = empl.FirstName,
+            ImagePath = empl.ImagePath,
+            MiddleName = empl.MiddleName,
+            WorkStatus = empl.WorkStatus.Status,
+            BeginningOfWork = empl.BeginningWork,
+            DepartmentName = empl.Department.Name,
+            MaritalStatus = empl.MaritalStatus.Status
+        };
+
+        private EmployeeSaveViewModel MapEmployeeToEmployeeSaveViewModel(Employee empl) => new EmployeeSaveViewModel
+        {
+            Id = empl.Id,
+            Emails = empl.Emails,
+            Address = empl.Address,
+            EndWork = empl.EndWork,
+            HomePhone = empl.HomePhone,
+            MobilePhone = empl.MobilePhone,
+            WorkPhone = empl.WorkPhone,
+            LastName = empl.LastName,
+            ImagePath = empl.ImagePath,
+            FirstName = empl.FirstName,
+            MiddleName = empl.MiddleName,
+            DepartmentId = empl.Department.Id,
+            WorkStatusId = empl.WorkStatus.Id,
+            BeginningWork = empl.BeginningWork,
+            MaritalStatusId = empl.MaritalStatus.Id
+        };
+
+        private Employee MapEmployeeSaveViewModelToEmployee(EmployeeSaveViewModel model) => new Employee
+        {
+            Id = model.Id,
+            Emails = model.Emails,
+            Address = model.Address,
+            EndWork = model.EndWork,
+            LastName = model.LastName,
+            HomePhone = model.HomePhone,
+            MobilePhone = model.MobilePhone,
+            WorkPhone = model.WorkPhone,
+            FirstName = model.FirstName,
+            ImagePath = model.ImagePath,
+            MiddleName = model.MiddleName,
+            BeginningWork = model.BeginningWork,
+            WorkStatus = new WorkStatus { Id = model.WorkStatusId },
+            Department = new Department { Id = model.DepartmentId },
+            MaritalStatus = new MaritalStatus { Id = model.MaritalStatusId }
+        };
 
         #endregion
     }
