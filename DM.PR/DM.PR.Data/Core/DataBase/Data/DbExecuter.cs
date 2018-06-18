@@ -35,6 +35,7 @@ namespace DM.PR.Data.Core.DataBase.Data
         {
             command.Connection.Open();
             return command.ExecuteNonQuery();
+
         }, parameter);
     }
 }

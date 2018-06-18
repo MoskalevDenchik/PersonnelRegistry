@@ -75,14 +75,14 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
             }
         };
 
-        public IInputParameter CreateBySearchParams(string lastName, string firstName, string middledName, int fromYear, int toYear, int WorkStatusId, int pageSize, int pageNumber) => new DbInputParameter
+        public IInputParameter CreateBySearchParams(string lastName, string firstName, string middleName, int fromYear, int toYear, int WorkStatusId, int pageSize, int pageNumber) => new DbInputParameter
         {
             Procedure = "SelectPageEmployeesBySearchParams",
             Parameters =
             {
                 {nameof(lastName), lastName},
                 {nameof(firstName), firstName},
-                {nameof(middledName), middledName},
+                {nameof(middleName), middleName},
                 {nameof(fromYear), fromYear},
                 {nameof(toYear), toYear},
                 {nameof(WorkStatusId), WorkStatusId},

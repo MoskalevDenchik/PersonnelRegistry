@@ -59,4 +59,8 @@ textarea {
 
 #emplSummary div:last-child a {
     font-size: 15px;
+}                                    
+
+#searchParams {
+   line-height:0px;
 }

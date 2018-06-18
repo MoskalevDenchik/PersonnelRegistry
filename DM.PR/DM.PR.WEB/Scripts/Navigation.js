@@ -61,7 +61,7 @@ function GetPageData(departmentId, pageSize)
     $("#paged").empty();
 
     $.ajax({
-        url: "/Employees/GetEmployees",
+        url: "/Employees/GetEmployeesByDepartmentId",
         type: "GET",
         data: {
             departmentId: departmentId,

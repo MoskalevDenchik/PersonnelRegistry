@@ -129,7 +129,7 @@ namespace DM.PR.WEB.Controllers
         }
 
         [AjaxOnly]
-        public ActionResult GetEmployees(int departmentId, int pageNumber, int pageSize)
+        public ActionResult GetEmployeesByDepartmentId(int departmentId, int pageNumber, int pageSize)
         {
             var list = _employeeProvider.GetEmployees(departmentId, pageSize, pageNumber, out int totalCount);
             ViewBag.totalCount = totalCount;
@@ -139,11 +139,12 @@ namespace DM.PR.WEB.Controllers
 
 
         [AjaxOnly]
-        public ActionResult GetPageEmployeesBySearchParams(string middledName, string firstName, string lastName, int pageNumber, int pageSize, int WorkStatusId = 0, int fromYear = 0, int toYear = 100)
+        public ActionResult GetEmployees(string middleName, string firstName, string lastName, int pageNumber, int pageSize, int WorkStatusId = 0, int fromYear = 0, int toYear = 100)
         {
-            var list = _employeeProvider.GetEmployees(lastName, firstName, middledName, fromYear, toYear, WorkStatusId, pageSize, pageNumber, out int totalCount);
+            var list = _employeeProvider.GetEmployees(lastName, firstName, middleName, fromYear, toYear, WorkStatusId, pageSize, pageNumber, out int totalCount);
             ViewBag.totalCount = totalCount;
-            return PartialView("EmployeeSummary", list);
+            var model = MapEmployeesToEmployeesSummaryViewModel(list);
+            return PartialView("EmployeeSummary", model);
         }
 
 

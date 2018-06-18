@@ -27,12 +27,12 @@ function GetPageData()
     $("#paged").empty();
 
     $.ajax({
-        url: "/Employees/GetPageEmployeesBySearchParams",
+        url: "/Employees/GetEmployees",
         type: "GET",
         data: {
             firstName: $("input[name='firstName']").val(),
             lastName: $("input[name='lastName']").val(),
-            middlename: $("input[name='middlename']").val(),
+            middleName: $("input[name='middlename']").val(),
             fromYear: $("input[name='fromYear']").val(),
             toYear: $("input[name='toYear']").val(),
             WorkStatusId: $("select[name='WorkStatusId'] option:checked").val(),
