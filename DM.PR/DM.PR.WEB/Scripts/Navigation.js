@@ -1,16 +1,22 @@
 ﻿pageNumber = 1;
 departmentId = 0;
 pageSize = 5;
+var parentActive;
 
 $(document).ready(function ()
 {
-    pageSize = $('#pageSize option:selected').html();
     GetPageData(departmentId, pageSize);
 });
 
-$("#menu ").on('click', " li a", function ()
+$("#menu").on('click', " li a", function ()
 {
     var active = $("#menu li[class ='active']");
+
+    if (parentActive == $(this).parent())
+    {                                               
+        active.val();                                                 
+    }
+    parentActive = $(this).parent();
     active.find("ul[class ='Children']").empty();
     active.removeClass('active');
     $(this).parent().addClass("active");
@@ -27,13 +33,6 @@ $('#paged').on('click', 'li', function ()
     var curent = $(this).html();
     pageNumber = $(curent).data("page");
 
-    GetPageData(departmentId, pageSize);
-})
-
-$('#pageSize').on('change', function ()
-{
-    pageNumber = 1;
-    pageSize = $('#pageSize option:selected').html();
     GetPageData(departmentId, pageSize);
 })
 
@@ -71,7 +70,12 @@ function GetPageData(departmentId, pageSize)
         success: function (response)
         {
             $("#EmployeesList").append(response);
-            AddPaggin($("#EmployeesList div input").val());
+            var totalCount = $("#EmployeesList div input").val();
+
+            if (totalCount > pageSize)
+            {
+                AddPaggin(totalCount);
+            }
         }
     })
 }
@@ -79,8 +83,7 @@ function GetPageData(departmentId, pageSize)
 function AddPaggin(totalCount)
 {
     var buttons = '';
-    var pagaSize = $('#pageSize option:selected').html();
-    var totalPage = Math.ceil(totalCount / pagaSize);
+    var totalPage = Math.ceil(totalCount / pageSize);
     var nextPage = (pageNumber < totalPage) ? pageNumber + 1 : pageNumber;
     var previosPage = (pageNumber > 1) ? pageNumber - 1 : pageNumber;
 

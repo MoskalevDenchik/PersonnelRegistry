@@ -44,7 +44,13 @@ function GetPageData()
         {
             $('#EmployeesList').append(respons);
             var a = $("#EmployeesList div input").val();
-            AddPaggin($("#EmployeesList div input").val());
+
+            var totalCount = $("#EmployeesList div input").val();
+
+            if (totalCount > pageSize)
+            {
+                AddPaggin(totalCount);
+            }
         }
     })
 }

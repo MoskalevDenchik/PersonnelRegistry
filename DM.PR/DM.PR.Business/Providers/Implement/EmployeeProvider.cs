@@ -22,39 +22,39 @@ namespace DM.PR.Business.Providers.Implement
             _rep = rep;
         }
 
-        public IReadOnlyCollection<Employee> GetEmployees(int pageSize, int page, out int totalCount)
+        public IReadOnlyCollection<Employee> GetEmployees(int pageSize, int pageNumber, out int totalCount)
         {
-            if (pageSize <= 0 || page <= 0)
+            if (pageSize <= 0 || pageNumber <= 0)
             {
                 totalCount = 0;
                 return null;
             }
 
-            ISpecification specification = _specificationCreator.CreateSpecification(pageSize, page);
+            ISpecification specification = _specificationCreator.CreateSpecification(pageSize, pageNumber);
             return _rep.FindBy(specification, out totalCount);
         }
 
-        public IReadOnlyCollection<Employee> GetEmployees(int departmentId, int pageSize, int page, out int totalCount)
+        public IReadOnlyCollection<Employee> GetEmployees(int departmentId, int pageSize, int pageNumber, out int totalCount)
         {
-            if (page <= 0 || page <= 0 || departmentId < 0)
+            if (pageNumber <= 0 || pageNumber <= 0 || departmentId < 0)
             {
                 totalCount = 0;
                 return null;
             }
 
-            ISpecification specification = _specificationCreator.CreateSpecification(departmentId, pageSize, page);
+            ISpecification specification = _specificationCreator.CreateSpecification(departmentId, pageSize, pageNumber);
             return _rep.FindBy(specification, out totalCount);
         }
 
-        public IReadOnlyCollection<Employee> GetEmployees(string lastName, string firstName, string middledName, int fromYear, int toYear, int WorkStatusId, int pageSize, int page, out int totalCount)
+        public IReadOnlyCollection<Employee> GetEmployees(string lastName, string firstName, string middleName, int fromYear, int toYear, int workStatusId, int pageSize, int pageNumber, out int totalCount)
         {
-            if (page <= 0 || page <= 0 || fromYear < 0 || toYear < 0)
+            if (pageSize <= 0 || pageNumber <= 0 || fromYear < 0 || toYear < 0 || workStatusId < 0)
             {
                 totalCount = 0;
                 return null;
-            }
+            }                   
 
-            ISpecification specification = _specificationCreator.CreateSpecification(lastName, firstName, middledName, fromYear, toYear, WorkStatusId, pageSize, page);
+            ISpecification specification = _specificationCreator.CreateSpecification(lastName, firstName, middleName, fromYear, toYear, workStatusId, pageSize, pageNumber);
             return _rep.FindBy(specification, out totalCount);
         }
     }
