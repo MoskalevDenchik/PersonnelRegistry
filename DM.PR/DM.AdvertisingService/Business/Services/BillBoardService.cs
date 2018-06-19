@@ -1,8 +1,8 @@
 ﻿using DM.AdvertisingService.Data.Repositories;
 using DM.AdvertisingService.Entities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace DM.AdvertisingService.Business.Services
 {

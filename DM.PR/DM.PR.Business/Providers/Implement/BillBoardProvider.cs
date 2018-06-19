@@ -3,6 +3,7 @@ using DM.PR.Data.Repositories;
 using DM.PR.Common.Services;
 using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
+using System.Linq;
 
 namespace DM.PR.Business.Providers.Implement
 {
@@ -26,10 +27,10 @@ namespace DM.PR.Business.Providers.Implement
                 list = _rep.GetAll();
                 if (list != null)
                 {
-                    _cache.Add("BillBoard", list, 1);    
+                    _cache.Add("BillBoard", list, 1);
                 }
             }
-            return list;
+            return list.Take(2).ToList();
         }
     }
 }
