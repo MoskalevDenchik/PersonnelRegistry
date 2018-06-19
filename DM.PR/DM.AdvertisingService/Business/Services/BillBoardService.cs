@@ -14,25 +14,20 @@ namespace DM.AdvertisingService.Business.Services
             _bBRepository = new BiilBoardRepositoy();
         }
         public List<BillBoard> GetRandomBillBoards()
-        {
-            var bBList = _bBRepository.GetAll().Take(2).ToList();
-            //var randomNumberArray = GetRandomNumber(4, bBList.Count);
-            //var resultList = new List<BillBoard>();
+        {                                                                       
+            var bBList = _bBRepository.GetAll();
 
-            //for (int i = 0; i < randomNumberArray.Count(); i++)
-            //{
-            //    if (randomNumberArray.Contains(i))
-            //    {
-            //        resultList.Add(bBList[i]);
-            //    }
-            //}
+            var randomNumberArray = GetRandomNumber(2, bBList.Count);
 
-            return bBList;
+            int i = -1;
+            return bBList.FindAll(x => { i++; return randomNumberArray.Contains(i) ? true : false; }).Select(x => x).ToList();
         }
+
+        #region Helpers
 
         private int[] GetRandomNumber(int size, int maxValue)
         {
-            if (maxValue > size)
+            if (size > maxValue)
             {
                 throw new Exception();
             }
@@ -47,5 +42,7 @@ namespace DM.AdvertisingService.Business.Services
             }
             return array;
         }
+
+        #endregion
     }
 }
