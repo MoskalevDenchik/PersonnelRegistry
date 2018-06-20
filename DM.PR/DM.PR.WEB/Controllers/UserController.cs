@@ -2,9 +2,10 @@
 using DM.PR.Business.Providers;
 using DM.PR.Business.Services;
 using DM.PR.WEB.Models.User;
+using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using System.Web.Mvc;
-using System.Linq;
+using DM.PR.WEB.Infrastructure.Attributes;
 
 namespace DM.PR.WEB.Controllers
 {
@@ -37,40 +38,34 @@ namespace DM.PR.WEB.Controllers
 
         public ActionResult Create(int employeeId = 0)
         {
-            var model = new UserCreateViewModel { EmployeeId = employeeId };
-            return View(model);
+            return View(new UserCreateViewModel { EmployeeId = employeeId });
         }
 
         [HttpPost]
-        public ActionResult Create(UserCreateViewModel model)
+        [AjaxOnly]
+        public JsonResult Create(User model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = MapUserCreateViewModelToUser(model);
-            _userServ.Save(user);
-
-            return RedirectToAction("Index");
+            var result = _userServ.Save(model);
+            return Json(result);
         }
 
         public ActionResult Edit(int employeeId = 0)
         {
+            ViewBag.title = "Редактируйте пользователя";
             var user = _userProvider.GetByEmployeeId(employeeId);
-            var model = MapUserToUserEditViewModel(user);
-            return View(model);
+            var model = MapUserToUserSaveViewModel(user);
+            return View("Save", model);
         }
 
         [HttpPost]
-        public ActionResult Edit(UserEditViewModel model)
+        public ActionResult Edit(UserCreateViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View("Save", model);
             }
 
-            var user = MapUserEditViewModelToUser(model);
+            var user = MapUserSaveViewModelToUser(model);
             _userServ.Save(user);
 
             return RedirectToAction("Index");
@@ -84,50 +79,30 @@ namespace DM.PR.WEB.Controllers
 
         #region Partial
 
-        public ActionResult AddRole(int selectedId = 0, int number = 0)
+        [ChildActionOnly]
+        public ActionResult GetRole()
         {
-            ViewBag.number = number;
-            ViewBag.selectedId = selectedId;
-            var roles = _roleProvider.GetAll();
-            return PartialView("SelectRole", roles);
+            var list = _roleProvider.GetAll();
+            return PartialView(new GetRolePartialModel { Roles = list });
         }
 
         #endregion
 
         #region Mappers
 
-        private User MapUserCreateViewModelToUser(UserCreateViewModel model)
+        private User MapUserSaveViewModelToUser(UserCreateViewModel model) => new User
         {
-            return new User
-            {
-                EmployeeId = model.EmployeeId,
-                Login = model.Login,
-                Password = model.Password,
-                Roles = model.Roles
-            };
-        }
+            Id = model.Id,
+            Login = model.Login,
+            Password = model.Password,
+        };
 
-        private User MapUserEditViewModelToUser(UserEditViewModel model)
+        private UserCreateViewModel MapUserToUserSaveViewModel(User model) => new UserCreateViewModel
         {
-            return new User
-            {
-                Id = model.Id,
-                Login = model.Login,
-                Password = model.Password,
-                Roles = model.Roles
-            };
-        }
-
-        private UserEditViewModel MapUserToUserEditViewModel(User model)
-        {
-            return new UserEditViewModel
-            {
-                Id = model.Id,
-                Login = model.Login,
-                Password = model.Password,
-                Roles = model.Roles.ToList()
-            };
-        }
+            Id = model.Id,
+            Login = model.Login,
+            Password = model.Password,
+        };
 
         #endregion
     }

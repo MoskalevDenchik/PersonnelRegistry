@@ -33,7 +33,7 @@ namespace DM.PR.WEB.Controllers
         }
         #endregion
 
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "admin")]
         public ActionResult Index()
         {
             return View();
@@ -61,11 +61,11 @@ namespace DM.PR.WEB.Controllers
         public ActionResult Create()
         {
             ViewBag.title = "Добавьте сотрудника";
-            return View("Save", new EmployeeSaveViewModel { Emails = new List<Email> { new Email() } });
+            return View("Save", new EmployeeCreateViewModel { Emails = new List<Email> { new Email() } });
         }
 
         [HttpPost]
-        public ActionResult Create(EmployeeSaveViewModel model)
+        public ActionResult Create(EmployeeCreateViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace DM.PR.WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(EmployeeSaveViewModel model)
+        public ActionResult Edit(EmployeeCreateViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -210,7 +210,7 @@ namespace DM.PR.WEB.Controllers
             MaritalStatus = empl.MaritalStatus.Status
         };
 
-        private EmployeeSaveViewModel MapEmployeeToEmployeeSaveViewModel(Employee empl) => new EmployeeSaveViewModel
+        private EmployeeCreateViewModel MapEmployeeToEmployeeSaveViewModel(Employee empl) => new EmployeeCreateViewModel
         {
             Id = empl.Id,
             Emails = empl.Emails,
@@ -229,7 +229,7 @@ namespace DM.PR.WEB.Controllers
             MaritalStatusId = empl.MaritalStatus.Id
         };
 
-        private Employee MapEmployeeSaveViewModelToEmployee(EmployeeSaveViewModel model) => new Employee
+        private Employee MapEmployeeSaveViewModelToEmployee(EmployeeCreateViewModel model) => new Employee
         {
             Id = model.Id,
             Emails = model.Emails,

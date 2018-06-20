@@ -5,7 +5,7 @@ using System;
 
 namespace DM.PR.WEB.Models.Employee
 {
-    public class EmployeeSaveViewModel
+    public class EmployeeCreateViewModel
     {
         public int Id { get; set; }
 
@@ -14,12 +14,10 @@ namespace DM.PR.WEB.Models.Employee
 
         [Required(ErrorMessage = "Введите имя")]
         [Display(Name = "Имя")]
-        [StringLength(16, MinimumLength = 3, ErrorMessage = "Длина строки должна быть от 3 до 16 символов")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Введите отчество")]
         [Display(Name = "Отчество")]
-        [StringLength(16, MinimumLength = 3, ErrorMessage = "Длина строки должна быть от 3 до 16 символов")]
         public string MiddleName { get; set; }
 
         [Required(ErrorMessage = "Введите фамилию")]

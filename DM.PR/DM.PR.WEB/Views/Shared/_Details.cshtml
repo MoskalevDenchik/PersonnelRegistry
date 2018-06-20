@@ -1,13 +1,16 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml"; 
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container" style="margin-bottom:15px">
     <div class="pull-left">
-        <a class = "btn btn-lg btn-default"  onclick="history.go(-1); return false;">Back</a>
+        <a class="btn btn btn-default" onclick="history.go(-1); return false;">Назад</a>
     </div>
-    <div class="btn-group-lg pull-right">
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-default" })
-        @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class = "btn btn-default" })
+    <div class="btn-group pull-right">
+        @if (User.IsInRole("admin"))
+        {
+            @Html.ActionLink("Изменить", "Edit", new { id = Model.Id }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Удалить", "Delete", new { id = Model.Id }, new { @class = "btn btn-default" })
+        }
     </div>
 </div>
 <div class="container">

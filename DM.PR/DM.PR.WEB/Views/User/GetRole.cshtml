@@ -1,0 +1,6 @@
+﻿@model DM.PR.WEB.Models.User.GetRolePartialModel
+
+<div class="role">
+    @Html.DropDownListFor(m => m.Model.Roles[0], new SelectList(Model.Roles, "Id", "Name"), "Выберите роль", new { @class = "form-control " })
+    @Html.ValidationMessageFor(m => m.Model.Roles[0], "", new { @class = "text-danger" })
+</div>

@@ -3,9 +3,8 @@
 <br />
 <div>
     <ul>
-        <li>@Html.ActionLink($"Просмотр {(@User.IsInRole("admin") ? "и редактирование" : "полной")} информации о сотруднике", "Index", "Employees")</li>
+        <li>@Html.ActionLink($"Просмотр {(@User.IsInRole("admin") ? "и редактирование" : "полной")} информации о сотруднике", $"{(@User.IsInRole("admin") ? "Index" : "Navigation")}", "Employees")</li>
         <li>@Html.ActionLink("Просмотр и редактирование отделов", "Index", "Departments")</li>
-        <li>@Html.ActionLink("Просмотр и редактирование информации о видах связи", "Index", "KindPhone")</li>
         <li>@Html.ActionLink("Просмотр и редактирование информации о статусах сотрудников ", "Index", "WorkStatus")</li>
         <li>@Html.ActionLink("Просмотр и редактирование информации о семейных положениях сотрудников", "Index", "MaritalStatus")</li>
 

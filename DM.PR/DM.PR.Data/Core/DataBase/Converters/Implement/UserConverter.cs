@@ -16,7 +16,7 @@ namespace DM.PR.Data.Core.Converters.Implement
             Login = user.Field<string>("Login"),
             Password = user.Field<string>("Password"),
             Emails = ConvertToEmails(user.Field<int>("Id"), dataSet.Tables[1]),
-            Roles = ConvertToRoles(user.Field<int>("Id"), dataSet.Tables[2])
+            Roles = ConvertToRoles(user.Field<int>("Id"), dataSet.Tables[2]).ToList()
         });
 
         public IEnumerable<User> ConvertToList(DataSet dataSet, out int outputParameter) => throw new NotImplementedException();

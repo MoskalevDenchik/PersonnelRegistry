@@ -188,6 +188,7 @@
     <Content Include="Scripts\Roles\AddRole.js" />
     <Content Include="Scripts\Search.js" />
     <Content Include="Scripts\EditEmails.js" />
+    <Content Include="Scripts\User\Create.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -210,6 +211,7 @@
     <Compile Include="Dependency\IoC.cs" />
     <Compile Include="Dependency\StructureMapDependencyScope.cs" />
     <Compile Include="Dependency\StructureMapScopeModule.cs" />
+    <Compile Include="Infrastructure\Bindings\UserBinder.cs" />
     <Compile Include="Infrastructure\HtmlHelpers\ImageHalper.cs" />
     <Compile Include="Infrastructure\Attributes\AjaxOnly.cs" />
     <Compile Include="Models\Account\LoginViewModel.cs" />
@@ -220,13 +222,13 @@
     <Compile Include="Models\Department\DepartmentDeatailsViewModel.cs" />
     <Compile Include="Models\Department\DepartmentSelectModel.cs" />
     <Compile Include="Models\Employee\EmployeeDetailsViewModel.cs" />
-    <Compile Include="Models\Employee\EmployeeSaveViewModel.cs" />
+    <Compile Include="Models\Employee\EmployeeCreateViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeSummaryViewModel.cs" />
     <Compile Include="Models\MaritalStatus\MaritalStatusCreateViewModel.cs" />
     <Compile Include="Models\MaritalStatus\MaritalStatusEditViewModel.cs" />
     <Compile Include="Models\Navigation\NavigationMenuViewModel.cs" />
+    <Compile Include="Models\User\GetRolePartialModel.cs" />
     <Compile Include="Models\User\UserCreateViewModel.cs" />
-    <Compile Include="Models\User\UserEditViewModel.cs" />
     <Compile Include="Models\WorkStatus\WorkStatusCreateViewModel.cs" />
     <Compile Include="Models\WorkStatus\WorkStatusEditViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -248,7 +250,7 @@
     <Content Include="Views\Employees\Details.cshtml" />
     <Content Include="Views\Shared\_Details.cshtml" />
     <Content Include="Views\Departments\Index.cshtml" />
-    <Content Include="Views\Advertising\ListOfAd.cshtml" />
+    <Content Include="Views\Advertising\GetAdvertising.cshtml" />
     <Content Include="Views\Departments\Save.cshtml" />
     <Content Include="Views\Employees\NoEmployees.cshtml" />
     <Content Include="Views\Advertising\NoAd.cshtml" />
@@ -261,7 +263,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Error\Unauthorized.cshtml" />
     <Content Include="Views\Employees\Search.cshtml" />
-    <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\MaritalStatus\Index.cshtml" />
     <Content Include="Views\MaritalStatus\Create.cshtml" />
@@ -277,7 +278,7 @@
     <Content Include="Views\Navigation\DepartmentChildren.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
-    <Content Include="Views\User\SelectRole.cshtml" />
+    <Content Include="Views\User\GetRole.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

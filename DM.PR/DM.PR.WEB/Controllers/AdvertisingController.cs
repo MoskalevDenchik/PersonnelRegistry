@@ -16,10 +16,10 @@ namespace DM.PR.WEB.Controllers
         }
 
         [ChildActionOnly]
-        public PartialViewResult ListOfAd()
+        public PartialViewResult GetAdvertising()
         {
-            var content = _billBoardProv.GetAll();
-            return content == null ? PartialView("NoAd") : PartialView(content);
+            var list = _billBoardProv.GetAll();
+            return list == null ? PartialView("NoAd") : PartialView(list);
         }
     }
 }

@@ -27,12 +27,12 @@
             </td>
             <td>
                 @Html.ActionLink("Подробнее", "Details", "Employees", new { id = item.EmployeeId }, null)/
-                @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }) /
+                @Html.ActionLink("Изменить", "Edit", new { id = item.Id }) /
                 @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
             </td>
         </tr>
     }
 </table>
 <div class="col-md-offset-9">
-    @Html.ActionLink("Добавить нового пользователя", "Search", "Employees",null, new { @class = "btn btn-default" })
+    @Html.ActionLink("Добавить нового пользователя", "Navigation", "Employees",null, new { @class = "btn btn-default" })
 </div>

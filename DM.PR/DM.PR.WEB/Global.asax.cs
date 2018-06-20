@@ -8,6 +8,8 @@ using System.Web.Routing;
 using System.Web.Mvc;
 using System.Web;
 using System;
+using DM.PR.Common.Entities.Account;
+using DM.PR.WEB.Infrastructure.Bindings;
 
 namespace DM.PR.WEB
 {
@@ -15,6 +17,7 @@ namespace DM.PR.WEB
     {
         protected void Application_Start()
         {
+            ModelBinders.Binders.Add(typeof(User), new UserBinder());
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

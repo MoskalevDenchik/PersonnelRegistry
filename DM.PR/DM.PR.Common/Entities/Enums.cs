@@ -8,4 +8,12 @@ namespace DM.PR.Common.Entities.Account
         Failure = 2,
 
     }
+    public enum Status
+    {
+        Success = 0,    
+        Failure = 1,
+        InValid = 2
+    }
+
+
 }

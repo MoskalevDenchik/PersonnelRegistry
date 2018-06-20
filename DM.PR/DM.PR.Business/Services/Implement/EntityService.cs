@@ -1,4 +1,8 @@
-﻿using DM.PR.Data.Repositories;
+﻿using System.ComponentModel.DataAnnotations;
+using DM.PR.Common.Entities.Account;
+using System.Collections.Generic;
+using DM.PR.Data.Repositories;
+using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using System;
 
@@ -14,11 +18,20 @@ namespace DM.PR.Business.Services.Implement
             _rep = rep;
         }
 
-        public virtual void Save(T entity)
+        public virtual Result Save(T entity)
         {
-
-            _rep.Save(entity);
-        }  
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(entity);
+            if (!Validator.TryValidateObject(entity, context, results, true))
+            {
+                return new Result { Exception = results, Status = Status.InValid };
+            }
+            else
+            {
+                _rep.Save(entity);
+                return new Result { Status = Status.Success };
+            }
+        }
 
         public virtual void Remove(int id)
         {

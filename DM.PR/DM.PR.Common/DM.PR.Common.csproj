@@ -64,8 +64,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\RolesAttribute.cs" />
     <Compile Include="Dependencies\CommonRegistry.cs" />
-    <Compile Include="Entities\Account\Enums.cs" />
+    <Compile Include="Entities\Enums.cs" />
     <Compile Include="Entities\Account\Role.cs" />
     <Compile Include="Entities\Account\User.cs" />
     <Compile Include="Entities\BillBoard.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\MaritalStatus.cs" />
     <Compile Include="Entities\Phone.cs" />
+    <Compile Include="Entities\Result.cs" />
     <Compile Include="Entities\WorkStatus.cs" />
     <Compile Include="Helpers\IEnityReflector.cs" />
     <Compile Include="Helpers\Implement\EnityReflector.cs" />

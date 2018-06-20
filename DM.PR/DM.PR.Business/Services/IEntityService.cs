@@ -1,8 +1,10 @@
-﻿namespace DM.PR.Business.Services
+﻿using DM.PR.Common.Entities;
+
+namespace DM.PR.Business.Services
 {
     public interface IEntityService<T>
     {
-        void Save(T item);
+        Result Save(T item);
         void Remove(int id);
     }
 }
