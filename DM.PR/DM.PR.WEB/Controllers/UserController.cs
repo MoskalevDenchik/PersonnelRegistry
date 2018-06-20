@@ -1,21 +1,26 @@
-﻿using DM.PR.Common.Entities.Account;
+﻿using DM.PR.WEB.Infrastructure.Attributes;
+using DM.PR.Common.Entities.Account;
 using DM.PR.Business.Providers;
 using DM.PR.Business.Services;
 using DM.PR.WEB.Models.User;
-using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using System.Web.Mvc;
-using DM.PR.WEB.Infrastructure.Attributes;
+using System.Linq;
 
 namespace DM.PR.WEB.Controllers
 {
     [Authorize(Roles = "admin")]
     public class UserController : Controller
     {
+        #region Private
+
         private readonly IUserProvider _userProvider;
         private readonly IProvider<Role> _roleProvider;
         private readonly IEntityService<User> _userServ;
 
+        #endregion
+
+        #region Ctors
         public UserController(IUserProvider userProv, IEntityService<User> userServ, IProvider<Role> roleProvider)
         {
             Inspector.ThrowExceptionIfNull(userProv, userProv, roleProvider);
@@ -23,6 +28,8 @@ namespace DM.PR.WEB.Controllers
             _userProvider = userProv;
             _userServ = userServ;
         }
+
+        #endregion
 
         public ActionResult Index()
         {
@@ -36,39 +43,40 @@ namespace DM.PR.WEB.Controllers
             return View(user);
         }
 
+        [HttpGet]
         public ActionResult Create(int employeeId = 0)
         {
             return View(new UserCreateViewModel { EmployeeId = employeeId });
         }
 
-        [HttpPost]
         [AjaxOnly]
+        [HttpPost]
         public JsonResult Create(User model)
         {
             var result = _userServ.Save(model);
             return Json(result);
         }
 
+        [HttpGet]
         public ActionResult Edit(int employeeId = 0)
         {
-            ViewBag.title = "Редактируйте пользователя";
             var user = _userProvider.GetByEmployeeId(employeeId);
-            var model = MapUserToUserSaveViewModel(user);
-            return View("Save", model);
+            return View(new UserUpdateViewModel
+            {
+                Id = user.Id,
+                EmployeeId = employeeId,
+                Login = user.Login,
+                Password = user.Password,
+                Roles = user.Roles.Select(x => x.Id).ToArray()
+            });
         }
 
+        [AjaxOnly]
         [HttpPost]
-        public ActionResult Edit(UserCreateViewModel model)
+        public ActionResult Edit(User model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View("Save", model);
-            }
-
-            var user = MapUserSaveViewModelToUser(model);
-            _userServ.Save(user);
-
-            return RedirectToAction("Index");
+            var result = _userServ.Save(model);
+            return Json(result);
         }
 
         public ActionResult Delete(int id = 0)
@@ -88,22 +96,5 @@ namespace DM.PR.WEB.Controllers
 
         #endregion
 
-        #region Mappers
-
-        private User MapUserSaveViewModelToUser(UserCreateViewModel model) => new User
-        {
-            Id = model.Id,
-            Login = model.Login,
-            Password = model.Password,
-        };
-
-        private UserCreateViewModel MapUserToUserSaveViewModel(User model) => new UserCreateViewModel
-        {
-            Id = model.Id,
-            Login = model.Login,
-            Password = model.Password,
-        };
-
-        #endregion
     }
 }

@@ -1,38 +1,20 @@
 ﻿$("input[type='submit']").on('click', function ()
 {
-    if ($("#userForm").valid())
+    if ($("#EmployeeForm").valid())
     {
         event.preventDefault();
-
-        var roles = [];
-
-        var rolesArray = $("#Roles select  option:selected");
-
-        for (var i = 0; i < rolesArray.length; i++)
-        {
-            roles[i] = rolesArray.eq(i).val();
-        }
-
-                                                                
-        var data = {
-            Id: $("input[name='Id']").val(),
-            EmployeeId: $("input[name='EmployeeId']").val(),
-            Login: $("input[name='Login']").val(),
-            Password: $("input[name='Password']").val(),
-            Roles: roles
-        }
 
         $.ajax({
             type: "POST",
             async: false,
-            url: "/User/Create",
+            url: "/Employees/Save",
             dataType: 'JSON',
-            data: data,
+            data: $("#EmployeeForm").serialize(),
             success: function (response)
             {
                 if (response.Status === 0)
                 {
-                     
+                    alert("Все гуд!!!");
                 }
                 else
                 {

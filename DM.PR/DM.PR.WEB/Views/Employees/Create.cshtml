@@ -1,13 +1,8 @@
-﻿@model DM.PR.WEB.Models.Employee.EmployeeSaveViewModel
+﻿@model DM.PR.WEB.Models.Employee.EmployeeCreateViewModel
 
-<h2 class="text-center">@ViewBag.title</h2> <br />
+<h2 class="text-center">Создайте пользователя</h2> <br />
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-    @Html.HiddenFor(model=>model.Id)
-
+<form action="@Url.Action("Create")" id="EmployeeForm">
     <div class="row" id="emplCreate">
         <div class="col-md-offset-1 col-md-3">
             <div class=" form-group">
@@ -25,7 +20,7 @@
             <br />
             <div class="form-group">
                 <div class="col-md-12">
-                    @Html.Action("GetWorkStatusList", "WorkStatus", new { selectedId = Model.WorkStatusId > 0 ? Model.WorkStatusId : 0 })
+                    @Html.Action("GetWorkStatusList", "WorkStatus")
                     @Html.ValidationMessageFor(model => model.WorkStatusId, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -48,7 +43,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.DepartmentId, new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.Action("GetDepartmentList", new { selectedId = Model.DepartmentId > 0 ? Model.DepartmentId : 0 })
+                        @Html.Action("GetDepartmentList")
                         @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -82,7 +77,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.MaritalStatusId, new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.Action("GetMaritalStatusList", "MaritalStatus", new { selectedId = Model?.MaritalStatusId > 0 ? Model.MaritalStatusId : 0 })
+                        @Html.Action("GetMaritalStatusList", "MaritalStatus")
                         @Html.ValidationMessageFor(model => model.MaritalStatusId, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -106,19 +101,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Emails[0].Address, new { @class = "control-label col-md-4" })
-                    <div class="col-md-8" id="Emails">
-                        @for (int i = 0; i < Model.Emails.Count; i++)
-                        {
-                            <div id="email">
-                                @Html.HiddenFor(Model => Model.Emails[i].Id)
-                                @Html.TextBoxFor(model => model.Emails[i].Address, new { @class = "form-control ", placeholder = "Почтовый адрес..." })
-                                @Html.ValidationMessageFor(model => model.Emails[i].Address, "", new { @class = "text-danger" })
-                            </div>
-                        }
-                    </div>
-                </div>
-                <div class="form-group">
                     <div class="col-md-offset-5">
                         <a id="AddEmail" class="btn btn-default">Добавить Email</a>
                     </div>
@@ -131,11 +113,12 @@
             <input type="submit" value="Сохранить" class="btn btn-default" />
         </div>
     </div>
-}
+</form>
 
 
 
 @section Scripts {
+    <script src="~/Scripts/Employee/Save.js"></script>
     <script src="~/Scripts/Emails.js"></script>
     <script src="~/Scripts/Employee/UpdateImage.js"></script>
 }

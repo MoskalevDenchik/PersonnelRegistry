@@ -1,6 +1,9 @@
-﻿using DM.PR.WEB.DependencyResolution;
+﻿using DM.PR.WEB.Infrastructure.Bindings;
+using DM.PR.WEB.DependencyResolution;
+using DM.PR.Common.Entities.Account;
 using System.Web.Optimization;
 using DM.PR.Business.Helpers;
+using DM.PR.Common.Entities;
 using System.Web.Security;
 using DM.PR.Common.Logger;
 using DM.PR.WEB.App_Start;
@@ -8,8 +11,6 @@ using System.Web.Routing;
 using System.Web.Mvc;
 using System.Web;
 using System;
-using DM.PR.Common.Entities.Account;
-using DM.PR.WEB.Infrastructure.Bindings;
 
 namespace DM.PR.WEB
 {
@@ -18,6 +19,7 @@ namespace DM.PR.WEB
         protected void Application_Start()
         {
             ModelBinders.Binders.Add(typeof(User), new UserBinder());
+            ModelBinders.Binders.Add(typeof(Employee), new EmployeeBinder());
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

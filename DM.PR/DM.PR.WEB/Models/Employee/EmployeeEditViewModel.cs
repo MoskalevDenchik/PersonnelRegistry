@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using DM.PR.Common.Entities;
 using System;
-using DM.PR.WEB.Infrastructure.Attributes;
-using DM.PR.Common.Attributes;
 
 namespace DM.PR.WEB.Models.Employee
 {
-    public class EmployeeCreateViewModel
+    public class EmployeeEditViewModel
     {
         public int Id { get; set; }
 
-        [Empty]
         [Display(Name = "Отдел")]
         public int DepartmentId { get; set; }
 
@@ -29,7 +26,7 @@ namespace DM.PR.WEB.Models.Employee
 
         [Display(Name = "Emails")]
         public List<Email> Emails { get; set; }
-
+                                               
         [StringLength(16, ErrorMessage = "Длина строки должна быть до 16 символов")]
         public string HomePhone { get; set; }
 

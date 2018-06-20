@@ -167,6 +167,7 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Employee\Save.js" />
     <Content Include="Scripts\EditPhones.js" />
     <Content Include="Scripts\Emails.js" />
     <Content Include="Scripts\Employee\UpdateImage.js" />
@@ -211,16 +212,20 @@
     <Compile Include="Dependency\IoC.cs" />
     <Compile Include="Dependency\StructureMapDependencyScope.cs" />
     <Compile Include="Dependency\StructureMapScopeModule.cs" />
+    <Compile Include="Infrastructure\Attributes\DepNullAttribute.cs" />
+    <Compile Include="Infrastructure\Bindings\BinderHelper.cs" />
+    <Compile Include="Infrastructure\Bindings\EmployeeBinder.cs" />
     <Compile Include="Infrastructure\Bindings\UserBinder.cs" />
     <Compile Include="Infrastructure\HtmlHelpers\ImageHalper.cs" />
     <Compile Include="Infrastructure\Attributes\AjaxOnly.cs" />
     <Compile Include="Models\Account\LoginViewModel.cs" />
-    <Compile Include="Models\Department\DepartmentSaveViewModel.cs" />
+    <Compile Include="Models\Department\DepartmentCreateViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Department\DepartmentDeatailsViewModel.cs" />
     <Compile Include="Models\Department\DepartmentSelectModel.cs" />
+    <Compile Include="Models\Employee\EmployeeEditViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeDetailsViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeCreateViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeSummaryViewModel.cs" />
@@ -228,6 +233,7 @@
     <Compile Include="Models\MaritalStatus\MaritalStatusEditViewModel.cs" />
     <Compile Include="Models\Navigation\NavigationMenuViewModel.cs" />
     <Compile Include="Models\User\GetRolePartialModel.cs" />
+    <Compile Include="Models\User\UserUpdateViewModel.cs" />
     <Compile Include="Models\User\UserCreateViewModel.cs" />
     <Compile Include="Models\WorkStatus\WorkStatusCreateViewModel.cs" />
     <Compile Include="Models\WorkStatus\WorkStatusEditViewModel.cs" />
@@ -246,7 +252,7 @@
     <Content Include="Views\Employees\EmployeeSummary.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
     <Content Include="Views\Departments\Details.cshtml" />
-    <Content Include="Views\Employees\Save.cshtml" />
+    <Content Include="Views\Employees\Create.cshtml" />
     <Content Include="Views\Employees\Details.cshtml" />
     <Content Include="Views\Shared\_Details.cshtml" />
     <Content Include="Views\Departments\Index.cshtml" />

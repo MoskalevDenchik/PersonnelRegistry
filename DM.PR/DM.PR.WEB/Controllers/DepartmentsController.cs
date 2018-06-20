@@ -46,8 +46,9 @@ namespace DM.PR.WEB.Controllers
 
         public ActionResult Create()
         {
+
             ViewBag.title = "Добавьте отдел";
-            return View("Save", new DepartmentSaveViewModel { Phones = new List<Phone> { new Phone() } });
+            return View("Save", new DepartmentSaveViewModel { });
         }
 
         [HttpPost]
@@ -139,12 +140,10 @@ namespace DM.PR.WEB.Controllers
         {
             return new Department()
             {
-                Id = model.Id,
                 Name = model.Name,
                 Address = model.Address,
                 ParentId = model.ParentId,
                 Description = model.Description,
-                Phones = model.Phones
             };
         }
 
@@ -152,12 +151,10 @@ namespace DM.PR.WEB.Controllers
         {
             return new DepartmentSaveViewModel()
             {
-                Id = department.Id,
                 Name = department.Name,
                 Address = department.Address,
                 ParentId = department.ParentId,
-                Description = department.Description,
-                Phones = department.Phones.ToList()
+                Description = department.Description
             };
         }
 

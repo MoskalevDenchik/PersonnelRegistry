@@ -52,51 +52,30 @@ namespace DM.PR.WEB.Controllers
         [Authorize(Roles = "admin,editor")]
         public ActionResult Details(int id = 0)
         {
-            var employee = _employeeProvider.GetById(id);
-            var model = MapEmployeeToEmployeeDetailsViewModel(employee);
-            return View(model);
+            var empl = _employeeProvider.GetById(id);
+            return View(MapEmployeeToEmployeeDetailsViewModel(empl));
         }
 
         [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
-            ViewBag.title = "Добавьте сотрудника";
-            return View("Save", new EmployeeCreateViewModel { Emails = new List<Email> { new Email() } });
-        }
-
-        [HttpPost]
-        public ActionResult Create(EmployeeCreateViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View("Save", model);
-            }
-
-            var employee = MapEmployeeSaveViewModelToEmployee(model);
-            _employeeService.Save(employee);
-
-            return RedirectToAction("Index");
+            return View();
         }
 
         [Authorize(Roles = "admin")]
         public ActionResult Edit(int id = 0)
         {
-            ViewBag.title = "Редактируйте сотрудника";
-            var employee = _employeeProvider.GetById(id);
-            var model = MapEmployeeToEmployeeSaveViewModel(employee);
-            return View("Save", model);
+            var empl = _employeeProvider.GetById(id);
+            return View(MapEmployeeToEmployeeEditViewModel(empl));
         }
 
         [HttpPost]
-        public ActionResult Edit(EmployeeCreateViewModel model)
+        [AjaxOnly]
+        [Authorize(Roles = "admin")]
+        public JsonResult Save(Employee employee)
         {
-            if (!ModelState.IsValid)
-            {
-                return View("Save", model);
-            }
-            var employee = MapEmployeeSaveViewModelToEmployee(model);
-            _employeeService.Save(employee);
-            return RedirectToAction("Index");
+            var result = _employeeService.Save(employee);
+            return Json(result);
         }
 
         [Authorize(Roles = "admin")]
@@ -137,7 +116,6 @@ namespace DM.PR.WEB.Controllers
             return PartialView("EmployeeSummary", model);
         }
 
-
         [AjaxOnly]
         public ActionResult GetEmployees(string middleName, string firstName, string lastName, int pageNumber, int pageSize, int WorkStatusId = 0, int fromYear = 0, int toYear = 100)
         {
@@ -146,7 +124,6 @@ namespace DM.PR.WEB.Controllers
             var model = MapEmployeesToEmployeesSummaryViewModel(list);
             return PartialView("EmployeeSummary", model);
         }
-
 
         [ChildActionOnly]
         public PartialViewResult GetDepartmentList(int selectedId = 0)
@@ -157,17 +134,9 @@ namespace DM.PR.WEB.Controllers
             return PartialView("DepartmentSelect", model);
         }
 
-        [AjaxOnly]
-        public ActionResult AddEmail(int number = 0)
-        {
-            return PartialView("AddEmail", number);
-        }
-
         #endregion
 
         #region Mappers
-
-
 
         private IReadOnlyCollection<DepartmentSelectModel> MapDepartmentToDepartmentSelectModel(IReadOnlyCollection<Department> departments)
         {
@@ -182,14 +151,13 @@ namespace DM.PR.WEB.Controllers
                 HasRole = empl.HasRole,
                 LastName = empl.LastName,
                 WorkPhone = empl.WorkPhone,
-                FirstName = empl.FirstName,                              
+                FirstName = empl.FirstName,
                 ImagePath = empl.ImagePath,
                 MiddleName = empl.MiddleName,
                 DepartmentName = empl.Department.Name
 
             }).ToList();
         }
-
 
         private EmployeeDetailsViewModel MapEmployeeToEmployeeDetailsViewModel(Employee empl) => new EmployeeDetailsViewModel
         {
@@ -210,7 +178,7 @@ namespace DM.PR.WEB.Controllers
             MaritalStatus = empl.MaritalStatus.Status
         };
 
-        private EmployeeCreateViewModel MapEmployeeToEmployeeSaveViewModel(Employee empl) => new EmployeeCreateViewModel
+        private EmployeeEditViewModel MapEmployeeToEmployeeEditViewModel(Employee empl) => new EmployeeEditViewModel
         {
             Id = empl.Id,
             Emails = empl.Emails,
@@ -227,25 +195,6 @@ namespace DM.PR.WEB.Controllers
             WorkStatusId = empl.WorkStatus.Id,
             BeginningWork = empl.BeginningWork,
             MaritalStatusId = empl.MaritalStatus.Id
-        };
-
-        private Employee MapEmployeeSaveViewModelToEmployee(EmployeeCreateViewModel model) => new Employee
-        {
-            Id = model.Id,
-            Emails = model.Emails,
-            Address = model.Address,
-            EndWork = model.EndWork,
-            LastName = model.LastName,
-            HomePhone = model.HomePhone,
-            MobilePhone = model.MobilePhone,
-            WorkPhone = model.WorkPhone,
-            FirstName = model.FirstName,
-            ImagePath = model.ImagePath,
-            MiddleName = model.MiddleName,
-            BeginningWork = model.BeginningWork,
-            WorkStatus = new WorkStatus { Id = model.WorkStatusId },
-            Department = new Department { Id = model.DepartmentId },
-            MaritalStatus = new MaritalStatus { Id = model.MaritalStatusId }
         };
 
         #endregion
