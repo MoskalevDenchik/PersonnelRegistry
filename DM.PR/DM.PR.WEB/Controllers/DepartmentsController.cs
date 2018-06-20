@@ -15,8 +15,8 @@ namespace DM.PR.WEB.Controllers
     {
         #region Private
 
-        private readonly IDepartmentProvider _departmentProv;
-        private readonly IEntityService<Department> _departmentServ;
+        private readonly IDepartmentProvider _depProv;
+        private readonly IEntityService<Department> _depServ;
 
         #endregion
 
@@ -25,8 +25,8 @@ namespace DM.PR.WEB.Controllers
         public DepartmentsController(IDepartmentProvider departmentProv, IEntityService<Department> departmentServ)
         {
             Inspector.ThrowExceptionIfNull(departmentProv, departmentProv);
-            _departmentProv = departmentProv;
-            _departmentServ = departmentServ;
+            _depProv = departmentProv;
+            _depServ = departmentServ;
         }
 
         #endregion
@@ -38,58 +38,34 @@ namespace DM.PR.WEB.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            var department = _departmentProv.GetById(id);
-            var parent = department.ParentId > 0 ? _departmentProv.GetById(department.ParentId) : null;
+            var department = _depProv.GetById(id);
+            var parent = department.ParentId > 0 ? _depProv.GetById(department.ParentId) : null;
             var model = MapDepartmentToDepartmentDetailsViewModel(department, parent);
             return View(model);
         }
 
         public ActionResult Create()
         {
-
-            ViewBag.title = "Добавьте отдел";
-            return View("Save", new DepartmentSaveViewModel { });
-        }
-
-        [HttpPost]
-        public ActionResult Create(DepartmentSaveViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var department = MapDepartmentSaveViewModelToDepartment(model);
-            _departmentServ.Save(department);
-
-            return RedirectToAction("Index");
+            return View();
         }
 
         public ActionResult Edit(int id = 0)
         {
-            ViewBag.title = "Редактируйте отдел";
-            var department = _departmentProv.GetById(id);
-            var model = MapDepartmentToDepartmentSaveViewModel(department);
-            return View("Save", model);
+            var department = _depProv.GetById(id);
+            return View(MapDepartmentToDepartmentEditViewModel(department));
         }
 
+        [AjaxOnly]
         [HttpPost]
-        public ActionResult Edit(DepartmentSaveViewModel model)
+        public JsonResult Save(Department department)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var department = MapDepartmentSaveViewModelToDepartment(model);
-            _departmentServ.Save(department);
-            return RedirectToAction("Index");
+            var result = _depServ.Save(department);
+            return Json(result);
         }
-
 
         public ActionResult Delete(int id = 0)
         {
-            _departmentServ.Remove(id);
+            _depServ.Remove(id);
             return RedirectToAction("Index");
         }
 
@@ -98,7 +74,7 @@ namespace DM.PR.WEB.Controllers
         [AjaxOnly]
         public ActionResult GetAll(int pageSize, int pageNumber)
         {
-            var model = _departmentProv.GetDepartments(pageSize, pageNumber, out int totalPage);
+            var model = _depProv.GetDepartments(pageSize, pageNumber, out int totalPage);
             return Json(new { Data = model, TotalCount = totalPage }, JsonRequestBehavior.AllowGet);
         }
 
@@ -106,7 +82,7 @@ namespace DM.PR.WEB.Controllers
         public ActionResult GetParentDepartment(int selectedId)
         {
             ViewBag.departmentId = selectedId;
-            var list = _departmentProv.GetAll();
+            var list = _depProv.GetAll();
             var model = MapDepartmentToDepartmentSelectModel(list);
 
             return PartialView("DepartmentSelect", model);
@@ -134,7 +110,7 @@ namespace DM.PR.WEB.Controllers
                 Description = department.Description
             };
         }
-      
+
 
         public Department MapDepartmentSaveViewModelToDepartment(DepartmentSaveViewModel model)
         {
@@ -147,7 +123,7 @@ namespace DM.PR.WEB.Controllers
             };
         }
 
-        public DepartmentSaveViewModel MapDepartmentToDepartmentSaveViewModel(Department department)
+        public DepartmentSaveViewModel MapDepartmentToDepartmentEditViewModel(Department department)
         {
             return new DepartmentSaveViewModel()
             {
