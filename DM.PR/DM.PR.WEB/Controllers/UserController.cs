@@ -49,15 +49,6 @@ namespace DM.PR.WEB.Controllers
             return View(new UserCreateViewModel { EmployeeId = employeeId });
         }
 
-        [AjaxOnly]
-        [HttpPost]
-        public JsonResult Create(User model)
-        {
-            var result = _userServ.Save(model);
-            return Json(result);
-        }
-
-        [HttpGet]
         public ActionResult Edit(int employeeId = 0)
         {
             var user = _userProvider.GetByEmployeeId(employeeId);
@@ -71,21 +62,21 @@ namespace DM.PR.WEB.Controllers
             });
         }
 
-        [AjaxOnly]
-        [HttpPost]
-        public ActionResult Edit(User model)
-        {
-            var result = _userServ.Save(model);
-            return Json(result);
-        }
-
         public ActionResult Delete(int id = 0)
         {
             _userServ.Remove(id);
             return RedirectToAction("Index");
         }
 
-        #region Partial
+        #region Partial and Json
+
+        [AjaxOnly]
+        [HttpPost]
+        public JsonResult Save(User model)
+        {
+            var result = _userServ.Save(model);
+            return Json(result);
+        }
 
         [ChildActionOnly]
         public ActionResult GetRole()
