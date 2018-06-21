@@ -16,20 +16,25 @@ namespace DM.PR.WEB.Controllers
     {
         #region Private
 
-        private IEmployeeProvider _employeeProvider;
-        private IDepartmentProvider _departmentProvider;
-        private IEntityService<Employee> _employeeService;
+        private IEmployeeProvider _emplProv;
+        private IDepartmentProvider _depProv;
+        private IEntityService<Employee> _emplServ;
+        private IProvider<WorkStatus> _workStatProv;
+        private IProvider<MaritalStatus> _merStatProv;
 
         #endregion
 
         #region Ctors
 
-        public EmployeesController(IEmployeeProvider employeeProvider, IEntityService<Employee> employeeService, IDepartmentProvider departmentProvider)
+        public EmployeesController(IEmployeeProvider employeeProvider, IEntityService<Employee> employeeService,
+            IDepartmentProvider departmentProvider, IProvider<WorkStatus> workStatProv, IProvider<MaritalStatus> merStatProv)
         {
-            Inspector.ThrowExceptionIfNull(employeeProvider, employeeService, departmentProvider);
-            _departmentProvider = departmentProvider;
-            _employeeProvider = employeeProvider;
-            _employeeService = employeeService;
+            Inspector.ThrowExceptionIfNull(employeeProvider, employeeService, departmentProvider, workStatProv, merStatProv);
+            _depProv = departmentProvider;
+            _emplProv = employeeProvider;
+            _emplServ = employeeService;
+            _merStatProv = merStatProv;
+            _workStatProv = workStatProv;
         }
         #endregion
 
@@ -46,46 +51,58 @@ namespace DM.PR.WEB.Controllers
 
         public ActionResult Navigation()
         {
-            return View("DepartmentNavigation");
+            return View();
         }
 
         [Authorize(Roles = "admin,editor")]
         public ActionResult Details(int id = 0)
         {
-            var empl = _employeeProvider.GetById(id);
+            var empl = _emplProv.GetById(id);
             return View(MapEmployeeToEmployeeDetailsViewModel(empl));
         }
 
         [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
-            return View();
+            var marStatusList = _merStatProv.GetAll();
+            var workStatusList = _workStatProv.GetAll();
+            var departmentList = MapDepartmentToDepartmentSelectModel(_depProv.GetAll());
+            return View(new EmployeeSaveViewModel
+            {
+                WorkStatusList = workStatusList,
+                MaritalStatusList = marStatusList,
+                DepartmentList = departmentList
+            });
         }
 
         [Authorize(Roles = "admin")]
         public ActionResult Edit(int id = 0)
         {
-            var empl = _employeeProvider.GetById(id);
-            return View(MapEmployeeToEmployeeEditViewModel(empl));
+            var empl = _emplProv.GetById(id);
+            var model = MapEmployeeToEmployeeSaveViewModel(empl);
+            model.MaritalStatusList = _merStatProv.GetAll();
+            model.WorkStatusList = _workStatProv.GetAll();
+            model.DepartmentList = MapDepartmentToDepartmentSelectModel(_depProv.GetAll());
+            return View(model);
         }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult Delete(int id = 0)
+        {
+            _emplServ.Remove(id);
+            return RedirectToAction("Index");
+        }
+
+        #region Partial and Json
 
         [HttpPost]
         [AjaxOnly]
         [Authorize(Roles = "admin")]
         public JsonResult Save(Employee employee)
         {
-            var result = _employeeService.Save(employee);
+            var result = _emplServ.Save(employee);
             return Json(result);
         }
-
-        [Authorize(Roles = "admin")]
-        public ActionResult Delete(int id = 0)
-        {
-            _employeeService.Remove(id);
-            return RedirectToAction("Index");
-        }
-
-        #region Partial and Json
 
         [AjaxOnly]
         public JsonResult AddImage()
@@ -103,14 +120,14 @@ namespace DM.PR.WEB.Controllers
         [AjaxOnly]
         public ActionResult GetPageEmployees(int pageSize, int pageNumber)
         {
-            var list = _employeeProvider.GetEmployees(pageSize, pageNumber, out int totalCount);
+            var list = _emplProv.GetEmployees(pageSize, pageNumber, out int totalCount);
             return Json(new { Data = list, TotalCount = totalCount }, JsonRequestBehavior.AllowGet);
         }
 
         [AjaxOnly]
         public ActionResult GetEmployeesByDepartmentId(int departmentId, int pageNumber, int pageSize)
         {
-            var list = _employeeProvider.GetEmployees(departmentId, pageSize, pageNumber, out int totalCount);
+            var list = _emplProv.GetEmployees(departmentId, pageSize, pageNumber, out int totalCount);
             ViewBag.totalCount = totalCount;
             var model = MapEmployeesToEmployeesSummaryViewModel(list);
             return PartialView("EmployeeSummary", model);
@@ -119,21 +136,11 @@ namespace DM.PR.WEB.Controllers
         [AjaxOnly]
         public ActionResult GetEmployees(string middleName, string firstName, string lastName, int pageNumber, int pageSize, int WorkStatusId = 0, int fromYear = 0, int toYear = 100)
         {
-            var list = _employeeProvider.GetEmployees(lastName, firstName, middleName, fromYear, toYear, WorkStatusId, pageSize, pageNumber, out int totalCount);
+            var list = _emplProv.GetEmployees(lastName, firstName, middleName, fromYear, toYear, WorkStatusId, pageSize, pageNumber, out int totalCount);
             ViewBag.totalCount = totalCount;
             var model = MapEmployeesToEmployeesSummaryViewModel(list);
             return PartialView("EmployeeSummary", model);
         }
-
-        [ChildActionOnly]
-        public PartialViewResult GetDepartmentList(int selectedId = 0)
-        {
-            ViewBag.departmentId = selectedId;
-            var list = _departmentProvider.GetAll();
-            var model = MapDepartmentToDepartmentSelectModel(list);
-            return PartialView("DepartmentSelect", model);
-        }
-
         #endregion
 
         #region Mappers
@@ -178,7 +185,7 @@ namespace DM.PR.WEB.Controllers
             MaritalStatus = empl.MaritalStatus.Status
         };
 
-        private EmployeeEditViewModel MapEmployeeToEmployeeEditViewModel(Employee empl) => new EmployeeEditViewModel
+        private EmployeeSaveViewModel MapEmployeeToEmployeeSaveViewModel(Employee empl) => new EmployeeSaveViewModel
         {
             Id = empl.Id,
             Emails = empl.Emails,

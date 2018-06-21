@@ -3,10 +3,11 @@ using System.Web.Mvc;
 using System.Linq;
 using System;
 
+
 namespace DM.PR.WEB.Infrastructure.Bindings
 {
     public class EmployeeBinder : IModelBinder
-    {                                   
+    {
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             var _prov = new ProviderHelper(bindingContext.ValueProvider);
@@ -27,8 +28,15 @@ namespace DM.PR.WEB.Infrastructure.Bindings
                 ImagePath = _prov.GetValueOrDefault<string>("ImagePath"),
                 MaritalStatus = new MaritalStatus { Id = _prov.GetValueOrDefault<int>("MaritalStatusId") },
                 WorkStatus = new WorkStatus { Id = _prov.GetValueOrDefault<int>("WorkStatusId") },
-                Emails = _prov.GetValueOrDefault<string[]>("Emails")?.Select(x => new Email { Address = x }).ToList()
+                Emails = _prov.GetPrefixesWhoContaints("Emails").Select(prefix => new Email
+                {
+                    Id = _prov.GetValueOrDefault<int>($"{prefix}.Id"),
+                    Address = _prov.GetValueOrDefault<string>($"{prefix}.Address"),
+
+                }).ToList()
             };
         }
     }
 }
+
+

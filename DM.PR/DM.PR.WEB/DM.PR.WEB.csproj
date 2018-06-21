@@ -212,7 +212,7 @@
     <Compile Include="Dependency\IoC.cs" />
     <Compile Include="Dependency\StructureMapDependencyScope.cs" />
     <Compile Include="Dependency\StructureMapScopeModule.cs" />
-    <Compile Include="Infrastructure\Attributes\DepNullAttribute.cs" />
+    <Compile Include="Infrastructure\Attributes\EmailsAttribute.cs" />
     <Compile Include="Infrastructure\Bindings\BinderHelper.cs" />
     <Compile Include="Infrastructure\Bindings\EmployeeBinder.cs" />
     <Compile Include="Infrastructure\Bindings\UserBinder.cs" />
@@ -227,7 +227,7 @@
     <Compile Include="Models\Department\DepartmentSelectModel.cs" />
     <Compile Include="Models\Employee\EmployeeEditViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeDetailsViewModel.cs" />
-    <Compile Include="Models\Employee\EmployeeCreateViewModel.cs" />
+    <Compile Include="Models\Employee\EmployeeSaveViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeSummaryViewModel.cs" />
     <Compile Include="Models\MaritalStatus\MaritalStatusCreateViewModel.cs" />
     <Compile Include="Models\MaritalStatus\MaritalStatusEditViewModel.cs" />
@@ -262,8 +262,6 @@
     <Content Include="Views\Advertising\NoAd.cshtml" />
     <Content Include="Views\Error\ServerError.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
-    <Content Include="Views\Employees\DepartmentSelect.cshtml" />
-    <Content Include="Views\MaritalStatus\MaritalStatusSelect.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -273,18 +271,17 @@
     <Content Include="Views\MaritalStatus\Index.cshtml" />
     <Content Include="Views\MaritalStatus\Create.cshtml" />
     <Content Include="Views\MaritalStatus\Edit.cshtml" />
-    <Content Include="Views\Employees\DepartmentNavigation.cshtml" />
+    <Content Include="Views\Employees\Navigation.cshtml" />
     <Content Include="Views\Departments\AddPhone.cshtml" />
     <Content Include="Views\Employees\AddEmail.cshtml" />
-    <Content Include="Views\Departments\DepartmentSelect.cshtml" />
     <Content Include="Views\WorkStatus\Index.cshtml" />
     <Content Include="Views\WorkStatus\Create.cshtml" />
     <Content Include="Views\WorkStatus\Edit.cshtml" />
-    <Content Include="Views\WorkStatus\WorkStatusSelect.cshtml" />
     <Content Include="Views\Navigation\DepartmentChildren.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\GetRole.cshtml" />
+    <Content Include="Views\Employees\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

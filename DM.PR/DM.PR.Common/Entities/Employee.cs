@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System;
+using DM.PR.WEB.Infrastructure.Attributes;
 
 namespace DM.PR.Common.Entities
 {
@@ -29,6 +30,7 @@ namespace DM.PR.Common.Entities
         [StringLength(16, ErrorMessage = "Длина строки должна быть  до 16 символов")]
         public string WorkPhone { get; set; }
 
+        [Emails]
         public List<Email> Emails { get; set; }
 
         [StringLength(64, MinimumLength = 3, ErrorMessage = "Длина строки должна быть от 3 до 64 символов")]

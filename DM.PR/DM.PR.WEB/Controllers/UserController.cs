@@ -14,8 +14,8 @@ namespace DM.PR.WEB.Controllers
     {
         #region Private
 
-        private readonly IUserProvider _userProvider;
-        private readonly IProvider<Role> _roleProvider;
+        private readonly IUserProvider _userProv;
+        private readonly IProvider<Role> _roleProv;
         private readonly IEntityService<User> _userServ;
 
         #endregion
@@ -24,8 +24,8 @@ namespace DM.PR.WEB.Controllers
         public UserController(IUserProvider userProv, IEntityService<User> userServ, IProvider<Role> roleProvider)
         {
             Inspector.ThrowExceptionIfNull(userProv, userProv, roleProvider);
-            _roleProvider = roleProvider;
-            _userProvider = userProv;
+            _roleProv = roleProvider;
+            _userProv = userProv;
             _userServ = userServ;
         }
 
@@ -33,13 +33,13 @@ namespace DM.PR.WEB.Controllers
 
         public ActionResult Index()
         {
-            var list = _userProvider.GetAll();
+            var list = _userProv.GetAll();
             return View(list);
         }
 
         public ActionResult Details(int id = 0)
         {
-            var user = _userProvider.GetById(id);
+            var user = _userProv.GetById(id);
             return View(user);
         }
 
@@ -51,7 +51,7 @@ namespace DM.PR.WEB.Controllers
 
         public ActionResult Edit(int employeeId = 0)
         {
-            var user = _userProvider.GetByEmployeeId(employeeId);
+            var user = _userProv.GetByEmployeeId(employeeId);
             return View(new UserUpdateViewModel
             {
                 Id = user.Id,
@@ -81,11 +81,10 @@ namespace DM.PR.WEB.Controllers
         [ChildActionOnly]
         public ActionResult GetRole()
         {
-            var list = _roleProvider.GetAll();
+            var list = _roleProv.GetAll();
             return PartialView(new GetRolePartialModel { Roles = list });
         }
 
         #endregion
-
     }
 }

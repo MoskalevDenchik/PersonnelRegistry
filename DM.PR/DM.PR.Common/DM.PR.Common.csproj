@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\EmailsAttribute.cs" />
     <Compile Include="Attributes\EmptyAttribute.cs" />
     <Compile Include="Attributes\RolesAttribute.cs" />
     <Compile Include="Dependencies\CommonRegistry.cs" />

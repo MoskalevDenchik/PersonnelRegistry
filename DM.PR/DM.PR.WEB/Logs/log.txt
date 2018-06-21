@@ -1,3 +1,17 @@
 2018-06-20 16:49:42,413  INFO MyLogger - Ошибка выполнения дочернего запроса для дескриптора 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'. 
 2018-06-20 18:06:56,866  INFO MyLogger - Не удалось найти общедоступный метод действия "DepartmentSelect" на контроллере "DM.PR.WEB.Controllers.EmployeesController". 
 2018-06-20 18:28:30,589  INFO MyLogger - Ошибка выполнения дочернего запроса для дескриптора 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'. 
+2018-06-20 21:02:17,548  INFO MyLogger - DataBinding: 'DM.PR.Common.Entities.WorkStatus' не содержит свойство с именем Name.  
+2018-06-20 22:10:08,040  INFO MyLogger - D:\testes\PersonnelRegistry\DM.PR\DM.PR.WEB\Views\Employees\Edit.cshtml(24): error CS1513: } expected 
+2018-06-20 22:10:14,325  INFO MyLogger - D:\testes\PersonnelRegistry\DM.PR\DM.PR.WEB\Views\Employees\Edit.cshtml(24): error CS1513: } expected 
+2018-06-20 23:56:57,864  INFO MyLogger - Значение не может быть неопределенным.
+Имя параметра: source 
+2018-06-20 23:57:17,546  INFO MyLogger - Значение не может быть неопределенным.
+Имя параметра: source 
+2018-06-20 23:58:22,280  INFO MyLogger - Значение не может быть неопределенным.
+Имя параметра: source 
+2018-06-21 12:41:16,247  INFO MyLogger - Ошибка выполнения дочернего запроса для дескриптора 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'. 
+2018-06-21 13:18:07,397  INFO MyLogger - Ошибка при получении ответа HTTP на http://localhost:54126/AdvertisingService.svc/AdService. Возможно, это вызвано тем, что привязка конечной точки службы не использует протокол HTTP. Это может быть также вызвано тем, что контекст запроса HTTP прерван сервером (возможно, из-за отключения службы). Подробнее см. в журналах сервера. 
+2018-06-21 13:18:07,701  INFO MyLogger - Ошибка выполнения дочернего запроса для дескриптора 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'. 
+2018-06-21 13:18:25,759  INFO MyLogger - Прослушивание на http://localhost:54126/AdvertisingService.svc/AdService не выполняла ни одна конечная точка, которая могла бы принять сообщение. Среди прочих причин это могло быть вызвано неправильным адресом или действием SOAP. Подробнее см. в описании InnerException (если имеется). 
+2018-06-21 13:18:25,979  INFO MyLogger - Ошибка выполнения дочернего запроса для дескриптора 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'. 

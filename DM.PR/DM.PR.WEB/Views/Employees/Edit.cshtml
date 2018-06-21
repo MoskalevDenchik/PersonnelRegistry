@@ -1,6 +1,6 @@
 ﻿@model DM.PR.WEB.Models.Employee.EmployeeSaveViewModel
 
-<h2 class="text-center">Создайте пользователя</h2> <br />
+<h2 class="text-center">Редактируйте пользователя</h2> <br />
 
 <form id="EmployeeForm">
     <div class="row" id="emplCreate">
@@ -20,8 +20,8 @@
             <br />
             <div class="form-group">
                 <div class="col-md-12">
-                    @Html.DropDownListFor(m => m.WorkStatusId, new SelectList(Model.WorkStatusList, "Id", "Status"), "Выберите статус",
-                                                                           new { @class = "form-control", data_val_required = "Вы не выбрали статус" })
+                    @Html.DropDownListFor(m => m.WorkStatusId, new SelectList(Model.WorkStatusList, "Id", "Status", Model.WorkStatusId),
+                                   new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.WorkStatusId, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -44,8 +44,8 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.DepartmentId, new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.DepartmentList, "Id", "Name"), "Выберите отдел",
-                                                                            new { @class = "form-control", data_val_required = "Вы не выбрали отдел" })
+                        @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.DepartmentList, "Id", "Name", Model.DepartmentId),
+                                    new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -68,7 +68,6 @@
                         @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
@@ -79,8 +78,8 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.MaritalStatusId, new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.DropDownListFor(m => m.MaritalStatusId, new SelectList(Model.MaritalStatusList, "Id", "Status"), "Выберите семейное положение",
-                                                                        new { @class = "form-control", data_val_required = "Вы не выбрали семейное положение" })
+                        @Html.DropDownListFor(m => m.MaritalStatusId, new SelectList(Model.MaritalStatusList, "Id", "Status", Model.MaritalStatusId),
+                                new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.MaritalStatusId, "", new { @class = "text-danger", data_val_required = "Вы не выбрали семейное положение" })
                     </div>
                 </div>
@@ -104,13 +103,13 @@
                     </div>
                 </div>
                 <div class="form-group">
-                        @Html.LabelFor(m => m.Emails, new { @class = "control-label col-md-4 text-right" })
-                    <div class="col-md-8" id="Emails">
-                        <div>
-                            @Html.HiddenFor(m => m.Emails[0].Id)
-                            @Html.TextBoxFor(model => model.Emails[0].Address, new { @class = "form-control ", placeholder = "Введите почтовый адресс..." })
-                            @Html.ValidationMessageFor(model => model.Emails[0].Address, "", new { @class = "text-danger" })
-                        </div>
+                    <div class=" col-md-offset-4 col-md-8">
+                        @for (int i = 0; i < Model.Emails.Count; i++)
+                        {
+                            @Html.HiddenFor(m => m.Emails[i].Id)
+                            @Html.TextBoxFor(model => model.Emails[i].Address, new { @class = "form-control ", placeholder = "Введите почтовый адресс..." })
+                            @Html.ValidationMessageFor(model => model.Emails[i].Address, "", new { @class = "text-danger" })
+                        }
                     </div>
                 </div>
                 <div class="form-group">
@@ -127,8 +126,6 @@
         </div>
     </div>
 </form>
-
-
 
 @section Scripts {
     <script src="~/Scripts/Employee/Save.js"></script>

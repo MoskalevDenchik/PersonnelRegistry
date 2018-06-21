@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
+using System.Linq;
 
 namespace DM.PR.WEB.Infrastructure.Bindings
 {
@@ -15,6 +17,11 @@ namespace DM.PR.WEB.Infrastructure.Bindings
         {
             var result = _provider.GetValue(key);
             return result == null || string.IsNullOrEmpty(result.AttemptedValue) ? default(T) : (T)result.ConvertTo(typeof(T));
+        }
+
+        public IEnumerable<string> GetPrefixesWhoContaints(string key)
+        {
+            return ((IEnumerableValueProvider)_provider).GetKeysFromPrefix(key).Select(x => x.Value);
         }
     }
 }
