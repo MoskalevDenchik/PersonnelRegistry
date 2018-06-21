@@ -20,3 +20,13 @@
 2018-06-21 23:15:27,853  INFO MyLogger - Ошибка выполнения дочернего запроса для дескриптора 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'. 
 2018-06-21 23:16:00,070  INFO MyLogger - Ошибка выполнения дочернего запроса для дескриптора 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'. 
 2018-06-21 23:31:03,402  INFO MyLogger - Ссылка на объект не указывает на экземпляр объекта. 
+2018-06-21 23:59:57,968  INFO MyLogger - Не удалось найти представление "Edit" или его образец, либо ни один обработчик представлений не поддерживает места поиска. Выполнялся поиск в следующих местах:
+~/Views/Departments/Edit.aspx
+~/Views/Departments/Edit.ascx
+~/Views/Shared/Edit.aspx
+~/Views/Shared/Edit.ascx
+~/Views/Departments/Edit.cshtml
+~/Views/Departments/Edit.vbhtml
+~/Views/Shared/Edit.cshtml
+~/Views/Shared/Edit.vbhtml 
+2018-06-22 00:20:11,280  INFO MyLogger - Контроллер для пути "/StatusForm/Index" не найден или не реализует интерфейс IController. 

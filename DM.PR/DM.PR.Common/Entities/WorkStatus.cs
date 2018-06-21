@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace DM.PR.Common.Entities
 {
@@ -8,5 +9,10 @@ namespace DM.PR.Common.Entities
 
         [StringLength(16, ErrorMessage = "Длина строки должна быть до 16 символов")]
         public string Status { get; set; }
+
+        public object Select()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

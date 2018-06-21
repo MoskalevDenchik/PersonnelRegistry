@@ -4,6 +4,7 @@ using DM.PR.Business.Services;
 using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using System.Web.Mvc;
+using DM.PR.WEB.Infrastructure.Attributes;
 
 namespace DM.PR.WEB.Controllers
 {
@@ -37,39 +38,10 @@ namespace DM.PR.WEB.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Create(WorkStatusCreateViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = MapWorkStatusCreateViewModelToWorkStatus(model);
-            _workStatusService.Save(user);
-
-            return RedirectToAction("Index");
-        }
-
         public ActionResult Edit(int id = 0)
         {
-            var workStatus = _workStatusProvider.GetById(id);
-            var model = MapWorkStatusToWorkStatusEditViewModel(workStatus);
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult Edit(WorkStatusEditViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = MapWorkStatusEditViewModelToWorkStatus(model);
-            _workStatusService.Save(user);
-
-            return RedirectToAction("Index");
+            var status = _workStatusProvider.GetById(id);
+            return View(new WorkStatusEditViewModel { Id = status.Id, Status = status.Status });
         }
 
         public ActionResult Delete(int id = 0)
@@ -79,6 +51,13 @@ namespace DM.PR.WEB.Controllers
         }
 
         #region Partial and Json
+
+        [AjaxOnly]
+        [HttpPost]
+        public JsonResult Save(WorkStatus model)
+        {
+            return Json(_workStatusService.Save(model));
+        }
 
         [AllowAnonymous]
         [ChildActionOnly]

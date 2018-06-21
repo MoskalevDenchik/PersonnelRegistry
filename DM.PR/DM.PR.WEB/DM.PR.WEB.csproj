@@ -190,6 +190,7 @@
     <Content Include="Scripts\Search.js" />
     <Content Include="Scripts\EditEmails.js" />
     <Content Include="Scripts\User\Create.js" />
+    <Content Include="Scripts\WorkStatus\Save.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
