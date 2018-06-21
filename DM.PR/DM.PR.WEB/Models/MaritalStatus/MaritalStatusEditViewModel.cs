@@ -6,7 +6,7 @@ namespace DM.PR.WEB.Models.MaritalStatus
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Введите семейное положение")]
+        [Required(ErrorMessage = "Поле не может быть пустым")]
         public string Status { get; set; }
     }
 }

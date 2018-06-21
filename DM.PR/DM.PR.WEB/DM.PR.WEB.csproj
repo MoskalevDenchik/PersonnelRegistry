@@ -171,6 +171,7 @@
     <Content Include="Scripts\EditPhones.js" />
     <Content Include="Scripts\Emails.js" />
     <Content Include="Scripts\Employee\UpdateImage.js" />
+    <Content Include="Scripts\MaritalStatus\Save.js" />
     <Content Include="Scripts\ModifyButtons.js" />
     <Content Include="Scripts\Employee\EmployeePagin.js" />
     <Content Include="Scripts\Department\DepartmentPagin.js" />

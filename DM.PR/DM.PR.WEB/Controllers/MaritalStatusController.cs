@@ -1,4 +1,5 @@
-﻿using DM.PR.WEB.Models.MaritalStatus;
+﻿using DM.PR.WEB.Infrastructure.Attributes;
+using DM.PR.WEB.Models.MaritalStatus;
 using DM.PR.Business.Providers;
 using DM.PR.Business.Services;
 using DM.PR.Common.Entities;
@@ -10,115 +11,44 @@ namespace DM.PR.WEB.Controllers
     [Authorize(Roles = "admin,editor")]
     public class MaritalStatusController : Controller
     {
-        private readonly IProvider<MaritalStatus> _maritalStatusProvider;
-        private readonly IEntityService<MaritalStatus> _kindPhoneServ;
+        private readonly IProvider<MaritalStatus> _maritalStatusProv;
+        private readonly IEntityService<MaritalStatus> _maritalStatusServ;
 
         public MaritalStatusController(IProvider<MaritalStatus> maritalStatusProvider, IEntityService<MaritalStatus> maritalStatusServ)
         {
             Inspector.ThrowExceptionIfNull(maritalStatusProvider, maritalStatusServ);
-            _maritalStatusProvider = maritalStatusProvider;
-            _kindPhoneServ = maritalStatusServ;
+            _maritalStatusProv = maritalStatusProvider;
+            _maritalStatusServ = maritalStatusServ;
         }
 
         public ActionResult Index()
         {
-            var list = _maritalStatusProvider.GetAll();
+            var list = _maritalStatusProv.GetAll();
             return View(list);
         }
 
         public ActionResult Details(int id = 0)
         {
-            var user = _maritalStatusProvider.GetById(id);
+            var user = _maritalStatusProv.GetById(id);
             return View(user);
         }
 
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Create(MaritalStatusCreateViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = MapMaritalStatusCreateViewModelToMaritalStatus(model);
-            _kindPhoneServ.Save(user);
-
-            return RedirectToAction("Index");
-        }
+        public ActionResult Create() => View();
 
         public ActionResult Edit(int id = 0)
         {
-            var maritalStatus = _maritalStatusProvider.GetById(id);
-            var model = MapMaritalStatusToMaritalStatusEditViewModel(maritalStatus);
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult Edit(MaritalStatusEditViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = MapMaritalStatusEditViewModelToMaritalStatus(model);
-            _kindPhoneServ.Save(user);
-
-            return RedirectToAction("Index");
+            var status = _maritalStatusProv.GetById(id);
+            return View(new MaritalStatusEditViewModel { Id = status.Id, Status = status.Status });
         }
 
         public ActionResult Delete(int id = 0)
         {
-            _kindPhoneServ.Remove(id);
+            _maritalStatusServ.Remove(id);
             return RedirectToAction("Index");
         }
 
-        #region Partial and Json
-
-        [ChildActionOnly]
-        public PartialViewResult GetMaritalStatusList(int selectedId = 0)
-        {
-            ViewBag.maritalStatusId = selectedId;
-            var list = _maritalStatusProvider.GetAll();
-            return PartialView("MaritalStatusSelect", list);
-        }
-
-        #endregion
-
-
-        #region Mappers
-
-        private MaritalStatus MapMaritalStatusCreateViewModelToMaritalStatus(MaritalStatusCreateViewModel model)
-        {
-            return new MaritalStatus
-            {
-                Status = model.Status
-            };
-        }
-
-        private MaritalStatus MapMaritalStatusEditViewModelToMaritalStatus(MaritalStatusEditViewModel model)
-        {
-            return new MaritalStatus
-            {
-                Id = model.Id,
-                Status = model.Status
-            };
-        }
-
-        private MaritalStatusEditViewModel MapMaritalStatusToMaritalStatusEditViewModel(MaritalStatus maritalStatus)
-        {
-            return new MaritalStatusEditViewModel
-            {
-                Id = maritalStatus.Id,
-                Status = maritalStatus.Status
-            };
-        }
-
-        #endregion
+        [AjaxOnly]
+        [HttpPost]
+        public JsonResult Save(MaritalStatus maritalStatus) => Json(_maritalStatusServ.Save(maritalStatus));
     }
 }
