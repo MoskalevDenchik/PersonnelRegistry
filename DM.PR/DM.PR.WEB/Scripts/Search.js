@@ -29,13 +29,13 @@ function GetPageData()
     $.ajax({
         url: "/Employees/GetEmployees",
         type: "GET",
-        data: {
-            firstName: $("input[name='firstName']").val(),
-            lastName: $("input[name='lastName']").val(),
-            middleName: $("input[name='middlename']").val(),
-            fromYear: $("input[name='fromYear']").val(),
-            toYear: $("input[name='toYear']").val(),
-            WorkStatusId: $("select[name='WorkStatusId'] option:checked").val(),
+        data: {                                             
+            firstName: $("input[id='FirstName']").val(),
+            lastName: $("input[id='LastName']").val(),
+            middleName: $("input[id='MiddleName']").val(),
+            fromYear: $("input[id='FromYear']").val(),
+            toYear: $("input[id='ToYear']").val(),
+            WorkStatusId: $("select[id='WorkStatusId'] option:checked").val(),
             pageNumber: pageNumber,
             pageSize: pageSize
 

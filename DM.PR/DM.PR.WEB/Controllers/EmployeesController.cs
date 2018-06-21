@@ -46,7 +46,8 @@ namespace DM.PR.WEB.Controllers
 
         public ActionResult Search()
         {
-            return View();
+            var workStatusList = _workStatProv.GetAll();
+            return View(new EmployeeSearchModel { WorkStatusLst = workStatusList });
         }
 
         public ActionResult Navigation()

@@ -228,6 +228,7 @@
     <Compile Include="Models\Employee\EmployeeEditViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeDetailsViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeSaveViewModel.cs" />
+    <Compile Include="Models\Employee\EmployeeSearchModel.cs" />
     <Compile Include="Models\Employee\EmployeeSummaryViewModel.cs" />
     <Compile Include="Models\MaritalStatus\MaritalStatusCreateViewModel.cs" />
     <Compile Include="Models\MaritalStatus\MaritalStatusEditViewModel.cs" />

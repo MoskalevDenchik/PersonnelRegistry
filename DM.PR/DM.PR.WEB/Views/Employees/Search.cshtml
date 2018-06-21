@@ -1,22 +1,22 @@
-﻿
+﻿@model DM.PR.WEB.Models.Employee.EmployeeSearchModel
 <div class="row" id="searchParams">
     <div class="col-md-2">
-        <input type="text" class="form-control" name="lastName" placeholder="Фамилия..." />
+        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "Фамилия..." })
     </div>
     <div class="col-md-2">
-        <input type="text" class="form-control" name="firstName" placeholder="Имя..." />
+        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "Имя..." })
     </div>
     <div class="col-md-2">
-        <input type="text" class="form-control" name="middlename" placeholder="Отчество..." />
+        @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control", placeholder = "Отчество..." })
     </div>
     <div class="col-md-1">
-        <input type="number" class="form-control" name="fromYear" placeholder="От..." />
+        @Html.TextBoxFor(m => m.FromYear, new { @class = "form-control", @type ="number" })
     </div>
     <div class="col-md-1">
-        <input type="number" class="form-control" name="toYear" placeholder="До..." />
+        @Html.TextBoxFor(m => m.ToYear, new { @class = "form-control", @type = "number", @value ="10" })
     </div>
     <div class="col-md-2">
-        @Html.Action("GetWorkStatusList", "WorkStatus")
+        @Html.DropDownListFor(m => m.WorkStatusId, new SelectList(Model.WorkStatusLst, "Id", "Status"), "Выберите статус", new { @class = "form-control" })
     </div>
     <div class="col-md-1">
         <select id="pageSize" class="form-control">

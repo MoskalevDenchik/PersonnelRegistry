@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using DM.PR.WEB.Infrastructure.Attributes;
+using DM.PR.Common.Attributes;
 
 namespace DM.PR.Common.Entities
 {
@@ -10,6 +11,7 @@ namespace DM.PR.Common.Entities
         [Range(0, int.MaxValue, ErrorMessage = "Id не может быть отрицательным")]
         public int Id { get; set; }
 
+        [ValidEntity]
         public Department Department { get; set; }
 
         [StringLength(16, MinimumLength = 3, ErrorMessage = "Длина строки должна быть от 3 до 16 символов")]
@@ -36,9 +38,11 @@ namespace DM.PR.Common.Entities
         [StringLength(64, MinimumLength = 3, ErrorMessage = "Длина строки должна быть от 3 до 64 символов")]
         public string Address { get; set; }
 
+        [ValidEntity]
         public MaritalStatus MaritalStatus { get; set; }
 
-        public WorkStatus WorkStatus { get; set; }
+        [ValidEntity]
+         public WorkStatus WorkStatus { get; set; }
 
         public string ImagePath { get; set; }
 

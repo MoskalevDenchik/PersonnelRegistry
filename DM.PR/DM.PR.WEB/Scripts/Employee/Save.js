@@ -14,8 +14,8 @@
             {
                 if (response.Status === 0)
                 {
-                    alert("Все гуд!!!");
-                }
+                    window.location.href = "/Employees/Index";
+                }                                                  
                 else
                 {
                     for (var i = 0; i < response.Exception.length; i++)

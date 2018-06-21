@@ -15,3 +15,8 @@
 2018-06-21 13:18:07,701  INFO MyLogger - Ошибка выполнения дочернего запроса для дескриптора 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'. 
 2018-06-21 13:18:25,759  INFO MyLogger - Прослушивание на http://localhost:54126/AdvertisingService.svc/AdService не выполняла ни одна конечная точка, которая могла бы принять сообщение. Среди прочих причин это могло быть вызвано неправильным адресом или действием SOAP. Подробнее см. в описании InnerException (если имеется). 
 2018-06-21 13:18:25,979  INFO MyLogger - Ошибка выполнения дочернего запроса для дескриптора 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'. 
+2018-06-21 17:38:04,901  INFO MyLogger - D:\testes\PersonnelRegistry\DM.PR\DM.PR.WEB\Views\Employees\Edit.cshtml(38): error CS1513: } expected 
+2018-06-21 23:15:01,059  INFO MyLogger - Ошибка выполнения дочернего запроса для дескриптора 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'. 
+2018-06-21 23:15:27,853  INFO MyLogger - Ошибка выполнения дочернего запроса для дескриптора 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'. 
+2018-06-21 23:16:00,070  INFO MyLogger - Ошибка выполнения дочернего запроса для дескриптора 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'. 
+2018-06-21 23:31:03,402  INFO MyLogger - Ссылка на объект не указывает на экземпляр объекта. 

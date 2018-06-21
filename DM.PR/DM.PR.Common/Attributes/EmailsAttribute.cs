@@ -1,17 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using DM.PR.Common.Entities;
-using System;
-using System.Linq;
-using System.Web;
 
 namespace DM.PR.WEB.Infrastructure.Attributes
 {
     public class EmailsAttribute : ValidationAttribute
     {
-
-
-
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             List<Email> email = value as List<Email>;
@@ -27,7 +21,7 @@ namespace DM.PR.WEB.Infrastructure.Attributes
                 }
             }
 
-            return new ValidationResult(errorMessage, names);
+            return names.Count < 1 ? null : new ValidationResult(errorMessage, names);
         }
     }
 }
