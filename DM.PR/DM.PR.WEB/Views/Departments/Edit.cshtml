@@ -9,9 +9,7 @@
     <div class="form-horizontal">
         <div class="form-group">
             <div class="col-md-offset-4 col-md-8">
-                @Html.DropDownListFor(m => m.ParentId, new SelectList(Model.DepartmentList, "Id", "Name",Model.ParentId),
-                                     new { @class = "form-control", data_val_required = "Вы не выбрали отдел" })
-                @Html.ValidationMessageFor(model => model.ParentId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(m => m.ParentId, new SelectList(Model.DepartmentList, "Id", "Name", Model.ParentId), new { @class = "form-control", @data_val = false })
             </div>
         </div>
         <div class="form-group">
@@ -33,9 +31,7 @@
             </div>
         </div>
         <div class="form-group">
-            <div class=" col-md-offset-2 col-md-2">
-                @Html.LabelFor(model => model.Phones, new { @class = "control-label col-md-4" })
-            </div>
+            @Html.LabelFor(model => model.Phones, new { @class = "control-label col-md-4 text-right" })
             <div class="col-md-8" id="Phones">
                 @if (Model.Phones != null && Model.Phones.Length > 0)
                 {
@@ -49,12 +45,12 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-5">
-                <a id="AddEmail" class="btn btn-default">Добавить Телефон</a>
+                <a id="AddPhone" class="btn btn-default">Добавить Телефон</a>
             </div>
         </div>
         <div class="form-group">
             <div class="row text-center">
-                <input type="submit" id="Save" value="Сохранить" class="btn btn-default" />
+                <input type="submit" value="Сохранить" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -62,4 +58,5 @@
 
 @section Scripts {
     <script src="~/Scripts/Common/Save.js"></script>
+    <script src="~/Scripts/Department/Phones.js"></script>
 }
