@@ -1,5 +1,4 @@
 ﻿using DM.PR.WEB.Infrastructure.Attributes;
-using System.Collections.Generic;
 using DM.PR.Business.Providers;
 using DM.PR.Business.Services;
 using DM.PR.Common.Entities;
@@ -46,21 +45,18 @@ namespace DM.PR.WEB.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            var depList = _depProv.GetAll();
+            return View(new DepartmentSaveViewModel
+            {
+                DepartmentList = depList.Select(x => new DepartmentSelectModel { Id = x.Id, Name = x.Name }).ToList()
+            });
         }
 
         public ActionResult Edit(int id = 0)
         {
-            var department = _depProv.GetById(id);
-            return View(MapDepartmentToDepartmentEditViewModel(department));
-        }
-
-        [AjaxOnly]
-        [HttpPost]
-        public JsonResult Save(Department department)
-        {
-            var result = _depServ.Save(department);
-            return Json(result);
+            var dep = _depProv.GetById(id);
+            var depList = _depProv.GetAll();
+            return View(MapDepartmentToDepartmentEditViewModel(dep));
         }
 
         public ActionResult Delete(int id = 0)
@@ -70,6 +66,14 @@ namespace DM.PR.WEB.Controllers
         }
 
         #region Partial
+
+        [AjaxOnly]
+        [HttpPost]
+        public JsonResult Save(Department department)
+        {
+            var result = _depServ.Save(department);
+            return Json(result);
+        }
 
         [AjaxOnly]
         public ActionResult GetAll(int pageSize, int pageNumber)
@@ -83,19 +87,12 @@ namespace DM.PR.WEB.Controllers
         {
             ViewBag.departmentId = selectedId;
             var list = _depProv.GetAll();
-            var model = MapDepartmentToDepartmentSelectModel(list);
-
-            return PartialView("DepartmentSelect", model);
+            return PartialView("DepartmentSelect", list.Select(x => new DepartmentSelectModel { Id = x.Id, Name = x.Name }));
         }
 
         #endregion
 
         #region Mappers
-
-        private IReadOnlyCollection<DepartmentSelectModel> MapDepartmentToDepartmentSelectModel(IReadOnlyCollection<Department> departments)
-        {
-            return departments.Select(d => new DepartmentSelectModel { Id = d.Id, Name = d.Name }).ToList();
-        }
 
         private DepartmentDeatailsViewModel MapDepartmentToDepartmentDetailsViewModel(Department department, Department parent)
         {
@@ -108,18 +105,6 @@ namespace DM.PR.WEB.Controllers
                 Address = department.Address,
                 ParentId = department.ParentId,
                 Description = department.Description
-            };
-        }
-
-
-        public Department MapDepartmentSaveViewModelToDepartment(DepartmentSaveViewModel model)
-        {
-            return new Department()
-            {
-                Name = model.Name,
-                Address = model.Address,
-                ParentId = model.ParentId,
-                Description = model.Description,
             };
         }
 

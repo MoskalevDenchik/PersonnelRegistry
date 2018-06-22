@@ -20,6 +20,8 @@ namespace DM.PR.WEB
         {
             ModelBinders.Binders.Add(typeof(User), new UserBinder());
             ModelBinders.Binders.Add(typeof(Employee), new EmployeeBinder());
+            ModelBinders.Binders.Add(typeof(Department), new DepartmentBinder());
+
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

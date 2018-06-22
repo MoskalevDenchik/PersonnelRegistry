@@ -40,7 +40,8 @@ namespace DM.PR.Data.Core.Context.Implement
             try
             {
                 _adClient = factory.CreateChannel();
-                borders = _adClient.GetRandomBiilBoards();
+                borders = _adClient?.GetRandomBiilBoards();
+
             }
             catch (Exception ex)
             {

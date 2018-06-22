@@ -30,7 +30,7 @@ namespace DM.PR.Business.Providers.Implement
                     _cache.Add("BillBoard", list, 1);
                 }
             }
-            return list.Take(2).ToList();
+            return list?.Take(2).ToList();
         }
     }
 }

@@ -1,20 +1,22 @@
 ﻿$("input[type='submit']").on('click', function ()
 {
-    if ($("#StatusForm").valid())
+    var form = $("#AjaxForm");
+
+    if (form.valid())
     {
         event.preventDefault();
 
         $.ajax({
-            type: "POST",
+            type: form.attr("method"),
             async: false,
-            url: "/MaritalStatus/Save",
+            url: form.attr("action"),
             dataType: 'JSON',
-            data: $("#StatusForm").serialize(),
+            data: form.serialize(),
             success: function (response)
             {
                 if (response.Status === 0)
                 {
-                    window.location.href = "/WorkStatus/Index";
+                    window.location.href = form.attr("redirect");
                 }
                 else
                 {

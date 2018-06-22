@@ -1,18 +1,14 @@
 ﻿@model DM.PR.WEB.Models.DepartmentSaveViewModel
 
+<h2 class="text-center">Добавьте отдел</h2> <br />
 
-<h2 class="text-center">@ViewBag.title</h2> <br />
-
-@using (Html.BeginForm())
+@using (Html.BeginForm("Save", "Departments", null, FormMethod.Post, new { @id = "AjaxForm", @redirect = Url.Action("Index") }))
 {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-    @Html.HiddenFor(model => model.Id)
-
     <div class="form-horizontal">
         <div class="form-group">
             <div class="col-md-offset-4 col-md-8">
-                @Html.Action("GetParentDepartment", new { selectedId = Model.ParentId > 0 ? Model.ParentId : 0 })
+                @Html.DropDownListFor(m => m.ParentId, new SelectList(Model.DepartmentList, "Id", "Name"), "Выберите отдел сверху",
+                                                  new { @class = "form-control", data_val_required = "Вы не выбрали отдел" })
                 @Html.ValidationMessageFor(model => model.ParentId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -39,14 +35,10 @@
                 @Html.LabelFor(model => model.Phones, new { @class = "control-label col-md-4" })
             </div>
             <div class="col-md-8" id="Phones">
-                @for (int i = 0; i < Model.Phones.Count; i++)
-                {
-                    <div id="phone">
-                        @Html.HiddenFor(Model => Model.Phones[i].Id)
-                        @Html.TextBoxFor(model => model.Phones[i].Number, new { @class = "form-control ", placeholder = "Номер телефона..." })
-                        @Html.ValidationMessageFor(model => model.Phones[i].Number, "", new { @class = "text-danger" })
-                    </div>
-                }
+                <div id="phone">
+                    @Html.TextBoxFor(model => model.Phones[0].Number, new { @class = "form-control ", placeholder = "Номер телефона..." })
+                    @Html.ValidationMessageFor(model => model.Phones[0].Number, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
         <div class="form-group">
@@ -63,5 +55,5 @@
 }
 
 @section Scripts {
-    @*<script src="~/Scripts/Phones.js"></script>*@
+    <script src="~/Scripts/Common/Save.js"></script>
 }
