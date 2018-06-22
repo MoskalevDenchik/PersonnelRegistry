@@ -1,6 +1,5 @@
 ﻿using DM.PR.WEB.Infrastructure.Bindings;
 using DM.PR.WEB.DependencyResolution;
-using DM.PR.Common.Entities.Account;
 using System.Web.Optimization;
 using DM.PR.Business.Helpers;
 using DM.PR.Common.Entities;
@@ -18,9 +17,7 @@ namespace DM.PR.WEB
     {
         protected void Application_Start()
         {
-            ModelBinders.Binders.Add(typeof(User), new UserBinder());
             ModelBinders.Binders.Add(typeof(Employee), new EmployeeBinder());
-            ModelBinders.Binders.Add(typeof(Department), new DepartmentBinder());
 
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);

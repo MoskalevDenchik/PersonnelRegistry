@@ -3,21 +3,12 @@ $("#AddEmail").on('click', function ()
 {
     AddNewEmail();
 })
-
-$(function ()
-{
-    $(document).on('click touchstart', '.selector', function ()
-    {
-        console.log($(this));
-    });
-});
-
+ 
 function AddNewEmail()
 {
     var copy = $("#Emails div:first").clone();
 
     copy.find("span:first").attr("data-valmsg-for", "Emails[" + emailNumber + "].Address");
-    // copy.find("span:first").attr("for", "Emails_" + emailNumber + "__Address");
 
     copy.find("input[type='hidden']").attr("name", "Emails[" + emailNumber + "].Id");
     copy.find("input[type='hidden']").attr("id", "Emails_" + emailNumber + "__Id");

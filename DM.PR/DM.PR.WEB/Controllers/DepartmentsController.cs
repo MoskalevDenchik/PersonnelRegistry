@@ -70,11 +70,7 @@ namespace DM.PR.WEB.Controllers
 
         [AjaxOnly]
         [HttpPost]
-        public JsonResult Save(Department department)
-        {
-            var result = _depServ.Save(department);
-            return Json(result);
-        }
+        public JsonResult Save(Department department) => Json(_depServ.Save(department));
 
         [AjaxOnly]
         public ActionResult GetAll(int pageSize, int pageNumber)

@@ -5,7 +5,6 @@ using DM.PR.Business.Services;
 using DM.PR.WEB.Models.User;
 using DM.PR.Common.Helpers;
 using System.Web.Mvc;
-using System.Linq;
 
 namespace DM.PR.WEB.Controllers
 {
@@ -43,22 +42,24 @@ namespace DM.PR.WEB.Controllers
             return View(user);
         }
 
-        [HttpGet]
         public ActionResult Create(int employeeId = 0)
         {
-            return View(new UserCreateViewModel { EmployeeId = employeeId });
+            var rolesList = _roleProv.GetAll();
+            return View(new UserSaveViewModel { EmployeeId = employeeId, RolesList = rolesList });
         }
 
         public ActionResult Edit(int employeeId = 0)
         {
             var user = _userProv.GetByEmployeeId(employeeId);
-            return View(new UserUpdateViewModel
+            var rolesList = _roleProv.GetAll();
+            return View(new UserSaveViewModel
             {
                 Id = user.Id,
                 EmployeeId = employeeId,
                 Login = user.Login,
                 Password = user.Password,
-                Roles = user.Roles.Select(x => x.Id).ToArray()
+                RolesList = rolesList,
+                Roles =  user.Roles.ToArray()
             });
         }
 
@@ -68,23 +69,8 @@ namespace DM.PR.WEB.Controllers
             return RedirectToAction("Index");
         }
 
-        #region Partial and Json
-
         [AjaxOnly]
         [HttpPost]
-        public JsonResult Save(User model)
-        {
-            var result = _userServ.Save(model);
-            return Json(result);
-        }
-
-        [ChildActionOnly]
-        public ActionResult GetRole()
-        {
-            var list = _roleProv.GetAll();
-            return PartialView(new GetRolePartialModel { Roles = list });
-        }
-
-        #endregion
+        public JsonResult Save(User model) => Json(_userServ.Save(model));
     }
 }

@@ -1,15 +1,14 @@
 ﻿@model DM.PR.WEB.Models.DepartmentSaveViewModel
 
-<h2 class="text-center">Добавьте отдел</h2> <br />
+<h2 class="text-center">Добавьте отдел</h2>
+<br />
 
 @using (Html.BeginForm("Save", "Departments", null, FormMethod.Post, new { @id = "AjaxForm", @redirect = Url.Action("Index") }))
 {
     <div class="form-horizontal">
         <div class="form-group">
             <div class="col-md-offset-4 col-md-8">
-                @Html.DropDownListFor(m => m.ParentId, new SelectList(Model.DepartmentList, "Id", "Name"), "Выберите отдел сверху",
-                                                  new { @class = "form-control", data_val_required = "Вы не выбрали отдел" })
-                @Html.ValidationMessageFor(model => model.ParentId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(m => m.ParentId, new SelectList(Model.DepartmentList, "Id", "Name"), "Выберите отдел сверху", new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group">
