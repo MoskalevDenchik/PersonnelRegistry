@@ -13,36 +13,34 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-4 col-md-8">
-                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Название отдела..." })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Название отдела..." })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-4 col-md-8">
-                @Html.TextAreaFor(model => model.Address, new { @class = "form-control", placeholder = "Адрес..." })
-                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(m => m.Address, new { @class = "form-control", placeholder = "Адрес..." })
+                @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-4 col-md-8">
-                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Описание..." })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Описание..." })
+                @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            <div class=" col-md-offset-2 col-md-2">
-                @Html.LabelFor(model => model.Phones, new { @class = "control-label col-md-4" })
-            </div>
+            @Html.LabelFor(m => m.Phones, new { @class = "control-label col-md-4 text-right" })
             <div class="col-md-8" id="Phones">
-                <div id="phone">
-                    @Html.TextBoxFor(model => model.Phones[0].Number, new { @class = "form-control ", placeholder = "Номер телефона..." })
-                    @Html.ValidationMessageFor(model => model.Phones[0].Number, "", new { @class = "text-danger" })
+                <div>
+                    @Html.TextBoxFor(m => m.Phones[0].Number, new { @class = "form-control ", placeholder = "Номер телефона..." })
+                    @Html.ValidationMessageFor(m => m.Phones[0].Number, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-5">
-                <a id="AddEmail" class="btn btn-default">Добавить Телефон</a>
+                <a id="AddPhone" class="btn btn-default">Добавить Телефон</a>
             </div>
         </div>
         <div class="form-group">
@@ -54,5 +52,6 @@
 }
 
 @section Scripts {
+    <script src="~/Scripts/Department/Phones.js"></script>
     <script src="~/Scripts/Common/Save.js"></script>
 }

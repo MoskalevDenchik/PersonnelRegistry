@@ -168,6 +168,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Common\Save.js" />
+    <Content Include="Scripts\Department\Phones.js" />
     <Content Include="Scripts\Employee\Save.js" />
     <Content Include="Scripts\Employee\Emails.js" />
     <Content Include="Scripts\Employee\UpdateImage.js" />
@@ -185,7 +186,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Employee\Navigation.js" />
-    <Content Include="Scripts\Department\Phones.js" />
     <Content Include="Scripts\Employee\Search.js" />
     <Content Include="Web.config" />
   </ItemGroup>
