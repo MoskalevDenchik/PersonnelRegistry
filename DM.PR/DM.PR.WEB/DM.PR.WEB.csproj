@@ -275,7 +275,6 @@
     <Content Include="Views\MaritalStatus\Create.cshtml" />
     <Content Include="Views\MaritalStatus\Edit.cshtml" />
     <Content Include="Views\Employees\Navigation.cshtml" />
-    <Content Include="Views\Departments\AddPhone.cshtml" />
     <Content Include="Views\Employees\AddEmail.cshtml" />
     <Content Include="Views\WorkStatus\Index.cshtml" />
     <Content Include="Views\WorkStatus\Create.cshtml" />
@@ -285,6 +284,7 @@
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\GetRole.cshtml" />
     <Content Include="Views\Employees\Edit.cshtml" />
+    <Content Include="Views\Departments\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

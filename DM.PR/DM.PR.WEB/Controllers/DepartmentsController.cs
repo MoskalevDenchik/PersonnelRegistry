@@ -6,6 +6,7 @@ using DM.PR.Common.Helpers;
 using DM.PR.WEB.Models;
 using System.Web.Mvc;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace DM.PR.WEB.Controllers
 {
@@ -39,7 +40,7 @@ namespace DM.PR.WEB.Controllers
         {
             var department = _depProv.GetById(id);
             var parent = department.ParentId > 0 ? _depProv.GetById(department.ParentId) : null;
-            var model = MapDepartmentToDepartmentDetailsViewModel(department, parent);
+            var model = MapToDepartmentDetailsViewModel(department, parent);
             return View(model);
         }
 
@@ -56,7 +57,7 @@ namespace DM.PR.WEB.Controllers
         {
             var dep = _depProv.GetById(id);
             var depList = _depProv.GetAll();
-            return View(MapDepartmentToDepartmentEditViewModel(dep));
+            return View(MapToDepartmentEditViewModel(dep, depList));
         }
 
         public ActionResult Delete(int id = 0)
@@ -94,30 +95,27 @@ namespace DM.PR.WEB.Controllers
 
         #region Mappers
 
-        private DepartmentDeatailsViewModel MapDepartmentToDepartmentDetailsViewModel(Department department, Department parent)
+        private DepartmentDeatailsViewModel MapToDepartmentDetailsViewModel(Department department, Department parent) => new DepartmentDeatailsViewModel()
         {
-            return new DepartmentDeatailsViewModel()
-            {
-                Id = department.Id,
-                Name = department.Name,
-                ParentName = parent?.Name,
-                Phones = department.Phones,
-                Address = department.Address,
-                ParentId = department.ParentId,
-                Description = department.Description
-            };
-        }
+            Id = department.Id,
+            Name = department.Name,
+            ParentName = parent?.Name,
+            Phones = department.Phones,
+            Address = department.Address,
+            ParentId = department.ParentId,
+            Description = department.Description
+        };
 
-        public DepartmentSaveViewModel MapDepartmentToDepartmentEditViewModel(Department department)
+        public DepartmentSaveViewModel MapToDepartmentEditViewModel(Department dep, IReadOnlyCollection<Department> depList) => new DepartmentSaveViewModel()
         {
-            return new DepartmentSaveViewModel()
-            {
-                Name = department.Name,
-                Address = department.Address,
-                ParentId = department.ParentId,
-                Description = department.Description
-            };
-        }
+            Id = dep.Id,
+            Name = dep.Name,
+            Address = dep.Address,
+            ParentId = dep.ParentId,
+            Description = dep.Description,
+            Phones = dep.Phones.ToArray(),
+            DepartmentList = depList.Select(x => new DepartmentSelectModel { Id = x.Id, Name = x.Name }).ToList()
+        };
 
         #endregion
     }

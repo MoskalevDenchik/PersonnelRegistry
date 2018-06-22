@@ -2,3 +2,21 @@
 2018-06-22 14:17:27,845  INFO MyLogger - Прослушивание на http://localhost:54126/AdvertisingService.svc/AdService не выполняла ни одна конечная точка, которая могла бы принять сообщение. Среди прочих причин это могло быть вызвано неправильным адресом или действием SOAP. Подробнее см. в описании InnerException (если имеется). 
 2018-06-22 15:10:55,020  INFO MyLogger - Ссылка на объект не указывает на экземпляр объекта. 
 2018-06-22 15:40:21,391  INFO MyLogger - Невозможно создать экземпляр интерфейса. Тип объекта "System.Collections.Generic.IReadOnlyCollection`1[[DM.PR.Common.Entities.Phone, DM.PR.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]". 
+2018-06-22 16:52:52,938  INFO MyLogger - Значение не может быть неопределенным.
+Имя параметра: items 
+2018-06-22 17:01:43,061  INFO MyLogger - Непредвиденное ключевое слово "for" после символа "@". В блоке кода не требуется указывать перед конструкциями, такими как "for", префикс "@".
+ 
+2018-06-22 17:02:10,339  INFO MyLogger - Значение не может быть неопределенным.
+Имя параметра: items 
+2018-06-22 17:03:15,052  INFO MyLogger - Значение не может быть неопределенным.
+Имя параметра: items 
+2018-06-22 17:03:20,749  INFO MyLogger - Значение не может быть неопределенным.
+Имя параметра: items 
+2018-06-22 17:04:21,904  INFO MyLogger - Значение не может быть неопределенным.
+Имя параметра: items 
+2018-06-22 17:09:43,214  INFO MyLogger - D:\testes\PersonnelRegistry\DM.PR\DM.PR.WEB\Views\Departments\Edit.cshtml(44): error CS0021: Cannot apply indexing with [] to an expression of type 'IReadOnlyCollection<Phone>' 
+2018-06-22 17:11:38,523  INFO MyLogger - D:\testes\PersonnelRegistry\DM.PR\DM.PR.WEB\Views\Departments\Edit.cshtml(40): error CS0019: Operator '>' cannot be applied to operands of type 'method group' and 'int' 
+2018-06-22 17:12:43,580  INFO MyLogger - Значение не может быть неопределенным.
+Имя параметра: items 
+2018-06-22 17:13:19,534  INFO MyLogger - Значение не может быть неопределенным.
+Имя параметра: items 

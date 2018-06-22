@@ -25,7 +25,7 @@ namespace DM.PR.WEB.Models
         public string Description { get; set; }
 
         [Display(Name = "Телефоны")]
-        public List<Phone> Phones { get; set; }
+        public Phone[] Phones { get; set; }
 
         public IReadOnlyCollection<DepartmentSelectModel> DepartmentList { get; set; }
     }
