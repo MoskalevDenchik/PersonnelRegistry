@@ -21,14 +21,14 @@ GO
 USE [PR_DB]
 GO
 
-CREATE LOGIN [PR_user]   
+CREATE LOGIN PR_user   
     WITH PASSWORD = '1234';  
 GO  
   
 CREATE USER PR_user FOR LOGIN PR_user
-ALTER ROLE db_owner ADD MEMBER PR_user 
+Go
+ALTER ROLE [db_owner] ADD MEMBER [PR_user] 
 GO 
-
 
 ---------------------------------------------------------------------------------------------------------
 -----------------------------------------------------TABLES----------------------------------------------
