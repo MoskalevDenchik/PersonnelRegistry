@@ -1,4 +1,6 @@
 ﻿using DM.PR.Common.Entities.Account;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DM.PR.Common.Entities
 {
@@ -6,6 +8,6 @@ namespace DM.PR.Common.Entities
     {
         public Status Status { get; set; }
 
-        public object Exception { get; set; }
+        public List<ValidationResult> Exceptions { get; set; }
     }
 }

@@ -167,14 +167,13 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\Employee\Save.js" />
-    <Content Include="Scripts\EditPhones.js" />
-    <Content Include="Scripts\Emails.js" />
+    <Content Include="Scripts\Common\Save.js" />
+    <Content Include="Scripts\Department\Phones.js" />
+    <Content Include="Scripts\Employee\Emails.js" />
     <Content Include="Scripts\Employee\UpdateImage.js" />
-    <Content Include="Scripts\MaritalStatus\Save.js" />
-    <Content Include="Scripts\ModifyButtons.js" />
-    <Content Include="Scripts\Employee\EmployeePagin.js" />
-    <Content Include="Scripts\Department\DepartmentPagin.js" />
+    <Content Include="Scripts\Common\ModifyButtons.js" />
+    <Content Include="Scripts\Employee\Pagin.js" />
+    <Content Include="Scripts\Department\Pagin.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -185,13 +184,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\Navigation.js" />
-    <Content Include="Scripts\Phones.js" />
-    <Content Include="Scripts\Roles\AddRole.js" />
-    <Content Include="Scripts\Search.js" />
-    <Content Include="Scripts\EditEmails.js" />
-    <Content Include="Scripts\User\Create.js" />
-    <Content Include="Scripts\WorkStatus\Save.js" />
+    <Content Include="Scripts\Employee\Navigation.js" />
+    <Content Include="Scripts\Employee\Search.js" />
+    <Content Include="Scripts\User\Role.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -215,13 +210,13 @@
     <Compile Include="Dependency\StructureMapDependencyScope.cs" />
     <Compile Include="Dependency\StructureMapScopeModule.cs" />
     <Compile Include="Infrastructure\Attributes\EmailsAttribute.cs" />
-    <Compile Include="Infrastructure\Bindings\BinderHelper.cs" />
-    <Compile Include="Infrastructure\Bindings\EmployeeBinder.cs" />
-    <Compile Include="Infrastructure\Bindings\UserBinder.cs" />
-    <Compile Include="Infrastructure\HtmlHelpers\ImageHalper.cs" />
+    <Compile Include="Infrastructure\Binders\DepartmentBinder.cs" />
+    <Compile Include="Infrastructure\Helpers\BinderHelper.cs" />
+    <Compile Include="Infrastructure\Binders\EmployeeBinder.cs" />
+    <Compile Include="Infrastructure\Helpers\ImageHalper.cs" />
     <Compile Include="Infrastructure\Attributes\AjaxOnly.cs" />
     <Compile Include="Models\Account\LoginViewModel.cs" />
-    <Compile Include="Models\Department\DepartmentCreateViewModel.cs" />
+    <Compile Include="Models\Department\DepartmentSaveViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -235,9 +230,7 @@
     <Compile Include="Models\MaritalStatus\MaritalStatusCreateViewModel.cs" />
     <Compile Include="Models\MaritalStatus\MaritalStatusEditViewModel.cs" />
     <Compile Include="Models\Navigation\NavigationMenuViewModel.cs" />
-    <Compile Include="Models\User\GetRolePartialModel.cs" />
-    <Compile Include="Models\User\UserUpdateViewModel.cs" />
-    <Compile Include="Models\User\UserCreateViewModel.cs" />
+    <Compile Include="Models\User\UserSaveViewModel.cs" />
     <Compile Include="Models\WorkStatus\WorkStatusCreateViewModel.cs" />
     <Compile Include="Models\WorkStatus\WorkStatusEditViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -260,7 +253,7 @@
     <Content Include="Views\Shared\_Details.cshtml" />
     <Content Include="Views\Departments\Index.cshtml" />
     <Content Include="Views\Advertising\GetAdvertising.cshtml" />
-    <Content Include="Views\Departments\Save.cshtml" />
+    <Content Include="Views\Departments\Create.cshtml" />
     <Content Include="Views\Employees\NoEmployees.cshtml" />
     <Content Include="Views\Advertising\NoAd.cshtml" />
     <Content Include="Views\Error\ServerError.cshtml" />
@@ -275,16 +268,15 @@
     <Content Include="Views\MaritalStatus\Create.cshtml" />
     <Content Include="Views\MaritalStatus\Edit.cshtml" />
     <Content Include="Views\Employees\Navigation.cshtml" />
-    <Content Include="Views\Departments\AddPhone.cshtml" />
-    <Content Include="Views\Employees\AddEmail.cshtml" />
     <Content Include="Views\WorkStatus\Index.cshtml" />
     <Content Include="Views\WorkStatus\Create.cshtml" />
     <Content Include="Views\WorkStatus\Edit.cshtml" />
     <Content Include="Views\Navigation\DepartmentChildren.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
-    <Content Include="Views\User\GetRole.cshtml" />
     <Content Include="Views\Employees\Edit.cshtml" />
+    <Content Include="Views\Departments\Edit.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
