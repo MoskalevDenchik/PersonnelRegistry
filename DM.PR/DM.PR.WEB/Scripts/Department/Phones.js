@@ -30,7 +30,6 @@ function AddNewPhone()
         copy.find("input[type='text']").attr("id", "Phones" + phoneNumber + "__Number");
 
         copy.appendTo("#Phones");
-        phoneNumber++;
     }
 }
 
