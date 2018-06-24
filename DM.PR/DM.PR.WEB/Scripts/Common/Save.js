@@ -1,6 +1,9 @@
 ﻿$("input[type='submit']").on('click', function ()
 {
     var form = $("#AjaxForm");
+    form.removeData('validator');
+    form.removeData('unobtrusiveValidation');
+    $.validator.unobtrusive.parse(form);
 
     if (form.valid())
     {
@@ -20,9 +23,9 @@
                 }
                 else
                 {
-                    for (var i = 0; i < response.Exception.length; i++)
+                    for (var i = 0; i < response.Exceptions.length; i++)
                     {
-                        $('span[data-valmsg-for="' + response.Exception[i].MemberNames[0] + '"]').text(response.Exception[i].ErrorMessage);
+                        $('span[data-valmsg-for="' + response.Exceptions[i].MemberNames[0] + '"]').text(response.Exceptions[i].ErrorMessage);
                     }
                 }
             }

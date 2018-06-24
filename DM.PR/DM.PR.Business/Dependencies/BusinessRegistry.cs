@@ -21,7 +21,7 @@ namespace DM.PR.Business.Dependencies
             For<IProvider<MaritalStatus>>().Use<Provider<MaritalStatus>>();
 
             For<ILoginServices>().Use<LoginServices>();
-            For<IEntityService<User>>().Use<EntityService<User>>();
+            For<IEntityService<User>>().Use<UserService>();
             For<IEntityService<Employee>>().Use<EntityService<Employee>>();
             For<IEntityService<WorkStatus>>().Use<EntityService<WorkStatus>>();
             For<IEntityService<Department>>().Use<EntityService<Department>>();

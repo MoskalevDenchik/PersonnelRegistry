@@ -18,4 +18,5 @@ function AddNewEmail()
 
     copy.appendTo("#Emails");
     emailNumber++;
+
 }

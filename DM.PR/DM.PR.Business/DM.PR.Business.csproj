@@ -51,6 +51,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -70,6 +71,7 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -84,6 +86,7 @@
     <Compile Include="Dependencies\BusinessRegistry.cs" />
     <Compile Include="Entities\UserPrincipal.cs" />
     <Compile Include="Helpers\CookiesConverter.cs" />
+    <Compile Include="Helpers\EntityValidator.cs" />
     <Compile Include="Providers\IDepartmentProvider.cs" />
     <Compile Include="Providers\Implement\Provider.cs" />
     <Compile Include="Providers\Implement\UserProvider.cs" />
@@ -98,6 +101,7 @@
     <Compile Include="Services\ILoginServices.cs" />
     <Compile Include="Services\Implement\EntityService.cs" />
     <Compile Include="Services\Implement\LoginServices.cs" />
+    <Compile Include="Services\Implement\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DM.PR.Common\DM.PR.Common.csproj">
