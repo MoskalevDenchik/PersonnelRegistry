@@ -19,6 +19,7 @@
             {
                 if (response.Status === 0)
                 {
+                    alert("Объект был успешно сохранен, нажмите ОК что бы прейти к списку");
                     window.location.href = form.attr("redirect");
                 }
                 else

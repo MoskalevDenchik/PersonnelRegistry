@@ -29,7 +29,8 @@ namespace DM.PR.Business.Services.Implement
 
         protected override bool IsValid(Result result, User user)
         {
-            if (_prov.GetByLogin(user.Login) == null)
+            var us = _prov.GetByLogin(user.Login);
+            if (us == null || us.Id == user.Id)
             {
                 result.Status = Status.Success;
                 result.Exceptions = null;
