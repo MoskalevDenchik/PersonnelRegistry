@@ -186,6 +186,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Employee\Navigation.js" />
     <Content Include="Scripts\Employee\Search.js" />
+    <Content Include="Scripts\User\Role.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
