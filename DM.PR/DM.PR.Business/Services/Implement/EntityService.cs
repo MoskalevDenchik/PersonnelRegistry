@@ -4,15 +4,16 @@ using DM.PR.Business.Helpers;
 using DM.PR.Common.Entities;
 using DM.PR.Common.Helpers;
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace DM.PR.Business.Services.Implement
 {
-    public class EntityService<T> : IEntityService<T>
+    internal class EntityService<T> : IEntityService<T>
     {
         #region Private
 
         private readonly IRepository<T> _rep;
-        private readonly EntityValidator<T> _validator;
 
         #endregion
 
@@ -21,7 +22,6 @@ namespace DM.PR.Business.Services.Implement
         public EntityService(IRepository<T> rep)
         {
             Inspector.ThrowExceptionIfNull(rep);
-            _validator = new EntityValidator<T>();
             _rep = rep;
         }
 
@@ -29,11 +29,14 @@ namespace DM.PR.Business.Services.Implement
 
         public virtual Result Save(T entity)
         {
-            var result = _validator.Validate(entity);
+            var result = new Result();
 
-            if (result.Status == Status.Success)
+            if (IsValidByAttributes(result, entity))
             {
-
+                if (IsValid(result, entity))
+                {
+                    _rep.Save(entity);
+                }
             }
 
             return result;
@@ -48,5 +51,29 @@ namespace DM.PR.Business.Services.Implement
 
             _rep.Remove(id);
         }
+
+        protected virtual bool IsValid(Result result, T enity)
+        {
+            return true;
+        }
+
+        protected bool IsValidByAttributes(Result result, T entity)
+        {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(entity);
+            if (Validator.TryValidateObject(entity, context, results, true))
+            {
+                result.Status = Status.Success;
+                result.Exceptions = null;
+                return true;
+            }
+            else
+            {
+                result.Status = Status.Failure;
+                result.Exceptions = results;
+                return false;
+            }
+        }
+
     }
 }

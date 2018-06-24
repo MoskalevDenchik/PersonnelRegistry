@@ -1,11 +1,10 @@
-﻿using DM.PR.Business.Helpers;
-using DM.PR.Business.Providers;
-using DM.PR.Common.Entities;
+﻿using System.ComponentModel.DataAnnotations;
 using DM.PR.Common.Entities.Account;
-using DM.PR.Common.Helpers;
-using DM.PR.Data.Repositories;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using DM.PR.Business.Providers;
+using DM.PR.Data.Repositories;
+using DM.PR.Common.Entities;
+using DM.PR.Common.Helpers;
 
 namespace DM.PR.Business.Services.Implement
 {
@@ -14,45 +13,34 @@ namespace DM.PR.Business.Services.Implement
 
         #region Private
 
-        private readonly IRepository<User> _rep;
         private readonly IUserProvider _prov;
-        private readonly EntityValidator<User> _validator;
 
         #endregion
 
         #region Ctors
 
-        public UserService(IRepository<User> rep, IUserProvider provider) : base(rep)
+        public UserService(IRepository<User> rep, IUserProvider prov) : base(rep)
         {
             Inspector.ThrowExceptionIfNull(rep);
-            _validator = new EntityValidator<User>();
-            _rep = rep;
-            _prov = provider;
+            _prov = prov;
         }
 
         #endregion
 
-
-        public override Result Save(User entity)
+        protected override bool IsValid(Result result, User user)
         {
-            var result = _validator.Validate(entity);
-
-            if (result.Status == Status.Success)
+            if (_prov.GetByLogin(user.Login) == null)
             {
-                var user = _prov.GetByLogin(entity.Login);
-                if (user == null)
-                {
-                    _rep.Save(entity);
-                }
-                else
-                {
-                    result.Status = Status.InValid;
-                    result.Exceptions = new List<ValidationResult> { new ValidationResult("Пользователь с таким именем уже существует", new List<string> { nameof(entity.Login) }) };
-                }
+                result.Status = Status.Success;
+                result.Exceptions = null;
+                return true;
             }
-
-            return result;
+            else
+            {
+                result.Status = Status.Failure;
+                result.Exceptions = new List<ValidationResult> { new ValidationResult("Пользователь с таким именем уже существует", new List<string> { nameof(user.Login) }) };
+                return false;
+            }
         }
-
     }
 }

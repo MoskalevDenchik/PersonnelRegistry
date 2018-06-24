@@ -86,7 +86,6 @@
     <Compile Include="Dependencies\BusinessRegistry.cs" />
     <Compile Include="Entities\UserPrincipal.cs" />
     <Compile Include="Helpers\CookiesConverter.cs" />
-    <Compile Include="Helpers\EntityValidator.cs" />
     <Compile Include="Providers\IDepartmentProvider.cs" />
     <Compile Include="Providers\Implement\Provider.cs" />
     <Compile Include="Providers\Implement\UserProvider.cs" />
