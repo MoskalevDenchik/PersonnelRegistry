@@ -100,7 +100,9 @@
     <Compile Include="Services\ILoginServices.cs" />
     <Compile Include="Services\Implement\EntityService.cs" />
     <Compile Include="Services\Implement\LoginServices.cs" />
+    <Compile Include="Services\Implement\MaritalStatusService.cs" />
     <Compile Include="Services\Implement\UserService.cs" />
+    <Compile Include="Services\Implement\WorkStatusService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DM.PR.Common\DM.PR.Common.csproj">
