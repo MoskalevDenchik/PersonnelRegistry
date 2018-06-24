@@ -22,7 +22,7 @@
             <br />
             <div class="form-group">
                 <div class="col-md-12">
-                    @Html.DropDownListFor(m => m.WorkStatusId, new SelectList(Model.WorkStatusList, "Id", "Status", Model.WorkStatusId), new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.WorkStatusId, new SelectList(Model.WorkStatusList, "Id", "Status", Model.WorkStatusId), Model.WorkStatusId == 0 ? "Выберите статус" : null, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.WorkStatusId, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -46,7 +46,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.DepartmentId, new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.DepartmentList, "Id", "Name", Model.DepartmentId), new { @class = "form-control" })
+                        @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.DepartmentList, "Id", "Name", Model.DepartmentId), Model.DepartmentId == 0 ? "Выберите отдел" : null, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.DepartmentId, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.MaritalStatusId, new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.DropDownListFor(m => m.MaritalStatusId, new SelectList(Model.MaritalStatusList, "Id", "Status", Model.MaritalStatusId), new { @class = "form-control" })
+                        @Html.DropDownListFor(m => m.MaritalStatusId, new SelectList(Model.MaritalStatusList, "Id", "Status", Model.MaritalStatusId), Model.MaritalStatusId == 0 ? "Выберите семейное положение" : null, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.MaritalStatusId, "", new { @class = "text-danger", data_val_required = "Вы не выбрали семейное положение" })
                     </div>
                 </div>

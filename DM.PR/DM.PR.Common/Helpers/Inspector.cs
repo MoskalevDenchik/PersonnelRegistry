@@ -10,7 +10,7 @@ namespace DM.PR.Common.Helpers
             {
                 if (item == null)
                 {
-                    throw new ArgumentNullException(item.GetType().ToString(), "Hello");
+                    throw new ArgumentNullException(item.GetType().ToString(), item.GetType().Name);
                 }
             }
         }

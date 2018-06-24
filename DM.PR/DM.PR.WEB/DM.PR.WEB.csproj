@@ -210,7 +210,6 @@
     <Compile Include="Dependency\StructureMapDependencyScope.cs" />
     <Compile Include="Dependency\StructureMapScopeModule.cs" />
     <Compile Include="Infrastructure\Attributes\EmailsAttribute.cs" />
-    <Compile Include="Infrastructure\Binders\DepartmentBinder.cs" />
     <Compile Include="Infrastructure\Helpers\BinderHelper.cs" />
     <Compile Include="Infrastructure\Binders\EmployeeBinder.cs" />
     <Compile Include="Infrastructure\Helpers\ImageHalper.cs" />

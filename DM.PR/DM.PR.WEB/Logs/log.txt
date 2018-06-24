@@ -27,3 +27,15 @@
 2018-06-22 19:39:30,964  INFO MyLogger - Ссылка на объект не указывает на экземпляр объекта. 
 2018-06-22 19:51:44,860  INFO MyLogger - Невозможно создать экземпляр интерфейса. Тип объекта "System.Collections.Generic.IReadOnlyCollection`1[[DM.PR.Common.Entities.Phone, DM.PR.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]". 
 2018-06-24 16:03:05,879  INFO MyLogger - Прослушивание на http://localhost:54126/AdvertisingService.svc/AdService не выполняла ни одна конечная точка, которая могла бы принять сообщение. Среди прочих причин это могло быть вызвано неправильным адресом или действием SOAP. Подробнее см. в описании InnerException (если имеется). 
+2018-06-24 21:19:33,110  INFO MyLogger - Не удается привести DBNull.Value к типу "System.Int32". Используйте тип, допускающий значения NULL. 
+2018-06-24 21:22:10,462  INFO MyLogger - Не удается привести DBNull.Value к типу "System.Int32". Используйте тип, допускающий значения NULL. 
+2018-06-24 21:22:24,021  INFO MyLogger - Не удается привести DBNull.Value к типу "System.Int32". Используйте тип, допускающий значения NULL. 
+2018-06-24 21:32:51,321  INFO MyLogger - Конфликт инструкции DELETE с ограничением FOREIGN KEY "fk_workStatusId". Конфликт произошел в базе данных "PR_DB", таблица "dbo.WorkStatuses", column 'Id'.
+Выполнение данной инструкции было прервано. 
+2018-06-24 22:02:38,622  INFO MyLogger - Конфликт инструкции DELETE с ограничением FOREIGN KEY "fk_workStatusId". Конфликт произошел в базе данных "PR_DB", таблица "dbo.WorkStatuses", column 'Id'.
+Выполнение данной инструкции было прервано. 
+2018-06-24 22:13:37,305  INFO MyLogger - Ссылка на объект не указывает на экземпляр объекта. 
+2018-06-24 23:30:15,967  INFO MyLogger - D:\testes\PersonnelRegistry\DM.PR\DM.PR.WEB\Views\Employees\Edit.cshtml(82): error CS0839: Argument missing 
+2018-06-24 23:30:56,923  INFO MyLogger - D:\testes\PersonnelRegistry\DM.PR\DM.PR.WEB\Views\Employees\Edit.cshtml(82): error CS0839: Argument missing 
+2018-06-24 23:31:25,043  INFO MyLogger - D:\testes\PersonnelRegistry\DM.PR\DM.PR.WEB\Views\Employees\Edit.cshtml(82): error CS0839: Argument missing 
+2018-06-24 23:31:59,747  INFO MyLogger - D:\testes\PersonnelRegistry\DM.PR\DM.PR.WEB\Views\Employees\Edit.cshtml(82): error CS0839: Argument missing 
