@@ -4,5 +4,6 @@
     {
         ISpecification CreateSpecification(int parentId);
         ISpecification CreateSpecification(int pageSize, int pageCount);
+        ISpecification CreateSpecification(string name);
     }
 }

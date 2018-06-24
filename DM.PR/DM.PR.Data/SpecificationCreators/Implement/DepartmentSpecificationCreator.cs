@@ -23,5 +23,9 @@ namespace DM.PR.Data.Specifications
         {
             return new Specification(_paramCreator.CreateFind(parentId));
         }
+        public ISpecification CreateSpecification(string name)
+        {
+            return new Specification(_paramCreator.CreateFind(name));
+        }
     }
 }

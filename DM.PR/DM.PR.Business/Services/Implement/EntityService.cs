@@ -38,7 +38,6 @@ namespace DM.PR.Business.Services.Implement
                     _rep.Save(entity);
                 }
             }
-
             return result;
         }
 
@@ -47,7 +46,7 @@ namespace DM.PR.Business.Services.Implement
             if (id <= 0)
             {
                 throw new Exception("Invalid Id");
-            }
+            }                    
 
             _rep.Remove(id);
         }
@@ -74,6 +73,5 @@ namespace DM.PR.Business.Services.Implement
                 return false;
             }
         }
-
     }
 }

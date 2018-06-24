@@ -98,6 +98,7 @@
     <Compile Include="Providers\Implement\EmployeeProvider.cs" />
     <Compile Include="Services\IEntityService.cs" />
     <Compile Include="Services\ILoginServices.cs" />
+    <Compile Include="Services\Implement\DepartmentService.cs" />
     <Compile Include="Services\Implement\EntityService.cs" />
     <Compile Include="Services\Implement\LoginServices.cs" />
     <Compile Include="Services\Implement\MaritalStatusService.cs" />
