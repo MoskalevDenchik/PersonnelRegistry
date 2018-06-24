@@ -20,6 +20,6 @@ namespace DM.PR.Common.Entities
         [StringLength(128, MinimumLength = 3, ErrorMessage = "Длина строки должна быть от 3 до 128 символов")]
         public string Description { get; set; }
 
-        public IReadOnlyCollection<Phone> Phones { get; set; }
+        public List<Phone> Phones { get; set; }
     }
 }

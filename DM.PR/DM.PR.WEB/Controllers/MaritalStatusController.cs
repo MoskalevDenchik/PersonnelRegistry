@@ -47,8 +47,7 @@ namespace DM.PR.WEB.Controllers
             return RedirectToAction("Index");
         }
 
-        [AjaxOnly]
-        [HttpPost]
+        [AjaxOnly] [HttpPost]
         public JsonResult Save(MaritalStatus maritalStatus) => Json(_maritalStatusServ.Save(maritalStatus));
     }
 }

@@ -1,15 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using DM.PR.Common.Entities.Account;
 using System.Collections.Generic;
-using System.Web.Mvc;
 
 namespace DM.PR.WEB.Models.User
 {
-    public class UserCreateViewModel
+    public class UserSaveViewModel
     {
-        [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
-        [HiddenInput(DisplayValue = false)]
         public int EmployeeId { get; set; }
 
         [Required(ErrorMessage = "Введите логин")]
@@ -18,12 +16,14 @@ namespace DM.PR.WEB.Models.User
         [Required(ErrorMessage = "Введите пароль")]
         public string Password { get; set; }
 
-        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Пароль и подтверждение не совпадают")]
+        [Compare("Password", ErrorMessage = "Пароль и подтверждение не совпадают")]
         [Required(ErrorMessage = "Подтвердите пароль")]
         public string ConfirmPassword { get; set; }
 
         [Required(ErrorMessage = "Добавьте роли")]
         [Display(Name = "Роли")]
-        public int[] Roles { get; set; }
+        public Role[] Roles { get; set; }
+
+        public IReadOnlyCollection<Role> RolesList { get; set; }
     }
 }

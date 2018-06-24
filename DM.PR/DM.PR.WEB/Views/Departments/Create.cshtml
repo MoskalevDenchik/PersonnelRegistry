@@ -1,0 +1,62 @@
+﻿@model DM.PR.WEB.Models.DepartmentSaveViewModel
+
+<h2 class="text-center">Добавьте отдел</h2>
+<br />
+
+@using (Html.BeginForm("Save", "Departments", null, FormMethod.Post, new { @id = "AjaxForm", @redirect = Url.Action("Index") }))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-8">
+                @Html.DropDownListFor(m => m.ParentId, new SelectList(Model.DepartmentList, "Id", "Name"), "Выберите отдел сверху", new { @class = "form-control", @data_val = false })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-8">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Название отдела..." })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-8">
+                @Html.TextAreaFor(m => m.Address, new { @class = "form-control", placeholder = "Адрес..." })
+                @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-8">
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Описание..." })
+                @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Phones, new { @class = "control-label col-md-4 text-right" })
+            <div class="col-md-8" id="Phones">
+                <div data-number="0">
+                    @Html.TextBoxFor(m => m.Phones[0].Number, new { @class = "form-control ", placeholder = "Номер телефона..." })
+                    @Html.ValidationMessageFor(m => m.Phones[0].Number, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-5">
+                <a id="AddPhone" class="btn btn-default">Добавить Телефон</a>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-5">
+                <a id="RemovePhone" class="btn btn-default">Удалить Телефон</a>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row text-center">
+                <input type="submit" id="Save" value="Сохранить" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/Scripts/Department/Phones.js"></script>
+    <script src="~/Scripts/Common/Save.js"></script>
+}

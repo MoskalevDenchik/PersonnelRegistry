@@ -1,10 +1,10 @@
 using DM.PR.Business.Providers.Implement;
 using DM.PR.Business.Services.Implement;
 using StructureMap.Configuration.DSL;
+using DM.PR.Common.Entities.Account;
 using DM.PR.Business.Providers;
 using DM.PR.Business.Services;
 using DM.PR.Common.Entities;
-using DM.PR.Common.Entities.Account;
 
 namespace DM.PR.Business.Dependencies
 {
@@ -21,11 +21,11 @@ namespace DM.PR.Business.Dependencies
             For<IProvider<MaritalStatus>>().Use<Provider<MaritalStatus>>();
 
             For<ILoginServices>().Use<LoginServices>();
-            For<IEntityService<User>>().Use<EntityService<User>>();
+            For<IEntityService<User>>().Use<UserService>();
+            For<IEntityService<WorkStatus>>().Use<WorkStatusService>();
             For<IEntityService<Employee>>().Use<EntityService<Employee>>();
-            For<IEntityService<WorkStatus>>().Use<EntityService<WorkStatus>>();
+            For<IEntityService<MaritalStatus>>().Use<MaritalStatusService>();
             For<IEntityService<Department>>().Use<EntityService<Department>>();
-            For<IEntityService<MaritalStatus>>().Use<EntityService<MaritalStatus>>();
         }
     }
 }

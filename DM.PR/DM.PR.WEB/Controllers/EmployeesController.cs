@@ -59,7 +59,7 @@ namespace DM.PR.WEB.Controllers
         public ActionResult Details(int id = 0)
         {
             var empl = _emplProv.GetById(id);
-            return View(MapEmployeeToEmployeeDetailsViewModel(empl));
+            return View(MapToEmployeeDetailsViewModel(empl));
         }
 
         [Authorize(Roles = "admin")]
@@ -67,7 +67,7 @@ namespace DM.PR.WEB.Controllers
         {
             var marStatusList = _merStatProv.GetAll();
             var workStatusList = _workStatProv.GetAll();
-            var departmentList = MapDepartmentToDepartmentSelectModel(_depProv.GetAll());
+            var departmentList = MapToDepartmentSelectModel(_depProv.GetAll());
             return View(new EmployeeSaveViewModel
             {
                 WorkStatusList = workStatusList,
@@ -80,10 +80,10 @@ namespace DM.PR.WEB.Controllers
         public ActionResult Edit(int id = 0)
         {
             var empl = _emplProv.GetById(id);
-            var model = MapEmployeeToEmployeeSaveViewModel(empl);
+            var model = MapToEmployeeSaveViewModel(empl);
             model.MaritalStatusList = _merStatProv.GetAll();
             model.WorkStatusList = _workStatProv.GetAll();
-            model.DepartmentList = MapDepartmentToDepartmentSelectModel(_depProv.GetAll());
+            model.DepartmentList = MapToDepartmentSelectModel(_depProv.GetAll());
             return View(model);
         }
 
@@ -130,28 +130,28 @@ namespace DM.PR.WEB.Controllers
         {
             var list = _emplProv.GetEmployees(departmentId, pageSize, pageNumber, out int totalCount);
             ViewBag.totalCount = totalCount;
-            var model = MapEmployeesToEmployeesSummaryViewModel(list);
+            var model = MapToEmployeesSummaryViewModel(list);
             return PartialView("EmployeeSummary", model);
         }
 
         [AjaxOnly]
         public ActionResult GetEmployees(string middleName, string firstName, string lastName, int pageNumber, int pageSize, int WorkStatusId = 0, int fromYear = 0, int toYear = 100)
         {
-            var list = _emplProv.GetEmployees(lastName, firstName, middleName, fromYear, toYear, WorkStatusId, pageSize, pageNumber, out int totalCount);
+            var emplList = _emplProv.GetEmployees(lastName, firstName, middleName, fromYear, toYear, WorkStatusId, pageSize, pageNumber, out int totalCount);
             ViewBag.totalCount = totalCount;
-            var model = MapEmployeesToEmployeesSummaryViewModel(list);
+            var model = MapToEmployeesSummaryViewModel(emplList);
             return PartialView("EmployeeSummary", model);
         }
         #endregion
 
         #region Mappers
 
-        private IReadOnlyCollection<DepartmentSelectModel> MapDepartmentToDepartmentSelectModel(IReadOnlyCollection<Department> departments)
+        private IReadOnlyCollection<DepartmentSelectModel> MapToDepartmentSelectModel(IReadOnlyCollection<Department> departments)
         {
             return departments.Select(d => new DepartmentSelectModel { Id = d.Id, Name = d.Name }).ToList();
         }
 
-        private IReadOnlyCollection<EmployeeSummaryViewModel> MapEmployeesToEmployeesSummaryViewModel(IReadOnlyCollection<Employee> list)
+        private IReadOnlyCollection<EmployeeSummaryViewModel> MapToEmployeesSummaryViewModel(IReadOnlyCollection<Employee> list)
         {
             return list.Select(empl => new EmployeeSummaryViewModel
             {
@@ -167,7 +167,7 @@ namespace DM.PR.WEB.Controllers
             }).ToList();
         }
 
-        private EmployeeDetailsViewModel MapEmployeeToEmployeeDetailsViewModel(Employee empl) => new EmployeeDetailsViewModel
+        private EmployeeDetailsViewModel MapToEmployeeDetailsViewModel(Employee empl) => new EmployeeDetailsViewModel
         {
             Id = empl.Id,
             Emails = empl.Emails,
@@ -186,7 +186,7 @@ namespace DM.PR.WEB.Controllers
             MaritalStatus = empl.MaritalStatus.Status
         };
 
-        private EmployeeSaveViewModel MapEmployeeToEmployeeSaveViewModel(Employee empl) => new EmployeeSaveViewModel
+        private EmployeeSaveViewModel MapToEmployeeSaveViewModel(Employee empl) => new EmployeeSaveViewModel
         {
             Id = empl.Id,
             Emails = empl.Emails,
