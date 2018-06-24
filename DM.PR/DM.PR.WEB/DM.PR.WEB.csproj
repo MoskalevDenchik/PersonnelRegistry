@@ -169,7 +169,6 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Common\Save.js" />
     <Content Include="Scripts\Department\Phones.js" />
-    <Content Include="Scripts\Employee\Save.js" />
     <Content Include="Scripts\Employee\Emails.js" />
     <Content Include="Scripts\Employee\UpdateImage.js" />
     <Content Include="Scripts\Common\ModifyButtons.js" />

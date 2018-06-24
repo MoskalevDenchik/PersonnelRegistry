@@ -32,7 +32,7 @@
         <div class="form-group">
             @Html.LabelFor(m => m.Phones, new { @class = "control-label col-md-4 text-right" })
             <div class="col-md-8" id="Phones">
-                <div>
+                <div data-number="0">
                     @Html.TextBoxFor(m => m.Phones[0].Number, new { @class = "form-control ", placeholder = "Номер телефона..." })
                     @Html.ValidationMessageFor(m => m.Phones[0].Number, "", new { @class = "text-danger" })
                 </div>
@@ -41,6 +41,11 @@
         <div class="form-group">
             <div class="col-md-offset-5">
                 <a id="AddPhone" class="btn btn-default">Добавить Телефон</a>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-5">
+                <a id="RemovePhone" class="btn btn-default">Удалить Телефон</a>
             </div>
         </div>
         <div class="form-group">
