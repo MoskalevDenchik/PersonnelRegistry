@@ -11,8 +11,14 @@ namespace DM.PR.WEB.Controllers
     [Authorize(Roles = "admin,editor")]
     public class WorkStatusController : Controller
     {
+        #region Private
+
         private readonly IProvider<WorkStatus> _workStatusProv;
         private readonly IEntityService<WorkStatus> _workStatusServ;
+
+        #endregion
+
+        #region Ctors
 
         public WorkStatusController(IProvider<WorkStatus> workStatusProvider, IEntityService<WorkStatus> workStatusService)
         {
@@ -21,24 +27,29 @@ namespace DM.PR.WEB.Controllers
             _workStatusServ = workStatusService;
         }
 
+        #endregion
+
+        [RedirectIfNull(RedirectTo = "~/Error/ServerError")]
         public ActionResult Index()
         {
-            var list = _workStatusProv.GetAll();
-            return list != null ? View(list) : (ActionResult)RedirectToAction("ServerError", "Error");
+            return View(_workStatusProv.GetAll());
         }
 
+        [RedirectIfNull(RedirectTo = "~/Error/ServerError")]
         public ActionResult Details(int id = 0)
         {
-            var model = _workStatusProv.GetById(id);
-            return model != null ? View(model) : (ActionResult)RedirectToAction("ServerError", "Error");
+            return View(_workStatusProv.GetById(id));
         }
 
-        public ActionResult Create() => View();
+        public ActionResult Create()
+        {
+            return View();
+        }
 
+        [RedirectIfNull(RedirectTo = "~/Error/ServerError")]
         public ActionResult Edit(int id = 0)
         {
-            var status = _workStatusProv.GetById(id);
-            return View(new WorkStatusEditViewModel { Id = status.Id, Status = status.Status });
+            return View(MapToWorkStatusEditViewModel(_workStatusProv.GetById(id)));
         }
 
         public ActionResult Delete(int id = 0)
@@ -49,6 +60,19 @@ namespace DM.PR.WEB.Controllers
 
         [AjaxOnly]
         [HttpPost]
-        public JsonResult Save(WorkStatus model) => Json(_workStatusServ.Save(model));
+        public JsonResult Save(WorkStatus model)
+        {
+            return Json(_workStatusServ.Save(model));
+        }
+
+        #region Mappers
+
+        private WorkStatusEditViewModel MapToWorkStatusEditViewModel(WorkStatus status)
+        {
+            return status != null ? new WorkStatusEditViewModel { Id = status.Id, Status = status.Status } : null;
+        }
+
+        #endregion
+
     }
 }

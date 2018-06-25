@@ -9,15 +9,22 @@ namespace DM.PR.Business.Providers.Implement
 {
     internal class DepartmentProvider : Provider<Department>, IDepartmentProvider
     {
+        #region Private
+
         private readonly IRepository<Department> _rep;
         private readonly IDepartmentSpecificationCreator _specificationCreator;
 
+        #endregion
+
+        #region Ctors
         public DepartmentProvider(IRepository<Department> rep, IDepartmentSpecificationCreator creater) : base(rep)
         {
             Inspector.ThrowExceptionIfNull(rep, creater);
             _rep = rep;
             _specificationCreator = creater;
         }
+
+        #endregion
 
         public Department GetByName(string name)
         {

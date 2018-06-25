@@ -209,6 +209,7 @@
     <Compile Include="Dependency\IoC.cs" />
     <Compile Include="Dependency\StructureMapDependencyScope.cs" />
     <Compile Include="Dependency\StructureMapScopeModule.cs" />
+    <Compile Include="Infrastructure\Attributes\CheckModelForNullAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\EmailsAttribute.cs" />
     <Compile Include="Infrastructure\Helpers\BinderHelper.cs" />
     <Compile Include="Infrastructure\Binders\EmployeeBinder.cs" />
