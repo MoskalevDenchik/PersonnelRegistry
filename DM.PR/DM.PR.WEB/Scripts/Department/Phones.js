@@ -28,6 +28,7 @@ function AddNewPhone()
 
         copy.find("input[type='text']").attr("name", "Phones[" + phoneNumber + "].Number");
         copy.find("input[type='text']").attr("id", "Phones" + phoneNumber + "__Number");
+        copy.find("input[type='text']").val("");
 
         copy.appendTo("#Phones");
     }
