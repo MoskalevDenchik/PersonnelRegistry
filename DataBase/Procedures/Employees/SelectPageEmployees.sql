@@ -1,11 +1,11 @@
-CREATE PROCEDURE [SelectAllEmployees]
+CREATE PROCEDURE [SelectPageEmployees]
 @PageSize INT,
-@Page INT 
+@PageNumber INT 
 AS
 
 CREATE TABLE [#Searched](EmployeeId INT,DepartmentId INT);
 INSERT INTO  [#Searched] 
-	  SELECT [EmployeeId], [DepartmentId] FROM dbo.GetAllEmployeesByPage(@PageSize,@Page);
+	  SELECT [EmployeeId], [DepartmentId] FROM dbo.GetEmployeesByPage(@PageSize,@PageNumber);
 
 SELECT [E].[Id],
 	   [LastName],
@@ -16,6 +16,9 @@ SELECT [E].[Id],
 	   [ImagePath],
 	   [BeginningWork],
 	   [EndWork],
+	   [HomePhone],
+	   [WorkPhone],
+	   [MobilePhone],
 	   [HasRole],
 	   [MS].[Status] as [MaritalStatus],
 	   [MaritalStatusId],
@@ -27,14 +30,6 @@ LEFT JOIN [WorkStatuses] as [WS]
 ON [E].[WorkStatusId] =[WS].[Id]
   JOIN [#Searched] as [S]
 ON [S].[EmployeeId] = [E].[Id]; 
-
-SELECT [PE].[EmployeeId],
-	   [PE].[Id],
-	   [Number],
-       [KindId],
-	   [Kind] From [PhonesEmployeeView] as [PE]
-  JOIN [#Searched] as [S]
-ON [S].[EmployeeId] = [PE].[EmployeeId];
 
 SELECT [Emails].[EmployeeId],
 	   [Emails].[Id], 
@@ -57,16 +52,12 @@ SELECT [Id]
 
 SELECT [Id], 
 	   [P].[DepartmentId],
-	   [Number], 
-	   [KindId],
-	   [Kind] FROM [PhonesDepartmentView] as [P]
+	   [Number] FROM [DepartmentPhones] as [P]
   JOIN [#Searched] as [S]
     ON [S].[DepartmentId] = [P].[DepartmentId]
 	GROUP BY [Id], 
 	   [P].[DepartmentId],
-	   [Number], 
-	   [KindId],
-	   [Kind];
+	   [Number]
 
 SELECT COUNT([ID]) as [Count] FROM [Employees];
 GO

@@ -1,4 +1,4 @@
-CREATE PROCEDURE [DeleteEmployeeById]
+CREATE PROCEDURE [DeleteEmployee]
 @Id INT
 AS
 DELETE FROM [dbo].[Phones] 

@@ -88,7 +88,7 @@ GO
 ----------------------------------------------------Employees---------------------------------------------
 CREATE TABLE [Employees](
 [Id] INT IDENTITY(1, 1),
-[DepartmentId] INT,
+[DepartmentId] INT NULL ,
 [LastName] NVARCHAR(16) NULL,
 [FirstName] NVARCHAR(16) NULL,
 [MiddleName] NVARCHAR(16) NULL,
@@ -377,6 +377,25 @@ SELECT [DepartmentId],
 WHERE [DepartmentId] = @Id;
 GO
 
+-------------------------------------------------SelectDepartmentByName-----------------------------------------
+CREATE PROCEDURE [SelectDepartmentByName]
+@Name NVARCHAR(16)
+AS
+SELECT [Id]
+      ,[ParentID]
+      ,[Name]
+      ,[Address]
+      ,[Description] FROM [Departments]
+ WHERE @Name = [Name]
+
+SELECT [DepartmentId],
+	   [D].[Id],
+	   [Number] FROM [DepartmentPhones] as [DP]
+JOIN [Departments] as [D]
+ON [D].[Id] = [DP].[DepartmentId]
+WHERE [D].[Name] = @Name;
+GO
+
 -------------------------------------------------SelectDepartmentByEmployeeId----------------------------------
 CREATE PROCEDURE [SelectDepartmentByEmployeeId]
 @Id INT
@@ -417,7 +436,7 @@ SELECT [DepartmentId],
     ON [DepartmentId] = [D].[Id]
  WHERE [ParentID] = @ParentId;
 GO
--------------------------------------------------InsertDepartment---------------------------------------------
+-------------------------------------------------SaveDepartment---------------------------------------------
 CREATE PROCEDURE [SaveDepartment]
 @Id INT,
 @parentId INT,
