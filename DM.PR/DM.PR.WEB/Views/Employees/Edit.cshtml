@@ -8,7 +8,7 @@
     <div class="row" id="emplCreate">
         <div class="col-md-offset-1 col-md-3">
             <div class=" form-group">
-                <img src="~/Content/Images/UserImg.jpg" id="UserImage" class="img-responsive img-thumbnail" />
+                <img src="@Model.ImagePath" id="UserImage" class="img-responsive img-thumbnail" />
                 <input type="hidden" name="ImagePath" id=" are" value="/Content/Images/UserImg.jpg" />
             </div>
             <div class="form-group">
@@ -103,18 +103,14 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class=" col-md-offset-4 col-md-8">
+                    @Html.LabelFor(m => m.Emails, new { @class = "control-label col-md-4 text-right" })
+                    <div class="col-md-8">
                         @for (int i = 0; i < Model.Emails.Count; i++)
                         {
                             @Html.HiddenFor(m => m.Emails[i].Id)
                             @Html.TextBoxFor(model => model.Emails[i].Address, new { @class = "form-control ", placeholder = "Введите почтовый адресс..." })
                             @Html.ValidationMessageFor(model => model.Emails[i].Address, "", new { @class = "text-danger" })
                         }
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-5">
-                        <a id="AddEmail" class="btn btn-default">Добавить Email</a>
                     </div>
                 </div>
             </div>
@@ -129,6 +125,5 @@
 
 @section Scripts {
     <script src="~/Scripts/Common/Save.js"></script>
-    <script src="~/Scripts/Employee/Emails.js"></script>
     <script src="~/Scripts/Employee/UpdateImage.js"></script>
 }

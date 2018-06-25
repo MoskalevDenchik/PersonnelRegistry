@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
-using System;
 using DM.PR.WEB.Infrastructure.Attributes;
+using System.Collections.Generic;
 using DM.PR.Common.Attributes;
+using System;
 
 namespace DM.PR.Common.Entities
 {
@@ -46,10 +46,9 @@ namespace DM.PR.Common.Entities
 
         public string ImagePath { get; set; }
 
-
         public DateTime BeginningWork { get; set; }
 
-        [ValidDate(MoreThen = "BeginningWork", ErrorMessage = "Дата увольнение не может быть познее или совпадать с датой приема на работу")]
+        [ValidDate(LessOrEqualTo = "BeginningWork", ErrorMessage = "Дата увольнение не может быть познее или совпадать с датой приема на работу")]
         public DateTime? EndWork { get; set; }
 
         public bool HasRole { get; set; }
