@@ -1,6 +1,7 @@
 ﻿@model DM.PR.WEB.Models.Employee.EmployeeSaveViewModel
 
-<h2 class="text-center">Создайте пользователя</h2> <br />
+<h2 class="text-center">Создайте пользователя</h2>
+<br />
 
 @using (Html.BeginForm("Save", "Employees", null, FormMethod.Post, new { @id = "AjaxForm", @redirect = Url.Action("Index") }))
 {
@@ -22,7 +23,7 @@
             <div class="form-group">
                 <div class="col-md-12">
                     @Html.DropDownListFor(m => m.WorkStatusId, new SelectList(Model.WorkStatusList, "Id", "Status"), "Выберите статус",
-                                                                          new { @class = "form-control", data_val_required = "Вы не выбрали статус" })
+                                                                               new { @class = "form-control", data_val_required = "Вы не выбрали статус" })
                     @Html.ValidationMessageFor(model => model.WorkStatusId, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -46,7 +47,7 @@
                     @Html.LabelFor(model => model.DepartmentId, new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
                         @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.DepartmentList, "Id", "Name"), "Выберите отдел",
-                                                                new { @class = "form-control", data_val_required = "Вы не выбрали отдел" })
+                                                                     new { @class = "form-control", data_val_required = "Вы не выбрали отдел" })
                         @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -81,7 +82,7 @@
                     @Html.LabelFor(model => model.MaritalStatusId, new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
                         @Html.DropDownListFor(m => m.MaritalStatusId, new SelectList(Model.MaritalStatusList, "Id", "Status"), "Выберите семейное положение",
-                                                            new { @class = "form-control", data_val_required = "Вы не выбрали семейное положение" })
+                                                                 new { @class = "form-control", data_val_required = "Вы не выбрали семейное положение" })
                         @Html.ValidationMessageFor(model => model.MaritalStatusId, "", new { @class = "text-danger", data_val_required = "Вы не выбрали семейное положение" })
                     </div>
                 </div>
