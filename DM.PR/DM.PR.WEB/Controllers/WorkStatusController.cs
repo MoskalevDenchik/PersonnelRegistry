@@ -67,9 +67,9 @@ namespace DM.PR.WEB.Controllers
 
         #region Mappers
 
-        private WorkStatusEditViewModel MapToWorkStatusEditViewModel(WorkStatus status)
+        private WorkStatusSaveViewModel MapToWorkStatusEditViewModel(WorkStatus status)
         {
-            return status != null ? new WorkStatusEditViewModel { Id = status.Id, Status = status.Status } : null;
+            return status != null ? new WorkStatusSaveViewModel { Id = status.Id, Status = status.Status } : null;
         }
 
         #endregion

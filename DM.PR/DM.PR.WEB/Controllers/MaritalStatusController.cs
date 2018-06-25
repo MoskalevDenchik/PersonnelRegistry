@@ -67,9 +67,9 @@ namespace DM.PR.WEB.Controllers
 
         #region Mappers
 
-        private MaritalStatusEditViewModel MapToMaritalStatusEditViewModel(MaritalStatus status)
+        private MaritalStatusSaveViewModel MapToMaritalStatusEditViewModel(MaritalStatus status)
         {
-            return status != null ? new MaritalStatusEditViewModel { Id = status.Id, Status = status.Status } : null;
+            return status != null ? new MaritalStatusSaveViewModel { Id = status.Id, Status = status.Status } : null;
         }
 
         #endregion
