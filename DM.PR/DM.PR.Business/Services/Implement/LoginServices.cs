@@ -1,7 +1,10 @@
-﻿using DM.PR.Common.Entities.Account;
+﻿using System.ComponentModel.DataAnnotations;
+using DM.PR.Common.Entities.Account;
+using System.Collections.Generic;
 using DM.PR.Business.Providers;
 using DM.PR.Business.Helpers;
-using DM.PR.Common.Helpers;           
+using DM.PR.Common.Entities;
+using DM.PR.Common.Helpers;
 using System.Web.Security;
 using System.Web;
 
@@ -9,33 +12,47 @@ namespace DM.PR.Business.Services.Implement
 {
     internal class LoginServices : ILoginServices
     {
+        #region Private
+
         private readonly IUserProvider _prov;
 
+        #endregion
+
+        #region Ctors
         public LoginServices(IUserProvider prov)
         {
             Inspector.ThrowExceptionIfNull(prov);
             _prov = prov;
         }
 
-        public SignInStatus SignIn(string login, string password)
+        #endregion
+
+        public Result SignIn(string login, string password)
         {
-            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
-            {
-                return SignInStatus.Failure;
-            }
+            var result = new Result();
 
             var user = _prov.GetByLogin(login);
-            if (user == null)
+            if (user != null)
             {
-                return SignInStatus.Failure;
+                if (user.Password == password)
+                {
+                    AddUserToCookies(user);
+                    result.Status = Status.Success;
+                    result.Exceptions = null;
+                }
+                else
+                {
+                    result.Status = Status.InValid;
+                    result.Exceptions = result.Exceptions = new List<ValidationResult> { new ValidationResult("Неверный пароль", new List<string> { "Password" }) };
+                }
             }
-            if (user.Password != password)
+            else
             {
-                return SignInStatus.InvalidPssword;
+                result.Status = Status.InValid;
+                result.Exceptions = result.Exceptions = new List<ValidationResult> { new ValidationResult("Пользователя с таким именем не существует", new List<string> { "Login" }) };
             }
 
-            AddUserToCookies(user);
-            return SignInStatus.Success;
+            return result;
         }
 
 

@@ -23,9 +23,11 @@ namespace DM.PR.Data.Core.Converters.Implement
             MobilePhone = empl.Field<string>("MobilePhone"),
             BeginningWork = empl.Field<DateTime>("BeginningWork"),
             Emails = ConvertToEmails(empl.Field<int>("Id"), dataSet.Tables[1]),
-            Department = ConvertToDepartmnent(empl.Field<int>("DepartmentId"), dataSet.Tables[2], dataSet.Tables[3]),
-            WorkStatus = new WorkStatus { Id = empl.Field<int>("WorkStatusId"), Status = empl.Field<string>("WorkStatus") },
-            MaritalStatus = new MaritalStatus { Id = empl.Field<int>("MaritalStatusId"), Status = empl.Field<string>("MaritalStatus") },
+            Department = empl.Field<int?>("DepartmentId") != null ? ConvertToDepartmnent(empl.Field<int>("DepartmentId"), dataSet.Tables[2], dataSet.Tables[3]) : new Department { Id = 0, Name = "Временно без отдела" },
+            WorkStatus = empl.Field<int?>("WorkStatusId") != null ? new WorkStatus { Id = empl.Field<int>("WorkStatusId"), Status = empl.Field<string>("WorkStatus") }
+            : new WorkStatus { Id = 0, Status = "Временно без статуса" },
+            MaritalStatus = empl.Field<int?>("MaritalStatusId") != null ? new MaritalStatus { Id = empl.Field<int>("MaritalStatusId"), Status = empl.Field<string>("MaritalStatus") }
+            : new MaritalStatus { Id = 0, Status = "Временно без семейного положения" },
         });
 
 

@@ -8,18 +8,17 @@ using DM.PR.Common.Helpers;
 
 namespace DM.PR.Business.Services.Implement
 {
-    internal class UserService : EntityService<User>
+    internal class DepartmentService : EntityService<Department>
     {
-
         #region Private
 
-        private readonly IUserProvider _prov;
+        private readonly IDepartmentProvider _prov;
 
         #endregion
 
         #region Ctors
 
-        public UserService(IRepository<User> rep, IUserProvider prov) : base(rep)
+        public DepartmentService(IRepository<Department> rep, IDepartmentProvider prov) : base(rep)
         {
             Inspector.ThrowExceptionIfNull(rep);
             _prov = prov;
@@ -27,10 +26,11 @@ namespace DM.PR.Business.Services.Implement
 
         #endregion
 
-        protected override bool IsValid(Result result, User user)
+        protected override bool IsValid(Result result, Department department)
         {
-            var us = _prov.GetByLogin(user.Login);
-            if (us == null || us.Id == user.Id)
+            var dep = _prov.GetByName(department.Name);
+
+            if (dep == null || dep.Id == department.Id)
             {
                 result.Status = Status.Success;
                 result.Exceptions = null;
@@ -39,7 +39,7 @@ namespace DM.PR.Business.Services.Implement
             else
             {
                 result.Status = Status.Failure;
-                result.Exceptions = new List<ValidationResult> { new ValidationResult("Пользователь с таким именем уже существует", new List<string> { nameof(user.Login) }) };
+                result.Exceptions = new List<ValidationResult> { new ValidationResult("Отдел с таким именем уже существует", new List<string> { nameof(department.Name) }) };
                 return false;
             }
         }

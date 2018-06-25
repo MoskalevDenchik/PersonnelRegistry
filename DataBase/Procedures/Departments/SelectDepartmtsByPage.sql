@@ -1,4 +1,4 @@
-CREATE PROCEDURE [SelectAllDepartmtsByPage]
+CREATE PROCEDURE [SelectDepartmtsByPage]
 @PageSize INT,
 @Page INT
 AS

@@ -3,10 +3,9 @@ using DM.PR.Common.Entities;
 
 namespace DM.PR.Business.Providers
 {
-    public interface IDepartmentProvider
+    public interface IDepartmentProvider : IProvider<Department>
     {
-        Department GetById(int id);
-        IReadOnlyCollection<Department> GetAll();
+        Department GetByName(string name);
         IReadOnlyCollection<Department> GetDepartments(int parentId);
         IReadOnlyCollection<Department> GetDepartments(int pageSize, int pageNumber, out int totalCount);
     }

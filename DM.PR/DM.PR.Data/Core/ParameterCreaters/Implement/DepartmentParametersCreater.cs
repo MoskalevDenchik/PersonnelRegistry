@@ -62,6 +62,15 @@ namespace DM.PR.Data.Core.InputParameters.Creaters.Implement
             }
         };
 
+        public IInputParameter CreateFind(string name) => new DbInputParameter
+        {
+            Procedure = "SelectDepartmentByName",
+            Parameters =
+            {
+                {nameof(name), name}
+            }
+        };
+
         #region Converters
 
         private static DataTable ConvertToTable(IReadOnlyCollection<Phone> phones)

@@ -4,7 +4,7 @@ How to deploy:
 
 2) Then you need to set value for "Data Source" in connection string section in "~/PersonnelRegistry/DM.PR/DM.PR.Data/DM.PR.Data.dll.config";
 
-3) Open DM.PR.sln and deploy  DM.PR.AdvertismentService on the IIS with port: 8084 or 
+3) Open DM.PR.sln and deploy  DM.PR.AdvertismentService on the IIS with port: 54126 or 
 set another andpoint (but you must change "endpoint address" for WCF service in "~/PersonnelRegistry/DM.PR/DM.PR.Data/DM.PR.Data.dll.config");
 
 4) Open DM.PR.sln and deploy DM.PR.Web on local storage;
@@ -13,5 +13,6 @@ set another andpoint (but you must change "endpoint address" for WCF service in 
 Default logins for authentication:
 
 Name: Turbo; Password: 1234; Role: admin
+Name: Den; Password:1234; Role:editor
 Name: Red; Password: 1234; Role: editor
 
