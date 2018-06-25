@@ -6,10 +6,8 @@ namespace DM.PR.Common.Entities.Account
 {
     public class User : IEntity
     {
-        [Range(0, int.MaxValue, ErrorMessage = "Неверный Id")]
         public int Id { get; set; }
 
-        [Range(0, int.MaxValue, ErrorMessage = "Неверный Id")]
         public int EmployeeId { get; set; }
 
         [MaxLength(16, ErrorMessage = "Длинна строки должна быть не более 16 символов")]
@@ -20,7 +18,7 @@ namespace DM.PR.Common.Entities.Account
 
         public IReadOnlyCollection<Email> Emails { get; set; }
 
-        [Roles]
+        [UniqRoles(ErrorMessage = "Роли не могу повторяться")]
         public List<Role> Roles { get; set; }
     }
 }
