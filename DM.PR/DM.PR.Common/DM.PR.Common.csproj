@@ -64,9 +64,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\EmailsAttribute.cs" />
-    <Compile Include="Attributes\EmptyAttribute.cs" />
-    <Compile Include="Attributes\RolesAttribute.cs" />
+    <Compile Include="Attributes\UniqEmailsAttribute.cs" />
+    <Compile Include="Attributes\UniqPhonesAttribute.cs" />
+    <Compile Include="Attributes\UniqRolesAttribute.cs" />
     <Compile Include="Attributes\ValidDateAttribute.cs" />
     <Compile Include="Dependencies\CommonRegistry.cs" />
     <Compile Include="Entities\Enums.cs" />
