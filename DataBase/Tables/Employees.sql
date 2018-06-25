@@ -1,14 +1,17 @@
 CREATE TABLE [Employees](
 [Id] INT IDENTITY(1, 1),
-[DepartmentId] INT NULL,
+[DepartmentId] INT NULL ,
 [LastName] NVARCHAR(16) NULL,
 [FirstName] NVARCHAR(16) NULL,
 [MiddleName] NVARCHAR(16) NULL,
-[Address] NVARCHAR(128) NULL,
+[Address] NVARCHAR(64) NULL,
 [MaritalStatusId]INT NULL,
+[HomePhone] NVARCHAR(16) NULL,
+[WorkPhone] NVARCHAR(16) NULL,
+[MobilePhone] NVARCHAR(16) NULL,
 [ImagePath] NVARCHAR(MAX) NULL,
-[BeginningWork] DATE  NULL,
-[EndWork] DATE NULL,
+[BeginningWork] DATETIME  NULL,
+[EndWork] DATETIME NULL,
 [WorkStatusId] INT NULL,
 [HasRole] BIT DEFAULT 0);
 GO

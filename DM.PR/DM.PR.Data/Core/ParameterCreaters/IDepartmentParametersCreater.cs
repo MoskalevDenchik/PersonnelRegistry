@@ -6,6 +6,8 @@ namespace DM.PR.Data.Core.InputParameters.Creaters
     {
         IInputParameter CreateFind(int parentId);
         IInputParameter CreateFind(int pageSize, int page);
+        IInputParameter CreateFind(string name);
+
     }
 }
 

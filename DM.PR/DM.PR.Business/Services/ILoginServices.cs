@@ -1,11 +1,10 @@
-﻿
-using DM.PR.Common.Entities.Account;
+﻿using DM.PR.Common.Entities;
 
 namespace DM.PR.Business.Services
 {
     public interface ILoginServices
     {
-        SignInStatus SignIn(string login, string password);
+        Result SignIn(string login, string password);
         void SingOut();
     }
 }

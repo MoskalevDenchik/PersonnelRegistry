@@ -1,4 +1,4 @@
-CREATE FUNCTION [dbo].[GetEmployeeBySerchParams](
+CREATE FUNCTION [dbo].[GetEmployeesBySerchParams](
 @LastName nvarchar(16) = '',
 @FirstName nvarchar(16) = '',
 @MiddleName nvarchar(16) = '',

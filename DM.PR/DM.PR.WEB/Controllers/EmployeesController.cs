@@ -125,7 +125,7 @@ namespace DM.PR.WEB.Controllers
             return Json(new { Data = list, TotalCount = totalCount }, JsonRequestBehavior.AllowGet);
         }
 
-        [AjaxOnly]
+        [AjaxOnly]                                                                                                                      
         public ActionResult GetEmployeesByDepartmentId(int departmentId, int pageNumber, int pageSize)
         {
             var list = _emplProv.GetEmployees(departmentId, pageSize, pageNumber, out int totalCount);

@@ -183,6 +183,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Account\Login.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Employee\Navigation.js" />
     <Content Include="Scripts\Employee\Search.js" />
@@ -209,8 +210,8 @@
     <Compile Include="Dependency\IoC.cs" />
     <Compile Include="Dependency\StructureMapDependencyScope.cs" />
     <Compile Include="Dependency\StructureMapScopeModule.cs" />
+    <Compile Include="Infrastructure\Attributes\CheckModelForNullAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\EmailsAttribute.cs" />
-    <Compile Include="Infrastructure\Binders\DepartmentBinder.cs" />
     <Compile Include="Infrastructure\Helpers\BinderHelper.cs" />
     <Compile Include="Infrastructure\Binders\EmployeeBinder.cs" />
     <Compile Include="Infrastructure\Helpers\ImageHalper.cs" />

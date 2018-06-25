@@ -11,8 +11,14 @@ namespace DM.PR.WEB.Controllers
     [Authorize(Roles = "admin,editor")]
     public class MaritalStatusController : Controller
     {
+        #region Private
+
         private readonly IProvider<MaritalStatus> _maritalStatusProv;
         private readonly IEntityService<MaritalStatus> _maritalStatusServ;
+
+        #endregion
+
+        #region Ctors
 
         public MaritalStatusController(IProvider<MaritalStatus> maritalStatusProvider, IEntityService<MaritalStatus> maritalStatusServ)
         {
@@ -21,24 +27,29 @@ namespace DM.PR.WEB.Controllers
             _maritalStatusServ = maritalStatusServ;
         }
 
+        #endregion
+
+        [RedirectIfNull(RedirectTo = "~/Error/ServerError")]
         public ActionResult Index()
         {
-            var list = _maritalStatusProv.GetAll();
-            return View(list);
+            return View(_maritalStatusProv.GetAll());
         }
 
+        [RedirectIfNull(RedirectTo = "~/Error/ServerError")]
         public ActionResult Details(int id = 0)
         {
-            var user = _maritalStatusProv.GetById(id);
-            return View(user);
+            return View(_maritalStatusProv.GetById(id));
         }
 
-        public ActionResult Create() => View();
+        public ActionResult Create()
+        {
+            return View();
+        }
 
+        [RedirectIfNull(RedirectTo = "~/Error/ServerError")]
         public ActionResult Edit(int id = 0)
         {
-            var status = _maritalStatusProv.GetById(id);
-            return View(new MaritalStatusEditViewModel { Id = status.Id, Status = status.Status });
+            return View(MapToMaritalStatusEditViewModel(_maritalStatusProv.GetById(id)));
         }
 
         public ActionResult Delete(int id = 0)
@@ -47,7 +58,20 @@ namespace DM.PR.WEB.Controllers
             return RedirectToAction("Index");
         }
 
-        [AjaxOnly] [HttpPost]
-        public JsonResult Save(MaritalStatus maritalStatus) => Json(_maritalStatusServ.Save(maritalStatus));
+        [AjaxOnly]
+        [HttpPost]
+        public JsonResult Save(MaritalStatus maritalStatus)
+        {
+            return Json(_maritalStatusServ.Save(maritalStatus));
+        }
+
+        #region Mappers
+
+        private MaritalStatusEditViewModel MapToMaritalStatusEditViewModel(MaritalStatus status)
+        {
+            return status != null ? new MaritalStatusEditViewModel { Id = status.Id, Status = status.Status } : null;
+        }
+
+        #endregion
     }
 }
