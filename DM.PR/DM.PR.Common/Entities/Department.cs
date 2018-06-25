@@ -5,10 +5,8 @@ namespace DM.PR.Common.Entities
 {
     public class Department : IEntity
     {
-        [Range(0, int.MaxValue, ErrorMessage = "Id не может быть отрицательным")]
         public int Id { get; set; }
 
-        [Range(0, int.MaxValue, ErrorMessage = "Id не может быть отрицательным")]
         public int ParentId { get; set; }
 
         [StringLength(16, MinimumLength = 3, ErrorMessage = "Длина строки должна быть от 3 до 16 символов")]

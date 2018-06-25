@@ -1,8 +1,8 @@
-﻿using log4net;
+﻿using System.Reflection;
 using log4net.Config;
-using System;
 using System.IO;
-using System.Reflection;
+using log4net;
+using System;
 
 namespace DM.PR.Common.Logger
 {
@@ -21,11 +21,6 @@ namespace DM.PR.Common.Logger
             _log.Info(message);
         }
 
-        public void MaleError(object message)
-        {
-            _log.Error(message);
-        }
-
         private void InitLogger()
         {
             if (!LogManager.GetRepository().Configured)
@@ -42,14 +37,13 @@ namespace DM.PR.Common.Logger
                 }
                 else
                 {
-                    throw new FileLoadException(String.Format("The configuration file {0} does not exist", fullPath));
+                    throw new FileLoadException($"The configuration file {fullPath} does not exist");
                 }
             }
-
         }
 
         private string GetFullPathToConfigFile()
-        {                                              
+        {
             return new DirectoryInfo(Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath)).FullName;
         }
     }
