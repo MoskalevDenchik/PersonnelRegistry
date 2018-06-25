@@ -32,8 +32,8 @@ namespace DM.PR.Business.Services.Implement
             var us = _prov.GetByLogin(user.Login);
             if (us == null || us.Id == user.Id)
             {
-                result.Status = Status.Success;
                 result.Exceptions = null;
+                result.Status = Status.Success;
                 return true;
             }
             else

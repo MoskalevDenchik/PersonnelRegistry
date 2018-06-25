@@ -59,7 +59,7 @@ namespace DM.PR.WEB.Controllers
                 Login = user.Login,
                 Password = user.Password,
                 RolesList = rolesList,
-                Roles =  user.Roles.ToArray()
+                Roles =  user.Roles
             });
         }
 
@@ -71,6 +71,9 @@ namespace DM.PR.WEB.Controllers
 
         [AjaxOnly]
         [HttpPost]
-        public JsonResult Save(User model) => Json(_userServ.Save(model));
+        public JsonResult Save(User model)
+        {
+            return Json(_userServ.Save(model));
+        }
     }
 }

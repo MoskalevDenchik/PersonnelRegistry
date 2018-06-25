@@ -211,7 +211,6 @@
     <Compile Include="Dependency\StructureMapDependencyScope.cs" />
     <Compile Include="Dependency\StructureMapScopeModule.cs" />
     <Compile Include="Infrastructure\Attributes\CheckModelForNullAttribute.cs" />
-    <Compile Include="Infrastructure\Attributes\EmailsAttribute.cs" />
     <Compile Include="Infrastructure\Helpers\BinderHelper.cs" />
     <Compile Include="Infrastructure\Binders\EmployeeBinder.cs" />
     <Compile Include="Infrastructure\Helpers\ImageHalper.cs" />
@@ -223,17 +222,14 @@
     </Compile>
     <Compile Include="Models\Department\DepartmentDeatailsViewModel.cs" />
     <Compile Include="Models\Department\DepartmentSelectModel.cs" />
-    <Compile Include="Models\Employee\EmployeeEditViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeDetailsViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeSaveViewModel.cs" />
     <Compile Include="Models\Employee\EmployeeSearchModel.cs" />
     <Compile Include="Models\Employee\EmployeeSummaryViewModel.cs" />
-    <Compile Include="Models\MaritalStatus\MaritalStatusCreateViewModel.cs" />
-    <Compile Include="Models\MaritalStatus\MaritalStatusEditViewModel.cs" />
+    <Compile Include="Models\MaritalStatus\MaritalStatusSaveViewModel.cs" />
     <Compile Include="Models\Navigation\NavigationMenuViewModel.cs" />
     <Compile Include="Models\User\UserSaveViewModel.cs" />
-    <Compile Include="Models\WorkStatus\WorkStatusCreateViewModel.cs" />
-    <Compile Include="Models\WorkStatus\WorkStatusEditViewModel.cs" />
+    <Compile Include="Models\WorkStatus\WorkStatusSaveViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

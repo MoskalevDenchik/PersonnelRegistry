@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.Roles, new { @class = "control-label col-md-offset-2 col-md-2" })
+            @Html.LabelFor(m => m.Roles, new { @class = "control-label col-md-4 text-right" })
             <div class="col-md-8" id="Roles">
                 <div>
                     @Html.DropDownListFor(m => m.Roles[0].Id, new SelectList(Model.RolesList, "Id", "Name"), "Выберите роль",
