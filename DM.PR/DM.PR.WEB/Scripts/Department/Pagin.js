@@ -27,7 +27,7 @@ function GetPageData(pageSize)
     $("#paged").empty();
 
     $.ajax({
-        url: "/Departments/GetAll",
+        url: "/Departments/GetDepartments",
         type: "GET",
         data: {
             pageNumber: pageNumber,

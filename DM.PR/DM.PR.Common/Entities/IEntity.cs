@@ -1,5 +1,4 @@
-﻿
-namespace DM.PR.Common.Entities
+﻿namespace DM.PR.Common.Entities
 {
     public interface IEntity
     {

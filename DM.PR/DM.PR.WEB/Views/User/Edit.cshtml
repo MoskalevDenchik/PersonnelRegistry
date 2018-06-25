@@ -27,13 +27,15 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.Roles, new { @class = "control-label col-md-offset-2 col-md-2" })
+            @Html.LabelFor(m => m.Roles, new { @class = "control-label col-md-4 text-right" })
             <div class="col-md-8" id="Roles">
-                @for (int i = 0; i < Model.Roles.Length; i++)
+                @for (int i = 0; i < @Model.Roles.Count; i++)
                 {
-                    @Html.DropDownListFor(m => m.Roles[i].Id, new SelectList(Model.RolesList, "Id", "Name", Model.Roles[i].Name),
-                         new { @class = "form-control", data_val_required = "Вы не выбрали роль" })
-                    @Html.ValidationMessageFor(m => m.Roles[i], "", new { @class = "text-danger" })
+                    <div>
+                        @Html.DropDownListFor(m => m.Roles[i].Id, new SelectList(Model.RolesList, "Id", "Name", Model.Roles[i].Id),
+                                       new { @class = "form-control", data_val_required = "Вы не выбрали роль" })
+                        @Html.ValidationMessageFor(m => m.Roles[i], "", new { @class = "text-danger" })
+                    </div>
                 }
             </div>
         </div>

@@ -1,4 +1,5 @@
 ﻿using DM.PR.WEB.Infrastructure.Attributes;
+using System.Collections.Generic;
 using DM.PR.Business.Providers;
 using DM.PR.Business.Services;
 using DM.PR.Common.Entities;
@@ -6,7 +7,6 @@ using DM.PR.Common.Helpers;
 using DM.PR.WEB.Models;
 using System.Web.Mvc;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace DM.PR.WEB.Controllers
 {
@@ -70,10 +70,13 @@ namespace DM.PR.WEB.Controllers
 
         [AjaxOnly]
         [HttpPost]
-        public JsonResult Save(Department department) => Json(_depServ.Save(department));
+        public JsonResult Save(Department department)
+        {
+            return Json(_depServ.Save(department));
+        }
 
         [AjaxOnly]
-        public ActionResult GetAll(int pageSize, int pageNumber)
+        public ActionResult GetDepartments(int pageSize, int pageNumber)
         {
             var model = _depProv.GetDepartments(pageSize, pageNumber, out int totalPage);
             return Json(new { Data = model, TotalCount = totalPage }, JsonRequestBehavior.AllowGet);
