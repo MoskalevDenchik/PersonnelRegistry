@@ -10,10 +10,10 @@
         @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control", placeholder = "Отчество..." })
     </div>
     <div class="col-md-1">
-        @Html.TextBoxFor(m => m.FromYear, new { @class = "form-control", @type ="number" })
+        @Html.TextBoxFor(m => m.FromYear, new { @class = "form-control"})
     </div>
     <div class="col-md-1">
-        @Html.TextBoxFor(m => m.ToYear, new { @class = "form-control", @type = "number", @value ="10" })
+        @Html.TextBox("ToYear",10, new { @class = "form-control" })
     </div>
     <div class="col-md-2">
         @Html.DropDownListFor(m => m.WorkStatusId, new SelectList(Model.WorkStatusLst, "Id", "Status"), "Выберите статус", new { @class = "form-control" })

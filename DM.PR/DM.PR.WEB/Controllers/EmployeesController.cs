@@ -98,7 +98,6 @@ namespace DM.PR.WEB.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [Authorize(Roles = "admin")]
         public JsonResult Save(Employee employee)
         {
             var result = _emplServ.Save(employee);

@@ -24,9 +24,10 @@ function AddNewEmail()
 
         copy.find("input[type='hidden']").attr("name", "Emails[" + emailNumber + "].Id");
         copy.find("input[type='hidden']").attr("id", "Emails_" + emailNumber + "__Id");
-
+        
         copy.find("input[type='text']").attr("name", "Emails[" + emailNumber + "].Address");
         copy.find("input[type='text']").attr("id", "Emails_" + emailNumber + "__Address");
+        copy.find("input[type='text']").val("");
 
         copy.appendTo("#Emails");
     }

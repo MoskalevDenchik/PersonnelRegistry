@@ -2,7 +2,7 @@
 
 namespace DM.PR.WEB.Models.WorkStatus
 {
-    public class WorkStatusEditViewModel
+    public class WorkStatusSaveViewModel
     {
         public int Id { get; set; }
 

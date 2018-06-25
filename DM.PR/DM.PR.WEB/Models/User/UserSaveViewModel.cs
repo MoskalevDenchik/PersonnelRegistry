@@ -20,9 +20,8 @@ namespace DM.PR.WEB.Models.User
         [Required(ErrorMessage = "Подтвердите пароль")]
         public string ConfirmPassword { get; set; }
 
-        [Required(ErrorMessage = "Добавьте роли")]
         [Display(Name = "Роли")]
-        public Role[] Roles { get; set; }
+        public List<Role> Roles { get; set; }
 
         public IReadOnlyCollection<Role> RolesList { get; set; }
     }
