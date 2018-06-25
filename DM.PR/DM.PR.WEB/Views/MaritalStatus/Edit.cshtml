@@ -1,9 +1,11 @@
 ﻿@model DM.PR.WEB.Models.MaritalStatus.MaritalStatusEditViewModel
 
-<h2 class="text-center">Измените семейное положение</h2>
+<h2 class="text-center">Редактируйте семейное положение</h2>
 <br />
 
-<form id="StatusForm">
+
+@using (Html.BeginForm("Save", "MaritalStatus", null, FormMethod.Post, new { @id = "AjaxForm", @redirect = Url.Action("Index") }))
+{
     @Html.HiddenFor(model => model.Id)
     <div class="row">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -19,8 +21,8 @@
             </div>
         </div>
     </div>
-</form>
+}
 
 @section Scripts {
-    <script src="~/Scripts/MaritalStatus/Save.js"></script>
+    <script src="~/Scripts/Common/Save.js"></script>
 }

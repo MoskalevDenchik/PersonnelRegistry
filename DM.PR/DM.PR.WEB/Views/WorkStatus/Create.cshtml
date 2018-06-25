@@ -3,7 +3,8 @@
 <h2 class="text-center"> Добавтье новый статус</h2>
 <br />
 
-<form id="StatusForm">
+@using (Html.BeginForm("Save", "WorkStatus", null, FormMethod.Post, new { @id = "AjaxForm", @redirect = Url.Action("Index") }))
+{
     <div class="row">
         <div class="form-group">
             <div class="col-md-offset-4">
@@ -17,8 +18,8 @@
             </div>
         </div>
     </div>
-</form>
+}
 
 @section Scripts {
-    <script src="~/Scripts/WorkStatus/Save.js"></script>
+    <script src="~/Scripts/Common/Save.js"></script>
 }

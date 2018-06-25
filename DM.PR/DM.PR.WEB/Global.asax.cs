@@ -1,6 +1,5 @@
 ﻿using DM.PR.WEB.Infrastructure.Bindings;
 using DM.PR.WEB.DependencyResolution;
-using DM.PR.Common.Entities.Account;
 using System.Web.Optimization;
 using DM.PR.Business.Helpers;
 using DM.PR.Common.Entities;
@@ -18,43 +17,43 @@ namespace DM.PR.WEB
     {
         protected void Application_Start()
         {
-            ModelBinders.Binders.Add(typeof(User), new UserBinder());
             ModelBinders.Binders.Add(typeof(Employee), new EmployeeBinder());
+
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
-        protected void Application_Error(Object sender, EventArgs e)
-        {
-            Exception exc = Server.GetLastError();
-            Server.ClearError();
-            Response.Clear();
+        //protected void Application_Error(Object sender, EventArgs e)
+        //{
+        //    Exception exc = Server.GetLastError();
+        //    Server.ClearError();
+        //    Response.Clear();
 
-            string errorType = "ServerError";
+        //    string errorType = "ServerError";
 
-            if (exc is HttpException HttpExc)
-            {
-                switch (HttpExc.GetHttpCode())
-                {
-                    case 404:
-                        errorType = "NotFound";
-                        break;
-                    default:
-                        errorType = "ServerError";
-                        break;
-                }
-            }
+        //    if (exc is HttpException HttpExc)
+        //    {
+        //        switch (HttpExc.GetHttpCode())
+        //        {
+        //            case 404:
+        //                errorType = "NotFound";
+        //                break;
+        //            default:
+        //                errorType = "ServerError";
+        //                break;
+        //        }
+        //    }
 
 
-            using (var container = IoC.Initialize())
-            {
-                var log = container.GetInstance<IRecordLog>();
-                log.MakeInfo(exc.Message);
-            }
+        //    using (var container = IoC.Initialize())
+        //    {
+        //        var log = container.GetInstance<IRecordLog>();
+        //        log.MakeInfo(exc.Message);
+        //    }
 
-            Response.Redirect($"~/Error/{errorType}");
-        }
+        //    Response.Redirect($"~/Error/{errorType}");
+        //}
 
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
         {

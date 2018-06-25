@@ -8,10 +8,8 @@
 <br />
 <div class="row">
     <div class="col-md-offset-5">
-        @using (Html.BeginForm("Login", "Account", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        @using (Html.BeginForm("Login", "Account", null, FormMethod.Post, new { @id = "AjaxForm", @class = "form-horizontal", @redirect = Url.Action("Index", "Home") }))
         {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
             <div class="form-group">
                 @Html.TextBoxFor(m => m.Login, new { @class = "form-control", placeholder = "Введите логин...." })
@@ -27,3 +25,7 @@
         }
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/Scripts/Account/Login.js"></script>
+}
