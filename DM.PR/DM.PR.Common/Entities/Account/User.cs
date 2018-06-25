@@ -20,7 +20,6 @@ namespace DM.PR.Common.Entities.Account
 
         public IReadOnlyCollection<Email> Emails { get; set; }
 
-        [Roles]
         public List<Role> Roles { get; set; }
     }
 }

@@ -39,3 +39,5 @@
 2018-06-24 23:30:56,923  INFO MyLogger - D:\testes\PersonnelRegistry\DM.PR\DM.PR.WEB\Views\Employees\Edit.cshtml(82): error CS0839: Argument missing 
 2018-06-24 23:31:25,043  INFO MyLogger - D:\testes\PersonnelRegistry\DM.PR\DM.PR.WEB\Views\Employees\Edit.cshtml(82): error CS0839: Argument missing 
 2018-06-24 23:31:59,747  INFO MyLogger - D:\testes\PersonnelRegistry\DM.PR\DM.PR.WEB\Views\Employees\Edit.cshtml(82): error CS0839: Argument missing 
+2018-06-25 22:55:57,850  INFO MyLogger - Индекс за пределами диапазона. Индекс должен быть положительным числом, а его размер не должен превышать размер коллекции.
+Имя параметра: index 
