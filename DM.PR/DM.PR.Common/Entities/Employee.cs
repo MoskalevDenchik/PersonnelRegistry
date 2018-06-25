@@ -42,12 +42,14 @@ namespace DM.PR.Common.Entities
         public MaritalStatus MaritalStatus { get; set; }
 
         [ValidEntity]
-         public WorkStatus WorkStatus { get; set; }
+        public WorkStatus WorkStatus { get; set; }
 
         public string ImagePath { get; set; }
 
+
         public DateTime BeginningWork { get; set; }
 
+        [ValidDate(MoreThen = "BeginningWork", ErrorMessage = "Дата увольнение не может быть познее или совпадать с датой приема на работу")]
         public DateTime? EndWork { get; set; }
 
         public bool HasRole { get; set; }

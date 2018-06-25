@@ -4,7 +4,7 @@ using System;
 
 namespace DM.PR.Common.Attributes
 {
-    class ValidEntityAttribute : ValidationAttribute
+    public class ValidEntityAttribute : ValidationAttribute
     {
         public override bool IsValid(object entity) => ((IEntity)entity).Id >= 0 ? true : throw new Exception("Чет не так");
     }
