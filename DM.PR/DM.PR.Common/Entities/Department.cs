@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using DM.PR.Common.Attributes;
 
 namespace DM.PR.Common.Entities
 {
@@ -18,6 +19,7 @@ namespace DM.PR.Common.Entities
         [StringLength(128, MinimumLength = 3, ErrorMessage = "Длина строки должна быть от 3 до 128 символов")]
         public string Description { get; set; }
 
+        [UniqPhones(ErrorMessage = "Телефоны не должны повторяться")]
         public List<Phone> Phones { get; set; }
     }
 }
