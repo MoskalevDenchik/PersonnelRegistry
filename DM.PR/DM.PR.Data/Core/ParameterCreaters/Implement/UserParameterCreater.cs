@@ -64,17 +64,17 @@ namespace DM.PR.Data.Core.ParameterCreaters.Implement
 
         #region Converters
 
-        private DataTable ConvertToTable(IReadOnlyCollection<Role> users)
+        private DataTable ConvertToTable(IReadOnlyCollection<Role> roles)
         {
-            var table = new DataTable("Users");
+            var table = new DataTable("Roles");
             table.Columns.Add("Id", typeof(int));
             table.Columns.Add("Name", typeof(string));
 
-            foreach (var item in users)
+            foreach (var item in roles)
             {
                 table.Rows.Add(item.Id, item.Name);
             }
-            return table;
+            return table;                                               
         }
 
         #endregion

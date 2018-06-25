@@ -7,7 +7,7 @@ namespace DM.PR.Common.Attributes
 {
     public class ValidDateAttribute : ValidationAttribute
     {
-        public string LessOrEqualTo { get; set; }
+        public string OverOrEqualTo { get; set; }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -15,8 +15,8 @@ namespace DM.PR.Common.Attributes
 
             if (endDate != null)
             {
-                DateTime beginDate = (DateTime)typeof(Employee).GetProperty(LessOrEqualTo).GetValue(validationContext.ObjectInstance);
-                if (beginDate.CompareTo((DateTime)endDate) <= 0)
+                DateTime beginDate = (DateTime)typeof(Employee).GetProperty(OverOrEqualTo).GetValue(validationContext.ObjectInstance);
+                if (beginDate.CompareTo((DateTime)endDate) >= 0)
                 {
                     return new ValidationResult(ErrorMessage, new List<string> { "EndWork" });
                 }

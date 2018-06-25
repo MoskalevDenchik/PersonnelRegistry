@@ -2,6 +2,8 @@
 
 @{
     Layout = "~/Views/Shared/_Details.cshtml";
+    var parentName = Model.ParentId == 0 ? "Нету" : Model.ParentName;
+
 }
 
 <div class="row">
@@ -11,7 +13,7 @@
                 <span class="text-info">Вышестоящий отдел:</span>
             </div>
             <div class="col-md-8 text-left">
-                @Model.ParentName
+                @parentName
             </div>
         </div>
         <div class="row">

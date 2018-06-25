@@ -48,7 +48,7 @@ namespace DM.PR.Common.Entities
 
         public DateTime BeginningWork { get; set; }
 
-        [ValidDate(LessOrEqualTo = "BeginningWork", ErrorMessage = "Дата увольнение не может быть познее или совпадать с датой приема на работу")]
+        [ValidDate(OverOrEqualTo = "BeginningWork", ErrorMessage = "Дата увольнение не может быть раньше или совпадать с датой приема на работу")]
         public DateTime? EndWork { get; set; }
 
         public bool HasRole { get; set; }
