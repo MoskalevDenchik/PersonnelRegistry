@@ -38,7 +38,7 @@
             </td>
             <td>
                 @Html.ActionLink("Подробнее", "Details", "Employees", new { id = item.EmployeeId }, null)/
-                @Html.ActionLink("Изменить", "Edit", new { id = item.Id }) /
+                @Html.ActionLink("Изменить", "Edit", new { employeeid = item.EmployeeId }) /
                 @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
             </td>
         </tr>
